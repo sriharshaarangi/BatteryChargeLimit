@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Battery Charge Limit</string>
+    <string name="action_settings">Settings</string>
+    <string name="previously_started">Previously Started</string>
+</resources>
