@@ -12,48 +12,88 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.slash.batterychargelimit.MainActivity"
     tools:showIn="@layout/activity_main">
-<RelativeLayout
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:id="@+id/rel"
-    android:layout_below="@+id/button1">
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/limit_TextView"
-        android:textSize="16sp"
-        android:layout_centerVertical="true"
-        android:textColor="@android:color/black"
-        android:text="Limit(between 40 and 99): " />
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/limit_TextView"
-        android:layout_margin="8dp"
-        android:padding="8dp"
-        android:id="@+id/limit_EditText"
-        android:textSize="16sp"
-        android:layout_centerVertical="true"
-        android:inputType="number"
-        android:text="80"
-        android:background="@drawable/textbox"
-        />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Change"
-        android:id="@+id/changeLimitButton"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:layout_marginBottom="16dp"/>
-
-    </RelativeLayout>
+    <Switch
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Enable "
+            android:textSize="16sp"
+            android:id="@+id/button1"
+            android:layout_centerHorizontal="true"
+    />
 
     <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_below="@+id/rel"
+        android:layout_height="wrap_content"
+        android:id="@+id/rel"
+        android:layout_below="@+id/button1">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/limit_TextView"
+            android:textSize="16sp"
+            android:layout_centerVertical="true"
+            android:textColor="@android:color/black"
+            android:text="Limit (between 40 and 99): " />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/limit_TextView"
+            android:layout_margin="8dp"
+            android:padding="8dp"
+            android:id="@+id/limit_EditText"
+            android:textSize="16sp"
+            android:layout_centerVertical="true"
+            android:inputType="number"
+            android:text="80"
+            android:background="@drawable/textbox"
+            />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Change"
+            android:id="@+id/changeLimitButton"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginBottom="16dp"/>
+
+    </RelativeLayout>
+
+    <LinearLayout
+            android:layout_below="@+id/rel"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="8dp"
+            android:id="@+id/ran_rel">
+
+        <SeekBar
+                android:id="@+id/range_bar"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingEnd="30dp"
+                android:paddingStart="10dp"
+                android:max="10"
+                android:progress="2" />
+
+        <TextView
+                android:id="@+id/range_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Recharge below 78%"
+                android:textColor="@android:color/black"
+                android:textSize="16sp" />
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_below="@+id/ran_rel"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:id="@+id/stat">
@@ -66,6 +106,7 @@
             android:textColor="@android:color/black"
             android:textSize="16sp"
             />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -77,15 +118,6 @@
 
     </RelativeLayout>
 
-    <Switch
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Enable "
-        android:textSize="16sp"
-        android:id="@+id/button1"
-        android:layout_centerHorizontal="true"
-
-        />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -101,20 +133,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-
         >
+        <RadioButton
+                android:id="@+id/battery_charging_enabled"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="battery_charging_enabled (Nexus/Pixel)"
+                android:onClick="onRadioButtonClicked">
+        </RadioButton>
         <RadioButton
             android:id="@+id/charging_enabled"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="charging_enabled"
-            android:onClick="onRadioButtonClicked">
-        </RadioButton>
-        <RadioButton
-            android:id="@+id/battery_charging_enabled"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="battery_charging_enabled (Nexus/Pixel)"
+            android:text="charging_enabled (Generic)"
             android:onClick="onRadioButtonClicked">
         </RadioButton>
         <RadioButton
@@ -124,7 +155,13 @@
             android:text="batt_slate_mode (Samsung)"
             android:onClick="onRadioButtonClicked">
         </RadioButton>
-
+        <RadioButton
+            android:id="@+id/store_mode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="store_mode (Samsung Note)"
+            android:onClick="onRadioButtonClicked">
+        </RadioButton>
     </RadioGroup>
 
     <Button
@@ -135,6 +172,5 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="16dp"
         android:layout_below="@+id/rgOpinion"/>
-
 
 </RelativeLayout>

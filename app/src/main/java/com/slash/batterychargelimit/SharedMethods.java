@@ -12,37 +12,48 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import static com.slash.batterychargelimit.Constants.*;
+import static com.slash.batterychargelimit.Constants.CHARGE_OFF_INDEX;
+import static com.slash.batterychargelimit.Constants.CHARGE_OFF_KEY;
+
 /**
  * Created by harsha on 17/3/17.
  */
 
 public class SharedMethods {
-    public static void changeState(Context context, String s) {
+
+    public static int CHARGE_ON = 0;
+    public static int CHARGE_OFF = 1;
+
+    public static void changeState(Context context, int chargeMode) {
         Process p;
         SharedPreferences settings = context.getSharedPreferences("Settings", 0);
         try {
             // Preform su to get root privledges
             p = Runtime.getRuntime().exec("su");
-            String battery_file = settings.getString("file", "charging_enabled");
-            String file = "/sys/class/power_supply/battery/" + battery_file + "\n";
-            if (battery_file.equals("batt_slate_mode")) {
-                if (s.equals("1")) s = "0";
-                else s = "1";
+            String file = settings.getString(Constants.FILE_KEY, "/sys/class/power_supply/battery/charging_enabled") + "\n";
+            String newState;
+            if (chargeMode == CHARGE_OFF) {
+                newState = settings.getString(Constants.CHARGE_OFF_KEY, "0");
+            } else if (chargeMode == CHARGE_ON) {
+                newState = settings.getString(Constants.CHARGE_ON_KEY, "1");
+            } else {
+                newState = settings.getString(Constants.CHARGE_OFF_KEY, "0");
             }
             DataOutputStream os = new DataOutputStream(p.getOutputStream());
             BufferedReader bf = new BufferedReader(new InputStreamReader(p.getInputStream()));
             os.writeBytes("cat " + file);
             os.flush();
-            String tmp = bf.readLine();
+            String recentState = bf.readLine();
 //            os.writeBytes("echo \"Do I have root?\" >/system/sd/temporary.txt\n");
-            if (!tmp.equals(s)) {
-                if (s.equals("0")) {
+            if (!recentState.equals(newState)) {
+                if (chargeMode == CHARGE_OFF) {
                     SharedPreferences.Editor editor = settings.edit();
                     editor.putBoolean("limitReached", true);
                     editor.apply();
                 }
                 os.writeBytes("mount -o rw,remount " + file);
-                os.writeBytes("echo " + s + " > " + file);
+                os.writeBytes("echo " + newState + " > " + file);
             }
 //            os.writeBytes("mount -o ro,remount /sys/class/power_supply/battery/charging_enabled\n");
             os.writeBytes("exit\n");
@@ -94,8 +105,7 @@ public class SharedMethods {
         if (level == -1 || scale == -1) {
             return 50;
         }
-        int d = ((level * 100) / scale);
-        return d;
+        return level * 100 / scale;
     }
 
     public static boolean isConnected(Context context) {

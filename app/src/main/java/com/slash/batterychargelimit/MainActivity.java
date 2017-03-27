@@ -1,40 +1,39 @@
 package com.slash.batterychargelimit;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.content.SharedPreferences;
+import android.annotation.SuppressLint;
+import android.content.*;
+import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.BatteryManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
+import android.util.SparseArray;
+import android.util.SparseIntArray;
 import android.view.Menu;
-import android.widget.Button;
-import android.widget.CompoundButton;
-import android.widget.EditText;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
-import android.widget.Switch;
-import android.widget.TextView;
+import android.view.View;
+import android.widget.*;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-    Button limit_Button;
-    Button resetBatteryStats_Button;
-    Switch enable_Switch;
-    TextView status_TextView;
-    EditText limit_TextView;
-    SharedPreferences settings;
-    String battery_file;
-    int limit_percentage;
-    boolean is_enabled;
-    RadioGroup batteryFile_RadioGroup;
-    Context thisContext = this;
+import java.io.File;
+
+import static com.slash.batterychargelimit.Constants.*;
+import static com.slash.batterychargelimit.SharedMethods.CHARGE_ON;
+
+public class MainActivity extends AppCompatActivity {
+    private Button limit_Button;
+    private SeekBar rangeBar;
+    private Switch enable_Switch;
+    private TextView status_TextView;
+    private EditText limit_TextView;
+    private SharedPreferences settings;
+    private RadioGroup batteryFile_RadioGroup;
+    private Context thisContext = this;
+
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,38 +41,51 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
         settings = getSharedPreferences("Settings", 0);
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         boolean previouslyStarted = prefs.getBoolean(getString(R.string.previously_started), false);
-        if(!previouslyStarted) {
-            SharedPreferences.Editor edit = prefs.edit();
-            edit.putBoolean(getString(R.string.previously_started), Boolean.TRUE);
-            edit.apply();
-            SharedPreferences.Editor editor = settings.edit();
-            editor.putInt("limit", 80);
-            editor.putBoolean("limitReached", false);
-            editor.putBoolean("enable", false);
-            if(Build.BRAND.equalsIgnoreCase("Samsung"))
-                editor.putString("file", "batt_slate_mode");
-            else if(Build.BRAND.equalsIgnoreCase("google"))//nexus/pixel devices
-                editor.putString("file", "battery_charging_enabled");
-            else
-                editor.putString("file", "charging_enabled");
-            editor.apply();
+        if (!previouslyStarted) {
+            prefs.edit().putBoolean(getString(R.string.previously_started), true).apply();
+            settings.edit()
+                    .putInt(LIMIT, 80)
+                    .putBoolean("limitReached", false)
+                    .putBoolean("enable", false).apply();
             SharedMethods.whitlelist(thisContext);
         }
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
-        battery_file = settings.getString("file", "charging_enabled");
-        limit_percentage = settings.getInt("limit", 80);
-        is_enabled = settings.getBoolean("enable", false);
+
+        int settingsVersion = prefs.getInt("SettingsVersion", 0);
+        int versionCode = 0;
+        try {
+            versionCode = getPackageManager().getPackageInfo(getPackageName(), 0).versionCode;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace(); // should never happen
+        }
+        if (settingsVersion < versionCode) {
+            switch(settingsVersion) {
+                case 0:
+                    SparseArray<String[]> modes = getValidCtrlFiles();
+                    if (modes.size() == 0) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                        builder.setMessage("Your device is not supported (yet)!")
+                                .setCancelable(false)
+                                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        finish();
+                                    }
+                                });
+                        AlertDialog alert = builder.create();
+                        alert.show();
+                    }
+                    setCtrlFile(modes.valueAt(0));
+                case 4:
+                    // settings upgrade for future version(s)
+            }
+            // update the settings version
+            prefs.edit().putInt("SettingsVersion", versionCode).apply();
+        }
+
+        int limit_percentage = settings.getInt(LIMIT, 80);
+        boolean is_enabled = settings.getBoolean("enable", false);
 
         if (is_enabled && SharedMethods.isPhonePluggedIn(thisContext)) {
             Intent startIntent2 = new Intent(thisContext, ForegroundService.class);
@@ -86,108 +98,33 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         enable_Switch = (Switch) findViewById(R.id.button1);
         limit_TextView = (EditText) findViewById(R.id.limit_EditText);
         status_TextView = (TextView) findViewById(R.id.status);
-        resetBatteryStats_Button = (Button) findViewById(R.id.reset_battery_stats);
+        Button resetBatteryStats_Button = (Button) findViewById(R.id.reset_battery_stats);
+        rangeBar = (SeekBar) findViewById(R.id.range_bar);
+        final TextView rangeText = (TextView) findViewById(R.id.range_text);
 
         limit_TextView.setEnabled(false);
         limit_TextView.setText(Integer.toString(limit_percentage));
+        int rechargeDiff = settings.getInt(RECHARGE_DIFF, 2);
+        rangeBar.setProgress(rechargeDiff);
+        rangeText.setText("Recharge below " + (limit_percentage - rechargeDiff) + "%");
         enable_Switch.setChecked(is_enabled);
-
-        int getBatteryFile = getResources().getIdentifier(battery_file, "id", getApplicationContext().getPackageName());
-        RadioButton currentBatteryFile = (RadioButton) findViewById(getBatteryFile);
-        currentBatteryFile.setChecked(true);
+        updateRadioButtons();
 
         // if limit is enabled, disable all editable settings
         if (is_enabled) {
             limit_Button.setEnabled(false);
-            for (int i = 0; i < batteryFile_RadioGroup.getChildCount(); i++) {
-                ((RadioButton) batteryFile_RadioGroup.getChildAt(i)).setEnabled(false);
-            }
+            rangeBar.setEnabled(false);
         }
 
         enable_Switch.setOnCheckedChangeListener(switchListener);
-        limit_Button.setOnClickListener(this);
-        resetBatteryStats_Button.setOnClickListener(this);
-        IntentFilter percentage = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
-        registerReceiver(charging, percentage);
-    }
-
-    //oncheckedchangelistener for switches
-    CompoundButton.OnCheckedChangeListener switchListener = new CompoundButton.OnCheckedChangeListener() {
-        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-            if (isChecked) {
-                enable_Switch.setEnabled(false);
-
-                for (int i = 0; i < batteryFile_RadioGroup.getChildCount(); i++) {
-                    ((RadioButton) batteryFile_RadioGroup.getChildAt(i)).setEnabled(false);
-                }
-
-                SharedPreferences.Editor editor = settings.edit();
-                editor.putBoolean("enable", true);
-                editor.apply();
-
-                if (SharedMethods.isPhonePluggedIn(thisContext)) {
-                    if (SharedMethods.getBatteryLevel(thisContext) >= settings.getInt("limit", 80)) {
-                        SharedPreferences.Editor editor2 = settings.edit();
-                        editor2.putBoolean("limitReached", true);
-                        editor2.apply();
-                    }                        Intent startIntent2 = new Intent(thisContext, ForegroundService.class);
-                    startIntent2.setAction("connected");//todo even when disconnected
-                    thisContext.startService(startIntent2);
-                }
-
-                limit_Button.setText("Change");
-                limit_Button.setEnabled(false);
-                limit_TextView.setEnabled(false);
-
-                final Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        enable_Switch.setEnabled(true);
-                    }
-                }, 500);
-            }
-            else {
-                enable_Switch.setEnabled(false);
-
-                for (int i = 0; i < batteryFile_RadioGroup.getChildCount(); i++) {
-                    ((RadioButton) batteryFile_RadioGroup.getChildAt(i)).setEnabled(true);
-                }
-                SharedPreferences.Editor editor = settings.edit();
-                editor.putBoolean("enable", false);
-                editor.apply();
-                boolean is_notificationLive = settings.getBoolean("notificationLive", false);
-                if (is_notificationLive) {
-                    Intent startIntent2 = new Intent(thisContext, ForegroundService.class);
-                    startIntent2.setAction("reset");//todo even when disconnected
-                    thisContext.startService(startIntent2);
-                }
-                SharedMethods.changeState(thisContext, "1");
-                final Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-
-                        limit_Button.setEnabled(true);
-                        enable_Switch.setEnabled(true);
-                    }
-                }, 500);
-            }
-        }
-    };
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-
-            case R.id.changeLimitButton:
-                SharedPreferences.Editor editor = settings.edit();
+        limit_Button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 String s = limit_Button.getText().toString();
                 if (s.equals("Apply")) {
                     int t = Integer.parseInt(limit_TextView.getText().toString());
                     if (t >= 40 && t <= 99) {
-                        editor.putInt("limit", t);
-                        editor.apply();
+                        settings.edit().putInt(LIMIT, t).apply();
                         if (enable_Switch.isChecked()) {
                             enable_Switch.toggle();
                             final Handler handler = new Handler();
@@ -199,10 +136,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             }, 1000);
                         }
                     } else {
+                        t = settings.getInt(LIMIT, 80);
                         SharedMethods.toastMessage(thisContext, "Not valid");
                     }
-                    limit_percentage = settings.getInt("limit", 80);
-                    limit_TextView.setText(Integer.toString(limit_percentage));
+                    int limit = settings.getInt(LIMIT, 80);
+                    limit_TextView.setText(Integer.toString(limit));
+                    rangeText.setText("Recharge below " + (limit - settings.getInt(RECHARGE_DIFF, 2)) + "%");
                     limit_Button.setText("Change");
                     limit_TextView.setEnabled(false);
                 }
@@ -210,55 +149,154 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     limit_TextView.setEnabled(true);
                     limit_Button.setText("Apply");
                 }
-                break;
-            case R.id.reset_battery_stats:
+            }
+        });
+        rangeBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int diff, boolean fromUser) {
+                settings.edit().putInt(RECHARGE_DIFF, diff).apply();
+                rangeText.setText("Recharge below " + (settings.getInt(LIMIT, 80) - diff) + "%");
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {}
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {}
+        });
+        resetBatteryStats_Button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 SharedMethods.resetBatteryStats(thisContext);
-            default:
-                break;
-        }
+            }
+        });
+        IntentFilter percentage = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
+        registerReceiver(charging, percentage);
     }
 
+    //oncheckedchangelistener for switches
+    CompoundButton.OnCheckedChangeListener switchListener = new CompoundButton.OnCheckedChangeListener() {
+        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            //looks very strange when limit_TextView is yet to be clicked, see below
+//            enable_Switch.setEnabled(false);
+//            new Handler().postDelayed(new Runnable() {
+//                @Override
+//                public void run() {
+//                    enable_Switch.setEnabled(true);
+//                }
+//            }, 500);
+
+            settings.edit().putBoolean("enable", isChecked).apply();
+
+            if (isChecked) {
+                if (SharedMethods.isPhonePluggedIn(thisContext)) {
+                    if (SharedMethods.getBatteryLevel(thisContext) >= settings.getInt(LIMIT, 80)) {
+                        settings.edit().putBoolean("limitReached", true).apply();
+                    }
+                    Intent startIntent2 = new Intent(thisContext, ForegroundService.class);
+                    startIntent2.setAction("connected");//todo even when disconnected
+                    thisContext.startService(startIntent2);
+                }
+
+                if (limit_TextView.isEnabled()) {
+                    limit_Button.performClick();
+                    limit_TextView.setEnabled(false);
+                }
+            } else {
+                boolean is_notificationLive = settings.getBoolean("notificationLive", false);
+                if (is_notificationLive) {
+                    Intent startIntent2 = new Intent(thisContext, ForegroundService.class);
+                    startIntent2.setAction("reset");//todo even when disconnected
+                    thisContext.startService(startIntent2);
+                }
+                SharedMethods.changeState(thisContext, CHARGE_ON);
+            }
+
+            updateRadioButtons();
+            limit_Button.setEnabled(!isChecked);
+            rangeBar.setEnabled(!isChecked);
+        }
+    };
+
+    /**
+     * This listener is bound via XML!
+     *
+     * @param view The view
+     */
     public void onRadioButtonClicked(View view) {
-        boolean checked = ((RadioButton) view).isChecked();
-
-        switch (view.getId()) {
-            case R.id.charging_enabled:
-                if (checked) {
-                    SharedPreferences.Editor editor = settings.edit();
-                    editor.putString("file", "charging_enabled");
-                    editor.apply();
-                }
-                break;
-            case R.id.battery_charging_enabled:
-                if (checked) {
-                    SharedPreferences.Editor editor = settings.edit();
-                    editor.putString("file", "battery_charging_enabled");
-                    editor.apply();
-                }
-                break;
-            case R.id.batt_slate_mode:
-                if (checked) {
-                    SharedPreferences.Editor editor = settings.edit();
-                    editor.putString("file", "batt_slate_mode");
-                    editor.apply();
-                }
-                break;
+        if (((RadioButton) view).isChecked()) {
+            setCtrlFile(getValidCtrlFiles().get(view.getId()));
         }
     }
 
-    int currentStatus = 1, previouStatus = 1;
+    private SparseIntArray getCtrlFileMapping() {
+        SparseIntArray m = new SparseIntArray();
+        m.put(R.id.batt_slate_mode, R.array.batt_slate_mode);
+        m.put(R.id.store_mode, R.array.store_mode);
+        m.put(R.id.battery_charging_enabled, R.array.battery_charging_enabled);
+        m.put(R.id.charging_enabled, R.array.charging_enabled);
+        return m;
+    }
+
+    private SparseArray<String[]> ctrlFiles = null;
+    private SparseArray<String[]> getValidCtrlFiles() {
+        if (ctrlFiles == null) {
+            Resources res = getResources();
+            SparseIntArray map = getCtrlFileMapping();
+            SparseArray<String[]> modeMap = new SparseArray<>();
+            for (int i = 0; i < map.size(); i++) {
+                String[] mode = res.getStringArray(map.valueAt(i));
+                if (new File(mode[FILE_INDEX]).exists()) {
+                    modeMap.put(map.keyAt(i), mode);
+                }
+            }
+            ctrlFiles = modeMap;
+        }
+        return ctrlFiles;
+    }
+
+    private void updateRadioButtons() {
+        if (settings.getBoolean("enable", false)) {
+            for (int i = 0; i < batteryFile_RadioGroup.getChildCount(); i++) {
+                batteryFile_RadioGroup.getChildAt(i).setEnabled(false);
+            }
+        } else {
+            boolean first = false;
+            SparseArray<String[]> ctrlFiles = getValidCtrlFiles();
+            for (int i = 0; i < batteryFile_RadioGroup.getChildCount(); i++) {
+                RadioButton b = (RadioButton) batteryFile_RadioGroup.getChildAt(i);
+                String[] mode = ctrlFiles.get(b.getId());
+                if (mode == null) {
+                    b.setEnabled(false);
+                } else {
+                    b.setEnabled(true);
+                    String currentCtrlFile = settings.getString(FILE_KEY, "");
+                    b.setChecked(currentCtrlFile.equals(mode[FILE_INDEX]));
+                }
+            }
+        }
+    }
+
+    private void setCtrlFile(String[] mode) {
+        getSharedPreferences("Settings", 0)
+                .edit().putString(FILE_KEY, mode[FILE_INDEX])
+                .putString(CHARGE_ON_KEY, mode[CHARGE_ON_INDEX])
+                .putString(CHARGE_OFF_KEY, mode[CHARGE_OFF_INDEX]).apply();
+    }
 
     //to update battery status on UI
     BroadcastReceiver charging = new BroadcastReceiver() {
+        private int previousStatus = 1;
+
         @Override
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equals(Intent.ACTION_BATTERY_CHANGED)) {
                 //in a function
                 Intent batteryIntent2 = thisContext.registerReceiver(null, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
-                currentStatus = batteryIntent2.getIntExtra(BatteryManager.EXTRA_STATUS, -1);
+                int currentStatus = batteryIntent2.getIntExtra(BatteryManager.EXTRA_STATUS, -1);
                 //in a function
-                if (currentStatus != previouStatus) {
-                    previouStatus = currentStatus;
+                if (currentStatus != previousStatus) {
+                    previousStatus = currentStatus;
                     if (currentStatus == 2) {
                         status_TextView.setText("CHARGING");
                         status_TextView.setTextColor(Color.parseColor("#4CAF50"));
@@ -313,19 +351,4 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onDestroy() {
         super.onDestroy();
     }
-
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        // Handle action bar item clicks here. The action bar will
-//        // automatically handle clicks on the Home/Up button, so long
-//        // as you specify a parent activity in AndroidManifest.xml.
-//        int id = item.getItemId();
-//
-//        //noinspection SimplifiableIfStatement
-//        if (id == R.id.action_settings) {
-//            return true;
-//        }
-//
-//        return super.onOptionsItemSelected(item);
-//    }
 }

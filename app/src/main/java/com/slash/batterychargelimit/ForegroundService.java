@@ -13,20 +13,23 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 
+import static com.slash.batterychargelimit.Constants.LIMIT;
+import static com.slash.batterychargelimit.Constants.RECHARGE_DIFF;
+import static com.slash.batterychargelimit.SharedMethods.CHARGE_OFF;
+import static com.slash.batterychargelimit.SharedMethods.CHARGE_ON;
+
 /**
  * Created by harsha on 30/1/17.
  */
 
 public class ForegroundService extends Service {
-    SharedPreferences settings;
-    Context thisContext = this;
-    int flag = 0, flag2 = 0;
-    Notification notification;
-    NotificationCompat.Builder mNotifyBuilder;
-    NotificationManager mNotificationManager;
-    int notifyID = 1;
-    int limitPercentage;
-    String limit;
+    private SharedPreferences settings;
+    private Context thisContext = this;
+    private int flag = 0, flag2 = 0;
+    private NotificationCompat.Builder mNotifyBuilder;
+    private NotificationManager mNotificationManager;
+    private int notifyID = 1;
+    private String limit;
 
     @Override
     public void onCreate() {
@@ -42,7 +45,7 @@ public class ForegroundService extends Service {
 
         mNotifyBuilder = new NotificationCompat.Builder(this);
         mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        notification = mNotifyBuilder
+        Notification notification = mNotifyBuilder
                 .setContentTitle("Please wait.......")
                 .setContentText("")
 //                .setContentText(getText(R.string.notification_message))
@@ -55,17 +58,10 @@ public class ForegroundService extends Service {
                 mNotifyBuilder.build());
         startForeground(notifyID, notification);
 
-//        if (!settings.contains("limit")) {
-//            editor.putInt("limit", 80);
-//        }
-        limitPercentage = settings.getInt("limit", 80);
-        limit = Integer.toString(limitPercentage);
-
         flag = 0;
         flag2 = 0;
 
-        IntentFilter percentage = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
-        registerReceiver(charging, percentage);
+        registerReceiver(charging, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
     }
 
     @Override//todo on change incerease/decrease auto restart
@@ -74,7 +70,7 @@ public class ForegroundService extends Service {
             //onCreate called if not already started
         }
         else if (intent.getAction().equals("reset")) {
-            SharedMethods.changeState(thisContext, "1");
+            SharedMethods.changeState(thisContext, CHARGE_ON);
             SharedPreferences.Editor editor = settings.edit();
             editor.putBoolean("notificationLive", false);
             editor.apply();
@@ -90,12 +86,15 @@ public class ForegroundService extends Service {
         @Override
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equals(Intent.ACTION_BATTERY_CHANGED)) {
-                limitPercentage = settings.getInt("limit", 80);
+                int limitPercentage = settings.getInt(LIMIT, 80);
+                int rechargePercentage = limitPercentage - settings.getInt(RECHARGE_DIFF, 2);
+
                 if (SharedMethods.getBatteryLevel(thisContext) >= limitPercentage) {
                     if (flag == 0) {
                         flag2 = 1;
-                        SharedMethods.changeState(thisContext, "0");
-                        mNotifyBuilder.setContentTitle("Maintaining " + Integer.toString(limitPercentage - 2) + " - " + Integer.toString(limitPercentage) + " IF plugged");
+                        SharedMethods.changeState(thisContext, CHARGE_OFF);
+                        mNotifyBuilder.setContentTitle("Maintaining " + Integer.toString(rechargePercentage)
+                                + " - " + Integer.toString(limitPercentage) + " IF plugged");
 //                                .setContentText("NOT CHARGING - Click to charge to 100%")
 //                                .addAction(android.R.drawable.something, "Something", resetIntent);
 //                                .setContentIntent(resetIntent);
@@ -107,7 +106,7 @@ public class ForegroundService extends Service {
                     }
                 }
                 else if (flag2 == 0) {
-                    SharedMethods.changeState(thisContext, "1");
+                    SharedMethods.changeState(thisContext, CHARGE_ON);
                     flag2 = 2;
                     flag = 0;
                     mNotifyBuilder.setContentTitle("Waiting until " + limit + "%")
@@ -124,8 +123,8 @@ public class ForegroundService extends Service {
                         thisContext.startService(startIntent2);
                     }
                 }
-                else if ((flag2 == 1 && SharedMethods.getBatteryLevel(thisContext) < limitPercentage - 2)) {
-                    SharedMethods.changeState(thisContext, "1");
+                else if ((flag2 == 1 && SharedMethods.getBatteryLevel(thisContext) < rechargePercentage)) {
+                    SharedMethods.changeState(thisContext, CHARGE_ON);
                     Intent startIntent2 = new Intent(thisContext, ForegroundService.class);
                     startIntent2.setAction("reset");
                     thisContext.startService(startIntent2);
@@ -150,9 +149,6 @@ public class ForegroundService extends Service {
                             }
                         }
                     }, 1000);
-                }
-                else {
-
                 }
             }
         }

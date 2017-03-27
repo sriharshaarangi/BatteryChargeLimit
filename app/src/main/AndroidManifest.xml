@@ -9,8 +9,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
 
-        android:versionCode="3"
-        android:versionName="0.3">
+        android:versionCode="4"
+        android:versionName="0.4">
         >
         <activity
             android:name=".MainActivity"
