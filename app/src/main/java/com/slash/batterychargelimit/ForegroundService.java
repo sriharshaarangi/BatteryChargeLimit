@@ -29,7 +29,6 @@ public class ForegroundService extends Service {
     private NotificationCompat.Builder mNotifyBuilder;
     private NotificationManager mNotificationManager;
     private int notifyID = 1;
-    private String limit;
 
     @Override
     public void onCreate() {
@@ -109,7 +108,7 @@ public class ForegroundService extends Service {
                     SharedMethods.changeState(thisContext, CHARGE_ON);
                     flag2 = 2;
                     flag = 0;
-                    mNotifyBuilder.setContentTitle("Waiting until " + limit + "%")
+                    mNotifyBuilder.setContentTitle("Waiting until " + limitPercentage + "%")
                             .setContentText("");
 //                            .addAction(android.R.drawable.something, "Something", resetIntent);
 //                            .setContentIntent(resetIntent);
@@ -130,7 +129,7 @@ public class ForegroundService extends Service {
                     thisContext.startService(startIntent2);
                     flag2 = 2;
                     flag = 0;
-                    mNotifyBuilder.setContentTitle("Waiting until " + limit + "% IF plugged")
+                    mNotifyBuilder.setContentTitle("Waiting until " + limitPercentage + "% IF plugged")
                             .setContentText("");
 //                                .addAction(android.R.drawable.ic_media_previous, "Previous",
 //                                        resetIntent);
