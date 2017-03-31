@@ -13,8 +13,7 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 
-import static com.slash.batterychargelimit.Constants.LIMIT;
-import static com.slash.batterychargelimit.Constants.RECHARGE_DIFF;
+import static com.slash.batterychargelimit.Constants.*;
 import static com.slash.batterychargelimit.SharedMethods.CHARGE_OFF;
 import static com.slash.batterychargelimit.SharedMethods.CHARGE_ON;
 
@@ -29,28 +28,28 @@ public class ForegroundService extends Service {
     private NotificationCompat.Builder mNotifyBuilder;
     private NotificationManager mNotificationManager;
     private int notifyID = 1;
+    private static boolean ignoreAutoReset = false;
+
+    static void ignoreAutoReset() {
+        ignoreAutoReset = true;
+    }
 
     @Override
     public void onCreate() {
         notifyID = 1;
-        settings = thisContext.getSharedPreferences("Settings", 0);
-        SharedPreferences.Editor editor = settings.edit();
-        editor.putBoolean("notificationLive", true);
-        editor.apply();
+        settings = this.getSharedPreferences(SETTINGS, 0);
+        settings.edit().putBoolean(NOTIFICATION_LIVE, true).apply();
 
         Intent notificationIntent = new Intent(this, MainActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
 
-
         mNotifyBuilder = new NotificationCompat.Builder(this);
         mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         Notification notification = mNotifyBuilder
-                .setContentTitle("Please wait.......")
+                .setContentTitle(getString(R.string.please_wait))
                 .setContentText("")
-//                .setContentText(getText(R.string.notification_message))
                 .setSmallIcon(R.drawable.bcl_n)
                 .setContentIntent(pendingIntent)
-//                .setTicker(getText(R.string.ticker_text))
                 .build();
         mNotificationManager.notify(
                 notifyID,
@@ -63,25 +62,7 @@ public class ForegroundService extends Service {
         registerReceiver(charging, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
     }
 
-    @Override//todo on change incerease/decrease auto restart
-    public int onStartCommand(Intent intent, int flags, int startId) {
-        if (intent.getAction().equals("connected")) {
-            //onCreate called if not already started
-        }
-        else if (intent.getAction().equals("reset")) {
-            SharedMethods.changeState(thisContext, CHARGE_ON);
-            SharedPreferences.Editor editor = settings.edit();
-            editor.putBoolean("notificationLive", false);
-            editor.apply();
-            unregisterReceiver(charging);
-
-            stopForeground(true);
-            stopSelf();
-        }
-        return START_NOT_STICKY;
-    }
-
-    BroadcastReceiver charging = new BroadcastReceiver() {
+    private BroadcastReceiver charging = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equals(Intent.ACTION_BATTERY_CHANGED)) {
@@ -92,59 +73,34 @@ public class ForegroundService extends Service {
                     if (flag == 0) {
                         flag2 = 1;
                         SharedMethods.changeState(thisContext, CHARGE_OFF);
-                        mNotifyBuilder.setContentTitle("Maintaining " + Integer.toString(rechargePercentage)
-                                + " - " + Integer.toString(limitPercentage) + " IF plugged");
-//                                .setContentText("NOT CHARGING - Click to charge to 100%")
-//                                .addAction(android.R.drawable.something, "Something", resetIntent);
-//                                .setContentIntent(resetIntent);
-                        mNotificationManager.notify(
-                                notifyID,
-                                mNotifyBuilder.build());
+                        mNotifyBuilder.setContentTitle(getString(R.string.maintaining_x_to_y,
+                                rechargePercentage, limitPercentage));
+                        mNotificationManager.notify(notifyID, mNotifyBuilder.build());
                         flag = 1;
-
                     }
-                }
-                else if (flag2 == 0) {
+                } else if (flag2 == 0) {
                     SharedMethods.changeState(thisContext, CHARGE_ON);
                     flag2 = 2;
                     flag = 0;
-                    mNotifyBuilder.setContentTitle("Waiting until " + limitPercentage + "%")
-                            .setContentText("");
-//                            .addAction(android.R.drawable.something, "Something", resetIntent);
-//                            .setContentIntent(resetIntent);
-                    mNotificationManager.notify(
-                            notifyID,
-                            mNotifyBuilder.build());
+                    mNotifyBuilder.setContentTitle(getString(R.string.waiting_until_x, limitPercentage)).setContentText("");
+                    mNotificationManager.notify(notifyID, mNotifyBuilder.build());
 
-                    if (!SharedMethods.isPhonePluggedIn(thisContext)) {//todo IMP
-                        Intent startIntent2 = new Intent(thisContext, ForegroundService.class);
-                        startIntent2.setAction("reset");//disconnected
-                        thisContext.startService(startIntent2);
+                    if (!SharedMethods.isPhonePluggedIn(thisContext)) {
+                        thisContext.stopService(new Intent(thisContext, ForegroundService.class));
                     }
-                }
-                else if ((flag2 == 1 && SharedMethods.getBatteryLevel(thisContext) < rechargePercentage)) {
+                } else if ((flag2 == 1 && SharedMethods.getBatteryLevel(thisContext) < rechargePercentage)) {
                     SharedMethods.changeState(thisContext, CHARGE_ON);
-                    Intent startIntent2 = new Intent(thisContext, ForegroundService.class);
-                    startIntent2.setAction("reset");
-                    thisContext.startService(startIntent2);
+                    thisContext.stopService(new Intent(thisContext, ForegroundService.class));
                     flag2 = 2;
                     flag = 0;
-                    mNotifyBuilder.setContentTitle("Waiting until " + limitPercentage + "% IF plugged")
-                            .setContentText("");
-//                                .addAction(android.R.drawable.ic_media_previous, "Previous",
-//                                        resetIntent);
-//                            .setContentIntent(resetIntent);
-                    mNotificationManager.notify(
-                            notifyID,
-                            mNotifyBuilder.build());
+                    mNotifyBuilder.setContentTitle(getString(R.string.waiting_until_x_plugged, limitPercentage)).setContentText("");
+                    mNotificationManager.notify(notifyID, mNotifyBuilder.build());
                     final Handler handler = new Handler();
                     handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
                             if (SharedMethods.isPhonePluggedIn(thisContext)) {
-                                Intent startIntent3 = new Intent(thisContext, ForegroundService.class);
-                                startIntent3.setAction("connected");
-                                thisContext.startService(startIntent3);
+                                thisContext.startService(new Intent(thisContext, ForegroundService.class));
                             }
                         }
                     }, 1000);
@@ -155,12 +111,22 @@ public class ForegroundService extends Service {
 
     @Override
     public void onDestroy() {
+        if (!ignoreAutoReset && settings.getBoolean(AUTO_RESET_STATS, false)
+                && SharedMethods.getBatteryLevel(this)
+                > settings.getInt(LIMIT, 80) - settings.getInt(RECHARGE_DIFF, 2)) {
+            SharedMethods.resetBatteryStats(this);
+        }
+        ignoreAutoReset = false;
+
+        SharedMethods.changeState(thisContext, CHARGE_ON);
+        settings.edit().putBoolean(NOTIFICATION_LIVE, false).apply();
+        unregisterReceiver(charging);
+
         super.onDestroy();
     }
 
     @Override
     public IBinder onBind(Intent intent) {
-        // Used only in case of bound services.
         return null;
     }
 }

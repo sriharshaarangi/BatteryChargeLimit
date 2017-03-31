@@ -1,24 +1,53 @@
 <resources>
     <string name="app_name">Battery Charge Limit</string>
     <string name="action_settings">Settings</string>
+    <string name="enable">Enable </string>
+    <string name="limit_from_to">Limit (between 40 and 99): </string>
+    <string name="status">Status: </string>
+    <string name="select_file">Select file: </string>
+    <string name="auto_reset_stats">Automatically reset battery stats</string>
+    <string name="reset_stats">Reset Battery Stats</string>
+
     <string name="previously_started">Previously Started</string>
+    <string name="device_not_supported">Your device is not supported (yet)!</string>
+    <string name="ok">OK</string>
+    <string name="recharge_below">Recharge below %1$d%%</string>
+
+    <string name="charging">CHARGING</string>
+    <string name="discharging">DISCHARGING</string>
+    <string name="full">FULL</string>
+    <string name="not_charging">NOT CHARGING</string>
+    <string name="unknown">UNKOWN</string>
+
+    <string name="please_wait">Please wait…</string>
+    <string name="maintaining_x_to_y">Maintaining %1$d%% - %2$d%% IF plugged"</string>
+    <string name="waiting_until_x">Waiting until %1$d%%</string>
+    <string name="waiting_until_x_plugged">Waiting until %1$d%% IF plugged</string>
+
+    <string name="root_denied">App is denied ROOT access</string>
+    <string name="stats_reset_success">Battery Stats reset successful</string>
+
     <string-array name="store_mode">
         <item>/sys/class/power_supply/battery/store_mode</item>
+        <item>store_mode (Samsung Note)</item>
         <item>0</item>
         <item>1</item>
     </string-array>
     <string-array name="batt_slate_mode">
         <item>/sys/class/power_supply/battery/batt_slate_mode</item>
+        <item>batt_slate_mode (Samsung)</item>
         <item>0</item>
         <item>1</item>
     </string-array>
     <string-array name="battery_charging_enabled">
         <item>/sys/class/power_supply/battery/battery_charging_enabled</item>
+        <item>battery_charging_enabled (Nexus/Pixel)</item>
         <item>1</item>
         <item>0</item>
     </string-array>
     <string-array name="charging_enabled">
         <item>/sys/class/power_supply/battery/charging_enabled</item>
+        <item>charging_enabled (Generic)</item>
         <item>1</item>
         <item>0</item>
     </string-array>

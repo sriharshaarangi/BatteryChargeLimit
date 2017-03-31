@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 
+import static com.slash.batterychargelimit.Constants.*;
+
 /**
  * Created by harsha on 30/1/17.
  */
@@ -12,24 +14,17 @@ import android.content.SharedPreferences;
 public class PowerConnectionReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         String action = intent.getAction();
-        SharedPreferences settings = context.getSharedPreferences("Settings", 0);
-        boolean en = settings.getBoolean("enable", false);
+        SharedPreferences settings = context.getSharedPreferences(SETTINGS, 0);
+        boolean en = settings.getBoolean(ENABLE, false);
         if (en) {
             if (action.equals(Intent.ACTION_POWER_CONNECTED)) {
-                Intent startIntent = new Intent(context, ForegroundService.class);
-                startIntent.setAction("connected");
-                context.startService(startIntent);
-            }
-            else if (action.equals(Intent.ACTION_POWER_DISCONNECTED)) {
-                Boolean isLimitReached = settings.getBoolean("limitReached", false);
-                if (isLimitReached) {
-                    SharedPreferences.Editor editor = settings.edit();
-                    editor.putBoolean("limitReached", false);
-                    editor.apply();
+                context.startService(new Intent(context, ForegroundService.class));
+            } else if (action.equals(Intent.ACTION_POWER_DISCONNECTED)) {
+                long limitReached = settings.getLong(LIMIT_REACHED, -1);
+                if (limitReached > 0 && limitReached > System.currentTimeMillis() - UNPLUG_TOLERANCE) {
+                    settings.edit().putLong(LIMIT_REACHED, -1).apply();
                 } else {
-                    Intent startIntent = new Intent(context, ForegroundService.class);
-                    startIntent.setAction("reset");
-                    context.startService(startIntent);
+                    context.stopService(new Intent(context, ForegroundService.class));
                 }
             }
         }
