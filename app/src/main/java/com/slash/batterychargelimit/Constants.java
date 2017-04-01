@@ -24,9 +24,6 @@ public abstract class Constants {
     public static String ENABLE = "enable";
     public static String NOTIFICATION_LIVE = "notificationLive";
     public static String AUTO_RESET_STATS = "auto_reset_stats";
-//
-//    public static String ACTION_RESET = "reset";
-//    public static String ACTION_CONNECTED = "connected";
 
     // ms after reaching limit, where the "unplug" event is recognized as power cut instead of action unplugging
     public static long UNPLUG_TOLERANCE = 1000;

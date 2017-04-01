@@ -22,7 +22,6 @@
     <string name="please_wait">Please wait…</string>
     <string name="maintaining_x_to_y">Maintaining %1$d%% - %2$d%% IF plugged"</string>
     <string name="waiting_until_x">Waiting until %1$d%%</string>
-    <string name="waiting_until_x_plugged">Waiting until %1$d%% IF plugged</string>
 
     <string name="root_denied">App is denied ROOT access</string>
     <string name="stats_reset_success">Battery Stats reset successful</string>

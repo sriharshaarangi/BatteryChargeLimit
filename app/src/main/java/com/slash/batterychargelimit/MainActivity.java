@@ -19,9 +19,6 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.*;
 
-import java.io.File;
-import java.util.ResourceBundle;
-
 import static com.slash.batterychargelimit.Constants.*;
 import static com.slash.batterychargelimit.SharedMethods.CHARGE_ON;
 
@@ -87,8 +84,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 case 4:
                     if (settings.contains(LIMIT_REACHED)) {
-                        settings.edit().putLong(LIMIT_REACHED, settings.getBoolean(LIMIT_REACHED, false)
-                                ? System.currentTimeMillis() : -1).apply();
+                        settings.edit().remove(LIMIT_REACHED).apply();
                     }
                 case 5:
                     // settings upgrade for future version(s)
@@ -182,31 +178,16 @@ public class MainActivity extends AppCompatActivity {
     //oncheckedchangelistener for switches
     private CompoundButton.OnCheckedChangeListener switchListener = new CompoundButton.OnCheckedChangeListener() {
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-            enable_Switch.setEnabled(false);
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    enable_Switch.setEnabled(true);
-                }
-            }, 500);
-
             if (isChecked) {
                 // reset TextView content to valid number
                 limit_TextView.setText(String.valueOf(settings.getInt(LIMIT, 80)));
 
                 if (SharedMethods.isPhonePluggedIn(thisContext)) {
-                    if (SharedMethods.getBatteryLevel(thisContext) >= settings.getInt(LIMIT, 80)) {
-                        settings.edit().putLong(LIMIT_REACHED, System.currentTimeMillis()).apply();
-                    }
-                    //todo even when disconnected
                     thisContext.startService(new Intent(thisContext, ForegroundService.class));
                 }
             } else {
-                if (settings.getBoolean(NOTIFICATION_LIVE, false)) {
-                    //todo even when disconnected
-                    ForegroundService.ignoreAutoReset();
-                    thisContext.stopService(new Intent(thisContext, ForegroundService.class));
-                }
+                ForegroundService.ignoreAutoReset();
+                thisContext.stopService(new Intent(thisContext, ForegroundService.class));
                 SharedMethods.changeState(thisContext, CHARGE_ON);
             }
 
@@ -315,18 +296,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
-
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-
-    }
-
-    @Override
     public void onStop() {
         super.onStop();
         unregisterReceiver(charging);
@@ -336,10 +305,5 @@ public class MainActivity extends AppCompatActivity {
     public void onRestart() {
         super.onRestart();
         registerReceiver(charging, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
     }
 }
