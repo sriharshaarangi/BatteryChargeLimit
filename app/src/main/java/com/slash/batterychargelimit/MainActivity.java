@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.util.SparseArray;
 import android.util.SparseIntArray;
 import android.view.Menu;
@@ -64,7 +65,8 @@ public class MainActivity extends AppCompatActivity {
                     SparseArray<ControlFile> modes = getValidCtrlFiles();
                     boolean found = false;
                     for (int i = 0; i < modes.size() && !found; i++) {
-                        if (modes.get(i).valid) {
+                        int key = modes.keyAt(i);
+                        if (modes.get(key).valid) {
                             setCtrlFile(modes.valueAt(i));
                             found = true;
                         }
