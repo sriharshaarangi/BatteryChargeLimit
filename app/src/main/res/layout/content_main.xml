@@ -12,48 +12,77 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.slash.batterychargelimit.MainActivity"
     tools:showIn="@layout/activity_main">
-<RelativeLayout
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:id="@+id/rel"
-    android:layout_below="@+id/button1">
-    <TextView
-        android:layout_width="wrap_content"
+
+    <Switch
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/limit_TextView"
+        android:text="@string/enable"
         android:textSize="16sp"
-        android:layout_centerVertical="true"
-        android:textColor="@android:color/black"
-        android:text="Limit(between 40 and 99): " />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/limit_TextView"
-        android:layout_margin="8dp"
-        android:padding="8dp"
-        android:id="@+id/limit_EditText"
-        android:textSize="16sp"
-        android:layout_centerVertical="true"
-        android:inputType="number"
-        android:text="80"
-        android:background="@drawable/textbox"
-        />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Change"
-        android:id="@+id/changeLimitButton"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:layout_marginBottom="16dp"/>
-
-    </RelativeLayout>
+        android:id="@+id/button1"
+        android:layout_centerHorizontal="true" />
 
     <RelativeLayout
         android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/rel"
+        android:layout_below="@+id/button1">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/limit_TextView"
+            android:textSize="16sp"
+            android:layout_centerVertical="true"
+            android:textColor="@android:color/black"
+            android:text="@string/limit_from_to" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:minWidth="100dp"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/limit_TextView"
+            android:layout_margin="8dp"
+            android:padding="8dp"
+            android:id="@+id/limit_EditText"
+            android:textSize="16sp"
+            android:textAlignment="viewEnd"
+            android:layout_centerVertical="true"
+            android:inputType="number"
+            android:background="@drawable/textbox" />
+
+    </RelativeLayout>
+
+    <LinearLayout
         android:layout_below="@+id/rel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="8dp"
+        android:id="@+id/ran_rel">
+
+        <SeekBar
+            android:id="@+id/range_bar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingEnd="30dp"
+            android:paddingStart="10dp"
+            android:max="10"
+            android:progress="2" />
+
+        <TextView
+            android:id="@+id/range_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/black"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_below="@+id/ran_rel"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:id="@+id/stat">
@@ -61,36 +90,26 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"
             android:id="@+id/cstatus"
-            android:text="Status: "
+            android:text="@string/status"
             android:textColor="@android:color/black"
-            android:textSize="16sp"
-            />
+            android:textSize="16sp" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/status"
-            android:layout_toRightOf="@+id/cstatus"
-            android:text="UNKNOWN"
-            android:textSize="16sp"
-            />
+            android:layout_toEndOf="@+id/cstatus"
+            android:textSize="16sp" />
 
     </RelativeLayout>
 
-    <Switch
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Enable "
-        android:textSize="16sp"
-        android:id="@+id/button1"
-        android:layout_centerHorizontal="true"
-
-        />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/stat"
-        android:text="Select file: "
+        android:text="@string/select_file"
         android:id="@+id/file"
         android:textSize="16sp"
         android:textColor="@android:color/black"
@@ -101,40 +120,50 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-
-        >
-        <RadioButton
-            android:id="@+id/charging_enabled"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="charging_enabled"
-            android:onClick="onRadioButtonClicked">
-        </RadioButton>
+        android:layout_marginBottom="16dp">
         <RadioButton
             android:id="@+id/battery_charging_enabled"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="battery_charging_enabled (Nexus/Pixel)"
+            android:onClick="onRadioButtonClicked">
+        </RadioButton>
+        <RadioButton
+            android:id="@+id/charging_enabled"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:onClick="onRadioButtonClicked">
         </RadioButton>
         <RadioButton
             android:id="@+id/batt_slate_mode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="batt_slate_mode (Samsung)"
             android:onClick="onRadioButtonClicked">
         </RadioButton>
-
+        <RadioButton
+            android:id="@+id/store_mode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onRadioButtonClicked">
+        </RadioButton>
     </RadioGroup>
+
+    <Switch
+        android:id="@+id/auto_stats_reset"
+        android:layout_below="@+id/rgOpinion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/auto_reset_stats"
+        android:textSize="14sp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="16dp" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="reset battery stats"
+        android:text="@string/reset_stats"
         android:id="@+id/reset_battery_stats"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="16dp"
-        android:layout_below="@+id/rgOpinion"/>
-
+        android:layout_below="@+id/auto_stats_reset" />
 
 </RelativeLayout>

@@ -9,8 +9,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
 
-        android:versionCode="3"
-        android:versionName="0.3">
+        android:versionCode="5"
+        android:versionName="0.5">
         >
         <activity
             android:name=".MainActivity"
@@ -18,36 +18,14 @@
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <!--<receiver android:name=".receiver.PlugInControlReceiver">-->
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.ACTION_POWER_CONNECTED" />-->
-                <!--<action android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />-->
-            <!--</intent-filter>-->
-        <!--</receiver>-->
         <receiver android:name=".PowerConnectionReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.ACTION_POWER_CONNECTED"/>
-
-
-
                 <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED"/>
-                <!--<action android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED" />-->
-
-
-
-                <!--&lt;!&ndash;<action android:name="android.intent.action.ACTION_"/>&ndash;&gt;-->
-                <!--<action android:name="android.hardware.usb.action.USB_DEVICE_DETACHED" />-->
             </intent-filter>
-            <!--<meta-data-->
-                <!--android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED"-->
-                <!--android:resource="@xml/device_filter" />-->
-            <!--<meta-data-->
-                <!--android:name="android.hardware.usb.action.USB_DEVICE_DETACHED"-->
-                <!--android:resource="@xml/device_filter" />-->
         </receiver>
 
         <service android:name="com.slash.batterychargelimit.ForegroundService" >
