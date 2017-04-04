@@ -8,6 +8,7 @@ import android.os.BatteryManager;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -281,7 +282,7 @@ public class MainActivity extends AppCompatActivity {
                 previousStatus = currentStatus;
                 if (currentStatus == BatteryManager.BATTERY_STATUS_CHARGING) {
                     status_TextView.setText(R.string.charging);
-                    status_TextView.setTextColor(R.color.darkGreen);
+                    status_TextView.setTextColor(ContextCompat.getColor(MainActivity.this, R.color.darkGreen));
                 } else if (currentStatus == BatteryManager.BATTERY_STATUS_DISCHARGING) {
                     status_TextView.setText(R.string.discharging);
                     status_TextView.setTextColor(Color.DKGRAY);
