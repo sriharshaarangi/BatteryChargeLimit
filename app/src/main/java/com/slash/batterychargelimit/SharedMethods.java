@@ -61,13 +61,6 @@ public class SharedMethods {
                 || batteryIntent.getIntExtra(BatteryManager.EXTRA_PLUGGED, -1) > 0;
     }
 
-    public static void toastMessage(Context context, String message) {
-        Toast.makeText(context, message, Toast.LENGTH_LONG).show();
-    }
-    public static void toastMessage(Context context, @StringRes int messageRes) {
-        Toast.makeText(context, messageRes, Toast.LENGTH_LONG).show();
-    }
-
     public static int getBatteryLevel(Context context) {
         Intent batteryIntent = context.registerReceiver(null, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
         return getBatteryLevel(batteryIntent);
@@ -84,6 +77,6 @@ public class SharedMethods {
 
     public static void resetBatteryStats(Context context){
         Shell.SU.run("dumpsys batterystats --reset");
-        toastMessage(context, R.string.stats_reset_success);
+        Toast.makeText(context, R.string.stats_reset_success, Toast.LENGTH_LONG).show();
     }
 }
