@@ -22,11 +22,13 @@ public class BatteryReceiver extends BroadcastReceiver {
     private boolean chargedToLimit = false;
     private int lastState = -1;
     private ForegroundService service;
-    private SharedPreferences settings;
+    private int limitPercentage, rechargePercentage;
 
     BatteryReceiver(ForegroundService service) {
         this.service = service;
-        this.settings = service.getSharedPreferences(SETTINGS, 0);
+        SharedPreferences settings = service.getSharedPreferences(SETTINGS, 0);
+        limitPercentage = settings.getInt(LIMIT, 80);
+        rechargePercentage = limitPercentage - settings.getInt(RECHARGE_DIFF, 2);
     }
 
     /**
@@ -43,8 +45,6 @@ public class BatteryReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, final Intent intent) {
-        int limitPercentage = settings.getInt(LIMIT, 80);
-        int rechargePercentage = limitPercentage - settings.getInt(RECHARGE_DIFF, 2);
         int batteryLevel = SharedMethods.getBatteryLevel(intent);
 
         // when the service was "freshly started", charge until limit

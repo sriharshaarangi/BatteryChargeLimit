@@ -1,9 +1,7 @@
 package com.slash.batterychargelimit;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
+import android.content.*;
+import android.os.IBinder;
 
 import static com.slash.batterychargelimit.Constants.*;
 import static com.slash.batterychargelimit.SharedMethods.CHARGE_ON;
@@ -13,7 +11,7 @@ import static com.slash.batterychargelimit.SharedMethods.CHARGE_ON;
  */
 
 public class PowerConnectionReceiver extends BroadcastReceiver {
-    public void onReceive(Context context, Intent intent) {
+    public void onReceive(final Context context, Intent intent) {
         SharedPreferences settings = context.getSharedPreferences(SETTINGS, 0);
         if (settings.getBoolean(ENABLE, false)) {
             String action = intent.getAction();

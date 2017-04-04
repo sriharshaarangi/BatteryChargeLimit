@@ -4,18 +4,11 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.content.SharedPreferences;
-import android.os.Handler;
+import android.content.*;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 
 import static com.slash.batterychargelimit.Constants.*;
-import static com.slash.batterychargelimit.SharedMethods.CHARGE_OFF;
-import static com.slash.batterychargelimit.SharedMethods.CHARGE_ON;
 
 /**
  * Created by harsha on 30/1/17.
@@ -57,7 +50,7 @@ public class ForegroundService extends Service {
         startForeground(notifyID, notification);
 
         // create and register the receiver for the battery change events
-        batteryReceiver = new BatteryReceiver(this);
+        batteryReceiver = new BatteryReceiver(ForegroundService.this);
         registerReceiver(batteryReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
     }
 
@@ -76,6 +69,7 @@ public class ForegroundService extends Service {
         ignoreAutoReset = false;
 
         settings.edit().putBoolean(NOTIFICATION_LIVE, false).apply();
+        // unregister the battery event receiver
         unregisterReceiver(batteryReceiver);
 
         super.onDestroy();

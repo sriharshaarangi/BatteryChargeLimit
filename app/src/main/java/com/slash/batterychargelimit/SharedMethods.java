@@ -7,15 +7,11 @@ import android.content.SharedPreferences;
 import android.os.BatteryManager;
 import android.support.annotation.StringRes;
 import android.widget.Toast;
+import eu.chainfire.libsuperuser.Shell;
 
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
 
 import static com.slash.batterychargelimit.Constants.*;
-import static com.slash.batterychargelimit.Constants.CHARGE_OFF_INDEX;
-import static com.slash.batterychargelimit.Constants.CHARGE_OFF_KEY;
 
 /**
  * Created by harsha on 17/3/17.
@@ -26,50 +22,31 @@ public class SharedMethods {
     public static int CHARGE_ON = 0;
     public static int CHARGE_OFF = 1;
 
+    public static boolean checkFile(String path) {
+        return "0".equals(Shell.SU.run(new String[] {"stat " + path + " >/dev/null", "echo $?"}).get(0));
+    }
+
     public static void changeState(Context context, int chargeMode) {
         SharedPreferences settings = context.getSharedPreferences(SETTINGS, 0);
-        try {
-            // Preform su to get root privledges
-            final Process p = Runtime.getRuntime().exec("su");
-            String file = settings.getString(Constants.FILE_KEY,
-                    "/sys/class/power_supply/battery/charging_enabled") + "\n";
-            String newState;
-            if (chargeMode == CHARGE_ON) {
-                newState = settings.getString(Constants.CHARGE_ON_KEY, "1");
-            } else {
-                newState = settings.getString(Constants.CHARGE_OFF_KEY, "0");
+        String file = settings.getString(Constants.FILE_KEY,
+                "/sys/class/power_supply/battery/charging_enabled");
+
+        String newState;
+        if (chargeMode == CHARGE_ON) {
+            newState = settings.getString(Constants.CHARGE_ON_KEY, "1");
+        } else {
+            newState = settings.getString(Constants.CHARGE_OFF_KEY, "0");
+        }
+
+        String recentState = Shell.SU.run("cat " + file).get(0);
+        if (!recentState.equals(newState)) {
+            if (chargeMode == CHARGE_OFF) {
+                settings.edit().putLong(LIMIT_REACHED, System.currentTimeMillis()).apply();
             }
-            // open auto-closing streams (try-with-resources)
-            try (DataOutputStream os = new DataOutputStream(p.getOutputStream());
-                    BufferedReader bf = new BufferedReader(new InputStreamReader(p.getInputStream()))) {
-                os.writeBytes("cat " + file);
-                os.flush();
-                String recentState = bf.readLine();
-//                os.writeBytes("echo \"Do I have root?\" >/system/sd/temporary.txt\n");
-                if (!recentState.equals(newState)) {
-                    if (chargeMode == CHARGE_OFF) {
-                        settings.edit().putLong(LIMIT_REACHED, System.currentTimeMillis()).apply();
-                    }
-                    os.writeBytes("mount -o rw,remount " + file);
-                    os.writeBytes("echo " + newState + " > " + file);
-                }
-//                os.writeBytes("mount -o ro,remount /sys/class/power_supply/battery/charging_enabled\n");
-                os.writeBytes("exit\n");
-                os.flush();
-                try {
-                    p.waitFor();
-//                    if (p.exitValue() != 255) {
-//                        //Code to run on success
-//                    } else {
-//                        //Code to run on unsuccessful
-//                    }
-                } catch (InterruptedException e) {
-                    //Code to run in interrupted exception
-                }
-            }
-        } catch (IOException e) {
-            //Code to run in input/output exception
-            toastMessage(context, R.string.root_denied);
+            Shell.SU.run(new String[] {
+                    "mount -o rw,remount " + file,
+                    "echo " + newState + " > " + file
+            });
         }
     }
 
@@ -106,26 +83,7 @@ public class SharedMethods {
     }
 
     public static void resetBatteryStats(Context context){
-        try {
-            final Process p = Runtime.getRuntime().exec("su");
-            DataOutputStream os = new DataOutputStream(p.getOutputStream());
-            os.writeBytes("dumpsys batterystats --reset\n");
-            os.flush();
-            toastMessage(context, R.string.stats_reset_success);
-        }
-        catch (IOException e) {
-            toastMessage(context, R.string.root_denied);
-        }
-    }
-    public static void whitlelist(Context context){
-        try {
-            final Process p = Runtime.getRuntime().exec("su");
-            DataOutputStream os = new DataOutputStream(p.getOutputStream());
-            os.writeBytes("dumpsys deviceidle whitelist +com.slash.batterychargelimit");
-            os.flush();
-        }
-        catch (IOException e) {
-            toastMessage(context, R.string.root_denied);
-        }
+        Shell.SU.run("dumpsys batterystats --reset");
+        toastMessage(context, R.string.stats_reset_success);
     }
 }

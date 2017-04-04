@@ -24,7 +24,10 @@
     <string name="waiting_until_x">Waiting until %1$d%%</string>
 
     <string name="root_denied">App is denied ROOT access</string>
+    <string name="shell_close_error">Error while closing root shell</string>
     <string name="stats_reset_success">Battery Stats reset successful</string>
+    <string name="stats_reset_error">Error while resetting stats</string>
+    <string name="whitelist_error">Error while whitelisting App for Doze Mode</string>
 
     <string-array name="store_mode">
         <item>/sys/class/power_supply/battery/store_mode</item>

@@ -6,7 +6,7 @@ import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.BatteryManager;
 import android.os.Bundle;
-import android.os.Handler;
+import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -18,6 +18,9 @@ import android.util.SparseIntArray;
 import android.view.Menu;
 import android.view.View;
 import android.widget.*;
+import eu.chainfire.libsuperuser.Shell;
+
+import java.io.IOException;
 
 import static com.slash.batterychargelimit.Constants.*;
 import static com.slash.batterychargelimit.SharedMethods.CHARGE_ON;
@@ -25,7 +28,6 @@ import static com.slash.batterychargelimit.SharedMethods.CHARGE_ON;
 public class MainActivity extends AppCompatActivity {
     private SeekBar rangeBar;
     private TextView rangeText;
-    private Switch enable_Switch;
     private TextView status_TextView;
     private EditText limit_TextView;
     private SharedPreferences settings;
@@ -48,7 +50,9 @@ public class MainActivity extends AppCompatActivity {
                     .putInt(LIMIT, 80)
                     .putBoolean(LIMIT_REACHED, false)
                     .putBoolean(ENABLE, false).apply();
-            SharedMethods.whitlelist(thisContext);
+
+            // whitelist App for Doze Mode
+            Shell.SU.run("dumpsys deviceidle whitelist +com.slash.batterychargelimit");
         }
 
         int settingsVersion = prefs.getInt(SETTINGS_VERSION, 0);
@@ -61,16 +65,17 @@ public class MainActivity extends AppCompatActivity {
         if (settingsVersion < versionCode) {
             switch(settingsVersion) {
                 case 0:
-                    SparseArray<ControlFile> modes = getValidCtrlFiles();
+                    SparseArray<ControlFile> modes = getCtrlFiles();
                     boolean found = false;
                     for (int i = 0; i < modes.size() && !found; i++) {
-                        if (modes.get(i).valid) {
-                            setCtrlFile(modes.valueAt(i));
+                        ControlFile cf = modes.valueAt(i);
+                        if (cf.valid) {
+                            setCtrlFile(cf);
                             found = true;
                         }
                     }
                     if (!found) {
-                        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                         builder.setMessage(R.string.device_not_supported)
                                 .setCancelable(false)
                                 .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
@@ -101,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
         }//notif is 1!
 
         batteryFile_RadioGroup = (RadioGroup) findViewById(R.id.rgOpinion);
-        enable_Switch = (Switch) findViewById(R.id.button1);
+        final Switch enable_Switch = (Switch) findViewById(R.id.button1);
         limit_TextView = (EditText) findViewById(R.id.limit_EditText);
         status_TextView = (TextView) findViewById(R.id.status);
         final Button resetBatteryStats_Button = (Button) findViewById(R.id.reset_battery_stats);
@@ -166,7 +171,6 @@ public class MainActivity extends AppCompatActivity {
                 SharedMethods.resetBatteryStats(thisContext);
             }
         });
-        registerReceiver(charging, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
         autoResetSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -205,7 +209,7 @@ public class MainActivity extends AppCompatActivity {
      */
     public void onRadioButtonClicked(View view) {
         if (((RadioButton) view).isChecked()) {
-            setCtrlFile(getValidCtrlFiles().get(view.getId()));
+            setCtrlFile(getCtrlFiles().get(view.getId()));
         }
     }
 
@@ -219,7 +223,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private SparseArray<ControlFile> ctrlFiles = null;
-    private SparseArray<ControlFile> getValidCtrlFiles() {
+    private SparseArray<ControlFile> getCtrlFiles() {
         if (ctrlFiles == null) {
             Resources res = getResources();
             SparseIntArray map = getCtrlFileMapping();
@@ -234,7 +238,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void updateRadioButtons(boolean init) {
-        SparseArray<ControlFile> ctrlFiles = getValidCtrlFiles();
+        SparseArray<ControlFile> ctrlFiles = getCtrlFiles();
         String currentCtrlFile = settings.getString(FILE_KEY, "");
         boolean isEnabled = settings.getBoolean(ENABLE, false);
         for (int i = 0; i < batteryFile_RadioGroup.getChildCount(); i++) {
@@ -262,27 +266,22 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            if (intent.getAction().equals(Intent.ACTION_BATTERY_CHANGED)) {
-                //in a function
-                Intent batteryIntent2 = thisContext.registerReceiver(null,
-                        new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
-                int currentStatus = batteryIntent2.getIntExtra(BatteryManager.EXTRA_STATUS, -1);
-                //in a function
-                if (currentStatus != previousStatus) {
-                    previousStatus = currentStatus;
-                    if (currentStatus == BatteryManager.BATTERY_STATUS_CHARGING) {
-                        status_TextView.setText(R.string.charging);
-                        status_TextView.setTextColor(R.color.darkGreen);
-                    } else if (currentStatus == BatteryManager.BATTERY_STATUS_DISCHARGING) {
-                        status_TextView.setText(R.string.discharging);
-                        status_TextView.setTextColor(Color.DKGRAY);
-                    } else if (currentStatus == BatteryManager.BATTERY_STATUS_FULL) {
-                        status_TextView.setText(R.string.full);
-                    } else if (currentStatus == BatteryManager.BATTERY_STATUS_NOT_CHARGING) {
-                        status_TextView.setText(R.string.not_charging);
-                    } else if (currentStatus == BatteryManager.BATTERY_STATUS_UNKNOWN) {
-                        status_TextView.setText(R.string.unknown);
-                    }
+            int currentStatus = intent.getIntExtra(BatteryManager.EXTRA_STATUS, -1);
+            //in a function
+            if (currentStatus != previousStatus) {
+                previousStatus = currentStatus;
+                if (currentStatus == BatteryManager.BATTERY_STATUS_CHARGING) {
+                    status_TextView.setText(R.string.charging);
+                    status_TextView.setTextColor(R.color.darkGreen);
+                } else if (currentStatus == BatteryManager.BATTERY_STATUS_DISCHARGING) {
+                    status_TextView.setText(R.string.discharging);
+                    status_TextView.setTextColor(Color.DKGRAY);
+                } else if (currentStatus == BatteryManager.BATTERY_STATUS_FULL) {
+                    status_TextView.setText(R.string.full);
+                } else if (currentStatus == BatteryManager.BATTERY_STATUS_NOT_CHARGING) {
+                    status_TextView.setText(R.string.not_charging);
+                } else if (currentStatus == BatteryManager.BATTERY_STATUS_UNKNOWN) {
+                    status_TextView.setText(R.string.unknown);
                 }
             }
         }
@@ -297,13 +296,13 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onStop() {
-        super.onStop();
         unregisterReceiver(charging);
+        super.onStop();
     }
 
     @Override
-    public void onRestart() {
-        super.onRestart();
+    public void onStart() {
+        super.onStart();
         registerReceiver(charging, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
     }
 }
