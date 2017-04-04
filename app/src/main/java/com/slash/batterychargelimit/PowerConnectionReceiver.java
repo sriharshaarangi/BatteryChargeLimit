@@ -19,7 +19,7 @@ public class PowerConnectionReceiver extends BroadcastReceiver {
                 context.startService(new Intent(context, ForegroundService.class));
             } else if (action.equals(Intent.ACTION_POWER_DISCONNECTED)) {
                 if (settings.getLong(LIMIT_REACHED, -1) <= System.currentTimeMillis() - UNPLUG_TOLERANCE) {
-                    SharedMethods.changeState(context, CHARGE_ON);
+                    SharedMethods.changeState(context, null, CHARGE_ON);
                     context.stopService(new Intent(context, ForegroundService.class));
                 }
             }

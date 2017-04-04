@@ -32,7 +32,6 @@ public class MainActivity extends AppCompatActivity {
     private EditText limit_TextView;
     private SharedPreferences settings;
     private RadioGroup batteryFile_RadioGroup;
-    private Context thisContext = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,18 +40,30 @@ public class MainActivity extends AppCompatActivity {
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        // Exit immediately if no root support
+        if (!Shell.SU.available()) {
+            new AlertDialog.Builder(MainActivity.this)
+                    .setMessage(R.string.root_denied)
+                    .setCancelable(false)
+                    .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            finish();
+                        }
+                    }).create().show();
+            return;
+        }
+
         settings = getSharedPreferences(SETTINGS, 0);
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         boolean previouslyStarted = prefs.getBoolean(getString(R.string.previously_started), false);
         if (!previouslyStarted) {
-            prefs.edit().putBoolean(getString(R.string.previously_started), true).apply();
             settings.edit()
                     .putInt(LIMIT, 80)
                     .putBoolean(LIMIT_REACHED, false)
                     .putBoolean(ENABLE, false).apply();
-
             // whitelist App for Doze Mode
             Shell.SU.run("dumpsys deviceidle whitelist +com.slash.batterychargelimit");
+            prefs.edit().putBoolean(getString(R.string.previously_started), true).apply();
         }
 
         int settingsVersion = prefs.getInt(SETTINGS_VERSION, 0);
@@ -75,16 +86,14 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                     if (!found) {
-                        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                        builder.setMessage(R.string.device_not_supported)
+                        new AlertDialog.Builder(MainActivity.this)
+                                .setMessage(R.string.device_not_supported)
                                 .setCancelable(false)
                                 .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int id) {
                                         finish();
                                     }
-                                });
-                        AlertDialog alert = builder.create();
-                        alert.show();
+                                }).create().show();
                         return;
                     }
                 case 4:
@@ -101,8 +110,8 @@ public class MainActivity extends AppCompatActivity {
         int limit_percentage = settings.getInt(LIMIT, 80);
         boolean is_enabled = settings.getBoolean(ENABLE, false);
 
-        if (is_enabled && SharedMethods.isPhonePluggedIn(thisContext)) {
-            thisContext.startService(new Intent(thisContext, ForegroundService.class));
+        if (is_enabled && SharedMethods.isPhonePluggedIn(this)) {
+            this.startService(new Intent(this, ForegroundService.class));
         }//notif is 1!
 
         batteryFile_RadioGroup = (RadioGroup) findViewById(R.id.rgOpinion);
@@ -168,7 +177,7 @@ public class MainActivity extends AppCompatActivity {
         resetBatteryStats_Button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedMethods.resetBatteryStats(thisContext);
+                SharedMethods.resetBatteryStats(MainActivity.this);
             }
         });
         autoResetSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -186,13 +195,13 @@ public class MainActivity extends AppCompatActivity {
                 // reset TextView content to valid number
                 limit_TextView.setText(String.valueOf(settings.getInt(LIMIT, 80)));
 
-                if (SharedMethods.isPhonePluggedIn(thisContext)) {
-                    thisContext.startService(new Intent(thisContext, ForegroundService.class));
+                if (SharedMethods.isPhonePluggedIn(MainActivity.this)) {
+                    MainActivity.this.startService(new Intent(MainActivity.this, ForegroundService.class));
                 }
             } else {
                 ForegroundService.ignoreAutoReset();
-                thisContext.stopService(new Intent(thisContext, ForegroundService.class));
-                SharedMethods.changeState(thisContext, CHARGE_ON);
+                MainActivity.this.stopService(new Intent(MainActivity.this, ForegroundService.class));
+                SharedMethods.changeState(MainActivity.this, null, CHARGE_ON);
             }
 
             settings.edit().putBoolean(ENABLE, isChecked).apply();
@@ -267,8 +276,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onReceive(Context context, Intent intent) {
             int currentStatus = intent.getIntExtra(BatteryManager.EXTRA_STATUS, -1);
-            //in a function
-            if (currentStatus != previousStatus) {
+            if (currentStatus != previousStatus && status_TextView != null) {
                 previousStatus = currentStatus;
                 if (currentStatus == BatteryManager.BATTERY_STATUS_CHARGING) {
                     status_TextView.setText(R.string.charging);

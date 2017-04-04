@@ -10,6 +10,7 @@ import android.widget.Toast;
 import eu.chainfire.libsuperuser.Shell;
 
 import java.io.IOException;
+import java.util.List;
 
 import static com.slash.batterychargelimit.Constants.*;
 
@@ -26,27 +27,44 @@ public class SharedMethods {
         return "0".equals(Shell.SU.run(new String[] {"stat " + path + " >/dev/null", "echo $?"}).get(0));
     }
 
-    public static void changeState(Context context, int chargeMode) {
-        SharedPreferences settings = context.getSharedPreferences(SETTINGS, 0);
-        String file = settings.getString(Constants.FILE_KEY,
+    public static void changeState(Context context, final Shell.Interactive shell, final int chargeMode) {
+        final SharedPreferences settings = context.getSharedPreferences(SETTINGS, 0);
+        final String file = settings.getString(Constants.FILE_KEY,
                 "/sys/class/power_supply/battery/charging_enabled");
 
-        String newState;
+        final String newState;
         if (chargeMode == CHARGE_ON) {
             newState = settings.getString(Constants.CHARGE_ON_KEY, "1");
         } else {
             newState = settings.getString(Constants.CHARGE_OFF_KEY, "0");
         }
 
-        String recentState = Shell.SU.run("cat " + file).get(0);
-        if (!recentState.equals(newState)) {
-            if (chargeMode == CHARGE_OFF) {
-                settings.edit().putLong(LIMIT_REACHED, System.currentTimeMillis()).apply();
-            }
-            Shell.SU.run(new String[] {
-                    "mount -o rw,remount " + file,
-                    "echo " + newState + " > " + file
+        String catCommand = "cat " + file;
+        final String[] switchCommands = new String[] {
+                "mount -o rw,remount " + file,
+                "echo " + newState + " > " + file
+        };
+
+        if (shell != null) {
+            shell.addCommand(catCommand, 0, new Shell.OnCommandResultListener() {
+                @Override
+                public void onCommandResult(int commandCode, int exitCode, List<String> output) {
+                    if (!output.get(0).equals(newState)) {
+                        if (chargeMode == CHARGE_OFF) {
+                            settings.edit().putLong(LIMIT_REACHED, System.currentTimeMillis()).apply();
+                        }
+                        shell.addCommand(switchCommands);
+                    }
+                }
             });
+        } else {
+            String recentState = Shell.SU.run(catCommand).get(0);
+            if (!recentState.equals(newState)) {
+                if (chargeMode == CHARGE_OFF) {
+                    settings.edit().putLong(LIMIT_REACHED, System.currentTimeMillis()).apply();
+                }
+                Shell.SU.run(switchCommands);
+            }
         }
     }
 
