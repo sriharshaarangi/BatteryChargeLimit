@@ -1,7 +1,6 @@
 package com.slash.batterychargelimit;
 
 import android.content.*;
-import android.os.IBinder;
 
 import static com.slash.batterychargelimit.Constants.*;
 import static com.slash.batterychargelimit.SharedMethods.CHARGE_ON;

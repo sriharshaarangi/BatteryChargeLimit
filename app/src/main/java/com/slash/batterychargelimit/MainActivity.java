@@ -6,7 +6,6 @@ import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.BatteryManager;
 import android.os.Bundle;
-import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
@@ -14,15 +13,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.util.SparseArray;
 import android.util.SparseIntArray;
 import android.view.Menu;
 import android.view.View;
 import android.widget.*;
 import eu.chainfire.libsuperuser.Shell;
-
-import java.io.IOException;
 
 import static com.slash.batterychargelimit.Constants.*;
 import static com.slash.batterychargelimit.SharedMethods.CHARGE_ON;
