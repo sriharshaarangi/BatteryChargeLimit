@@ -61,6 +61,8 @@ public class BatteryReceiver extends BroadcastReceiver {
             if (switchState(CHARGE_STOP)) {
                 // remember that we let the device charge until limit at least once
                 chargedToLimit = true;
+                // active auto reset on service shutdown
+                service.enableAutoReset();
                 // remember the time when disabling charging, so that PowerConnectionReceiver can identify fakes
                 SharedMethods.changeState(service, shell, CHARGE_OFF);
                 // set the "maintain" notification, this must not change from now

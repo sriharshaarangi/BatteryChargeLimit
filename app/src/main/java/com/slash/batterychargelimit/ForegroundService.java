@@ -20,10 +20,21 @@ public class ForegroundService extends Service {
     private NotificationManager mNotificationManager;
     private int notifyID = 1;
     private static boolean ignoreAutoReset = false;
+    private boolean autoResetActive = false;
     private BatteryReceiver batteryReceiver;
 
+    /**
+     * Ignore the automatic reset when service is shut down the next time
+     */
     static void ignoreAutoReset() {
         ignoreAutoReset = true;
+    }
+
+    /**
+     * Enable the automatic reset on service shutdown
+     */
+    public void enableAutoReset() {
+        autoResetActive = true;
     }
 
     @Override
@@ -61,9 +72,7 @@ public class ForegroundService extends Service {
 
     @Override
     public void onDestroy() {
-        if (!ignoreAutoReset && settings.getBoolean(AUTO_RESET_STATS, false)
-                && SharedMethods.getBatteryLevel(this)
-                > settings.getInt(LIMIT, 80) - settings.getInt(RECHARGE_DIFF, 2)) {
+        if (autoResetActive && !ignoreAutoReset && settings.getBoolean(AUTO_RESET_STATS, false)) {
             SharedMethods.resetBatteryStats(this);
         }
         ignoreAutoReset = false;
