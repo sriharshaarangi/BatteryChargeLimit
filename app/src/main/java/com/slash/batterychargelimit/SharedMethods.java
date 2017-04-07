@@ -24,7 +24,7 @@ public class SharedMethods {
     public static int CHARGE_OFF = 1;
 
     public static boolean checkFile(String path) {
-        return "0".equals(Shell.SU.run(new String[] {"stat " + path + " >/dev/null", "echo $?"}).get(0));
+        return "0".equals(Shell.SU.run(new String[] {"test -f " + path, "echo $?"}).get(0));
     }
 
     public static void changeState(Context context, final Shell.Interactive shell, final int chargeMode) {
