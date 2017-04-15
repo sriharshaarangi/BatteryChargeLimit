@@ -1,7 +1,5 @@
 package com.slash.batterychargelimit;
 
-import java.io.File;
-
 import static com.slash.batterychargelimit.Constants.*;
 
 /**
@@ -22,7 +20,7 @@ public class ControlFile {
         label = modeArray[LABEL_INDEX];
         chargeOn = modeArray[CHARGE_ON_INDEX];
         chargeOff = modeArray[CHARGE_OFF_INDEX];
-        valid = new File(file).exists();
+        valid = SharedMethods.checkFile(file);
     }
 
 }

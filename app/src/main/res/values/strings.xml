@@ -23,7 +23,7 @@
     <string name="maintaining_x_to_y">Maintaining %1$d%% - %2$d%% IF plugged"</string>
     <string name="waiting_until_x">Waiting until %1$d%%</string>
 
-    <string name="root_denied">App is denied ROOT access</string>
+    <string name="root_denied">App is denied ROOT access or device is not rooted!</string>
     <string name="stats_reset_success">Battery Stats reset successful</string>
 
     <string-array name="store_mode">

@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import eu.chainfire.libsuperuser.Shell;
 
 import static com.slash.batterychargelimit.Constants.LIMIT;
 import static com.slash.batterychargelimit.Constants.RECHARGE_DIFF;
@@ -22,11 +23,16 @@ public class BatteryReceiver extends BroadcastReceiver {
     private boolean chargedToLimit = false;
     private int lastState = -1;
     private ForegroundService service;
-    private SharedPreferences settings;
+    private int limitPercentage, rechargePercentage;
+    // interactive shell for better performance
+    private Shell.Interactive shell;
 
     BatteryReceiver(ForegroundService service) {
+        shell = new Shell.Builder().setWantSTDERR(false).useSU().open();
         this.service = service;
-        this.settings = service.getSharedPreferences(SETTINGS, 0);
+        SharedPreferences settings = service.getSharedPreferences(SETTINGS, 0);
+        limitPercentage = settings.getInt(LIMIT, 80);
+        rechargePercentage = limitPercentage - settings.getInt(RECHARGE_DIFF, 2);
     }
 
     /**
@@ -43,29 +49,29 @@ public class BatteryReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, final Intent intent) {
-        int limitPercentage = settings.getInt(LIMIT, 80);
-        int rechargePercentage = limitPercentage - settings.getInt(RECHARGE_DIFF, 2);
         int batteryLevel = SharedMethods.getBatteryLevel(intent);
 
         // when the service was "freshly started", charge until limit
         if (!chargedToLimit && batteryLevel < limitPercentage) {
             if (switchState(CHARGE_FULL)) {
-                SharedMethods.changeState(service, CHARGE_ON);
+                SharedMethods.changeState(service, shell, CHARGE_ON);
                 service.setNotification(service.getString(R.string.waiting_until_x, limitPercentage));
             }
         } else if (batteryLevel >= limitPercentage) {
             if (switchState(CHARGE_STOP)) {
                 // remember that we let the device charge until limit at least once
                 chargedToLimit = true;
+                // active auto reset on service shutdown
+                service.enableAutoReset();
                 // remember the time when disabling charging, so that PowerConnectionReceiver can identify fakes
-                SharedMethods.changeState(service, CHARGE_OFF);
+                SharedMethods.changeState(service, shell, CHARGE_OFF);
                 // set the "maintain" notification, this must not change from now
                 service.setNotification(service.getString(R.string.maintaining_x_to_y,
                         rechargePercentage, limitPercentage));
             }
         } else if (batteryLevel < rechargePercentage) {
             if (switchState(CHARGE_REFRESH)) {
-                SharedMethods.changeState(service, CHARGE_ON);
+                SharedMethods.changeState(service, shell, CHARGE_ON);
                 // for those control files that with fake unplug events, stop service if power source was detached
                 if (!SharedMethods.isPhonePluggedIn(intent)) {
                     service.stopService(new Intent(service, ForegroundService.class));
