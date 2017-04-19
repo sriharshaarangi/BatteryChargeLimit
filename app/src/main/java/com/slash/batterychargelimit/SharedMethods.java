@@ -6,6 +6,7 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.BatteryManager;
 import android.support.annotation.StringRes;
+import android.util.Log;
 import android.widget.Toast;
 import eu.chainfire.libsuperuser.Shell;
 
@@ -79,10 +80,6 @@ public class SharedMethods {
                 || batteryIntent.getIntExtra(BatteryManager.EXTRA_PLUGGED, -1) > 0;
     }
 
-    public static int getBatteryLevel(Context context) {
-        Intent batteryIntent = context.registerReceiver(null, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
-        return getBatteryLevel(batteryIntent);
-    }
     public static int getBatteryLevel(Intent batteryIntent) {
         int level = batteryIntent.getIntExtra(BatteryManager.EXTRA_LEVEL, -1);
         int scale = batteryIntent.getIntExtra(BatteryManager.EXTRA_SCALE, -1);

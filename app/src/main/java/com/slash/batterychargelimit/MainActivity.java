@@ -2,7 +2,7 @@ package com.slash.batterychargelimit;
 
 import android.content.*;
 import android.content.pm.PackageManager;
-import android.content.res.Resources;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.BatteryManager;
 import android.os.Bundle;
@@ -13,12 +13,19 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.SparseArray;
-import android.util.SparseIntArray;
 import android.view.Menu;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.*;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import eu.chainfire.libsuperuser.Shell;
+
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.nio.charset.Charset;
+import java.util.List;
 
 import static com.slash.batterychargelimit.Constants.*;
 import static com.slash.batterychargelimit.SharedMethods.CHARGE_ON;
@@ -55,10 +62,6 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         boolean previouslyStarted = prefs.getBoolean(getString(R.string.previously_started), false);
         if (!previouslyStarted) {
-            settings.edit()
-                    .putInt(LIMIT, 80)
-                    .putBoolean(LIMIT_REACHED, false)
-                    .putBoolean(ENABLE, false).apply();
             // whitelist App for Doze Mode
             Shell.SU.run("dumpsys deviceidle whitelist +com.slash.batterychargelimit");
             prefs.edit().putBoolean(getString(R.string.previously_started), true).apply();
@@ -74,11 +77,9 @@ public class MainActivity extends AppCompatActivity {
         if (settingsVersion < versionCode) {
             switch(settingsVersion) {
                 case 0:
-                    SparseArray<ControlFile> modes = getCtrlFiles();
                     boolean found = false;
-                    for (int i = 0; i < modes.size() && !found; i++) {
-                        ControlFile cf = modes.valueAt(i);
-                        if (cf.valid) {
+                    for (ControlFile cf : getCtrlFiles()) {
+                        if (cf.isValid()) {
                             setCtrlFile(cf);
                             found = true;
                         }
@@ -98,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
                     if (settings.contains(LIMIT_REACHED)) {
                         settings.edit().remove(LIMIT_REACHED).apply();
                     }
-                case 5:
+                case 6:
                     // settings upgrade for future version(s)
             }
             // update the settings version
@@ -209,71 +210,86 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
-    /**
-     * This listener is bound via XML!
-     *
-     * @param view The view
-     */
-    public void onRadioButtonClicked(View view) {
-        if (((RadioButton) view).isChecked()) {
-            setCtrlFile(getCtrlFiles().get(view.getId()));
-        }
-    }
-
-    private SparseIntArray getCtrlFileMapping() {
-        SparseIntArray m = new SparseIntArray();
-        m.put(R.id.batt_slate_mode, R.array.batt_slate_mode);
-        m.put(R.id.store_mode, R.array.store_mode);
-        m.put(R.id.battery_charging_enabled, R.array.battery_charging_enabled);
-        m.put(R.id.charging_enabled, R.array.charging_enabled);
-        return m;
-    }
-
-    private SparseArray<ControlFile> ctrlFiles = null;
-    private SparseArray<ControlFile> getCtrlFiles() {
+    private List<ControlFile> ctrlFiles = null;
+    private List<ControlFile> getCtrlFiles() {
         if (ctrlFiles == null) {
-            Resources res = getResources();
-            SparseIntArray map = getCtrlFileMapping();
-            SparseArray<ControlFile> cfMap = new SparseArray<>();
-            for (int i = 0; i < map.size(); i++) {
-                String[] mode = res.getStringArray(map.valueAt(i));
-                cfMap.put(map.keyAt(i), new ControlFile(mode));
+            try (Reader r = new InputStreamReader(getResources().openRawResource(R.raw.control_files),
+                    Charset.forName("UTF-8"))) {
+                Gson gson = new Gson();
+                ctrlFiles = gson.fromJson(r, new TypeToken<List<ControlFile>>(){}.getType());
+            } catch (IOException ioe) {
+                ioe.printStackTrace();
+                finish();
             }
-            ctrlFiles = cfMap;
         }
         return ctrlFiles;
     }
 
+    private View.OnClickListener radioButtonListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            setCtrlFile(getCtrlFiles().get((int) v.getTag(R.id.radio_index_tag)));
+        }
+    };
+
+    private static ColorStateList radioDefaultColors = null;
     private void updateRadioButtons(boolean init) {
-        SparseArray<ControlFile> ctrlFiles = getCtrlFiles();
+        if (radioDefaultColors == null) {
+            synchronized (MainActivity.class) {
+                if (radioDefaultColors == null) {
+                    radioDefaultColors = new RadioButton(this).getTextColors();
+                }
+            }
+        }
+        List<ControlFile> ctrlFiles = getCtrlFiles();
         String currentCtrlFile = settings.getString(FILE_KEY, "");
-        boolean isEnabled = settings.getBoolean(ENABLE, false);
-        for (int i = 0; i < batteryFile_RadioGroup.getChildCount(); i++) {
-            RadioButton b = (RadioButton) batteryFile_RadioGroup.getChildAt(i);
-            ControlFile cf = ctrlFiles.get(b.getId());
+        boolean serviceEnabled = settings.getBoolean(ENABLE, false);
+        for (int i = 0; i < ctrlFiles.size(); i++) {
+            RadioGroup.LayoutParams layoutParams = init ? new RadioGroup.LayoutParams(
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT) : null;
+            ControlFile cf = ctrlFiles.get(i);
+            RadioButton b;
             if (init) {
-                b.setText(cf.label);
-                b.setChecked(currentCtrlFile.equals(cf.file));
+                b = new RadioButton(this);
+                b.setId(View.generateViewId());
+                b.setTag(R.id.radio_index_tag, i);
+                if (cf.isExperimental()) {
+                    b.setText(getString(R.string.experimental, cf.getLabel()));
+                } else {
+                    b.setText(cf.getLabel());
+                }
+                b.setChecked(currentCtrlFile.equals(cf.getFile()));
+                b.setOnClickListener(radioButtonListener);
+                batteryFile_RadioGroup.addView(b, i, layoutParams);
+            } else {
+                b = (RadioButton) batteryFile_RadioGroup.getChildAt(i);
             }
             // if service is not active, enable control file radio button if the control file is valid
-            b.setEnabled(!isEnabled && cf.valid);
+            b.setEnabled(!serviceEnabled && cf.isValid());
+            // color experimental control files red
+            if (cf.isExperimental() && !serviceEnabled) {
+                b.setTextColor(Color.RED);
+            } else {
+                b.setTextColor(radioDefaultColors);
+            }
         }
     }
 
     private void setCtrlFile(ControlFile cf) {
         getSharedPreferences(SETTINGS, 0)
-                .edit().putString(FILE_KEY, cf.file)
-                .putString(CHARGE_ON_KEY, cf.chargeOn)
-                .putString(CHARGE_OFF_KEY, cf.chargeOff).apply();
+                .edit().putString(FILE_KEY, cf.getFile())
+                .putString(CHARGE_ON_KEY, cf.getChargeOn())
+                .putString(CHARGE_OFF_KEY, cf.getChargeOff()).apply();
     }
 
     //to update battery status on UI
     private BroadcastReceiver charging = new BroadcastReceiver() {
-        private int previousStatus = 1;
+        private int previousStatus = BatteryManager.BATTERY_STATUS_UNKNOWN;
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            int currentStatus = intent.getIntExtra(BatteryManager.EXTRA_STATUS, -1);
+            int currentStatus = intent.getIntExtra(BatteryManager.EXTRA_STATUS, BatteryManager.BATTERY_STATUS_UNKNOWN);
             if (currentStatus != previousStatus && status_TextView != null) {
                 previousStatus = currentStatus;
                 if (currentStatus == BatteryManager.BATTERY_STATUS_CHARGING) {
@@ -284,10 +300,13 @@ public class MainActivity extends AppCompatActivity {
                     status_TextView.setTextColor(Color.DKGRAY);
                 } else if (currentStatus == BatteryManager.BATTERY_STATUS_FULL) {
                     status_TextView.setText(R.string.full);
+                    status_TextView.setTextColor(Color.BLACK);
                 } else if (currentStatus == BatteryManager.BATTERY_STATUS_NOT_CHARGING) {
                     status_TextView.setText(R.string.not_charging);
+                    status_TextView.setTextColor(Color.BLACK);
                 } else if (currentStatus == BatteryManager.BATTERY_STATUS_UNKNOWN) {
                     status_TextView.setText(R.string.unknown);
+                    status_TextView.setTextColor(Color.BLACK);
                 }
             }
         }
