@@ -1,40 +1,39 @@
 [
-  {
-    "file": "/sys/class/power_supply/battery/battery_charging_enabled",
-    "label": "battery_charging_enabled (Nexus/Pixel)",
-    "chargeOn": "1",
-    "chargeOff": "0",
-    "experimental": false
-  },{
-    "file": "/sys/class/power_supply/battery/charging_enabled",
-    "label": "charging_enabled (Generic)",
-    "chargeOn": "1",
-    "chargeOff": "0",
-    "experimental": false
-  },{
-    "file": "/sys/class/power_supply/battery/store_mode",
-    "label": "store_mode (Samsung Note)",
-    "chargeOn": "0",
-    "chargeOff": "1",
-    "experimental": false
-  },{
-    "file": "/sys/class/power_supply/battery/batt_slate_mode",
-    "label": "batt_slate_mode (Samsung)",
-    "chargeOn": "0",
-    "chargeOff": "1",
-    "experimental": false
-  },{
-    "file": "/sys/class/hw_power/charger/charge_data/enable_charger",
-    "label": "enable_charger (Huawei)",
-    "chargeOn": "1",
-    "chargeOff": "0",
-    "experimental": true
-  },{
+{
+  "file": "/sys/class/power_supply/battery/battery_charging_enabled",
+  "label": "battery_charging_enabled (Nexus/Pixel)",
+  "chargeOn": "1",
+  "chargeOff": "0",
+  "experimental": false
+},{
+  "file": "/sys/class/power_supply/battery/charging_enabled",
+  "label": "charging_enabled (Generic)",
+  "chargeOn": "1",
+  "chargeOff": "0",
+  "experimental": false
+},{
+  "file": "/sys/class/power_supply/battery/store_mode",
+  "label": "store_mode (Samsung Note)",
+  "chargeOn": "0",
+  "chargeOff": "1",
+  "experimental": false
+},{
+  "file": "/sys/class/power_supply/battery/batt_slate_mode",
+  "label": "batt_slate_mode (Samsung)",
+  "chargeOn": "0",
+  "chargeOff": "1",
+  "experimental": false
+},{
+  "file": "/sys/class/hw_power/charger/charge_data/enable_charger",
+  "label": "enable_charger (Huawei)",
+  "chargeOn": "1",
+  "chargeOff": "0",
+  "experimental": true
+},{
   "file": "/sys/module/pm8921_charger/parameters/disabled",
   "label": "disabled (Nexus 4)",
   "chargeOn": "0",
   "chargeOff": "1",
   "experimental": true
 }
-
 ]
