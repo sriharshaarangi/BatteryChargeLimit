@@ -120,32 +120,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="16dp">
-        <RadioButton
-            android:id="@+id/battery_charging_enabled"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="onRadioButtonClicked">
-        </RadioButton>
-        <RadioButton
-            android:id="@+id/charging_enabled"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="onRadioButtonClicked">
-        </RadioButton>
-        <RadioButton
-            android:id="@+id/batt_slate_mode"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="onRadioButtonClicked">
-        </RadioButton>
-        <RadioButton
-            android:id="@+id/store_mode"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="onRadioButtonClicked">
-        </RadioButton>
-    </RadioGroup>
+        android:layout_marginBottom="16dp" />
 
     <Switch
         android:id="@+id/auto_stats_reset"

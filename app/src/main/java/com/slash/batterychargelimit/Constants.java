@@ -10,10 +10,6 @@ public abstract class Constants {
     public static String SETTINGS = "Settings";
     public static String SETTINGS_VERSION = "SettingsVersion";
 
-    public static int FILE_INDEX = 0;
-    public static int LABEL_INDEX = 1;
-    public static int CHARGE_ON_INDEX = 2;
-    public static int CHARGE_OFF_INDEX = 3;
     public static String FILE_KEY = "ctrl_file";
     public static String CHARGE_ON_KEY = "charge_on";
     public static String CHARGE_OFF_KEY = "charge_off";

@@ -7,6 +7,7 @@ import android.app.Service;
 import android.content.*;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
+import eu.chainfire.libsuperuser.Shell;
 
 import static com.slash.batterychargelimit.Constants.*;
 
@@ -22,6 +23,8 @@ public class ForegroundService extends Service {
     private static boolean ignoreAutoReset = false;
     private boolean autoResetActive = false;
     private BatteryReceiver batteryReceiver;
+    // interactive shell for better performance
+    private Shell.Interactive shell;
 
     /**
      * Ignore the automatic reset when service is shut down the next time
@@ -61,7 +64,8 @@ public class ForegroundService extends Service {
         startForeground(notifyID, notification);
 
         // create and register the receiver for the battery change events
-        batteryReceiver = new BatteryReceiver(ForegroundService.this);
+        shell = new Shell.Builder().setWantSTDERR(false).useSU().open();
+        batteryReceiver = new BatteryReceiver(ForegroundService.this, shell);
         registerReceiver(batteryReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
     }
 
@@ -80,6 +84,7 @@ public class ForegroundService extends Service {
         settings.edit().putBoolean(NOTIFICATION_LIVE, false).apply();
         // unregister the battery event receiver
         unregisterReceiver(batteryReceiver);
+        shell.close();
 
         super.onDestroy();
     }
