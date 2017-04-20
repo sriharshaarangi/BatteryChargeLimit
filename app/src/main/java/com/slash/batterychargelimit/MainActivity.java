@@ -106,7 +106,6 @@ public class MainActivity extends AppCompatActivity {
             prefs.edit().putInt(SETTINGS_VERSION, versionCode).apply();
         }
 
-        int limit_percentage = settings.getInt(LIMIT, 80);
         boolean is_enabled = settings.getBoolean(ENABLE, false);
 
         if (is_enabled && SharedMethods.isPhonePluggedIn(this)) {
@@ -122,10 +121,6 @@ public class MainActivity extends AppCompatActivity {
         rangeText = (TextView) findViewById(R.id.range_text);
         final Switch autoResetSwitch = (Switch) findViewById(R.id.auto_stats_reset);
 
-        limit_TextView.setText(String.valueOf(limit_percentage));
-        int rechargeDiff = settings.getInt(RECHARGE_DIFF, 2);
-        rangeBar.setProgress(rechargeDiff);
-        rangeText.setText(getString(R.string.recharge_below, limit_percentage - rechargeDiff));
         enable_Switch.setChecked(is_enabled);
         updateRadioButtons(true);
         autoResetSwitch.setChecked(settings.getBoolean(AUTO_RESET_STATS, false));
@@ -329,5 +324,11 @@ public class MainActivity extends AppCompatActivity {
     public void onStart() {
         super.onStart();
         registerReceiver(charging, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
+        // the limits could have been changed by an Intent, so update the UI here
+        int limit_percentage = settings.getInt(LIMIT, 80);
+        limit_TextView.setText(String.valueOf(limit_percentage));
+        int rechargeDiff = settings.getInt(RECHARGE_DIFF, 2);
+        rangeBar.setProgress(rechargeDiff);
+        rangeText.setText(getString(R.string.recharge_below, limit_percentage - rechargeDiff));
     }
 }

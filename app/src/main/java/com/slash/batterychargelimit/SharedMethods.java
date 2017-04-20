@@ -94,4 +94,26 @@ public class SharedMethods {
         Shell.SU.run("dumpsys batterystats --reset");
         Toast.makeText(context, R.string.stats_reset_success, Toast.LENGTH_LONG).show();
     }
+
+    public static void handleLimitChange(Context context, String newLimit) {
+        try {
+            int limit = Integer.parseInt(newLimit);
+            if (40 <= limit && limit <= 99) {
+                SharedPreferences settings = context.getSharedPreferences(SETTINGS, 0);
+                // set the new limit and apply it
+                settings.edit().putInt(LIMIT, limit).apply();
+                Toast.makeText(context, context.getString(R.string.intent_limit_accepted, limit),
+                        Toast.LENGTH_SHORT).show();
+                if (settings.getBoolean(NOTIFICATION_LIVE, false)) {
+                    // restart service if necessary
+                    context.stopService(new Intent(context, ForegroundService.class));
+                    context.startService(new Intent(context, ForegroundService.class));
+                }
+            } else {
+                throw new NumberFormatException("battery limit out of range");
+            }
+        } catch (NumberFormatException fe) {
+            Toast.makeText(context, R.string.intent_limit_invalid, Toast.LENGTH_LONG).show();
+        }
+    }
 }
