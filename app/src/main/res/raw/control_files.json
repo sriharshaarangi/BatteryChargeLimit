@@ -29,5 +29,12 @@
     "chargeOn": "1",
     "chargeOff": "0",
     "experimental": true
-  }
+  },{
+  "file": "/sys/module/pm8921_charger/parameters/disabled",
+  "label": "disabled (Nexus 4)",
+  "chargeOn": "0",
+  "chargeOff": "1",
+  "experimental": true
+}
+
 ]

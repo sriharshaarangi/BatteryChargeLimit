@@ -27,9 +27,11 @@
     <string name="root_denied">App is denied ROOT access or device is not rooted!</string>
     <string name="stats_reset_success">Battery Stats reset successful</string>
 
+
     <string name="intent_handle_activity">Battery Charge Limit Handling Activity</string>
     <string name="intent_invalid">The supplied intent was invalid.</string>
     <string name="intent_limit_invalid">The supplied limit was invalid.</string>
     <string name="intent_limit_accepted">The battery charging limit was changed to %1$d%%.</string>
     <string name="mime_battery_limit">text/x-battery-limit</string>
+
 </resources>
