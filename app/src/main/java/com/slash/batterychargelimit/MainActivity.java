@@ -82,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
                         if (cf.isValid()) {
                             setCtrlFile(cf);
                             found = true;
+                            break;
                         }
                     }
                     if (!found) {

@@ -15,3 +15,8 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+
+# This is not required because of the "Keep" annotation, keep for completeness
+-keepclassmembers class com.slash.batterychargelimit.ControlFile {
+   private *;
+}
