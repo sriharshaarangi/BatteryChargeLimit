@@ -17,10 +17,11 @@ public abstract class Constants {
     public static String LIMIT = "limit";
     public static String RECHARGE_DIFF = "recharge_threshold";
     public static String LIMIT_REACHED = "limit_reached";
+    public static String REFRESH_STARTED = "refresh_started";
     public static String ENABLE = "enable";
     public static String NOTIFICATION_LIVE = "notificationLive";
     public static String AUTO_RESET_STATS = "auto_reset_stats";
 
     // ms after reaching limit, where the "unplug" event is recognized as power cut instead of action unplugging
-    public static long UNPLUG_TOLERANCE = 1000;
+    public static long POWER_CHANGE_TOLERANCE_MS = 1000;
 }

@@ -51,9 +51,7 @@ public class SharedMethods {
                 @Override
                 public void onCommandResult(int commandCode, int exitCode, List<String> output) {
                     if (!output.get(0).equals(newState)) {
-                        if (chargeMode == CHARGE_OFF) {
-                            settings.edit().putLong(LIMIT_REACHED, System.currentTimeMillis()).apply();
-                        }
+                        saveChangeTime(chargeMode, settings);
                         shell.addCommand(switchCommands);
                     }
                 }
@@ -61,11 +59,24 @@ public class SharedMethods {
         } else {
             String recentState = Shell.SU.run(catCommand).get(0);
             if (!recentState.equals(newState)) {
-                if (chargeMode == CHARGE_OFF) {
-                    settings.edit().putLong(LIMIT_REACHED, System.currentTimeMillis()).apply();
-                }
+                saveChangeTime(chargeMode, settings);
                 Shell.SU.run(switchCommands);
             }
+        }
+    }
+
+    /**
+     * Saves the last time when the control file was modified.
+     * This values are checked in the PowerConnectionReceiver to prevent fake plug/unplug reactions.
+     *
+     * @param chargeMode the newly applied charging mode, CHARGE_OFF or CHARGE_ON
+     * @param settings the common SharedPreference object
+     */
+    private static void saveChangeTime(int chargeMode, SharedPreferences settings) {
+        if (chargeMode == CHARGE_OFF) {
+            settings.edit().putLong(LIMIT_REACHED, System.currentTimeMillis()).apply();
+        } else if (chargeMode == CHARGE_ON) {
+            settings.edit().putLong(REFRESH_STARTED, System.currentTimeMillis()).apply();
         }
     }
 
