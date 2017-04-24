@@ -116,8 +116,7 @@ public class SharedMethods {
                 Toast.makeText(context, context.getString(R.string.intent_limit_accepted, limit),
                         Toast.LENGTH_SHORT).show();
                 if (settings.getBoolean(NOTIFICATION_LIVE, false)) {
-                    // restart service if necessary
-                    context.stopService(new Intent(context, ForegroundService.class));
+                    // "restart" service if necessary
                     context.startService(new Intent(context, ForegroundService.class));
                 }
             } else {
