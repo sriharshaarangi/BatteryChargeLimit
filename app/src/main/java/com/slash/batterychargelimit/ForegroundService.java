@@ -7,6 +7,7 @@ import android.app.Service;
 import android.content.*;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
+import android.util.Log;
 import eu.chainfire.libsuperuser.Shell;
 
 import static com.slash.batterychargelimit.Constants.*;
@@ -48,44 +49,36 @@ public class ForegroundService extends Service {
     @Override
     public void onCreate() {
         notifyID = 1;
-        ignoreAutoReset = false;
-        autoResetActive = false;
-        if (settings == null) {
-            settings = this.getSharedPreferences(SETTINGS, 0);
-        }
+        settings = this.getSharedPreferences(SETTINGS, 0);
         settings.edit().putBoolean(NOTIFICATION_LIVE, true).apply();
 
-        if (mNotifyBuilder == null) {
-            Intent notificationIntent = new Intent(this, MainActivity.class);
-            PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
+        Intent notificationIntent = new Intent(this, MainActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
 
-            mNotifyBuilder = new NotificationCompat.Builder(this);
-            mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-            Notification notification = mNotifyBuilder
-                    .setContentTitle(getString(R.string.please_wait))
-                    .setContentText("")
-                    .setSmallIcon(R.drawable.bcl_n)
-                    .setContentIntent(pendingIntent)
-                    .build();
-            mNotificationManager.notify(
-                    notifyID,
-                    mNotifyBuilder.build());
-            startForeground(notifyID, notification);
-        } else {
-            setNotification(getString(R.string.please_wait));
-        }
+        mNotifyBuilder = new NotificationCompat.Builder(this);
+        mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        Notification notification = mNotifyBuilder
+                .setContentTitle(getString(R.string.please_wait))
+                .setContentText("")
+                .setSmallIcon(R.drawable.bcl_n)
+                .setContentIntent(pendingIntent)
+                .build();
+        mNotificationManager.notify(
+                notifyID,
+                mNotifyBuilder.build());
+        startForeground(notifyID, notification);
 
+        shell = new Shell.Builder().setWantSTDERR(false).useSU().open();
+    }
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        ignoreAutoReset = false;
+        autoResetActive = false;
         // create and register the receiver for the battery change events
-        if (shell == null) {
-            shell = new Shell.Builder().setWantSTDERR(false).useSU().open();
-        }
-
-        // it is necessary to create a new BatteryReceiver on restart
-        if (batteryReceiver != null) {
-            unregisterReceiver(batteryReceiver);
-        }
         batteryReceiver = new BatteryReceiver(ForegroundService.this, shell);
         registerReceiver(batteryReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
+        return super.onStartCommand(intent, flags, startId);
     }
 
     public void setNotification(String notification) {
