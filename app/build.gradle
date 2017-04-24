@@ -13,6 +13,7 @@ android {
         versionCode 8
         versionName "0.8"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        setProperty("archivesBaseName", "BatteryChargeLimit-$versionName")
     }
     signingConfigs {
         release {
