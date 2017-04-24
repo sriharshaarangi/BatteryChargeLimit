@@ -79,10 +79,13 @@ public class ForegroundService extends Service {
         if (shell == null) {
             shell = new Shell.Builder().setWantSTDERR(false).useSU().open();
         }
-        if (batteryReceiver == null) {
-            batteryReceiver = new BatteryReceiver(ForegroundService.this, shell);
-            registerReceiver(batteryReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
+
+        // it is necessary to create a new BatteryReceiver on restart
+        if (batteryReceiver != null) {
+            unregisterReceiver(batteryReceiver);
         }
+        batteryReceiver = new BatteryReceiver(ForegroundService.this, shell);
+        registerReceiver(batteryReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
     }
 
     public void setNotification(String notification) {
