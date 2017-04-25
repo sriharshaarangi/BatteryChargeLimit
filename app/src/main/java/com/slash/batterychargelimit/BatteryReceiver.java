@@ -1,17 +1,12 @@
 package com.slash.batterychargelimit;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
+import android.content.*;
 import android.os.BatteryManager;
 import android.os.Handler;
 import android.util.Log;
 import eu.chainfire.libsuperuser.Shell;
 
-import static com.slash.batterychargelimit.Constants.LIMIT;
-import static com.slash.batterychargelimit.Constants.RECHARGE_DIFF;
-import static com.slash.batterychargelimit.Constants.SETTINGS;
+import static com.slash.batterychargelimit.Constants.*;
 import static com.slash.batterychargelimit.SharedMethods.CHARGE_OFF;
 import static com.slash.batterychargelimit.SharedMethods.CHARGE_ON;
 
@@ -22,7 +17,6 @@ import static com.slash.batterychargelimit.SharedMethods.CHARGE_ON;
  */
 public class BatteryReceiver extends BroadcastReceiver {
     private static final int CHARGE_FULL = 0, CHARGE_STOP = 1, CHARGE_REFRESH = 2;
-    private static final long CHARGING_DELAY_MS = 1000;
 
     private boolean chargedToLimit = false;
     private int lastState = -1;
@@ -30,16 +24,29 @@ public class BatteryReceiver extends BroadcastReceiver {
     private int limitPercentage, rechargePercentage;
     // interactive shell for better performance
     private Shell.Interactive shell;
-    // remember pending state change
-    private static long changePending = 0;
     private final static Handler handler = new Handler();
 
     BatteryReceiver(ForegroundService service, Shell.Interactive shell) {
         this.service = service;
         this.shell = shell;
+    }
+
+    /**
+     * "Restart" this receiver by resetting its flags/limits and calling its onReceive() handler
+     *
+     * @param callOnReceive Whether to call the onReceive() method
+     */
+    public void reset(boolean callOnReceive) {
+        chargedToLimit = false;
+        lastState = -1;
         SharedPreferences settings = service.getSharedPreferences(SETTINGS, 0);
         limitPercentage = settings.getInt(LIMIT, 80);
         rechargePercentage = limitPercentage - settings.getInt(RECHARGE_DIFF, 2);
+        if (callOnReceive) {
+            Intent batteryIntent = service.registerReceiver(null,
+                    new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
+            onReceive(service, batteryIntent);
+        }
     }
 
     /**
@@ -54,10 +61,28 @@ public class BatteryReceiver extends BroadcastReceiver {
         return oldState != newState;
     }
 
+    /**
+     * If battery should be charging, but there's no power supply, stop the service.
+     * NOT to be called if charging is expected to be disabled!
+     */
+    private void stopIfUnplugged() {
+        // save the state that caused this function call
+        final int triggerState = lastState;
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                // continue only if the state didn't change in the meantime
+                if (triggerState == lastState && !SharedMethods.isPhonePluggedIn(service)) {
+                    service.stopService(new Intent(service, ForegroundService.class));
+                }
+            }
+        }, CHARGING_CHANGE_TOLERANCE_MS);
+    }
+
     @Override
     public void onReceive(Context context, final Intent intent) {
         // ignore events while trying to fix charging state, see below
-        if (System.currentTimeMillis() <= changePending) {
+        if (SharedMethods.isChangePending(CHARGING_CHANGE_TOLERANCE_MS)) {
             return;
         }
 
@@ -70,10 +95,11 @@ public class BatteryReceiver extends BroadcastReceiver {
                 Log.d("Charging State", "CHARGE_FULL");
                 SharedMethods.changeState(service, shell, CHARGE_ON);
                 service.setNotification(service.getString(R.string.waiting_until_x, limitPercentage));
+                stopIfUnplugged();
             }
         } else if (batteryLevel >= limitPercentage) {
             if (switchState(CHARGE_STOP)) {
-                Log.d("Charging State", "CHARGE_STOP");
+                Log.d("Charging State", "CHARGE_STOP " + this.hashCode());
                 // remember that we let the device charge until limit at least once
                 chargedToLimit = true;
                 // active auto reset on service shutdown
@@ -86,24 +112,19 @@ public class BatteryReceiver extends BroadcastReceiver {
                 Log.d("Charging State", "Fixing state w. CHARGE_ON/CHARGE_OFF");
                 // if the device did not stop charging, try to "cycle" the state to fix this
                 SharedMethods.changeState(service, shell, CHARGE_ON);
-                // schedule the charging stop command to be executed after CHARGING_DELAY_MS
+                // schedule the charging stop command to be executed after CHARGING_CHANGE_TOLERANCE_MS
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         SharedMethods.changeState(service, shell, CHARGE_OFF);
                     }
-                }, CHARGING_DELAY_MS);
-                // update changePending to prevent concurrent state changes before execution
-                changePending = System.currentTimeMillis() + CHARGING_DELAY_MS;
+                }, CHARGING_CHANGE_TOLERANCE_MS);
             }
         } else if (batteryLevel < rechargePercentage) {
             if (switchState(CHARGE_REFRESH)) {
                 Log.d("Charging State", "CHARGE_REFRESH");
                 SharedMethods.changeState(service, shell, CHARGE_ON);
-                // for those control files that with fake unplug events, stop service if power source was detached
-                if (!SharedMethods.isPhonePluggedIn(intent)) {
-                    service.stopService(new Intent(service, ForegroundService.class));
-                }
+                stopIfUnplugged();
             }
         }
     }

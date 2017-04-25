@@ -31,6 +31,7 @@ public class ForegroundService extends Service {
     private BatteryReceiver batteryReceiver = null;
     // interactive shell for better performance
     private Shell.Interactive shell = null;
+    private boolean isFreshService = true;
 
     /**
      * Ignore the automatic reset when service is shut down the next time
@@ -54,7 +55,6 @@ public class ForegroundService extends Service {
 
         Intent notificationIntent = new Intent(this, MainActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
-
         mNotifyBuilder = new NotificationCompat.Builder(this);
         mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         Notification notification = mNotifyBuilder
@@ -69,19 +69,18 @@ public class ForegroundService extends Service {
         startForeground(notifyID, notification);
 
         shell = new Shell.Builder().setWantSTDERR(false).useSU().open();
+        // create and register the receiver for the battery change events
+        batteryReceiver = new BatteryReceiver(ForegroundService.this, shell);
+        registerReceiver(batteryReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         ignoreAutoReset = false;
         autoResetActive = false;
-        // remove the old BatteryReceiver, if exists
-        if (batteryReceiver != null) {
-            unregisterReceiver(batteryReceiver);
-        }
-        // create and register the receiver for the battery change events
-        batteryReceiver = new BatteryReceiver(ForegroundService.this, shell);
-        registerReceiver(batteryReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
+        // reset the battery receiver for every start command exce Service instantiation
+        batteryReceiver.reset(!isFreshService);
+        isFreshService = false;
         return super.onStartCommand(intent, flags, startId);
     }
 
@@ -101,8 +100,6 @@ public class ForegroundService extends Service {
         // unregister the battery event receiver
         unregisterReceiver(batteryReceiver);
         shell.close();
-
-        super.onDestroy();
     }
 
     @Override

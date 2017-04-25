@@ -23,7 +23,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".IntentHandleActivity"
+            android:name=".LimitChangeActivity"
             android:label="@string/intent_handle_activity">
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />

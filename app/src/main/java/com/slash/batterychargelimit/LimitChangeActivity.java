@@ -15,7 +15,7 @@ import static com.slash.batterychargelimit.Constants.SETTINGS;
  *
  * Handles new battery limits sent via Intents.
  */
-public class IntentHandleActivity extends AppCompatActivity {
+public class LimitChangeActivity extends AppCompatActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

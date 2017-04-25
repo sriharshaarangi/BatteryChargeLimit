@@ -1,6 +1,8 @@
 package com.slash.batterychargelimit;
 
 import android.content.*;
+import android.os.Handler;
+import android.util.Log;
 
 import static com.slash.batterychargelimit.Constants.*;
 import static com.slash.batterychargelimit.SharedMethods.CHARGE_ON;
@@ -17,20 +19,24 @@ import static com.slash.batterychargelimit.SharedMethods.CHARGE_ON;
 
 public class PowerConnectionReceiver extends BroadcastReceiver {
     public void onReceive(final Context context, Intent intent) {
+        if (SharedMethods.isChangePending(Constants.POWER_CHANGE_TOLERANCE_MS)) {
+            return;
+        }
         SharedPreferences settings = context.getSharedPreferences(SETTINGS, 0);
         if (settings.getBoolean(ENABLE, false)) {
             String action = intent.getAction();
             if (action.equals(Intent.ACTION_POWER_CONNECTED)) {
-                if (settings.getLong(REFRESH_STARTED, -1)
-                        <= System.currentTimeMillis() - POWER_CHANGE_TOLERANCE_MS) {
-                    context.startService(new Intent(context, ForegroundService.class));
-                }
+                Log.d("Power State", "ACTION_POWER_CONNECTED");
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        context.startService(new Intent(context, ForegroundService.class));
+                    }
+                }, CHARGING_CHANGE_TOLERANCE_MS);
             } else if (action.equals(Intent.ACTION_POWER_DISCONNECTED)) {
-                if (settings.getLong(LIMIT_REACHED, -1)
-                        <= System.currentTimeMillis() - POWER_CHANGE_TOLERANCE_MS) {
-                    context.stopService(new Intent(context, ForegroundService.class));
-                    SharedMethods.changeState(context, null, CHARGE_ON);
-                }
+                Log.d("Power State", "ACTION_POWER_DISCONNECTED");
+                context.stopService(new Intent(context, ForegroundService.class));
+                SharedMethods.changeState(context, null, CHARGE_ON);
             }
         }
     }

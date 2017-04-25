@@ -20,9 +20,29 @@ import static com.slash.batterychargelimit.Constants.*;
  */
 
 public class SharedMethods {
+    public final static int CHARGE_ON = 0;
+    public final static int CHARGE_OFF = 1;
 
-    public static int CHARGE_ON = 0;
-    public static int CHARGE_OFF = 1;
+    // remember pending state change
+    private static long changePending = 0;
+
+    /**
+     * Inform the BatteryReceiver instance(es) to ignore events for CHARGING_CHANGE_TOLERANCE_MS,
+     * in order to let the state change settle.
+     */
+    public static void setChangePending() {
+        // update changePending to prevent concurrent state changes before execution
+        changePending = System.currentTimeMillis();
+    }
+
+    /**
+     * Returns whether some change happened at most CHARGING_CHANGE_TOLERANCE_MS ago.
+     *
+     * @return Whether state change is pending
+     */
+    public static boolean isChangePending(long tolerance) {
+        return System.currentTimeMillis() <= changePending + tolerance;
+    }
 
     public static boolean checkFile(String path) {
         return "0".equals(Shell.SU.run(new String[] {"test -e " + path, "echo $?"}).get(0));
@@ -51,7 +71,7 @@ public class SharedMethods {
                 @Override
                 public void onCommandResult(int commandCode, int exitCode, List<String> output) {
                     if (!output.get(0).equals(newState)) {
-                        saveChangeTime(chargeMode, settings);
+                        setChangePending();
                         shell.addCommand(switchCommands);
                     }
                 }
@@ -59,24 +79,9 @@ public class SharedMethods {
         } else {
             String recentState = Shell.SU.run(catCommand).get(0);
             if (!recentState.equals(newState)) {
-                saveChangeTime(chargeMode, settings);
+                setChangePending();
                 Shell.SU.run(switchCommands);
             }
-        }
-    }
-
-    /**
-     * Saves the last time when the control file was modified.
-     * This values are checked in the PowerConnectionReceiver to prevent fake plug/unplug reactions.
-     *
-     * @param chargeMode the newly applied charging mode, CHARGE_OFF or CHARGE_ON
-     * @param settings the common SharedPreference object
-     */
-    private static void saveChangeTime(int chargeMode, SharedPreferences settings) {
-        if (chargeMode == CHARGE_OFF) {
-            settings.edit().putLong(LIMIT_REACHED, System.currentTimeMillis()).apply();
-        } else if (chargeMode == CHARGE_ON) {
-            settings.edit().putLong(REFRESH_STARTED, System.currentTimeMillis()).apply();
         }
     }
 
