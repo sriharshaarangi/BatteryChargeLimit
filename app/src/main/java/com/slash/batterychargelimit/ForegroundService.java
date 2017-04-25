@@ -75,6 +75,10 @@ public class ForegroundService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         ignoreAutoReset = false;
         autoResetActive = false;
+        // remove the old BatteryReceiver, if exists
+        if (batteryReceiver != null) {
+            unregisterReceiver(batteryReceiver);
+        }
         // create and register the receiver for the battery change events
         batteryReceiver = new BatteryReceiver(ForegroundService.this, shell);
         registerReceiver(batteryReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
