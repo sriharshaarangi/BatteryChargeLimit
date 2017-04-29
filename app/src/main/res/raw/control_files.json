@@ -35,5 +35,11 @@
   "chargeOn": "0",
   "chargeOff": "1",
   "experimental": true
+},{
+  "file": "/sys/class/power_supply/battery/device/Charging_Enable",
+  "label": "Charging_Enable (Amazon Fire)",
+  "chargeOn": "1",
+  "chargeOff": "0",
+  "experimental": true
 }
 ]

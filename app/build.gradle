@@ -10,8 +10,8 @@ android {
         applicationId "com.slash.batterychargelimit"
         minSdkVersion 19
         targetSdkVersion 25
-        versionCode 9
-        versionName "0.81"
+        versionCode 10
+        versionName "0.8.2"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         setProperty("archivesBaseName", "BatteryChargeLimit-$versionName")
     }
