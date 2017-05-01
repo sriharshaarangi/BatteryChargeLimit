@@ -111,9 +111,14 @@ public class SharedMethods {
         Toast.makeText(context, R.string.stats_reset_success, Toast.LENGTH_LONG).show();
     }
 
-    public static void handleLimitChange(Context context, String newLimit) {
+    public static void handleLimitChange(Context context, Object newLimit) {
         try {
-            int limit = Integer.parseInt(newLimit);
+            int limit;
+            if (newLimit instanceof Number) {
+                limit = ((Number) newLimit).intValue();
+            } else {
+                limit = Integer.parseInt(newLimit.toString());
+            }
             if (40 <= limit && limit <= 99) {
                 SharedPreferences settings = context.getSharedPreferences(SETTINGS, 0);
                 // set the new limit and apply it

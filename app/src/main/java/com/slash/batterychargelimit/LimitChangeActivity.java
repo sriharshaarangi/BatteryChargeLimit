@@ -24,7 +24,7 @@ public class LimitChangeActivity extends AppCompatActivity {
         String batteryLimitMime = this.getString(R.string.mime_battery_limit);
         Intent intent = getIntent();
         if (Intent.ACTION_SEND.equals(intent.getAction()) && batteryLimitMime.equals(intent.getType())) {
-            SharedMethods.handleLimitChange(this, intent.getStringExtra(Intent.EXTRA_TEXT));
+            SharedMethods.handleLimitChange(this, intent.getExtras().get(Intent.EXTRA_TEXT));
         } else {
             Toast.makeText(this, R.string.intent_invalid, Toast.LENGTH_LONG).show();
         }

@@ -16,7 +16,7 @@ import static com.slash.batterychargelimit.SharedMethods.CHARGE_ON;
 public class LimitChangeReceiver extends BroadcastReceiver {
 
     public void onReceive(Context context, Intent intent) {
-        SharedMethods.handleLimitChange(context, intent.getStringExtra(Intent.EXTRA_TEXT));
+        SharedMethods.handleLimitChange(context, intent.getExtras().get(Intent.EXTRA_TEXT));
     }
 
 }
