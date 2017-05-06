@@ -11,6 +11,8 @@ import android.widget.Toast;
 
 import java.util.Set;
 
+import eu.chainfire.libsuperuser.Shell;
+
 import static com.slash.batterychargelimit.Constants.ENABLE;
 import static com.slash.batterychargelimit.Constants.SETTINGS;
 import static com.slash.batterychargelimit.EnableWidget.buildButtonPendingIntent;
@@ -24,21 +26,31 @@ public class EnableWidgetIntentReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         if(intent.getAction().equals("com.slash.batterychargelimit.TOGGLE")){
-            toggle(context);
+            SharedPreferences settings = context.getSharedPreferences(SETTINGS, 0);
+            boolean is_enabled = settings.getBoolean(ENABLE, false);
+            boolean now_enabled = false;
+            if (Shell.SU.available()) {
+                now_enabled = !is_enabled;
+                toggle(context, now_enabled);
+                settings.edit().putBoolean(ENABLE, now_enabled).apply();
+            } else {
+                Toast.makeText(context, R.string.root_denied, Toast.LENGTH_LONG).show();
+            }
+
+            updateWidget(context, now_enabled);
         }
     }
 
-    private void toggle(Context context) {
-        SharedPreferences settings = context.getSharedPreferences(SETTINGS, 0);
-        boolean is_enabled = settings.getBoolean(ENABLE, false);
-        boolean now_enabled = !is_enabled;
+    private void toggle(Context context, boolean now_enabled) {
+
 
         if(now_enabled)
             SharedMethods.serviceEnabled(context);
         else
             SharedMethods.serviceDisabled(context);
 
-        settings.edit().putBoolean(ENABLE, now_enabled).apply();
+    }
+    public static void updateWidget(Context context, boolean now_enabled){
         RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.enable);
 
         remoteViews.setImageViewResource(R.id.enable, getImage(now_enabled));

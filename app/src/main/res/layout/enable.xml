@@ -8,5 +8,6 @@
         android:layout_height="wrap_content"
         android:src="@drawable/widget_disabled"
         android:background="#000000ff"
+        android:layout_gravity="center"
         />
 </LinearLayout>

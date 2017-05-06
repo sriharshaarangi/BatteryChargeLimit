@@ -38,6 +38,8 @@ public class MainActivity extends AppCompatActivity {
     private SharedPreferences settings;
     private RadioGroup batteryFile_RadioGroup;
     private Switch enable_Switch;
+    private boolean rootEnabled;
+    public boolean isRegistered = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,8 +47,11 @@ public class MainActivity extends AppCompatActivity {
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        rootEnabled = true;
         // Exit immediately if no root support
         if (!Shell.SU.available()) {
+            rootEnabled = false;
+            Toast.makeText(this, R.string.root_denied, Toast.LENGTH_LONG );
             new AlertDialog.Builder(MainActivity.this)
                     .setMessage(R.string.root_denied)
                     .setCancelable(false)
@@ -200,6 +205,8 @@ public class MainActivity extends AppCompatActivity {
             limit_TextView.setEnabled(!isChecked);
             updateRadioButtons(false);
             rangeBar.setEnabled(!isChecked);
+
+            EnableWidgetIntentReceiver.updateWidget(context, isChecked);
         }
     };
 
@@ -316,21 +323,34 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onStop() {
-        unregisterReceiver(charging);
+        if(isRegistered)
+            unregisterReceiver(charging);
+        isRegistered = false;
         super.onStop();
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        registerReceiver(charging, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
-        // the limits could have been changed by an Intent, so update the UI here
+        if(rootEnabled) {
+            registerReceiver(charging, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
+            isRegistered = true;
+
+            // the limits could have been changed by an Intent, so update the UI here
+            updateUi();
+        }
+    }
+
+    private void updateUi(){
         boolean is_enabled = settings.getBoolean(ENABLE, false);
         enable_Switch.setChecked(is_enabled);
+
         int limit_percentage = settings.getInt(LIMIT, 80);
         limit_TextView.setText(String.valueOf(limit_percentage));
+
         int rechargeDiff = settings.getInt(RECHARGE_DIFF, 2);
         rangeBar.setProgress(rechargeDiff);
+
         rangeText.setText(getString(R.string.recharge_below, limit_percentage - rechargeDiff));
     }
 }
