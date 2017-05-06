@@ -6,11 +6,14 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.provider.Settings;
 import android.widget.RemoteViews;
+import android.widget.Toast;
 
 import java.util.Set;
 
 import static com.slash.batterychargelimit.Constants.ENABLE;
 import static com.slash.batterychargelimit.Constants.SETTINGS;
+import static com.slash.batterychargelimit.EnableWidget.buildButtonPendingIntent;
+import static com.slash.batterychargelimit.EnableWidget.pushWidgetUpdate;
 
 /**
  * Created by harsha on 5/5/17.
@@ -27,15 +30,19 @@ public class EnableWidgetIntentReceiver extends BroadcastReceiver {
     private void toggle(Context context) {
         SharedPreferences settings = context.getSharedPreferences(SETTINGS, 0);
         boolean is_enabled = settings.getBoolean(ENABLE, false);
-        boolean toggle = !is_enabled;
-        settings.edit().putBoolean(ENABLE, toggle).apply();
+        boolean now_enabled = !is_enabled;
 
-//         RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.widget_demo);
+        if(now_enabled)
+            SharedMethods.serviceEnabled(context);
+        else
+            SharedMethods.serviceDisabled(context);
+
+        settings.edit().putBoolean(ENABLE, now_enabled).apply();
+        RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.enable);
+
 //        remoteViews.setImageViewResource(R.id.widget_image, getImageToSet());
-//
-//        //REMEMBER TO ALWAYS REFRESH YOUR BUTTON CLICK LISTENERS!!!
-//        remoteViews.setOnClickPendingIntent(R.id.widget_button, MyWidgetProvider.buildButtonPendingIntent(context));
-//
-//        MyWidgetProvider.pushWidgetUpdate(context.getApplicationContext(), remoteViews);
+        remoteViews.setOnClickPendingIntent(R.id.enable, buildButtonPendingIntent(context));
+
+        pushWidgetUpdate(context, remoteViews);
     }
 }

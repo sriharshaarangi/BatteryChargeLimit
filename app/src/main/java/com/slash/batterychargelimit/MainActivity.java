@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText limit_TextView;
     private SharedPreferences settings;
     private RadioGroup batteryFile_RadioGroup;
-
+    private Switch enable_Switch;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -114,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
         }//notif is 1!
 
         batteryFile_RadioGroup = (RadioGroup) findViewById(R.id.rgOpinion);
-        final Switch enable_Switch = (Switch) findViewById(R.id.button1);
+        enable_Switch = (Switch) findViewById(R.id.button1);
         limit_TextView = (EditText) findViewById(R.id.limit_EditText);
         status_TextView = (TextView) findViewById(R.id.status);
         final Button resetBatteryStats_Button = (Button) findViewById(R.id.reset_battery_stats);
@@ -185,21 +185,18 @@ public class MainActivity extends AppCompatActivity {
 
     //oncheckedchangelistener for switches
     private CompoundButton.OnCheckedChangeListener switchListener = new CompoundButton.OnCheckedChangeListener() {
+        Context context = MainActivity.this;
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
             if (isChecked) {
                 // reset TextView content to valid number
                 limit_TextView.setText(String.valueOf(settings.getInt(LIMIT, 80)));
-
-                if (SharedMethods.isPhonePluggedIn(MainActivity.this)) {
-                    MainActivity.this.startService(new Intent(MainActivity.this, ForegroundService.class));
-                }
+                SharedMethods.serviceEnabled(context);
             } else {
-                ForegroundService.ignoreAutoReset();
-                MainActivity.this.stopService(new Intent(MainActivity.this, ForegroundService.class));
-                SharedMethods.changeState(MainActivity.this, null, CHARGE_ON);
+                SharedMethods.serviceDisabled(context);
             }
 
             settings.edit().putBoolean(ENABLE, isChecked).apply();
+
             limit_TextView.setEnabled(!isChecked);
             updateRadioButtons(false);
             rangeBar.setEnabled(!isChecked);
@@ -307,6 +304,8 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     };
+
+
     
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -326,6 +325,8 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
         registerReceiver(charging, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
         // the limits could have been changed by an Intent, so update the UI here
+        boolean is_enabled = settings.getBoolean(ENABLE, false);
+        enable_Switch.setChecked(is_enabled);
         int limit_percentage = settings.getInt(LIMIT, 80);
         limit_TextView.setText(String.valueOf(limit_percentage));
         int rechargeDiff = settings.getInt(RECHARGE_DIFF, 2);

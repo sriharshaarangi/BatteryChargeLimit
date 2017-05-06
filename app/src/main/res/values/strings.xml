@@ -18,7 +18,7 @@
     <string name="discharging">DISCHARGING</string>
     <string name="full">FULL</string>
     <string name="not_charging">NOT CHARGING</string>
-    <string name="unknown">UNKOWN</string>
+    <string name="unknown">UNKNOWN</string>
 
     <string name="please_wait">Please wait…</string>
     <string name="maintaining_x_to_y">Maintaining %1$d%% - %2$d%% IF plugged"</string>
