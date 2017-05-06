@@ -4,8 +4,8 @@
     android:layout_height="match_parent">
     <ImageButton
         android:id="@+id/enable"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:src="@drawable/widget_disabled"
         android:background="#000000ff"
         android:layout_gravity="center"
