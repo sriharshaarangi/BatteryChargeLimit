@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.provider.Settings;
+import android.widget.ImageButton;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
@@ -40,9 +41,14 @@ public class EnableWidgetIntentReceiver extends BroadcastReceiver {
         settings.edit().putBoolean(ENABLE, now_enabled).apply();
         RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.enable);
 
-//        remoteViews.setImageViewResource(R.id.widget_image, getImageToSet());
+        remoteViews.setImageViewResource(R.id.enable, getImage(now_enabled));
         remoteViews.setOnClickPendingIntent(R.id.enable, buildButtonPendingIntent(context));
 
         pushWidgetUpdate(context, remoteViews);
+    }
+    public static int getImage(boolean now_enabled){
+        if(now_enabled)
+            return R.drawable.widget_enabled;
+        return R.drawable.widget_disabled;
     }
 }
