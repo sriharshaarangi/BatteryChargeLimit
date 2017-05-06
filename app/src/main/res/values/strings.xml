@@ -32,4 +32,7 @@
     <string name="intent_limit_invalid">The supplied limit was invalid.</string>
     <string name="intent_limit_accepted">The battery charging limit was changed to %1$d%%.</string>
     <string name="mime_battery_limit">text/x-battery-limit</string>
+
+    <string name="enabled"> Enabled! </string>
+    <string name="disabled"> Disabled! </string>
 </resources>

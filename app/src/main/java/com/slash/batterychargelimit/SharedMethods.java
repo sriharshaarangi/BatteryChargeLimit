@@ -140,14 +140,14 @@ public class SharedMethods {
         if (SharedMethods.isPhonePluggedIn(context)) {
             context.startService(new Intent(context, ForegroundService.class));
         }
-        Toast.makeText(context, "enabled", Toast.LENGTH_LONG).show();
+        Toast.makeText(context, R.string.enabled, Toast.LENGTH_LONG).show();
     }
     public static void serviceDisabled(Context context){
         ForegroundService.ignoreAutoReset();
         context.stopService(new Intent(context, ForegroundService.class));
         SharedMethods.changeState(context, null, CHARGE_ON);
 
-        Toast.makeText(context, "disabled", Toast.LENGTH_LONG).show();
+        Toast.makeText(context, R.string.disabled, Toast.LENGTH_LONG).show();
     }
 
 }
