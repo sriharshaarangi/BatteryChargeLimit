@@ -28,7 +28,6 @@ import java.nio.charset.Charset;
 import java.util.List;
 
 import static com.slash.batterychargelimit.Constants.*;
-import static com.slash.batterychargelimit.SharedMethods.CHARGE_ON;
 
 public class MainActivity extends AppCompatActivity {
     private SeekBar rangeBar;
@@ -102,8 +101,8 @@ public class MainActivity extends AppCompatActivity {
                         return;
                     }
                 case 4:
-                    if (settings.contains(LIMIT_REACHED)) {
-                        settings.edit().remove(LIMIT_REACHED).apply();
+                    if (settings.contains("limit_reached")) {
+                        settings.edit().remove("limit_reached").apply();
                     }
                 case 6:
                     // settings upgrade for future version(s)
@@ -195,9 +194,9 @@ public class MainActivity extends AppCompatActivity {
             if (isChecked) {
                 // reset TextView content to valid number
                 limit_TextView.setText(String.valueOf(settings.getInt(LIMIT, 80)));
-                SharedMethods.serviceEnabled(context);
+                SharedMethods.enableService(context);
             } else {
-                SharedMethods.serviceDisabled(context);
+                SharedMethods.disableService(context);
             }
 
             settings.edit().putBoolean(ENABLE, isChecked).apply();

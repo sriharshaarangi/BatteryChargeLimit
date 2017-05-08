@@ -30,13 +30,12 @@ public class PowerConnectionReceiver extends BroadcastReceiver {
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        context.startService(new Intent(context, ForegroundService.class));
+                        SharedMethods.enableService(context);
                     }
                 }, CHARGING_CHANGE_TOLERANCE_MS);
             } else if (action.equals(Intent.ACTION_POWER_DISCONNECTED)) {
                 Log.d("Power State", "ACTION_POWER_DISCONNECTED");
-                context.stopService(new Intent(context, ForegroundService.class));
-                SharedMethods.changeState(context, null, CHARGE_ON);
+                SharedMethods.disableService(context, false);
             }
         }
     }

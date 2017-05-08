@@ -2,7 +2,6 @@
 
 <!-- Translated to Brazilian Portuguese by Caio Roberto - caiorrs, on 04/05/2017* (*May the fourth be with you)-->
 <resources>
-    <string name="app_name">Battery Charge Limit</string>
     <string name="action_settings">Configurações</string>
     <string name="enable">Habilitar </string>
     <string name="limit_from_to">Limite (entre 40 e 99): </string>
@@ -34,5 +33,4 @@
     <string name="intent_invalid">O objetivo fornecido era inválido.</string>
     <string name="intent_limit_invalid">O limite fornecido era inválido.</string>
     <string name="intent_limit_accepted">O limite de carga da bateria foi mudado para %1$d%%.</string>
-    <string name="mime_battery_limit">text/x-battery-limit</string>
 </resources>

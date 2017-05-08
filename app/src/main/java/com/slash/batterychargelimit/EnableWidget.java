@@ -11,6 +11,7 @@ import android.widget.RemoteViews;
 
 import static com.slash.batterychargelimit.Constants.ENABLE;
 import static com.slash.batterychargelimit.Constants.SETTINGS;
+import static com.slash.batterychargelimit.Constants.INTENT_TOGGLE_ACTION;
 
 /**
  * Created by harsha on 5/5/17.
@@ -18,9 +19,7 @@ import static com.slash.batterychargelimit.Constants.SETTINGS;
 
 public class EnableWidget extends AppWidgetProvider {
     @Override
-    public void onUpdate(Context context, AppWidgetManager appWidgetManager,
-                         int[] appWidgetIds) {
-
+    public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.enable);
         SharedPreferences settings = context.getSharedPreferences(SETTINGS, 0);
         boolean is_enabled = settings.getBoolean(ENABLE, false);
@@ -31,9 +30,8 @@ public class EnableWidget extends AppWidgetProvider {
     }
 
     public static PendingIntent buildButtonPendingIntent(Context context) {
-        Intent intent = new Intent();
-        intent.setAction("com.slash.batterychargelimit.TOGGLE");
-        return PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        return PendingIntent.getBroadcast(context, 0,
+                new Intent().setAction(INTENT_TOGGLE_ACTION), PendingIntent.FLAG_UPDATE_CURRENT);
     }
 
     public static void pushWidgetUpdate(Context context, RemoteViews remoteViews) {

@@ -48,23 +48,18 @@
                 <action android:name="com.slash.batterychargelimit.CHANGE_LIMIT" />
             </intent-filter>
         </receiver>
-
         <receiver android:name=".EnableWidgetIntentReceiver">
             <intent-filter>
                 <action android:name="com.slash.batterychargelimit.TOGGLE" />
             </intent-filter>
         </receiver>
-
         <receiver android:name=".EnableWidget">
-
             <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"></action>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
-
-            <meta-data android:name="android.appwidget.provider"
-                android:resource="@xml/enable_widget"></meta-data>
-
+            <meta-data android:name="android.appwidget.provider" android:resource="@xml/enable_widget" />
         </receiver>
+
         <service android:name="com.slash.batterychargelimit.ForegroundService" />
     </application>
 

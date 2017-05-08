@@ -136,17 +136,25 @@ public class SharedMethods {
             Toast.makeText(context, R.string.intent_limit_invalid, Toast.LENGTH_LONG).show();
         }
     }
-    public static void serviceEnabled(Context context){
+
+    public static void enableService(Context context){
         if (SharedMethods.isPhonePluggedIn(context)) {
             context.startService(new Intent(context, ForegroundService.class));
+            // display service enabled Toast message
+            Toast.makeText(context, R.string.enabled, Toast.LENGTH_LONG).show();
         }
-        Toast.makeText(context, R.string.enabled, Toast.LENGTH_LONG).show();
     }
-    public static void serviceDisabled(Context context){
-        ForegroundService.ignoreAutoReset();
+
+    public static void disableService(Context context) {
+        disableService(context, true);
+    }
+    public static void disableService(Context context, boolean ignoreAutoReset) {
+        if (ignoreAutoReset) {
+            ForegroundService.ignoreAutoReset();
+        }
         context.stopService(new Intent(context, ForegroundService.class));
         SharedMethods.changeState(context, null, CHARGE_ON);
-
+        // display service disabled Toast message
         Toast.makeText(context, R.string.disabled, Toast.LENGTH_LONG).show();
     }
 

@@ -73,7 +73,7 @@ public class BatteryReceiver extends BroadcastReceiver {
             public void run() {
                 // continue only if the state didn't change in the meantime
                 if (triggerState == lastState && !SharedMethods.isPhonePluggedIn(service)) {
-                    service.stopService(new Intent(service, ForegroundService.class));
+                    SharedMethods.disableService(service, false);
                 }
             }
         }, CHARGING_CHANGE_TOLERANCE_MS);
