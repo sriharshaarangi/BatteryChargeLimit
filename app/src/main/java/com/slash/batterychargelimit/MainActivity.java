@@ -38,8 +38,8 @@ public class MainActivity extends AppCompatActivity {
     private SharedPreferences settings;
     private RadioGroup batteryFile_RadioGroup;
     private Switch enable_Switch;
-    private boolean rootEnabled;
-    public boolean isRegistered = false;
+    private boolean initComplete = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,10 +47,8 @@ public class MainActivity extends AppCompatActivity {
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        rootEnabled = true;
         // Exit immediately if no root support
         if (!Shell.SU.available()) {
-            rootEnabled = false;
             Toast.makeText(this, R.string.root_denied, Toast.LENGTH_LONG );
             new AlertDialog.Builder(MainActivity.this)
                     .setMessage(R.string.root_denied)
@@ -116,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (is_enabled && SharedMethods.isPhonePluggedIn(this)) {
             this.startService(new Intent(this, ForegroundService.class));
-        }//notif is 1!
+        }
 
         batteryFile_RadioGroup = (RadioGroup) findViewById(R.id.rgOpinion);
         enable_Switch = (Switch) findViewById(R.id.button1);
@@ -186,10 +184,12 @@ public class MainActivity extends AppCompatActivity {
                 settings.edit().putBoolean(AUTO_RESET_STATS, isChecked).apply();
             }
         });
+
+        //The onCreate() process was not stopped via return, UI elements should be available
+        initComplete = true;
     }
 
-
-    //oncheckedchangelistener for switches
+    //OnCheckedChangeListener for Switch elements
     private CompoundButton.OnCheckedChangeListener switchListener = new CompoundButton.OnCheckedChangeListener() {
         Context context = MainActivity.this;
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -328,26 +328,23 @@ public class MainActivity extends AppCompatActivity {
             case R.id.about:
                 Intent intent = new Intent(this, About.class);
                 this.startActivity(intent);
-                return true;
         }
         return true;
     }
 
     @Override
     public void onStop() {
-        if(isRegistered)
+        if(initComplete) {
             unregisterReceiver(charging);
-        isRegistered = false;
+        }
         super.onStop();
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        if(rootEnabled) {
+        if(initComplete) {
             registerReceiver(charging, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
-            isRegistered = true;
-
             // the limits could have been changed by an Intent, so update the UI here
             updateUi();
         }
