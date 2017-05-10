@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fillViewport="true"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="8dp"
+    >
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/ic_launcher"
+        android:id="@id/app_icon"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/app_name"
+        android:id="@+id/app_name"
+        android:textStyle="bold"
+        android:layout_toEndOf="@+id/app_icon"
+        android:layout_margin="4dp"
+        android:textSize="14dp"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/app_name"
+        android:layout_toEndOf="@+id/app_icon"
+        android:id="@+id/app_version"
+        android:text="0.9.1"
+        android:layout_marginStart="4dp"
+
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="License: GPL-3.0"
+        android:id="@+id/licence"
+        android:textStyle="bold"
+        android:layout_below="@+id/app_icon"
+        android:layout_marginTop="4dp"
+        android:layout_marginStart="4dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Developers "
+        android:id="@+id/developers_title"
+        android:textStyle="bold"
+        android:layout_below="@+id/licence"
+        android:textSize="20dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginStart="4dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:id="@+id/developers"
+        android:layout_below="@+id/developers_title"
+        android:layout_marginStart="4dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Translators "
+        android:id="@+id/translators_title"
+        android:textStyle="bold"
+        android:layout_below="@+id/developers"
+        android:textSize="20dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginStart="4dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:id="@+id/translators"
+        android:layout_below="@+id/translators_title"
+        android:layout_marginStart="4dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Source code "
+        android:id="@+id/source"
+        android:textStyle="bold"
+        android:layout_below="@+id/translators"
+        android:layout_marginStart="4dp"
+        android:textSize="20dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:id="@+id/source_code"
+        android:layout_below="@+id/source"
+        android:layout_marginStart="4dp"
+        android:autoLink="web"
+
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="XDA thread "
+        android:id="@+id/xda"
+        android:textStyle="bold"
+        android:layout_below="@+id/source_code"
+        android:layout_marginTop="4dp"
+        android:layout_marginStart="4dp"
+        android:textSize="20dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:id="@+id/xda_thread"
+        android:layout_below="@+id/xda"
+        android:layout_marginStart="4dp"
+        android:autoLink="web"
+        />
+
+</RelativeLayout>
+</ScrollView>

@@ -25,4 +25,9 @@ public abstract class Constants {
     public static final long CHARGING_CHANGE_TOLERANCE_MS = 500;
 
     public static final String INTENT_TOGGLE_ACTION = "com.slash.batterychargelimit.TOGGLE";
+
+    public static final String XDA_THREAD = "https://forum.xda-developers.com/android/apps-games/root-battery-charge-limit-t3557002/";
+    public static final String SOURCE_CODE = "https://github.com/sriharshaarangi/BatteryChargeLimit";
+    public static final String[] DEVELOPERS = {"Sri Harsha Arangi", "Michael Lux"};
+    public static final String[] TRANSLATORS = {"Caio Roberto"};
 }
