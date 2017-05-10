@@ -1,8 +1,8 @@
 <resources>
-    <string name="app_name">Battery Charge Limit</string>
+    <string name="app_name" translatable="false">Battery Charge Limit</string>
     <string name="action_settings">Settings</string>
-    <string name="source_code"><a href="https://github.com/sriharshaarangi/BatteryChargeLimit">Source Code</a></string>
-    <string name="xda_thread"><a href="https://forum.xda-developers.com/android/apps-games/root-battery-charge-limit-t3557002/">XDA Thread</a></string>
+    <string name="source_code" translatable="false"><a href="https://github.com/sriharshaarangi/BatteryChargeLimit">Source Code</a></string>
+    <string name="xda_thread" translatable="false"><a href="https://forum.xda-developers.com/android/apps-games/root-battery-charge-limit-t3557002/">XDA Thread</a></string>
     <string name="about">About</string>
     <string name="enable">Enable </string>
     <string name="limit_from_to">Limit (between 40 and 99): </string>
@@ -34,8 +34,8 @@
     <string name="intent_invalid">The supplied intent was invalid.</string>
     <string name="intent_limit_invalid">The supplied limit was invalid.</string>
     <string name="intent_limit_accepted">The battery charging limit was changed to %1$d%%.</string>
-    <string name="mime_battery_limit">text/x-battery-limit</string>
+    <string name="mime_battery_limit" translatable="false">text/x-battery-limit</string>
 
-    <string name="enabled"> Enabled! </string>
-    <string name="disabled"> Disabled! </string>
+    <string name="service_enabled"> Battery Limit Service Enabled! </string>
+    <string name="service_disabled"> Battery Limit Service Disabled! </string>
 </resources>

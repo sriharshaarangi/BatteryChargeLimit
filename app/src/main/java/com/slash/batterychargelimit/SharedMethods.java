@@ -5,12 +5,9 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.BatteryManager;
-import android.support.annotation.StringRes;
-import android.util.Log;
 import android.widget.Toast;
 import eu.chainfire.libsuperuser.Shell;
 
-import java.io.IOException;
 import java.util.List;
 
 import static com.slash.batterychargelimit.Constants.*;
@@ -141,7 +138,7 @@ public class SharedMethods {
         if (SharedMethods.isPhonePluggedIn(context)) {
             context.startService(new Intent(context, ForegroundService.class));
             // display service enabled Toast message
-            Toast.makeText(context, R.string.enabled, Toast.LENGTH_LONG).show();
+            Toast.makeText(context, R.string.service_enabled, Toast.LENGTH_LONG).show();
         }
     }
 
@@ -155,7 +152,7 @@ public class SharedMethods {
         context.stopService(new Intent(context, ForegroundService.class));
         SharedMethods.changeState(context, null, CHARGE_ON);
         // display service disabled Toast message
-        Toast.makeText(context, R.string.disabled, Toast.LENGTH_LONG).show();
+        Toast.makeText(context, R.string.service_disabled, Toast.LENGTH_LONG).show();
     }
 
 }
