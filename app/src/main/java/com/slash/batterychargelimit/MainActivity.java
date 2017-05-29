@@ -214,12 +214,13 @@ public class MainActivity extends AppCompatActivity {
     private List<ControlFile> ctrlFiles = null;
     private List<ControlFile> getCtrlFiles() {
         if (ctrlFiles == null) {
-            try (Reader r = new InputStreamReader(getResources().openRawResource(R.raw.control_files),
-                    Charset.forName("UTF-8"))) {
+            try {
+                Reader r = new InputStreamReader(getResources().openRawResource(R.raw.control_files),
+                        Charset.forName("UTF-8"));
                 Gson gson = new Gson();
                 ctrlFiles = gson.fromJson(r, new TypeToken<List<ControlFile>>(){}.getType());
-            } catch (IOException ioe) {
-                ioe.printStackTrace();
+            } catch (Exception e) {
+                e.printStackTrace();
                 finish();
             }
         }
