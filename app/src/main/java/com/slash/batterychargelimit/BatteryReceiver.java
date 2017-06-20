@@ -41,7 +41,7 @@ public class BatteryReceiver extends BroadcastReceiver {
         lastState = -1;
         SharedPreferences settings = service.getSharedPreferences(SETTINGS, 0);
         limitPercentage = settings.getInt(LIMIT, 80);
-        rechargePercentage = limitPercentage - settings.getInt(RECHARGE_DIFF, 2);
+        rechargePercentage = settings.getInt(MIN, limitPercentage - 2);
         if (callOnReceive) {
             Intent batteryIntent = service.registerReceiver(null,
                     new IntentFilter(Intent.ACTION_BATTERY_CHANGED));

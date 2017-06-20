@@ -16,6 +16,7 @@
     <string name="device_not_supported">Your device is not supported (yet)!</string>
     <string name="ok">OK</string>
     <string name="recharge_below">Recharge below %1$d%%</string>
+    <string name="no_recharge">No automatic recharge</string>
 
     <string name="charging">CHARGING</string>
     <string name="discharging">DISCHARGING</string>

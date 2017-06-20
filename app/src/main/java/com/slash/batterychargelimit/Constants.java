@@ -15,7 +15,7 @@ public abstract class Constants {
     public static final String CHARGE_OFF_KEY = "charge_off";
 
     public static final String LIMIT = "limit";
-    public static final String RECHARGE_DIFF = "recharge_threshold";
+    public static final String MIN = "min";
     public static final String ENABLE = "enable";
     public static final String NOTIFICATION_LIVE = "notificationLive";
     public static final String AUTO_RESET_STATS = "auto_reset_stats";

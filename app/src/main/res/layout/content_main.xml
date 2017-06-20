@@ -77,8 +77,8 @@
             android:layout_weight="1"
             android:paddingEnd="30dp"
             android:paddingStart="10dp"
-            android:max="10"
-            android:progress="2" />
+            android:max="80"
+            android:progress="78" />
 
         <TextView
             android:id="@+id/range_text"

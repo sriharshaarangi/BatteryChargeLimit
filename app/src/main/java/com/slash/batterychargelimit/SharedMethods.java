@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.BatteryManager;
+import android.util.Log;
 import android.widget.Toast;
 import eu.chainfire.libsuperuser.Shell;
 
@@ -108,6 +109,13 @@ public class SharedMethods {
         Toast.makeText(context, R.string.stats_reset_success, Toast.LENGTH_LONG).show();
     }
 
+    public static void setLimit(int limit, SharedPreferences settings) {
+        int max = settings.getInt(LIMIT, 80);
+        // calculate new recharge threshold from previous distance
+        int min = Math.max(0, limit - (max - settings.getInt(MIN, max - 2)));
+        settings.edit().putInt(LIMIT, limit).putInt(MIN, min).apply();
+    }
+
     public static void handleLimitChange(Context context, Object newLimit) {
         try {
             int limit;
@@ -116,18 +124,25 @@ public class SharedMethods {
             } else {
                 limit = Integer.parseInt(newLimit.toString());
             }
-            if (40 <= limit && limit <= 99) {
+            if (limit == 100) {
                 SharedPreferences settings = context.getSharedPreferences(SETTINGS, 0);
-                // set the new limit and apply it
-                settings.edit().putInt(LIMIT, limit).apply();
+                disableService(context);
+                settings.edit().putBoolean(ENABLE, false).apply();
+            } else if (40 <= limit && limit <= 99) {
+                SharedPreferences settings = context.getSharedPreferences(SETTINGS, 0);
+                // set the new limit
+                setLimit(limit, settings);
                 Toast.makeText(context, context.getString(R.string.intent_limit_accepted, limit),
                         Toast.LENGTH_SHORT).show();
                 if (settings.getBoolean(NOTIFICATION_LIVE, false)) {
                     // "restart" service if necessary
                     context.startService(new Intent(context, ForegroundService.class));
+                } else {
+                    settings.edit().putBoolean(ENABLE, true).apply();
+                    enableService(context);
                 }
             } else {
-                throw new NumberFormatException("battery limit out of range");
+                throw new NumberFormatException("Battery limit out of range!");
             }
         } catch (NumberFormatException fe) {
             Toast.makeText(context, R.string.intent_limit_invalid, Toast.LENGTH_LONG).show();

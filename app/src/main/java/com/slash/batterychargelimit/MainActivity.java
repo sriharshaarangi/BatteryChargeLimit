@@ -22,7 +22,6 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import eu.chainfire.libsuperuser.Shell;
 
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.nio.charset.Charset;
@@ -99,11 +98,17 @@ public class MainActivity extends AppCompatActivity {
                                 }).create().show();
                         return;
                     }
-                case 4:
+                case 1: case 2: case 3: case 4:
                     if (settings.contains("limit_reached")) {
                         settings.edit().remove("limit_reached").apply();
                     }
-                case 6:
+                case 5: case 6: case 7: case 8: case 9: case 10: case 11: case 12: case 13:
+                    if (settings.contains("recharge_threshold")) {
+                        int limit = settings.getInt(LIMIT, 80);
+                        int diff = settings.getInt("recharge_threshold", limit - 2);
+                        settings.edit().putInt(MIN, limit - diff).remove("recharge_threshold").apply();
+                    }
+                case 14:
                     // settings upgrade for future version(s)
             }
             // update the settings version
@@ -152,18 +157,19 @@ public class MainActivity extends AppCompatActivity {
                     //ignore this exception
                 }
                 if (t >= 40 && t <= 99) {
-                    settings.edit().putInt(LIMIT, t).apply();
-                    rangeText.setText(getString(R.string.recharge_below,
-                            t - settings.getInt(RECHARGE_DIFF, 2)));
+                    SharedMethods.setLimit(t, settings);
+                    int min = settings.getInt(MIN, t - 2);
+                    rangeBar.setMax(t);
+                    rangeBar.setProgress(min);
+                    updateRangeText(min);
                 }
             }
         });
         rangeBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
-            public void onProgressChanged(SeekBar seekBar, int diff, boolean fromUser) {
-                settings.edit().putInt(RECHARGE_DIFF, diff).apply();
-                rangeText.setText(getString(R.string.recharge_below,
-                        settings.getInt(LIMIT, 80) - diff));
+            public void onProgressChanged(SeekBar seekBar, int min, boolean fromUser) {
+                settings.edit().putInt(MIN, min).apply();
+                updateRangeText(min);
             }
 
             @Override
@@ -351,16 +357,22 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void updateUi(){
-        boolean is_enabled = settings.getBoolean(ENABLE, false);
-        enable_Switch.setChecked(is_enabled);
+    private void updateRangeText(int min) {
+        if (min == 0) {
+            rangeText.setText(R.string.no_recharge);
+        } else {
+            rangeText.setText(getString(R.string.recharge_below, min));
+        }
+    }
 
-        int limit_percentage = settings.getInt(LIMIT, 80);
-        limit_TextView.setText(String.valueOf(limit_percentage));
+    private void updateUi() {
+        enable_Switch.setChecked(settings.getBoolean(ENABLE, false));
 
-        int rechargeDiff = settings.getInt(RECHARGE_DIFF, 2);
-        rangeBar.setProgress(rechargeDiff);
-
-        rangeText.setText(getString(R.string.recharge_below, limit_percentage - rechargeDiff));
+        int limit = settings.getInt(LIMIT, 80);
+        int min = settings.getInt(MIN, limit - 2);
+        limit_TextView.setText(String.valueOf(limit));
+        rangeBar.setMax(limit);
+        rangeBar.setProgress(min);
+        updateRangeText(min);
     }
 }
