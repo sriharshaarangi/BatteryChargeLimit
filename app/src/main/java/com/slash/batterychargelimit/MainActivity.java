@@ -11,8 +11,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -30,11 +28,14 @@ import java.util.List;
 import static com.slash.batterychargelimit.Constants.*;
 
 public class MainActivity extends AppCompatActivity {
-    private SeekBar rangeBar;
-    private TextView rangeText;
-    private TextView status_TextView;
-    private EditText limit_TextView;
+//    private SeekBar rangeBar;
+    private NumberPicker minPicker;
+    private TextView minText;
+    private NumberPicker maxPicker;
+    private TextView maxText;
     private SharedPreferences settings;
+    private TextView status_TextView;
+    private TextView batteryInfo;
     private RadioGroup batteryFile_RadioGroup;
     private Switch enable_Switch;
     private boolean initComplete = false;
@@ -122,61 +123,47 @@ public class MainActivity extends AppCompatActivity {
         }
 
         batteryFile_RadioGroup = (RadioGroup) findViewById(R.id.rgOpinion);
-        enable_Switch = (Switch) findViewById(R.id.button1);
-        limit_TextView = (EditText) findViewById(R.id.limit_EditText);
+        enable_Switch = (Switch) findViewById(R.id.enable_switch);
+        maxPicker = (NumberPicker) findViewById(R.id.max_picker);
+        maxText = (TextView) findViewById(R.id.max_text);
         status_TextView = (TextView) findViewById(R.id.status);
+        batteryInfo = (TextView) findViewById(R.id.battery_info);
         final Button resetBatteryStats_Button = (Button) findViewById(R.id.reset_battery_stats);
-        rangeBar = (SeekBar) findViewById(R.id.range_bar);
-        rangeText = (TextView) findViewById(R.id.range_text);
+        minPicker = (NumberPicker) findViewById(R.id.min_picker);
+//        rangeBar = (SeekBar) findViewById(R.id.range_bar);
+        minText = (TextView) findViewById(R.id.min_text);
         final Switch autoResetSwitch = (Switch) findViewById(R.id.auto_stats_reset);
 
-        enable_Switch.setChecked(is_enabled);
         updateRadioButtons(true);
         autoResetSwitch.setChecked(settings.getBoolean(AUTO_RESET_STATS, false));
+        maxPicker.setMinValue(40);
+        maxPicker.setMaxValue(99);
+        minPicker.setMinValue(0);
 
         // if limit is enabled, disable all editable settings
         if (is_enabled) {
-            limit_TextView.setEnabled(false);
-            rangeBar.setEnabled(false);
+            maxPicker.setEnabled(false);
+            minPicker.setEnabled(false);
         }
 
         enable_Switch.setOnCheckedChangeListener(switchListener);
-        limit_TextView.addTextChangedListener(new TextWatcher() {
+        maxPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                int t = 0;
-                try {
-                    t = Integer.parseInt(limit_TextView.getText().toString());
-                } catch (NumberFormatException e) {
-                    //ignore this exception
-                }
-                if (t >= 40 && t <= 99) {
-                    SharedMethods.setLimit(t, settings);
-                    int min = settings.getInt(MIN, t - 2);
-                    rangeBar.setMax(t);
-                    rangeBar.setProgress(min);
-                    updateRangeText(min);
-                }
+            public void onValueChange(NumberPicker picker, int oldMax, int max) {
+                SharedMethods.setLimit(max, settings);
+                maxText.setText(getString(R.string.limit, max));
+                int min = settings.getInt(MIN, max - 2);
+                minPicker.setMaxValue(max);
+                minPicker.setValue(min);
+                updateMinText(min);
             }
         });
-        rangeBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+        minPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override
-            public void onProgressChanged(SeekBar seekBar, int min, boolean fromUser) {
+            public void onValueChange(NumberPicker picker, int oldMin, int min) {
                 settings.edit().putInt(MIN, min).apply();
-                updateRangeText(min);
+                updateMinText(min);
             }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {}
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {}
         });
         resetBatteryStats_Button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -200,8 +187,6 @@ public class MainActivity extends AppCompatActivity {
         Context context = MainActivity.this;
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
             if (isChecked) {
-                // reset TextView content to valid number
-                limit_TextView.setText(String.valueOf(settings.getInt(LIMIT, 80)));
                 SharedMethods.enableService(context);
             } else {
                 SharedMethods.disableService(context);
@@ -209,9 +194,9 @@ public class MainActivity extends AppCompatActivity {
 
             settings.edit().putBoolean(ENABLE, isChecked).apply();
 
-            limit_TextView.setEnabled(!isChecked);
+            maxPicker.setEnabled(!isChecked);
+            minPicker.setEnabled(!isChecked);
             updateRadioButtons(false);
-            rangeBar.setEnabled(!isChecked);
 
             EnableWidgetIntentReceiver.updateWidget(context, isChecked);
         }
@@ -298,6 +283,8 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onReceive(Context context, Intent intent) {
             int currentStatus = intent.getIntExtra(BatteryManager.EXTRA_STATUS, BatteryManager.BATTERY_STATUS_UNKNOWN);
+            float batteryVoltage = (float) intent.getIntExtra(BatteryManager.EXTRA_VOLTAGE, -1) / 1000.f;
+            float batteryCelsius = (float) intent.getIntExtra(BatteryManager.EXTRA_TEMPERATURE, -1) / 10.f;
             if (currentStatus != previousStatus && status_TextView != null) {
                 previousStatus = currentStatus;
                 if (currentStatus == BatteryManager.BATTERY_STATUS_CHARGING) {
@@ -317,6 +304,7 @@ public class MainActivity extends AppCompatActivity {
                     status_TextView.setTextColor(Color.BLACK);
                 }
             }
+            batteryInfo.setText(" (" + getString(R.string.battery_info, batteryVoltage, batteryCelsius) + ")");
         }
     };
 
@@ -357,22 +345,23 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void updateRangeText(int min) {
+    private void updateMinText(int min) {
         if (min == 0) {
-            rangeText.setText(R.string.no_recharge);
+            minText.setText(R.string.no_recharge);
         } else {
-            rangeText.setText(getString(R.string.recharge_below, min));
+            minText.setText(getString(R.string.recharge_below, min));
         }
     }
 
     private void updateUi() {
         enable_Switch.setChecked(settings.getBoolean(ENABLE, false));
-
-        int limit = settings.getInt(LIMIT, 80);
-        int min = settings.getInt(MIN, limit - 2);
-        limit_TextView.setText(String.valueOf(limit));
-        rangeBar.setMax(limit);
-        rangeBar.setProgress(min);
-        updateRangeText(min);
+        int max = settings.getInt(LIMIT, 80);
+        int min = settings.getInt(MIN, max - 2);
+        maxPicker.setValue(max);
+        maxText.setText(getString(R.string.limit, max));
+        minPicker.setMaxValue(max);
+        minPicker.setValue(min);
+        updateMinText(min);
+        updateRadioButtons(false);
     }
 }

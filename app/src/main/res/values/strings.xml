@@ -5,7 +5,8 @@
     <string name="xda_thread" translatable="false"><a href="https://forum.xda-developers.com/android/apps-games/root-battery-charge-limit-t3557002/">XDA Thread</a></string>
     <string name="about">About</string>
     <string name="enable">Enable </string>
-    <string name="limit_from_to">Limit (between 40 and 99): </string>
+    <string name="limit">Limit charging to %1$d%%</string>
+    <string name="recharge_below">Recharge below %1$d%%</string>
     <string name="status">Status: </string>
     <string name="select_file">Select charge control file: </string>
     <string name="experimental">%1$s (experimental!)</string>
@@ -15,7 +16,6 @@
     <string name="previously_started">Previously Started</string>
     <string name="device_not_supported">Your device is not supported (yet)!</string>
     <string name="ok">OK</string>
-    <string name="recharge_below">Recharge below %1$d%%</string>
     <string name="no_recharge">No automatic recharge</string>
 
     <string name="charging">CHARGING</string>
@@ -27,6 +27,7 @@
     <string name="please_wait">Please wait…</string>
     <string name="maintaining_x_to_y">Maintaining %1$d%% - %2$d%% IF plugged"</string>
     <string name="waiting_until_x">Waiting until %1$d%%</string>
+    <string name="battery_info">U: %1$.3f V, T: %2$.1f &#8451;</string>
 
     <string name="root_denied">App is denied ROOT access or device is not rooted!</string>
     <string name="stats_reset_success">Battery Stats reset successful</string>

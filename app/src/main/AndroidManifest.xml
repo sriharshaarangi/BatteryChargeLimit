@@ -3,6 +3,7 @@
     package="com.slash.batterychargelimit">
 
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.RESET_BATTERY_STATS"/>
 
     <application
         android:allowBackup="true"

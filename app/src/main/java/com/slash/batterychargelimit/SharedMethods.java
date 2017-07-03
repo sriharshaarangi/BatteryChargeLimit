@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.BatteryManager;
-import android.util.Log;
 import android.widget.Toast;
 import eu.chainfire.libsuperuser.Shell;
 

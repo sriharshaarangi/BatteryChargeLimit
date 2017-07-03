@@ -84,8 +84,13 @@ public class ForegroundService extends Service {
         return super.onStartCommand(intent, flags, startId);
     }
 
-    public void setNotification(String notification) {
-        mNotifyBuilder.setContentTitle(notification);
+    public void setNotification(String title, String contentText) {
+        mNotifyBuilder.setContentText(contentText);
+        setNotification(title);
+    }
+
+    public void setNotification(String title) {
+        mNotifyBuilder.setContentTitle(title);
         mNotificationManager.notify(notifyID, mNotifyBuilder.build());
     }
 

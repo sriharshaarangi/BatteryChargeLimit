@@ -87,6 +87,8 @@ public class BatteryReceiver extends BroadcastReceiver {
         }
 
         int batteryLevel = SharedMethods.getBatteryLevel(intent);
+        int batteryVoltage = intent.getIntExtra(BatteryManager.EXTRA_VOLTAGE, -1);
+        int batteryTemperature = intent.getIntExtra(BatteryManager.EXTRA_TEMPERATURE, -1);
         int currentStatus = intent.getIntExtra(BatteryManager.EXTRA_STATUS, BatteryManager.BATTERY_STATUS_UNKNOWN);
 
         // when the service was "freshly started", charge until limit
@@ -94,7 +96,9 @@ public class BatteryReceiver extends BroadcastReceiver {
             if (switchState(CHARGE_FULL)) {
                 Log.d("Charging State", "CHARGE_FULL " + this.hashCode());
                 SharedMethods.changeState(service, shell, CHARGE_ON);
-                service.setNotification(service.getString(R.string.waiting_until_x, limitPercentage));
+                service.setNotification(service.getString(R.string.waiting_until_x, limitPercentage),
+                        service.getString(R.string.battery_info, (float) batteryVoltage / 1000.f,
+                                (float) batteryTemperature / 10.f));
                 stopIfUnplugged();
             }
         } else if (batteryLevel >= limitPercentage) {
@@ -107,7 +111,8 @@ public class BatteryReceiver extends BroadcastReceiver {
                 SharedMethods.changeState(service, shell, CHARGE_OFF);
                 // set the "maintain" notification, this must not change from now
                 service.setNotification(service.getString(R.string.maintaining_x_to_y,
-                        rechargePercentage, limitPercentage));
+                        rechargePercentage, limitPercentage), service.getString(R.string.battery_info,
+                        (float) batteryVoltage / 1000.f, (float) batteryTemperature / 10.f));
             } else if (currentStatus == BatteryManager.BATTERY_STATUS_CHARGING) {
                 Log.d("Charging State", "Fixing state w. CHARGE_ON/CHARGE_OFF " + this.hashCode());
                 // if the device did not stop charging, try to "cycle" the state to fix this
