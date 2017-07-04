@@ -3,7 +3,7 @@
 <!-- Translated to Brazilian Portuguese by Caio Roberto - caiorrs, on 04/05/2017* (*May the fourth be with you)-->
 <resources>
     <string name="action_settings">Configurações</string>
-    <string name="enable">Habilitar </string>
+    <string name="enable">Habilitar Battery Charge Limit</string>
     <string name="limit">Limite: %1$d%%</string>
     <string name="status">Estado: </string>
     <string name="select_file">Selecione um arquivo para controle de carga: </string>

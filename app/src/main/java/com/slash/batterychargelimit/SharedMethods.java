@@ -5,9 +5,13 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.BatteryManager;
+import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 import eu.chainfire.libsuperuser.Shell;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
 import java.util.List;
 
 import static com.slash.batterychargelimit.Constants.*;
@@ -103,8 +107,21 @@ public class SharedMethods {
         return level * 100 / scale;
     }
 
-    public static void resetBatteryStats(Context context){
-        Shell.SU.run("dumpsys batterystats --reset");
+    public static void resetBatteryStats(Context context) {
+        try {
+            // new technique for PureNexus-powered devices
+            Class<?> helperClass = Class.forName("com.android.internal.os.BatteryStatsHelper");
+            Constructor<?> constructor = helperClass.getConstructor(Context.class, boolean.class, boolean.class);
+            Object instance = constructor.newInstance(context, false, false);
+            Method createMethod = helperClass.getMethod("create", Bundle.class);
+            createMethod.invoke(instance, (Bundle) null);
+            Method resetMethod = helperClass.getMethod("resetStatistics");
+            resetMethod.invoke(instance);
+        } catch (Exception e) {
+            Log.i("New reset method failed", e.getMessage(), e);
+            // on Exception, fall back to conventional method
+            Shell.SU.run("dumpsys batterystats --reset");
+        }
         Toast.makeText(context, R.string.stats_reset_success, Toast.LENGTH_LONG).show();
     }
 
