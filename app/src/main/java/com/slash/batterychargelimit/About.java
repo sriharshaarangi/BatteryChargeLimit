@@ -3,10 +3,7 @@ package com.slash.batterychargelimit;
 import android.content.pm.PackageInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.text.Html;
-import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
-import android.util.StringBuilderPrinter;
 import android.widget.TextView;
 
 /**
@@ -24,8 +21,6 @@ public class About extends AppCompatActivity{
         displayTranslators();
         displaySourceLink();
         displayXdaLink();
-
-
     }
 
     private void displayVersion(){
@@ -34,7 +29,7 @@ public class About extends AppCompatActivity{
             PackageInfo packageInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
             String version = packageInfo.versionName;
             int versionCode = packageInfo.versionCode;
-            String display = version + "(" + versionCode + ")";
+            String display = version + " (" + versionCode + ")";
             versionTV.setText(display);
         }
         catch (Exception e){
