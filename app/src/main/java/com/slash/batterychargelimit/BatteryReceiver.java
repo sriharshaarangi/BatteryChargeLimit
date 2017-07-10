@@ -96,9 +96,7 @@ public class BatteryReceiver extends BroadcastReceiver {
             if (switchState(CHARGE_FULL)) {
                 Log.d("Charging State", "CHARGE_FULL " + this.hashCode());
                 SharedMethods.changeState(service, shell, CHARGE_ON);
-                service.setNotification(service.getString(R.string.waiting_until_x, limitPercentage),
-                        service.getString(R.string.battery_info, (float) batteryVoltage / 1000.f,
-                                (float) batteryTemperature / 10.f));
+                service.setNotificationTitle(service.getString(R.string.waiting_until_x, limitPercentage));
                 stopIfUnplugged();
             }
         } else if (batteryLevel >= limitPercentage) {
@@ -110,9 +108,8 @@ public class BatteryReceiver extends BroadcastReceiver {
                 service.enableAutoReset();
                 SharedMethods.changeState(service, shell, CHARGE_OFF);
                 // set the "maintain" notification, this must not change from now
-                service.setNotification(service.getString(R.string.maintaining_x_to_y,
-                        rechargePercentage, limitPercentage), service.getString(R.string.battery_info,
-                        (float) batteryVoltage / 1000.f, (float) batteryTemperature / 10.f));
+                service.setNotificationTitle(service.getString(R.string.maintaining_x_to_y,
+                        rechargePercentage, limitPercentage));
             } else if (currentStatus == BatteryManager.BATTERY_STATUS_CHARGING) {
                 Log.d("Charging State", "Fixing state w. CHARGE_ON/CHARGE_OFF " + this.hashCode());
                 // if the device did not stop charging, try to "cycle" the state to fix this
@@ -132,6 +129,11 @@ public class BatteryReceiver extends BroadcastReceiver {
                 stopIfUnplugged();
             }
         }
+
+        // update battery status information and rebuild notification
+        service.setNotificationContentText(service.getString(R.string.battery_info,
+                (float) batteryVoltage / 1000.f, (float) batteryTemperature / 10.f));
+        service.updateNotification();
     }
 
 }
