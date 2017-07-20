@@ -11,9 +11,8 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
@@ -21,22 +20,25 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import eu.chainfire.libsuperuser.Shell;
 
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.nio.charset.Charset;
 import java.util.List;
 
 import static com.slash.batterychargelimit.Constants.*;
-import static com.slash.batterychargelimit.SharedMethods.CHARGE_ON;
 
 public class MainActivity extends AppCompatActivity {
-    private SeekBar rangeBar;
-    private TextView rangeText;
-    private TextView status_TextView;
-    private EditText limit_TextView;
+//    private SeekBar rangeBar;
+    private NumberPicker minPicker;
+    private TextView minText;
+    private NumberPicker maxPicker;
+    private TextView maxText;
     private SharedPreferences settings;
+    private TextView status_TextView;
+    private TextView batteryInfo;
     private RadioGroup batteryFile_RadioGroup;
+    private Switch enable_Switch;
+    private boolean initComplete = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Exit immediately if no root support
         if (!Shell.SU.available()) {
+            Toast.makeText(this, R.string.root_denied, Toast.LENGTH_LONG );
             new AlertDialog.Builder(MainActivity.this)
                     .setMessage(R.string.root_denied)
                     .setCancelable(false)
@@ -96,11 +99,17 @@ public class MainActivity extends AppCompatActivity {
                                 }).create().show();
                         return;
                     }
-                case 4:
-                    if (settings.contains(LIMIT_REACHED)) {
-                        settings.edit().remove(LIMIT_REACHED).apply();
+                case 1: case 2: case 3: case 4:
+                    if (settings.contains("limit_reached")) {
+                        settings.edit().remove("limit_reached").apply();
                     }
-                case 6:
+                case 5: case 6: case 7: case 8: case 9: case 10: case 11: case 12: case 13:
+                    if (settings.contains("recharge_threshold")) {
+                        int limit = settings.getInt(LIMIT, 80);
+                        int diff = settings.getInt("recharge_threshold", limit - 2);
+                        settings.edit().putInt(MIN, limit - diff).remove("recharge_threshold").apply();
+                    }
+                case 14:
                     // settings upgrade for future version(s)
             }
             // update the settings version
@@ -111,63 +120,50 @@ public class MainActivity extends AppCompatActivity {
 
         if (is_enabled && SharedMethods.isPhonePluggedIn(this)) {
             this.startService(new Intent(this, ForegroundService.class));
-        }//notif is 1!
+        }
 
         batteryFile_RadioGroup = (RadioGroup) findViewById(R.id.rgOpinion);
-        final Switch enable_Switch = (Switch) findViewById(R.id.button1);
-        limit_TextView = (EditText) findViewById(R.id.limit_EditText);
+        enable_Switch = (Switch) findViewById(R.id.enable_switch);
+        maxPicker = (NumberPicker) findViewById(R.id.max_picker);
+        maxText = (TextView) findViewById(R.id.max_text);
         status_TextView = (TextView) findViewById(R.id.status);
+        batteryInfo = (TextView) findViewById(R.id.battery_info);
         final Button resetBatteryStats_Button = (Button) findViewById(R.id.reset_battery_stats);
-        rangeBar = (SeekBar) findViewById(R.id.range_bar);
-        rangeText = (TextView) findViewById(R.id.range_text);
+        minPicker = (NumberPicker) findViewById(R.id.min_picker);
+//        rangeBar = (SeekBar) findViewById(R.id.range_bar);
+        minText = (TextView) findViewById(R.id.min_text);
         final Switch autoResetSwitch = (Switch) findViewById(R.id.auto_stats_reset);
 
-        enable_Switch.setChecked(is_enabled);
         updateRadioButtons(true);
         autoResetSwitch.setChecked(settings.getBoolean(AUTO_RESET_STATS, false));
+        maxPicker.setMinValue(40);
+        maxPicker.setMaxValue(99);
+        minPicker.setMinValue(0);
 
         // if limit is enabled, disable all editable settings
         if (is_enabled) {
-            limit_TextView.setEnabled(false);
-            rangeBar.setEnabled(false);
+            maxPicker.setEnabled(false);
+            minPicker.setEnabled(false);
         }
 
         enable_Switch.setOnCheckedChangeListener(switchListener);
-        limit_TextView.addTextChangedListener(new TextWatcher() {
+        maxPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                int t = 0;
-                try {
-                    t = Integer.parseInt(limit_TextView.getText().toString());
-                } catch (NumberFormatException e) {
-                    //ignore this exception
-                }
-                if (t >= 40 && t <= 99) {
-                    settings.edit().putInt(LIMIT, t).apply();
-                    rangeText.setText(getString(R.string.recharge_below,
-                            t - settings.getInt(RECHARGE_DIFF, 2)));
-                }
+            public void onValueChange(NumberPicker picker, int oldMax, int max) {
+                SharedMethods.setLimit(max, settings);
+                maxText.setText(getString(R.string.limit, max));
+                int min = settings.getInt(MIN, max - 2);
+                minPicker.setMaxValue(max);
+                minPicker.setValue(min);
+                updateMinText(min);
             }
         });
-        rangeBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+        minPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override
-            public void onProgressChanged(SeekBar seekBar, int diff, boolean fromUser) {
-                settings.edit().putInt(RECHARGE_DIFF, diff).apply();
-                rangeText.setText(getString(R.string.recharge_below,
-                        settings.getInt(LIMIT, 80) - diff));
+            public void onValueChange(NumberPicker picker, int oldMin, int min) {
+                settings.edit().putInt(MIN, min).apply();
+                updateMinText(min);
             }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {}
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {}
         });
         resetBatteryStats_Button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -181,40 +177,41 @@ public class MainActivity extends AppCompatActivity {
                 settings.edit().putBoolean(AUTO_RESET_STATS, isChecked).apply();
             }
         });
+
+        //The onCreate() process was not stopped via return, UI elements should be available
+        initComplete = true;
     }
 
-    //oncheckedchangelistener for switches
+    //OnCheckedChangeListener for Switch elements
     private CompoundButton.OnCheckedChangeListener switchListener = new CompoundButton.OnCheckedChangeListener() {
+        Context context = MainActivity.this;
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
             if (isChecked) {
-                // reset TextView content to valid number
-                limit_TextView.setText(String.valueOf(settings.getInt(LIMIT, 80)));
-
-                if (SharedMethods.isPhonePluggedIn(MainActivity.this)) {
-                    MainActivity.this.startService(new Intent(MainActivity.this, ForegroundService.class));
-                }
+                SharedMethods.enableService(context);
             } else {
-                ForegroundService.ignoreAutoReset();
-                MainActivity.this.stopService(new Intent(MainActivity.this, ForegroundService.class));
-                SharedMethods.changeState(MainActivity.this, null, CHARGE_ON);
+                SharedMethods.disableService(context);
             }
 
             settings.edit().putBoolean(ENABLE, isChecked).apply();
-            limit_TextView.setEnabled(!isChecked);
+
+            maxPicker.setEnabled(!isChecked);
+            minPicker.setEnabled(!isChecked);
             updateRadioButtons(false);
-            rangeBar.setEnabled(!isChecked);
+
+            EnableWidgetIntentReceiver.updateWidget(context, isChecked);
         }
     };
 
     private List<ControlFile> ctrlFiles = null;
     private List<ControlFile> getCtrlFiles() {
         if (ctrlFiles == null) {
-            try (Reader r = new InputStreamReader(getResources().openRawResource(R.raw.control_files),
-                    Charset.forName("UTF-8"))) {
+            try {
+                Reader r = new InputStreamReader(getResources().openRawResource(R.raw.control_files),
+                        Charset.forName("UTF-8"));
                 Gson gson = new Gson();
                 ctrlFiles = gson.fromJson(r, new TypeToken<List<ControlFile>>(){}.getType());
-            } catch (IOException ioe) {
-                ioe.printStackTrace();
+            } catch (Exception e) {
+                e.printStackTrace();
                 finish();
             }
         }
@@ -286,6 +283,8 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onReceive(Context context, Intent intent) {
             int currentStatus = intent.getIntExtra(BatteryManager.EXTRA_STATUS, BatteryManager.BATTERY_STATUS_UNKNOWN);
+            float batteryVoltage = (float) intent.getIntExtra(BatteryManager.EXTRA_VOLTAGE, -1) / 1000.f;
+            float batteryCelsius = (float) intent.getIntExtra(BatteryManager.EXTRA_TEMPERATURE, -1) / 10.f;
             if (currentStatus != previousStatus && status_TextView != null) {
                 previousStatus = currentStatus;
                 if (currentStatus == BatteryManager.BATTERY_STATUS_CHARGING) {
@@ -305,8 +304,11 @@ public class MainActivity extends AppCompatActivity {
                     status_TextView.setTextColor(Color.BLACK);
                 }
             }
+            batteryInfo.setText(" (" + getString(R.string.battery_info, batteryVoltage, batteryCelsius) + ")");
         }
     };
+
+
     
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -316,20 +318,50 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()) {
+            case R.id.about:
+                Intent intent = new Intent(this, About.class);
+                this.startActivity(intent);
+        }
+        return true;
+    }
+
+    @Override
     public void onStop() {
-        unregisterReceiver(charging);
+        if(initComplete) {
+            unregisterReceiver(charging);
+        }
         super.onStop();
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        registerReceiver(charging, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
-        // the limits could have been changed by an Intent, so update the UI here
-        int limit_percentage = settings.getInt(LIMIT, 80);
-        limit_TextView.setText(String.valueOf(limit_percentage));
-        int rechargeDiff = settings.getInt(RECHARGE_DIFF, 2);
-        rangeBar.setProgress(rechargeDiff);
-        rangeText.setText(getString(R.string.recharge_below, limit_percentage - rechargeDiff));
+        if(initComplete) {
+            registerReceiver(charging, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
+            // the limits could have been changed by an Intent, so update the UI here
+            updateUi();
+        }
+    }
+
+    private void updateMinText(int min) {
+        if (min == 0) {
+            minText.setText(R.string.no_recharge);
+        } else {
+            minText.setText(getString(R.string.recharge_below, min));
+        }
+    }
+
+    private void updateUi() {
+        enable_Switch.setChecked(settings.getBoolean(ENABLE, false));
+        int max = settings.getInt(LIMIT, 80);
+        int min = settings.getInt(MIN, max - 2);
+        maxPicker.setValue(max);
+        maxText.setText(getString(R.string.limit, max));
+        minPicker.setMaxValue(max);
+        minPicker.setValue(min);
+        updateMinText(min);
+        updateRadioButtons(false);
     }
 }

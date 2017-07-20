@@ -5,15 +5,18 @@ keystoreProperties.load(new FileInputStream(rootProject.file("private/keystore.p
 
 android {
     compileSdkVersion 25
-    buildToolsVersion '25.0.0'
+    buildToolsVersion '25.0.3'
     defaultConfig {
         applicationId "com.slash.batterychargelimit"
-        minSdkVersion 19
+        minSdkVersion 17
         targetSdkVersion 25
-        versionCode 10
-        versionName "0.8.2"
+        versionCode 15
+        versionName "0.11.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         setProperty("archivesBaseName", "BatteryChargeLimit-$versionName")
+    }
+    lintOptions {
+        abortOnError false
     }
     signingConfigs {
         release {

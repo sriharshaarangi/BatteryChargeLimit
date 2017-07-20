@@ -41,7 +41,7 @@ public class BatteryReceiver extends BroadcastReceiver {
         lastState = -1;
         SharedPreferences settings = service.getSharedPreferences(SETTINGS, 0);
         limitPercentage = settings.getInt(LIMIT, 80);
-        rechargePercentage = limitPercentage - settings.getInt(RECHARGE_DIFF, 2);
+        rechargePercentage = settings.getInt(MIN, limitPercentage - 2);
         if (callOnReceive) {
             Intent batteryIntent = service.registerReceiver(null,
                     new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
@@ -73,7 +73,7 @@ public class BatteryReceiver extends BroadcastReceiver {
             public void run() {
                 // continue only if the state didn't change in the meantime
                 if (triggerState == lastState && !SharedMethods.isPhonePluggedIn(service)) {
-                    service.stopService(new Intent(service, ForegroundService.class));
+                    SharedMethods.disableService(service, false);
                 }
             }
         }, CHARGING_CHANGE_TOLERANCE_MS);
@@ -87,14 +87,16 @@ public class BatteryReceiver extends BroadcastReceiver {
         }
 
         int batteryLevel = SharedMethods.getBatteryLevel(intent);
+        int batteryVoltage = intent.getIntExtra(BatteryManager.EXTRA_VOLTAGE, -1);
+        int batteryTemperature = intent.getIntExtra(BatteryManager.EXTRA_TEMPERATURE, -1);
         int currentStatus = intent.getIntExtra(BatteryManager.EXTRA_STATUS, BatteryManager.BATTERY_STATUS_UNKNOWN);
 
         // when the service was "freshly started", charge until limit
         if (!chargedToLimit && batteryLevel < limitPercentage) {
             if (switchState(CHARGE_FULL)) {
-                Log.d("Charging State", "CHARGE_FULL");
+                Log.d("Charging State", "CHARGE_FULL " + this.hashCode());
                 SharedMethods.changeState(service, shell, CHARGE_ON);
-                service.setNotification(service.getString(R.string.waiting_until_x, limitPercentage));
+                service.setNotificationTitle(service.getString(R.string.waiting_until_x, limitPercentage));
                 stopIfUnplugged();
             }
         } else if (batteryLevel >= limitPercentage) {
@@ -106,10 +108,10 @@ public class BatteryReceiver extends BroadcastReceiver {
                 service.enableAutoReset();
                 SharedMethods.changeState(service, shell, CHARGE_OFF);
                 // set the "maintain" notification, this must not change from now
-                service.setNotification(service.getString(R.string.maintaining_x_to_y,
+                service.setNotificationTitle(service.getString(R.string.maintaining_x_to_y,
                         rechargePercentage, limitPercentage));
             } else if (currentStatus == BatteryManager.BATTERY_STATUS_CHARGING) {
-                Log.d("Charging State", "Fixing state w. CHARGE_ON/CHARGE_OFF");
+                Log.d("Charging State", "Fixing state w. CHARGE_ON/CHARGE_OFF " + this.hashCode());
                 // if the device did not stop charging, try to "cycle" the state to fix this
                 SharedMethods.changeState(service, shell, CHARGE_ON);
                 // schedule the charging stop command to be executed after CHARGING_CHANGE_TOLERANCE_MS
@@ -122,11 +124,16 @@ public class BatteryReceiver extends BroadcastReceiver {
             }
         } else if (batteryLevel < rechargePercentage) {
             if (switchState(CHARGE_REFRESH)) {
-                Log.d("Charging State", "CHARGE_REFRESH");
+                Log.d("Charging State", "CHARGE_REFRESH " + this.hashCode());
                 SharedMethods.changeState(service, shell, CHARGE_ON);
                 stopIfUnplugged();
             }
         }
+
+        // update battery status information and rebuild notification
+        service.setNotificationContentText(service.getString(R.string.battery_info,
+                (float) batteryVoltage / 1000.f, (float) batteryTemperature / 10.f));
+        service.updateNotification();
     }
 
 }

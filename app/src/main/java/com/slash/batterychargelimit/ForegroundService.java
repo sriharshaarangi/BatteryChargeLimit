@@ -7,7 +7,6 @@ import android.app.Service;
 import android.content.*;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
-import android.util.Log;
 import eu.chainfire.libsuperuser.Shell;
 
 import static com.slash.batterychargelimit.Constants.*;
@@ -84,8 +83,15 @@ public class ForegroundService extends Service {
         return super.onStartCommand(intent, flags, startId);
     }
 
-    public void setNotification(String notification) {
-        mNotifyBuilder.setContentTitle(notification);
+    public void setNotificationTitle(String title) {
+        mNotifyBuilder.setContentTitle(title);
+    }
+
+    public void setNotificationContentText(String contentText) {
+        mNotifyBuilder.setContentText(contentText);
+    }
+
+    public void updateNotification() {
         mNotificationManager.notify(notifyID, mNotifyBuilder.build());
     }
 
