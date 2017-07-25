@@ -1,7 +1,6 @@
 package com.slash.batterychargelimit;
 
 import android.app.Notification;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.*;
@@ -94,6 +93,8 @@ public class ForegroundService extends Service {
         settings.edit().putBoolean(NOTIFICATION_LIVE, false).apply();
         // unregister the battery event receiver
         unregisterReceiver(batteryReceiver);
+        // make the BatteryReceiver and dependencies ready for garbage-collection
+        batteryReceiver.detach();
     }
 
     @Override

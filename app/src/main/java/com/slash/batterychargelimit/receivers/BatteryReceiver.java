@@ -20,7 +20,6 @@ import static com.slash.batterychargelimit.SharedMethods.CHARGE_ON;
  * Dynamically created receiver for battery events. Only registered if power supply is attached.
  */
 public class BatteryReceiver extends BroadcastReceiver {
-    private static final String TAG = BatteryReceiver.class.getSimpleName();
     private static final int CHARGE_FULL = 0, CHARGE_STOP = 1, CHARGE_REFRESH = 2;
 
     private final static Handler handler = new Handler();
@@ -31,13 +30,12 @@ public class BatteryReceiver extends BroadcastReceiver {
 
     private boolean chargedToLimit = false, useFahrenheit = false;
     private int lastState = -1;
-    private final ForegroundService service;
+    private ForegroundService service;
     private int limitPercentage, rechargePercentage;
+    private android.content.SharedPreferences.OnSharedPreferenceChangeListener preferenceChangeListener;
 
     public BatteryReceiver(final ForegroundService service) {
-        this.service = service;
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(service.getBaseContext());
-        prefs.registerOnSharedPreferenceChangeListener(new SharedPreferences.OnSharedPreferenceChangeListener() {
+        preferenceChangeListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
             @Override
             public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
                 if (SettingsFragment.KEY_TEMP_FAHRENHEIT.equals(key)) {
@@ -46,19 +44,17 @@ public class BatteryReceiver extends BroadcastReceiver {
                             service.registerReceiver(null, new IntentFilter(Intent.ACTION_BATTERY_CHANGED)),
                             useFahrenheit));
                     service.updateNotification();
+                } else if (LIMIT.equals(key) || MIN.equals(key)) {
+                    reset(sharedPreferences);
                 }
             }
-        });
-        this.useFahrenheit = prefs.getBoolean(SettingsFragment.KEY_TEMP_FAHRENHEIT, false);
+        };
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(service.getBaseContext());
+        prefs.registerOnSharedPreferenceChangeListener(preferenceChangeListener);
         SharedPreferences settings = service.getSharedPreferences(SETTINGS, 0);
-        settings.registerOnSharedPreferenceChangeListener(new SharedPreferences.OnSharedPreferenceChangeListener() {
-            @Override
-            public void onSharedPreferenceChanged(SharedPreferences settings, String key) {
-                if (LIMIT.equals(key) || MIN.equals(key)) {
-                    reset(settings);
-                }
-            }
-        });
+        settings.registerOnSharedPreferenceChangeListener(preferenceChangeListener);
+        this.service = service;
+        this.useFahrenheit = prefs.getBoolean(SettingsFragment.KEY_TEMP_FAHRENHEIT, false);
         reset(settings);
     }
 
@@ -159,6 +155,13 @@ public class BatteryReceiver extends BroadcastReceiver {
         // update battery status information and rebuild notification
         service.setNotificationContentText(SharedMethods.getBatteryInfo(service, intent, useFahrenheit));
         service.updateNotification();
+    }
+
+    public void detach() {
+        this.service = null;
+        //Technically not necessary, but it prevents inlining of this required field
+        //See end of https://developer.android.com/guide/topics/ui/settings.html#Listening
+        this.preferenceChangeListener = null;
     }
 
 }

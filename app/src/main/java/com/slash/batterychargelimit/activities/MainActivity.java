@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView batteryInfo;
     private Switch enableSwitch;
     private boolean initComplete = false;
+    private SharedPreferences.OnSharedPreferenceChangeListener preferenceChangeListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +61,8 @@ public class MainActivity extends AppCompatActivity {
 
         settings = getSharedPreferences(SETTINGS, 0);
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-        prefs.registerOnSharedPreferenceChangeListener(new SharedPreferences.OnSharedPreferenceChangeListener() {
+
+        preferenceChangeListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
             @Override
             public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
                 if (SettingsFragment.KEY_TEMP_FAHRENHEIT.equals(key)) {
@@ -68,7 +70,8 @@ public class MainActivity extends AppCompatActivity {
                             new IntentFilter(Intent.ACTION_BATTERY_CHANGED)));
                 }
             }
-        });
+        };
+        prefs.registerOnSharedPreferenceChangeListener(preferenceChangeListener);
         if (!prefs.contains(SettingsFragment.KEY_CONTROL_FILE)) {
             CtrlFileHelper.validateFiles(this, new Runnable() {
                 @Override
@@ -285,6 +288,14 @@ public class MainActivity extends AppCompatActivity {
             // the limits could have been changed by an Intent, so update the UI here
             updateUi();
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        //Technically not necessary, but it prevents inlining of this required field
+        //See end of https://developer.android.com/guide/topics/ui/settings.html#Listening
+        preferenceChangeListener = null;
+        super.onDestroy();
     }
 
     private void updateMinText(int min) {
