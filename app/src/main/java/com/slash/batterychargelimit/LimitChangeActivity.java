@@ -1,14 +1,11 @@
 package com.slash.batterychargelimit;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
-
-import static com.slash.batterychargelimit.Constants.LIMIT;
-import static com.slash.batterychargelimit.Constants.NOTIFICATION_LIVE;
-import static com.slash.batterychargelimit.Constants.SETTINGS;
+import com.slash.batterychargelimit.R;
+import com.slash.batterychargelimit.SharedMethods;
 
 /**
  * Created by Michael on 20.04.2017.

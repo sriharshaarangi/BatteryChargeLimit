@@ -1,16 +1,18 @@
-package com.slash.batterychargelimit;
+package com.slash.batterychargelimit.activities;
 
 import android.content.pm.PackageInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.method.LinkMovementMethod;
 import android.widget.TextView;
+import com.slash.batterychargelimit.Constants;
+import com.slash.batterychargelimit.R;
 
 /**
  * Created by harsha on 10/5/17.
  */
 
-public class About extends AppCompatActivity{
+public class About extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

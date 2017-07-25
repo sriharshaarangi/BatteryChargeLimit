@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="@string/main_settings">
+
+        <com.slash.batterychargelimit.settings.ControlFilePreference
+                android:key="control_file"
+                android:title="@string/set_control_file"
+                android:dialogTitle="@string/select_control_file"/>
+
+        <CheckBoxPreference
+                android:key="temp_fahrenheit"
+                android:title="@string/show_temperature_fahrenheit"
+                android:defaultValue="false"/>
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

@@ -1,4 +1,4 @@
-package com.slash.batterychargelimit;
+package com.slash.batterychargelimit.receivers;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -7,6 +7,8 @@ import android.content.SharedPreferences;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
+import com.slash.batterychargelimit.R;
+import com.slash.batterychargelimit.SharedMethods;
 import eu.chainfire.libsuperuser.Shell;
 
 import static com.slash.batterychargelimit.Constants.ENABLE;
@@ -26,12 +28,12 @@ public class EnableWidgetIntentReceiver extends BroadcastReceiver {
             SharedPreferences settings = context.getSharedPreferences(SETTINGS, 0);
             if (Shell.SU.available()) {
                 boolean enable = !settings.getBoolean(ENABLE, false);
-                if(enable) {
-                    SharedMethods.enableService(context);
-                } else {
-                    SharedMethods.disableService(context);
-                }
                 settings.edit().putBoolean(ENABLE, enable).apply();
+                if(enable) {
+                    SharedMethods.startService(context);
+                } else {
+                    SharedMethods.stopService(context);
+                }
                 updateWidget(context, enable);
             } else {
                 Toast.makeText(context, R.string.root_denied, Toast.LENGTH_LONG).show();

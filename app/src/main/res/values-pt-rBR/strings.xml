@@ -6,7 +6,6 @@
     <string name="enable">Habilitar Battery Charge Limit</string>
     <string name="limit">Limite: %1$d%%</string>
     <string name="status">Estado: </string>
-    <string name="select_file">Selecione um arquivo para controle de carga: </string>
     <string name="experimental">%1$s (experimental!)</string>
     <string name="auto_reset_stats">Restaura automaticamente as estatísticas da bateria</string>
     <string name="reset_stats">Restaurar Estatísticas da Bateria</string>
@@ -25,7 +24,7 @@
     <string name="please_wait">Por favor aguarde…</string>
     <string name="maintaining_x_to_y">Mantendo %1$d%% - %2$d%% SE conectado"</string>
     <string name="waiting_until_x">Esperando até %1$d%%</string>
-    <string name="battery_info">U: %1$.3f V, T: %2$.1f &#8451;</string>
+    <string name="battery_info_C">U: %1$.3f V, T: %2$.1f &#8451;</string>
 
     <string name="root_denied">Foi negado acesso ROOT ao app ou o dispositivo não possui root!</string>
     <string name="stats_reset_success">Estatísticas da Bateria foram restauradas com sucesso</string>

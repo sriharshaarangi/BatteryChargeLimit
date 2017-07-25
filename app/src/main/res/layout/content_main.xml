@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.slash.batterychargelimit.MainActivity"
+    tools:context="com.slash.batterychargelimit.activities.MainActivity"
     tools:showIn="@layout/activity_main"
     >
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -27,7 +27,7 @@
         android:text="@string/enable"
         android:textSize="16sp"
         android:id="@+id/enable_switch"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"/>
 
     <LinearLayout
         android:id="@+id/range_layout"
@@ -110,27 +110,9 @@
             android:textSize="16sp" />
     </RelativeLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/stat"
-        android:text="@string/select_file"
-        android:id="@+id/file"
-        android:textSize="16sp"
-        android:textColor="@android:color/black"
-        android:layout_marginBottom="8dp" />
-
-    <RadioGroup
-        android:id="@+id/rgOpinion"
-        android:layout_below="@+id/file"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="16dp" />
-
     <Switch
         android:id="@+id/auto_stats_reset"
-        android:layout_below="@+id/rgOpinion"
+        android:layout_below="@+id/stat"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/auto_reset_stats"

@@ -10,8 +10,8 @@ android {
         applicationId "com.slash.batterychargelimit"
         minSdkVersion 17
         targetSdkVersion 25
-        versionCode 15
-        versionName "0.11.0"
+        versionCode 16
+        versionName "1.0.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         setProperty("archivesBaseName", "BatteryChargeLimit-$versionName")
     }
@@ -31,13 +31,18 @@ android {
             minifyEnabled false
         }
         release {
-            debuggable false
+            debuggable true
             minifyEnabled true
+            shrinkResources true
+            zipAlignEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
         }
     }
     productFlavors {
+    }
+    dexOptions {
+        javaMaxHeapSize "4g"
     }
 }
 

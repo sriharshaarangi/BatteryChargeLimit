@@ -1,6 +1,9 @@
 package com.slash.batterychargelimit;
 
 import android.support.annotation.Keep;
+import eu.chainfire.libsuperuser.Shell;
+
+import java.util.List;
 
 /**
  * Created by Michael on 31.03.2017.
@@ -14,6 +17,8 @@ public class ControlFile {
     private String file;
     @Keep
     private String label;
+    @Keep
+    private String details;
     @Keep
     private String chargeOn;
     @Keep
@@ -30,6 +35,10 @@ public class ControlFile {
         return label;
     }
 
+    public String getDetails() {
+        return details;
+    }
+
     public String getChargeOn() {
         return chargeOn;
     }
@@ -44,14 +53,22 @@ public class ControlFile {
 
     public boolean isValid() {
         if (!checked) {
-            synchronized (this) {
-                if (!checked) {
-                    valid = SharedMethods.checkFile(file);
-                    checked = true;
-                }
-            }
+            throw new RuntimeException("Tried to check unvalidated ControlFile");
         }
         return valid;
+    }
+
+    public void validate() {
+        Shell.Interactive suShell = SharedMethods.getSuShell();
+        if (!checked) {
+            suShell.addCommand("test -e " + getFile(), 0, new Shell.OnCommandResultListener() {
+                @Override
+                public void onCommandResult(int commandCode, int exitCode, List<String> output) {
+                    valid = 0 == exitCode;
+                    checked = true;
+                }
+            });
+        }
     }
 
 }

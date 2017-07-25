@@ -20,3 +20,8 @@
 -keepclassmembers class com.slash.batterychargelimit.ControlFile {
    private *;
 }
+# This is safe for Android >= 2.0
+-optimizations code/simplification/arithmetic
+
+#-optimizations !code/allocation/variable
+#-dontobfuscate

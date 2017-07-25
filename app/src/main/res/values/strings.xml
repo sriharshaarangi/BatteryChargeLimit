@@ -1,5 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name" translatable="false">Battery Charge Limit</string>
+    <string name="receiver_limit" translatable="false">Limit BroadcastReceiver</string>
     <string name="action_settings">Settings</string>
     <string name="source_code" translatable="false"><a href="https://github.com/sriharshaarangi/BatteryChargeLimit">Source Code</a></string>
     <string name="xda_thread" translatable="false"><a href="https://forum.xda-developers.com/android/apps-games/root-battery-charge-limit-t3557002/">XDA Thread</a></string>
@@ -8,8 +10,7 @@
     <string name="limit">Limit charging to %1$d%%</string>
     <string name="recharge_below">Recharge below %1$d%%</string>
     <string name="status">Status: </string>
-    <string name="select_file">Select charge control file: </string>
-    <string name="experimental">%1$s (experimental!)</string>
+    <string name="experimental">EXPERIMENTAL</string>
     <string name="auto_reset_stats">Automatically reset battery stats</string>
     <string name="reset_stats">Reset Battery Stats</string>
 
@@ -27,7 +28,8 @@
     <string name="please_wait">Please wait…</string>
     <string name="maintaining_x_to_y">Maintaining %1$d%% - %2$d%% IF plugged"</string>
     <string name="waiting_until_x">Waiting until %1$d%%</string>
-    <string name="battery_info">U: %1$.3f V, T: %2$.1f &#8451;</string>
+    <string name="battery_info_C">U: %1$.3f V, T: %2$.1f &#8451;</string>
+    <string name="battery_info_F">U: %1$.3f V, T: %2$.1f &#8457;</string>
 
     <string name="root_denied">App is denied ROOT access or device is not rooted!</string>
     <string name="stats_reset_success">Battery Stats reset successful</string>
@@ -40,4 +42,9 @@
 
     <string name="service_enabled"> Battery Limit Service Enabled! </string>
     <string name="service_disabled"> Battery Limit Service Disabled! </string>
+
+    <string name="main_settings">Main Configuration</string>
+    <string name="set_control_file">Set Control File</string>
+    <string name="select_control_file">Select Control File</string>
+    <string name="show_temperature_fahrenheit">Show Temperature in &#8457;</string>
 </resources>

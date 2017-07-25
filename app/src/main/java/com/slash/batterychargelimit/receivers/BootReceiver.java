@@ -1,8 +1,10 @@
-package com.slash.batterychargelimit;
+package com.slash.batterychargelimit.receivers;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import com.slash.batterychargelimit.ForegroundService;
+import com.slash.batterychargelimit.SharedMethods;
 
 import static com.slash.batterychargelimit.Constants.ENABLE;
 import static com.slash.batterychargelimit.Constants.SETTINGS;
@@ -16,8 +18,7 @@ import static com.slash.batterychargelimit.Constants.SETTINGS;
 public class BootReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
-        if(context.getSharedPreferences(SETTINGS, 0).getBoolean(ENABLE, false)
-                && SharedMethods.isPhonePluggedIn(context)) {
+        if (Intent.ACTION_BOOT_COMPLETED.equals(intent.getAction())) {
             context.startService(new Intent(context, ForegroundService.class));
         }
     }

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_settings">Einstellungen</string>
+    <string name="about">Über</string>
+    <string name="enable">Aktiviere Battery Charge Limit</string>
+    <string name="limit">Laden bis max. %1$d%%</string>
+    <string name="recharge_below">Wiederaufladen unter %1$d%%</string>
+    <string name="status">Status: </string>
+    <string name="experimental">EXPERIMENTELL</string>
+    <string name="auto_reset_stats">Batterie-Statistik automatisch zurücksetzen</string>
+    <string name="reset_stats">Batterie-Statistik zurücksetzen</string>
+
+    <string name="previously_started">Previously Started</string>
+    <string name="device_not_supported">Dein Gerät wird (noch) nicht unterstützt!</string>
+    <string name="ok">OK</string>
+    <string name="no_recharge">Kein autom. Wiederaufladen</string>
+
+    <string name="charging">LADEN</string>
+    <string name="discharging">ENTLADEN</string>
+    <string name="full">VOLL</string>
+    <string name="not_charging">KEIN LADEN</string>
+    <string name="unknown">UNBEKANNT</string>
+
+    <string name="please_wait">Bitte warten…</string>
+    <string name="maintaining_x_to_y">Halte %1$d%% - %2$d%% WENN verbunden"</string>
+    <string name="waiting_until_x">Warte bis %1$d%%</string>
+    <string name="battery_info_C">U: %1$.3f V, T: %2$.1f &#8451;</string>
+    <string name="battery_info_F">U: %1$.3f V, T: %2$.1f &#8457;</string>
+
+    <string name="root_denied">Rootzugriff verweigert oder Gerät nicht gerootet!</string>
+    <string name="stats_reset_success">Reset der Batterie-Statistik erfolgreich</string>
+
+    <string name="intent_handle_activity">Battery Charge Limit Steuerungs-Activity</string>
+    <string name="intent_invalid">Der übergebene Intent war ungültig.</string>
+    <string name="intent_limit_invalid">Das übergebene Limit war ungültig.</string>
+    <string name="intent_limit_accepted">Die Ladegrenze wurde auf %1$d%% gesetzt.</string>
+
+    <string name="service_enabled"> Battery Limit Dienst aktiviert! </string>
+    <string name="service_disabled"> Battery Limit Dienst deaktiviert! </string>
+
+    <string name="main_settings">Hauptkonfiguration</string>
+    <string name="set_control_file">Steuerungsdatei auswählen</string>
+    <string name="select_control_file">Wählen Sie die Steuerungsdatei:</string>
+    <string name="show_temperature_fahrenheit">Temperatur in &#8457; anzeigen</string>
+</resources>

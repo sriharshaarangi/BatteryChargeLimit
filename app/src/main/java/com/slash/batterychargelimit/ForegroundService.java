@@ -7,7 +7,8 @@ import android.app.Service;
 import android.content.*;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
-import eu.chainfire.libsuperuser.Shell;
+import com.slash.batterychargelimit.activities.MainActivity;
+import com.slash.batterychargelimit.receivers.BatteryReceiver;
 
 import static com.slash.batterychargelimit.Constants.*;
 
@@ -28,9 +29,6 @@ public class ForegroundService extends Service {
     private static boolean ignoreAutoReset = false;
     private boolean autoResetActive = false;
     private BatteryReceiver batteryReceiver = null;
-    // interactive shell for better performance
-    private Shell.Interactive shell = null;
-    private boolean isFreshService = true;
 
     /**
      * Ignore the automatic reset when service is shut down the next time
@@ -67,19 +65,13 @@ public class ForegroundService extends Service {
                 mNotifyBuilder.build());
         startForeground(notifyID, notification);
 
-        shell = new Shell.Builder().setWantSTDERR(false).useSU().open();
-        // create and register the receiver for the battery change events
-        batteryReceiver = new BatteryReceiver(ForegroundService.this, shell);
+        batteryReceiver = new BatteryReceiver(ForegroundService.this);
         registerReceiver(batteryReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         ignoreAutoReset = false;
-        autoResetActive = false;
-        // reset the battery receiver for every start command exce Service instantiation
-        batteryReceiver.reset(!isFreshService);
-        isFreshService = false;
         return super.onStartCommand(intent, flags, startId);
     }
 
@@ -105,7 +97,6 @@ public class ForegroundService extends Service {
         settings.edit().putBoolean(NOTIFICATION_LIVE, false).apply();
         // unregister the battery event receiver
         unregisterReceiver(batteryReceiver);
-        shell.close();
     }
 
     @Override
