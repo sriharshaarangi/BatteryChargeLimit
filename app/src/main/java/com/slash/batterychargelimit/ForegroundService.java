@@ -24,7 +24,6 @@ import static com.slash.batterychargelimit.Constants.*;
 public class ForegroundService extends Service {
     private SharedPreferences settings = null;
     private NotificationCompat.Builder mNotifyBuilder = null;
-    private NotificationManager mNotificationManager = null;
     private int notifyID = 1;
     private static boolean ignoreAutoReset = false;
     private boolean autoResetActive = false;
@@ -53,16 +52,14 @@ public class ForegroundService extends Service {
         Intent notificationIntent = new Intent(this, MainActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
         mNotifyBuilder = new NotificationCompat.Builder(this);
-        mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         Notification notification = mNotifyBuilder
+                .setPriority(NotificationCompat.PRIORITY_MAX)
+                .setCategory(NotificationCompat.CATEGORY_SYSTEM)
+                .setOngoing(true)
                 .setContentTitle(getString(R.string.please_wait))
-                .setContentText("")
                 .setSmallIcon(R.drawable.bcl_n)
                 .setContentIntent(pendingIntent)
                 .build();
-        mNotificationManager.notify(
-                notifyID,
-                mNotifyBuilder.build());
         startForeground(notifyID, notification);
 
         batteryReceiver = new BatteryReceiver(ForegroundService.this);
@@ -84,7 +81,7 @@ public class ForegroundService extends Service {
     }
 
     public void updateNotification() {
-        mNotificationManager.notify(notifyID, mNotifyBuilder.build());
+        startForeground(notifyID, mNotifyBuilder.build());
     }
 
     @Override
