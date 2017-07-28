@@ -1,9 +1,11 @@
 package com.slash.batterychargelimit.receivers;
 
 import android.content.*;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import com.slash.batterychargelimit.Constants;
 import com.slash.batterychargelimit.SharedMethods;
+import com.slash.batterychargelimit.settings.SettingsFragment;
 
 import static com.slash.batterychargelimit.Constants.*;
 
@@ -20,7 +22,9 @@ import static com.slash.batterychargelimit.Constants.*;
 public class PowerConnectionReceiver extends BroadcastReceiver {
     public void onReceive(final Context context, Intent intent) {
         //Ignore new events after power change or during state fixing
-        if (SharedMethods.isChangePending(Math.max(Constants.POWER_CHANGE_TOLERANCE_MS,
+        if (!PreferenceManager.getDefaultSharedPreferences(context)
+                .getBoolean(SettingsFragment.KEY_IMMEDIATE_POWER_INTENT_HANDLING, false)
+                && SharedMethods.isChangePending(Math.max(Constants.POWER_CHANGE_TOLERANCE_MS,
                 BatteryReceiver.getBackOffTime() * 2))) {
             String action = intent.getAction();
             if (action.equals(Intent.ACTION_POWER_CONNECTED)) {

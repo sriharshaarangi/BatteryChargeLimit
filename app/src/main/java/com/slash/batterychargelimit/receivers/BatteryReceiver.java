@@ -32,6 +32,7 @@ public class BatteryReceiver extends BroadcastReceiver {
     private int lastState = -1;
     private ForegroundService service;
     private int limitPercentage, rechargePercentage;
+    private SharedPreferences prefs;
     private android.content.SharedPreferences.OnSharedPreferenceChangeListener preferenceChangeListener;
 
     public BatteryReceiver(final ForegroundService service) {
@@ -49,7 +50,7 @@ public class BatteryReceiver extends BroadcastReceiver {
                 }
             }
         };
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(service.getBaseContext());
+        prefs = PreferenceManager.getDefaultSharedPreferences(service.getBaseContext());
         prefs.registerOnSharedPreferenceChangeListener(preferenceChangeListener);
         SharedPreferences settings = service.getSharedPreferences(SETTINGS, 0);
         settings.registerOnSharedPreferenceChangeListener(preferenceChangeListener);
@@ -91,7 +92,7 @@ public class BatteryReceiver extends BroadcastReceiver {
             @Override
             public void run() {
                 // continue only if the state didn't change in the meantime
-                if (triggerState == lastState && !SharedMethods.isPhonePluggedIn(service)) {
+                if (triggerState == lastState && service != null && !SharedMethods.isPhonePluggedIn(service)) {
                     SharedMethods.stopService(service, false);
                 }
             }
@@ -127,7 +128,8 @@ public class BatteryReceiver extends BroadcastReceiver {
                 // set the "maintain" notification, this must not change from now
                 service.setNotificationTitle(service.getString(R.string.maintaining_x_to_y,
                         rechargePercentage, limitPercentage));
-            } else if (currentStatus == BatteryManager.BATTERY_STATUS_CHARGING) {
+            } else if (currentStatus == BatteryManager.BATTERY_STATUS_CHARGING
+                    && prefs.getBoolean(SettingsFragment.KEY_ENFORCE_CHARGE_LIMIT, true)) {
                 //Double the back off time with every unsuccessful round up to MAX_BACK_OFF_TIME
                 backOffTime = Math.min(backOffTime * 2, MAX_BACK_OFF_TIME);
                 Log.d("Charging State", "Fixing state w. CHARGE_ON/CHARGE_OFF " + this.hashCode()

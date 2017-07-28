@@ -43,8 +43,14 @@
     <string name="service_enabled"> Battery Limit Service Enabled! </string>
     <string name="service_disabled"> Battery Limit Service Disabled! </string>
 
-    <string name="main_settings">Main Configuration</string>
+    <string name="main_settings">Main Settings</string>
     <string name="set_control_file">Set Control File</string>
     <string name="select_control_file">Select Control File</string>
     <string name="show_temperature_fahrenheit">Show Temperature in &#8457;</string>
+    <string name="enforce_charge_limit">Enforce Charge Limit</string>
+    <string name="enforce_charge_limit_desc">Try to force the device to recognize changes of the control file by toggling its state with exp. increasing delay</string>
+
+    <string name="advanced_settings">Advanced Settings</string>
+    <string name="immediate_power_intent_handling">Always Handle Power Events</string>
+    <string name="immediate_power_intent_handling_desc">If enabled, power changes will be recognized immediately, even directly after control file changes.\nUse only for supported control files like battery_charging_enabled or store_mode!</string>
 </resources>
