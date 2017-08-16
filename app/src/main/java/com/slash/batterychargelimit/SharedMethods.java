@@ -79,7 +79,6 @@ public class SharedMethods {
         return executor;
     }
 
-
     public static void changeState(@NonNull Context context, final int chargeMode) {
         final SharedPreferences settings = context.getSharedPreferences(SETTINGS, 0);
         final String file = settings.getString(Constants.FILE_KEY,
@@ -95,7 +94,7 @@ public class SharedMethods {
         String catCommand = "cat " + file;
         final String[] switchCommands = new String[] {
                 "mount -o rw,remount " + file,
-                "echo " + newState + " > " + file
+                "echo \"" + newState + "\" > " + file
         };
 
         getSuShell().addCommand(catCommand, 0, new Shell.OnCommandResultListener() {

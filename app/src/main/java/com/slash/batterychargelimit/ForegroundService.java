@@ -21,12 +21,23 @@ import static com.slash.batterychargelimit.Constants.*;
  */
 
 public class ForegroundService extends Service {
+    private static boolean running = false;
+    private static boolean ignoreAutoReset = false;
+
     private SharedPreferences settings = null;
     private NotificationCompat.Builder mNotifyBuilder = null;
     private int notifyID = 1;
-    private static boolean ignoreAutoReset = false;
     private boolean autoResetActive = false;
     private BatteryReceiver batteryReceiver = null;
+
+    /**
+     * Returns whether the service is running right now
+     *
+     * @return Whether service is running
+     */
+    public static boolean isRunning() {
+        return running;
+    }
 
     /**
      * Ignore the automatic reset when service is shut down the next time
@@ -36,7 +47,7 @@ public class ForegroundService extends Service {
     }
 
     /**
-     * Enable the automatic reset on service shutdown
+     * Enables the automatic reset on service shutdown
      */
     public void enableAutoReset() {
         autoResetActive = true;
@@ -44,6 +55,8 @@ public class ForegroundService extends Service {
 
     @Override
     public void onCreate() {
+        running = true;
+
         notifyID = 1;
         settings = this.getSharedPreferences(SETTINGS, 0);
         settings.edit().putBoolean(NOTIFICATION_LIVE, true).apply();
@@ -95,6 +108,8 @@ public class ForegroundService extends Service {
         unregisterReceiver(batteryReceiver);
         // make the BatteryReceiver and dependencies ready for garbage-collection
         batteryReceiver.detach();
+
+        running = false;
     }
 
     @Override

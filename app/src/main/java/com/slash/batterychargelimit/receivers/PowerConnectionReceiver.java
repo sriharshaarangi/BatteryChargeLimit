@@ -4,6 +4,7 @@ import android.content.*;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import com.slash.batterychargelimit.Constants;
+import com.slash.batterychargelimit.ForegroundService;
 import com.slash.batterychargelimit.SharedMethods;
 import com.slash.batterychargelimit.settings.SettingsFragment;
 
@@ -21,20 +22,23 @@ import static com.slash.batterychargelimit.Constants.*;
 
 public class PowerConnectionReceiver extends BroadcastReceiver {
     public void onReceive(final Context context, Intent intent) {
+        String action = intent.getAction();
         //Ignore new events after power change or during state fixing
         if (!PreferenceManager.getDefaultSharedPreferences(context)
                 .getBoolean(SettingsFragment.KEY_IMMEDIATE_POWER_INTENT_HANDLING, false)
                 && SharedMethods.isChangePending(Math.max(Constants.POWER_CHANGE_TOLERANCE_MS,
                 BatteryReceiver.getBackOffTime() * 2))) {
-            String action = intent.getAction();
             if (action.equals(Intent.ACTION_POWER_CONNECTED)) {
-                Log.d("Power State", "ACTION_POWER_CONNECTED ignored");
+                //Ignore connected event only if service is running
+                if (ForegroundService.isRunning()) {
+                    Log.d("Power State", "ACTION_POWER_CONNECTED ignored");
+                    return;
+                }
             } else if (action.equals(Intent.ACTION_POWER_DISCONNECTED)) {
                 Log.d("Power State", "ACTION_POWER_DISCONNECTED ignored");
+                return;
             }
-            return;
         }
-        String action = intent.getAction();
         if (action.equals(Intent.ACTION_POWER_CONNECTED)) {
             Log.d("Power State", "ACTION_POWER_CONNECTED");
             SharedMethods.startService(context);

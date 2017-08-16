@@ -40,7 +40,7 @@
   "details": "Nexus 4",
   "chargeOn": "0",
   "chargeOff": "1",
-  "experimental": true
+  "experimental": false
 },{
   "file": "/sys/class/power_supply/battery/device/Charging_Enable",
   "label": "Charging_Enable",
@@ -48,5 +48,26 @@
   "chargeOn": "1",
   "chargeOff": "0",
   "experimental": false
+},{
+  "file": "/sys/class/power_supply/manta-battery/charge_enabled",
+  "label": "charge_enable",
+  "details": "Nexus 10",
+  "chargeOn": "1",
+  "chargeOff": "0",
+  "experimental": true
+},{
+  "file": "/sys/devices/platform/7000c400.i2c/i2c-1/1-006b/charging_state",
+  "label": "charging_state",
+  "details": "Nvidia Shield",
+  "chargeOn": "enabled",
+  "chargeOff": "disabled",
+  "experimental": true
+},{
+  "file": "//sys/class/power_supply/battery/input_suspend",
+  "label": "input_suspend",
+  "details": "Xiaomi Mi6",
+  "chargeOn": "0",
+  "chargeOff": "1",
+  "experimental": true
 }
 ]
