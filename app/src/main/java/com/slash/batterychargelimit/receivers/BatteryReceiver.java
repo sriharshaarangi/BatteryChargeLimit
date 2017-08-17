@@ -88,11 +88,12 @@ public class BatteryReceiver extends BroadcastReceiver {
     private void stopIfUnplugged() {
         // save the state that caused this function call
         final int triggerState = lastState;
+        final Context service = this.service;
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 // continue only if the state didn't change in the meantime
-                if (triggerState == lastState && service != null && !SharedMethods.isPhonePluggedIn(service)) {
+                if (triggerState == lastState && !SharedMethods.isPhonePluggedIn(service)) {
                     SharedMethods.stopService(service, false);
                 }
             }
@@ -137,6 +138,7 @@ public class BatteryReceiver extends BroadcastReceiver {
                 // if the device did not stop charging, try to "cycle" the state to fix this
                 SharedMethods.changeState(service, CHARGE_ON);
                 // schedule the charging stop command to be executed after CHARGING_CHANGE_TOLERANCE_MS
+                final Context service = this.service;
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {

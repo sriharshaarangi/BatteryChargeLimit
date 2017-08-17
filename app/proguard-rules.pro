@@ -23,5 +23,5 @@
 # This is safe for Android >= 2.0
 -optimizations code/simplification/arithmetic
 
-#-optimizations !code/allocation/variable
-#-dontobfuscate
+-optimizations !code/allocation/variable
+-dontobfuscate
