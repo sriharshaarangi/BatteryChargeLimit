@@ -13,15 +13,18 @@ import android.support.v7.widget.Toolbar
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import android.widget.*
 import com.slash.batterychargelimit.*
 import com.slash.batterychargelimit.settings.CtrlFileHelper
 import com.slash.batterychargelimit.settings.SettingsFragment
 import com.slash.batterychargelimit.receivers.EnableWidgetIntentReceiver
 import eu.chainfire.libsuperuser.Shell
-
-import com.slash.batterychargelimit.Constants.*
+import com.slash.batterychargelimit.Constants.SETTINGS
+import com.slash.batterychargelimit.Constants.SETTINGS_VERSION
+import com.slash.batterychargelimit.Constants.ENABLE
+import com.slash.batterychargelimit.Constants.LIMIT
+import com.slash.batterychargelimit.Constants.MIN
+import com.slash.batterychargelimit.Constants.AUTO_RESET_STATS
 
 class MainActivity : AppCompatActivity() {
     private val minPicker by lazy(LazyThreadSafetyMode.NONE) {findViewById(R.id.min_picker) as NumberPicker}
@@ -60,7 +63,7 @@ class MainActivity : AppCompatActivity() {
         }
         prefs.registerOnSharedPreferenceChangeListener(preferenceChangeListener)
         if (!prefs.contains(SettingsFragment.KEY_CONTROL_FILE)) {
-            CtrlFileHelper.validateFiles(this) {
+            CtrlFileHelper.validateFiles(this, Runnable {
                 var found = false
                 for (cf in SharedMethods.getCtrlFiles(this@MainActivity)) {
                     if (cf.isValid) {
@@ -75,11 +78,11 @@ class MainActivity : AppCompatActivity() {
                             .setCancelable(false)
                             .setPositiveButton(R.string.ok) { _, _ -> finish() }.create().show()
                 }
-            }
+            })
         }
         if (!prefs.getBoolean(getString(R.string.previously_started), false)) {
             // whitelist App for Doze Mode
-            SharedMethods.getSuShell().addCommand("dumpsys deviceidle whitelist +com.slash.batterychargelimit",
+            SharedMethods.suShell.addCommand("dumpsys deviceidle whitelist +com.slash.batterychargelimit",
                     0) { _, _, _ ->
                 PreferenceManager.getDefaultSharedPreferences(baseContext)
                         .edit().putBoolean(getString(R.string.previously_started), true).apply()
@@ -213,11 +216,11 @@ class MainActivity : AppCompatActivity() {
                 this.startActivity(intent)
             }
             R.id.action_settings -> if (!SettingsFragment.settingsVisible()) {
-                CtrlFileHelper.validateFiles(this) {
+                CtrlFileHelper.validateFiles(this, Runnable {
                     fragmentManager.beginTransaction()
                             .replace(R.id.fragment_container, SettingsFragment())
                             .addToBackStack(null).commit()
-                }
+                })
             }
         }
         return true
