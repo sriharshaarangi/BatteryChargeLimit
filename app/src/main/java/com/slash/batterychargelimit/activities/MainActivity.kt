@@ -24,14 +24,14 @@ import eu.chainfire.libsuperuser.Shell
 import com.slash.batterychargelimit.Constants.*
 
 class MainActivity : AppCompatActivity() {
-    private val minPicker by lazy {findViewById(R.id.min_picker) as NumberPicker}
-    private val minText by lazy {findViewById(R.id.min_text) as TextView}
-    private val maxPicker by lazy {findViewById(R.id.max_picker) as NumberPicker}
-    private val maxText by lazy {findViewById(R.id.max_text) as TextView}
-    private val settings by lazy {getSharedPreferences(SETTINGS, 0)}
-    private val statusText by lazy {findViewById(R.id.status) as TextView}
-    private val batteryInfo by lazy {findViewById(R.id.battery_info) as TextView}
-    private val enableSwitch by lazy {findViewById(R.id.enable_switch) as Switch}
+    private val minPicker by lazy(LazyThreadSafetyMode.NONE) {findViewById(R.id.min_picker) as NumberPicker}
+    private val minText by lazy(LazyThreadSafetyMode.NONE) {findViewById(R.id.min_text) as TextView}
+    private val maxPicker by lazy(LazyThreadSafetyMode.NONE) {findViewById(R.id.max_picker) as NumberPicker}
+    private val maxText by lazy(LazyThreadSafetyMode.NONE) {findViewById(R.id.max_text) as TextView}
+    private val settings by lazy(LazyThreadSafetyMode.NONE) {getSharedPreferences(SETTINGS, 0)}
+    private val statusText by lazy(LazyThreadSafetyMode.NONE) {findViewById(R.id.status) as TextView}
+    private val batteryInfo by lazy(LazyThreadSafetyMode.NONE) {findViewById(R.id.battery_info) as TextView}
+    private val enableSwitch by lazy(LazyThreadSafetyMode.NONE) {findViewById(R.id.enable_switch) as Switch}
     private var initComplete = false
     private var preferenceChangeListener: SharedPreferences.OnSharedPreferenceChangeListener? = null
 
