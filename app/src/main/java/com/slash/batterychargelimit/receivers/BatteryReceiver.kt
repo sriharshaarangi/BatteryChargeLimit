@@ -117,7 +117,8 @@ class BatteryReceiver(private val service: ForegroundService) : BroadcastReceive
                 // set the "maintain" notification, this must not change from now
                 service.setNotificationTitle(service.getString(R.string.maintaining_x_to_y,
                         rechargePercentage, limitPercentage))
-            } else if (currentStatus == BatteryManager.BATTERY_STATUS_CHARGING && prefs.getBoolean(SettingsFragment.KEY_ENFORCE_CHARGE_LIMIT, true)) {
+            } else if (currentStatus == BatteryManager.BATTERY_STATUS_CHARGING
+                    && prefs.getBoolean(SettingsFragment.KEY_ENFORCE_CHARGE_LIMIT, true)) {
                 //Double the back off time with every unsuccessful round up to MAX_BACK_OFF_TIME
                 backOffTime = Math.min(backOffTime * 2, MAX_BACK_OFF_TIME)
                 Log.d("Charging State", "Fixing state w. CHARGE_ON/CHARGE_OFF " + this.hashCode()
