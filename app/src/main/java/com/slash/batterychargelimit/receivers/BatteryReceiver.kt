@@ -80,7 +80,6 @@ class BatteryReceiver(private val service: ForegroundService) : BroadcastReceive
     private fun stopIfUnplugged() {
         // save the state that caused this function call
         val triggerState = lastState
-        val service = this.service
         handler.postDelayed({
             // continue only if the state didn't change in the meantime
             if (triggerState == lastState && !SharedMethods.isPhonePluggedIn(service)) {

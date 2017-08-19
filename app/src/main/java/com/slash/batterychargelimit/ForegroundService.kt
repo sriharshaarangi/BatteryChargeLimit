@@ -20,11 +20,10 @@ import com.slash.batterychargelimit.Constants.AUTO_RESET_STATS
  *
  * 24/4/17 milux: Changed to make "restart" more efficient by avoiding the need to stop the service
  */
-
 class ForegroundService : Service() {
 
-    private var settings: SharedPreferences? = null
-    private var mNotifyBuilder: NotificationCompat.Builder? = null
+    private val settings by lazy(LazyThreadSafetyMode.NONE) {this.getSharedPreferences(SETTINGS, 0)}
+    private val mNotifyBuilder by lazy(LazyThreadSafetyMode.NONE) {NotificationCompat.Builder(this)}
     private var notifyID = 1
     private var autoResetActive = false
     private var batteryReceiver: BatteryReceiver? = null
@@ -40,13 +39,11 @@ class ForegroundService : Service() {
         isRunning = true
 
         notifyID = 1
-        settings = this.getSharedPreferences(SETTINGS, 0)
-        settings!!.edit().putBoolean(NOTIFICATION_LIVE, true).apply()
+        settings.edit().putBoolean(NOTIFICATION_LIVE, true).apply()
 
         val notificationIntent = Intent(this, MainActivity::class.java)
         val pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0)
-        mNotifyBuilder = NotificationCompat.Builder(this)
-        val notification = mNotifyBuilder!!
+        val notification = mNotifyBuilder
                 .setPriority(NotificationCompat.PRIORITY_MAX)
                 .setCategory(NotificationCompat.CATEGORY_SYSTEM)
                 .setOngoing(true)
@@ -66,28 +63,30 @@ class ForegroundService : Service() {
     }
 
     fun setNotificationTitle(title: String) {
-        mNotifyBuilder!!.setContentTitle(title)
+        mNotifyBuilder.setContentTitle(title)
     }
 
     fun setNotificationContentText(contentText: String) {
-        mNotifyBuilder!!.setContentText(contentText)
+        mNotifyBuilder.setContentText(contentText)
     }
 
     fun updateNotification() {
-        startForeground(notifyID, mNotifyBuilder!!.build())
+        startForeground(notifyID, mNotifyBuilder.build())
     }
 
     override fun onDestroy() {
-        if (autoResetActive && !ignoreAutoReset && settings!!.getBoolean(AUTO_RESET_STATS, false)) {
+        if (autoResetActive && !ignoreAutoReset && settings.getBoolean(AUTO_RESET_STATS, false)) {
             SharedMethods.resetBatteryStats(this)
         }
         ignoreAutoReset = false
 
-        settings!!.edit().putBoolean(NOTIFICATION_LIVE, false).apply()
+        settings.edit().putBoolean(NOTIFICATION_LIVE, false).apply()
         // unregister the battery event receiver
         unregisterReceiver(batteryReceiver)
         // make the BatteryReceiver and dependencies ready for garbage-collection
         batteryReceiver!!.detach()
+        // clear the reference to the battery receiver for GC
+        batteryReceiver = null
 
         isRunning = false
     }
@@ -103,7 +102,6 @@ class ForegroundService : Service() {
          * @return Whether service is running
          */
         var isRunning = false
-            private set
         private var ignoreAutoReset = false
 
         /**
