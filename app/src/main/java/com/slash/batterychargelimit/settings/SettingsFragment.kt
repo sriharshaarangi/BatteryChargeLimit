@@ -32,10 +32,10 @@ class SettingsFragment : PreferenceFragment() {
     }
 
     companion object {
-        val KEY_CONTROL_FILE = "control_file"
-        val KEY_TEMP_FAHRENHEIT = "temp_fahrenheit"
-        val KEY_IMMEDIATE_POWER_INTENT_HANDLING = "immediate_power_intent_handling"
-        val KEY_ENFORCE_CHARGE_LIMIT = "enforce_charge_limit"
+        const val KEY_CONTROL_FILE = "control_file"
+        const val KEY_TEMP_FAHRENHEIT = "temp_fahrenheit"
+        const val KEY_IMMEDIATE_POWER_INTENT_HANDLING = "immediate_power_intent_handling"
+        const val KEY_ENFORCE_CHARGE_LIMIT = "enforce_charge_limit"
         private var visible = false
 
         fun settingsVisible(): Boolean {

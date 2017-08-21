@@ -33,14 +33,15 @@ class BatteryReceiver(private val service: ForegroundService) : BroadcastReceive
 
     init {
         preferenceChangeListener = SharedPreferences.OnSharedPreferenceChangeListener { sharedPreferences, key ->
-            if (SettingsFragment.KEY_TEMP_FAHRENHEIT == key) {
-                useFahrenheit = sharedPreferences.getBoolean(SettingsFragment.KEY_TEMP_FAHRENHEIT, false)
-                service.setNotificationContentText(SharedMethods.getBatteryInfo(service,
-                        service.registerReceiver(null, IntentFilter(Intent.ACTION_BATTERY_CHANGED)),
-                        useFahrenheit))
-                service.updateNotification()
-            } else if (LIMIT == key || MIN == key) {
-                reset(sharedPreferences)
+            when (key) {
+                SettingsFragment.KEY_TEMP_FAHRENHEIT -> {
+                    useFahrenheit = sharedPreferences.getBoolean(SettingsFragment.KEY_TEMP_FAHRENHEIT, false)
+                    service.setNotificationContentText(SharedMethods.getBatteryInfo(service,
+                            service.registerReceiver(null, IntentFilter(Intent.ACTION_BATTERY_CHANGED)),
+                            useFahrenheit))
+                    service.updateNotification()
+                }
+                LIMIT, MIN -> reset(sharedPreferences)
             }
         }
         prefs = PreferenceManager.getDefaultSharedPreferences(service.getBaseContext())
@@ -150,13 +151,12 @@ class BatteryReceiver(private val service: ForegroundService) : BroadcastReceive
     }
 
     companion object {
-        private val CHARGE_FULL = 0
-        private val CHARGE_STOP = 1
-        private val CHARGE_REFRESH = 2
+        private const val CHARGE_FULL = 0
+        private const val CHARGE_STOP = 1
+        private const val CHARGE_REFRESH = 2
 
         private val handler = Handler()
         internal var backOffTime = CHARGING_CHANGE_TOLERANCE_MS
-            private set
     }
 
 }

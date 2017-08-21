@@ -56,8 +56,8 @@ class MainActivity : AppCompatActivity() {
 
         val prefs = PreferenceManager.getDefaultSharedPreferences(baseContext)
         preferenceChangeListener = SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
-            if (SettingsFragment.KEY_TEMP_FAHRENHEIT == key) {
-                updateBatteryInfo(baseContext.registerReceiver(null,
+            when (key) {
+                SettingsFragment.KEY_TEMP_FAHRENHEIT -> updateBatteryInfo(baseContext.registerReceiver(null,
                         IntentFilter(Intent.ACTION_BATTERY_CHANGED)))
             }
         }
@@ -176,21 +176,27 @@ class MainActivity : AppCompatActivity() {
             val currentStatus = intent.getIntExtra(BatteryManager.EXTRA_STATUS, BatteryManager.BATTERY_STATUS_UNKNOWN)
             if (currentStatus != previousStatus) {
                 previousStatus = currentStatus
-                if (currentStatus == BatteryManager.BATTERY_STATUS_CHARGING) {
-                    statusText.setText(R.string.charging)
-                    statusText.setTextColor(ContextCompat.getColor(this@MainActivity, R.color.darkGreen))
-                } else if (currentStatus == BatteryManager.BATTERY_STATUS_DISCHARGING) {
-                    statusText.setText(R.string.discharging)
-                    statusText.setTextColor(Color.DKGRAY)
-                } else if (currentStatus == BatteryManager.BATTERY_STATUS_FULL) {
-                    statusText.setText(R.string.full)
-                    statusText.setTextColor(Color.BLACK)
-                } else if (currentStatus == BatteryManager.BATTERY_STATUS_NOT_CHARGING) {
-                    statusText.setText(R.string.not_charging)
-                    statusText.setTextColor(Color.BLACK)
-                } else if (currentStatus == BatteryManager.BATTERY_STATUS_UNKNOWN) {
-                    statusText.setText(R.string.unknown)
-                    statusText.setTextColor(Color.BLACK)
+                when (currentStatus) {
+                    BatteryManager.BATTERY_STATUS_CHARGING -> {
+                        statusText.setText(R.string.charging)
+                        statusText.setTextColor(ContextCompat.getColor(this@MainActivity, R.color.darkGreen))
+                    }
+                    BatteryManager.BATTERY_STATUS_DISCHARGING -> {
+                        statusText.setText(R.string.discharging)
+                        statusText.setTextColor(Color.DKGRAY)
+                    }
+                    BatteryManager.BATTERY_STATUS_FULL -> {
+                        statusText.setText(R.string.full)
+                        statusText.setTextColor(Color.BLACK)
+                    }
+                    BatteryManager.BATTERY_STATUS_NOT_CHARGING -> {
+                        statusText.setText(R.string.not_charging)
+                        statusText.setTextColor(Color.BLACK)
+                    }
+                    else -> {
+                        statusText.setText(R.string.unknown)
+                        statusText.setTextColor(Color.BLACK)
+                    }
                 }
             }
             updateBatteryInfo(intent)
@@ -250,10 +256,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun updateMinText(min: Int) {
-        if (min == 0) {
-            minText.setText(R.string.no_recharge)
-        } else {
-            minText.text = getString(R.string.recharge_below, min)
+        when (min) {
+            0 -> minText.setText(R.string.no_recharge)
+            else -> minText.text = getString(R.string.recharge_below, min)
         }
     }
 
