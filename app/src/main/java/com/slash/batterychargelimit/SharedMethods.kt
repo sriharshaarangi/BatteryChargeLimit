@@ -24,10 +24,7 @@ import com.slash.batterychargelimit.settings.SettingsFragment
 import eu.chainfire.libsuperuser.Shell
 import java.io.InputStreamReader
 import java.nio.charset.Charset
-import java.util.concurrent.ExecutionException
-import java.util.concurrent.Executors
-import java.util.concurrent.TimeUnit
-import java.util.concurrent.TimeoutException
+import java.util.concurrent.*
 
 object SharedMethods {
     private val TAG = SharedMethods::class.java.simpleName
@@ -74,24 +71,23 @@ object SharedMethods {
 
     }
 
-    val executor = Executors.newSingleThreadExecutor()
+    val executor: ExecutorService = Executors.newSingleThreadExecutor()
 
     fun changeState(context: Context, chargeMode: Int) {
         val settings = context.getSharedPreferences(SETTINGS, 0)
         val file = settings.getString(FILE_KEY,
                 "/sys/class/power_supply/battery/charging_enabled")
 
-        val newState: String
-        if (chargeMode == CHARGE_ON) {
-            newState = settings.getString(CHARGE_ON_KEY, "1")
+        val newState = if (chargeMode == CHARGE_ON) {
+            settings.getString(CHARGE_ON_KEY, "1")
         } else {
-            newState = settings.getString(CHARGE_OFF_KEY, "0")
+            settings.getString(CHARGE_OFF_KEY, "0")
         }
 
         val catCommand = "cat " + file
-        val switchCommands = arrayOf("mount -o rw,remount " + file, "echo \"$newState\" > $file")
+        val switchCommands = arrayOf("mount -o rw,remount $file", "echo \"$newState\" > $file")
 
-        suShell.addCommand(catCommand, 0) { commandCode, exitCode, output ->
+        suShell.addCommand(catCommand, 0) { _, _, output ->
             if (output[0] != newState) {
                 setChangePending()
                 suShell.addCommand(switchCommands)
@@ -174,7 +170,7 @@ object SharedMethods {
         //        } catch (Exception e) {
         //            Log.i("New reset method failed", e.getMessage(), e);
         //            // on Exception, fall back to conventional method
-        suShell.addCommand("dumpsys batterystats --reset", 0) { commandCode, exitCode, output ->
+        suShell.addCommand("dumpsys batterystats --reset", 0) { _, exitCode, _ ->
             if (exitCode == 0) {
                 Toast.makeText(context, R.string.stats_reset_success, Toast.LENGTH_LONG).show()
             } else {
@@ -193,11 +189,10 @@ object SharedMethods {
 
     fun handleLimitChange(context: Context, newLimit: Any) {
         try {
-            val limit: Int
-            if (newLimit is Number) {
-                limit = newLimit.toInt()
+            val limit = if (newLimit is Number) {
+                newLimit.toInt()
             } else {
-                limit = Integer.parseInt(newLimit.toString())
+                Integer.parseInt(newLimit.toString())
             }
             if (limit == 100) {
                 val settings = context.getSharedPreferences(SETTINGS, 0)
@@ -234,7 +229,6 @@ object SharedMethods {
         }
     }
 
-    @JvmOverloads
     fun stopService(context: Context, ignoreAutoReset: Boolean = true) {
         if (ignoreAutoReset) {
             ForegroundService.ignoreAutoReset()

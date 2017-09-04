@@ -12,8 +12,6 @@ import com.slash.batterychargelimit.ControlFile
 import com.slash.batterychargelimit.R
 import com.slash.batterychargelimit.SharedMethods
 
-import java.util.Collections
-
 @Keep
 class ControlFilePreference(context: Context, attrs: AttributeSet?) : DialogPreference(context, attrs) {
     private var ctrlFiles = emptyList<ControlFile>()
@@ -23,9 +21,8 @@ class ControlFilePreference(context: Context, attrs: AttributeSet?) : DialogPref
         ctrlFiles = SharedMethods.getCtrlFiles(context)
     }
 
-    inner class ControlFileAdapter internal constructor(private val data: List<ControlFile>, private val pContext: Context)
-        : ArrayAdapter<ControlFile>(context, R.layout.cf_row, data) {
-        private val holder: ViewHolder? = null
+    inner class ControlFileAdapter internal constructor(private val data: List<ControlFile>, pContext: Context)
+        : ArrayAdapter<ControlFile>(pContext, R.layout.cf_row, data) {
 
         private inner class ViewHolder {
             internal var label: RadioButton? = null
@@ -40,13 +37,13 @@ class ControlFilePreference(context: Context, attrs: AttributeSet?) : DialogPref
 
             if (convertView == null) {
                 h = ViewHolder()
-                val inflater = LayoutInflater.from(getContext())
+                val inflater = LayoutInflater.from(context)
                 convertView = inflater.inflate(R.layout.cf_row, parent, false)
                 convertView!!.setOnClickListener { h.label!!.performClick() }
                 h.label = convertView.findViewById(R.id.cf_label) as RadioButton
                 h.label!!.setOnClickListener { v ->
                     if (v.isEnabled) {
-                        SharedMethods.setCtrlFile(getContext(), v.tag as ControlFile)
+                        SharedMethods.setCtrlFile(context, v.tag as ControlFile)
                         this@ControlFilePreference.dialog.dismiss()
                     }
                 }

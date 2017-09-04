@@ -44,7 +44,7 @@ class BatteryReceiver(private val service: ForegroundService) : BroadcastReceive
                 LIMIT, MIN -> reset(sharedPreferences)
             }
         }
-        prefs = PreferenceManager.getDefaultSharedPreferences(service.getBaseContext())
+        prefs = PreferenceManager.getDefaultSharedPreferences(service.baseContext)
         prefs.registerOnSharedPreferenceChangeListener(preferenceChangeListener)
         val settings = service.getSharedPreferences(SETTINGS, 0)
         settings.registerOnSharedPreferenceChangeListener(preferenceChangeListener)
@@ -122,7 +122,7 @@ class BatteryReceiver(private val service: ForegroundService) : BroadcastReceive
                 //Double the back off time with every unsuccessful round up to MAX_BACK_OFF_TIME
                 backOffTime = Math.min(backOffTime * 2, MAX_BACK_OFF_TIME)
                 Log.d("Charging State", "Fixing state w. CHARGE_ON/CHARGE_OFF " + this.hashCode()
-                        + " (Delay: " + backOffTime + ")")
+                        + " (Delay: $backOffTime)")
                 // if the device did not stop charging, try to "cycle" the state to fix this
                 SharedMethods.changeState(service, SharedMethods.CHARGE_ON)
                 // schedule the charging stop command to be executed after CHARGING_CHANGE_TOLERANCE_MS

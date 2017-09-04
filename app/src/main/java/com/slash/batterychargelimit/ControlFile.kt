@@ -1,7 +1,6 @@
 package com.slash.batterychargelimit
 
 import android.support.annotation.Keep
-import eu.chainfire.libsuperuser.Shell
 
 /**
  * Created by Michael on 31.03.2017.
