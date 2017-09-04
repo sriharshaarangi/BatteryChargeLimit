@@ -76,7 +76,9 @@ object SharedMethods {
     fun changeState(context: Context, chargeMode: Int) {
         val settings = context.getSharedPreferences(SETTINGS, 0)
         val file = settings.getString(FILE_KEY,
-                "/sys/class/power_supply/battery/charging_enabled")
+                "/sys/class/power_supply/battery/charging_enabled")!!
+        val preferences = PreferenceManager.getDefaultSharedPreferences(context)
+        val alwaysWrite = preferences.getBoolean(SettingsFragment.KEY_ALWAYS_WRITE_CF, false)
 
         val newState = if (chargeMode == CHARGE_ON) {
             settings.getString(CHARGE_ON_KEY, "1")
@@ -84,13 +86,16 @@ object SharedMethods {
             settings.getString(CHARGE_OFF_KEY, "0")
         }
 
-        val catCommand = "cat " + file
         val switchCommands = arrayOf("mount -o rw,remount $file", "echo \"$newState\" > $file")
 
-        suShell.addCommand(catCommand, 0) { _, _, output ->
-            if (output[0] != newState) {
-                setChangePending()
-                suShell.addCommand(switchCommands)
+        if (alwaysWrite) {
+            suShell.addCommand(switchCommands)
+        } else {
+            suShell.addCommand("cat $file", 0) { _, _, output ->
+                if (output[0] != newState) {
+                    setChangePending()
+                    suShell.addCommand(switchCommands)
+                }
             }
         }
     }

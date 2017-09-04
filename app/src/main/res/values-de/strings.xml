@@ -44,6 +44,8 @@
     <string name="show_temperature_fahrenheit">Temperatur in &#8457; anzeigen</string>
     <string name="enforce_charge_limit">Limit erzwingen</string>
     <string name="enforce_charge_limit_desc">Versuchen, das Gerät zum Einhalten des Limits zu zwingen, indem die Steuerungsdatei mit exp. ansteigender Verzögerung umgeschaltet wird</string>
+    <string name="always_write_cf">Steuerungsdatei immer schreiben</string>
+    <string name="always_write_cf_desc">Die Steuerungsdatei immer blind überschreiben, auch wenn sie bereits den neuen Inhalt enthält.</string>
 
     <string name="advanced_settings">Profi-Einstellungen</string>
     <string name="immediate_power_intent_handling">Power-Events immer verarbeiten</string>

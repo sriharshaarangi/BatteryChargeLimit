@@ -49,6 +49,8 @@
     <string name="show_temperature_fahrenheit">Show Temperature in &#8457;</string>
     <string name="enforce_charge_limit">Enforce Charge Limit</string>
     <string name="enforce_charge_limit_desc">Try to force the device to recognize changes of the control file by toggling its state with exp. increasing delay</string>
+    <string name="always_write_cf">Always Write Ctrl. File</string>
+    <string name="always_write_cf_desc">Always overwrite the control file blindly, even if it already contains the new content.</string>
 
     <string name="advanced_settings">Advanced Settings</string>
     <string name="immediate_power_intent_handling">Always Handle Power Events</string>

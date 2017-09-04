@@ -29,6 +29,12 @@
                 android:summary="@string/immediate_power_intent_handling_desc"
                 android:defaultValue="false"/>
 
+        <CheckBoxPreference
+                android:key="write_blindly"
+                android:title="@string/always_write_cf"
+                android:summary="@string/always_write_cf_desc"
+                android:defaultValue="false"/>
+
     </PreferenceCategory>
 
 </PreferenceScreen>
