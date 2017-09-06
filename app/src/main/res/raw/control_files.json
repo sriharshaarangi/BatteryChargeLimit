@@ -61,14 +61,14 @@
   "details": "Nvidia Shield",
   "chargeOn": "enabled",
   "chargeOff": "disabled",
-  "experimental": true
+  "experimental": false
 },{
   "file": "/sys/class/power_supply/battery/input_suspend",
   "label": "input_suspend",
   "details": "Xiaomi Mi6",
   "chargeOn": "0",
   "chargeOff": "1",
-  "experimental": true
+  "experimental": false
 },{
   "file": "/sys/class/power_supply/bq2589x_charger/enable_charging",
   "label": "bq2589x_charger",
@@ -82,7 +82,7 @@
   "details": "Nexus 5",
   "chargeOn": "1",
   "chargeOff": "0",
-  "experimental": true
+  "experimental": false
 },{
   "file": "/sys/class/power_supply/dollar_cove_charger/present",
   "label": "dollar_cove_charger",
