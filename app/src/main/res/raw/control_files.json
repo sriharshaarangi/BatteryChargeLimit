@@ -103,6 +103,6 @@
   "details": "Galaxy Nexus (maguro)",
   "chargeOn": "1",
   "chargeOff": "0",
-  "experimental": true
+  "experimental": false
 }
 ]
