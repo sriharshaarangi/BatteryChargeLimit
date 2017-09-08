@@ -11,17 +11,17 @@ import android.support.annotation.Keep
  */
 class ControlFile {
     @Keep
-    var file: String? = null
+    val file: String? = null
     @Keep
-    var label: String? = null
+    val label: String? = null
     @Keep
-    var details: String? = null
+    val details: String? = null
     @Keep
-    var chargeOn: String? = null
+    val chargeOn: String? = null
     @Keep
-    var chargeOff: String? = null
+    val chargeOff: String? = null
     @Keep
-    var isExperimental: Boolean = false
+    val experimental: Boolean? = false
     @Transient private var checked = false
     @Transient private var valid = false
 

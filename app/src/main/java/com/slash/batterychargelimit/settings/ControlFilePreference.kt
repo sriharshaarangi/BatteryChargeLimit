@@ -59,7 +59,7 @@ class ControlFilePreference(context: Context, attrs: AttributeSet?) : DialogPref
             h.label!!.tag = cf
             h.label!!.isChecked = cf.file == getPersistedString(null)
             h.details!!.text = cf.details
-            h.experimental!!.visibility = if (cf.isExperimental) View.VISIBLE else View.INVISIBLE
+            h.experimental!!.visibility = if (cf.experimental!!) View.VISIBLE else View.INVISIBLE
 
             return convertView
         }
