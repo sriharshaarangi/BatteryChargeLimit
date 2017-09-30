@@ -104,5 +104,12 @@
   "chargeOn": "1",
   "chargeOff": "0",
   "experimental": false
+},{
+  "file": "/sys/devices/platform/battery/ChargerEnable",
+  "label": "ChargerEnable",
+  "details": "Xiaomi Redmi Note 2 (hermes)",
+  "chargeOn": "1",
+  "chargeOff": "0",
+  "experimental": true
 }
 ]
