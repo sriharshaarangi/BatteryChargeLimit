@@ -1,19 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<!-- Translated to Brazilian Portuguese by Caio Roberto - caiorrs, on 04/05/2017* (*May the fourth be with you)-->
+<!-- Translated to Brazilian Portuguese by Caio Roberto - caiorrs, on 04/05/2017* (*May the fourth be with you)
+Updated on 20/07/2017-->
 <resources>
     <string name="action_settings">Configurações</string>
+    <string name="about">Sobre</string>
     <string name="enable">Habilitar Battery Charge Limit</string>
     <string name="limit">Limite: %1$d%%</string>
     <string name="status">Estado: </string>
     <string name="experimental">%1$s (experimental!)</string>
-    <string name="auto_reset_stats">Restaura automaticamente as estatísticas da bateria</string>
+    <string name="auto_reset_stats">Restaurar automaticamente as estatísticas da bateria</string>
     <string name="reset_stats">Restaurar Estatísticas da Bateria</string>
 
     <string name="previously_started">Anteriormente Iniciado</string>
     <string name="device_not_supported">Seu dispositivo não é compatível (ainda)!</string>
     <string name="ok">OK</string>
-    <string name="recharge_below">Recarregar abaixo de %1$d%%</string>
+    <string name="no_recharge">Sem recarregamento automático</string>
 
     <string name="charging">CARREGANDO</string>
     <string name="discharging">DESCARREGANDO</string>
@@ -26,11 +28,15 @@
     <string name="waiting_until_x">Esperando até %1$d%%</string>
     <string name="battery_info_C">U: %1$.3f V, T: %2$.1f &#8451;</string>
 
-    <string name="root_denied">Foi negado acesso ROOT ao app ou o dispositivo não possui root!</string>
+    <string name="root_denied">Acesso ROOT foi negado ao app ou o dispositivo não possui root!</string>
     <string name="stats_reset_success">Estatísticas da Bateria foram restauradas com sucesso</string>
 
     <string name="intent_handle_activity">Atividade de Manipulador de Limite de Carga da Bateria</string>
     <string name="intent_invalid">O objetivo fornecido era inválido.</string>
     <string name="intent_limit_invalid">O limite fornecido era inválido.</string>
     <string name="intent_limit_accepted">O limite de carga da bateria foi mudado para %1$d%%.</string>
+    <string name="mime_battery_limit" translatable="false">text/x-battery-limit</string>
+
+    <string name="service_enabled"> Battery Limit Service Habilitado! </string>
+<string name="service_disabled"> Battery Limit Service Desabilitado! </string>
 </resources>
