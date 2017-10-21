@@ -115,8 +115,8 @@
   "file": "/sys/class/power_supply/chargalg/disable_charging",
   "label": "chargalg/disable_charging",
   "details": "Sony XPERIA Mini ST15i",
-  "chargeOn": "1",
-  "chargeOff": "0",
+  "chargeOn": "0",
+  "chargeOff": "1",
   "experimental": true
 }
 ]
