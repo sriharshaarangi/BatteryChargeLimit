@@ -6,7 +6,7 @@
     <string name="enable">Habilitar Battery Charge Limit</string>
     <string name="limit">Limite: %1$d%%</string>
     <string name="status">Estado: </string>
-    <string name="experimental">%1$s (experimental!)</string>
+    <string name="experimental">EXPERIMENTAL</string>
     <string name="auto_reset_stats">Restaura automaticamente as estatísticas da bateria</string>
     <string name="reset_stats">Restaurar Estatísticas da Bateria</string>
 

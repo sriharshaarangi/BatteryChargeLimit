@@ -10,14 +10,12 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="8dp"
-    >
+    android:layout_margin="8dp">
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@mipmap/ic_launcher"
-        android:id="@+id/app_icon"
-        />
+        android:id="@+id/app_icon"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -27,17 +25,16 @@
         android:layout_toEndOf="@+id/app_icon"
         android:layout_margin="4dp"
         android:textSize="14dp"
-        />
+        android:layout_toRightOf="@+id/app_icon"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/app_name"
         android:layout_toEndOf="@+id/app_icon"
         android:id="@+id/app_version"
-        android:text="0.9.1"
         android:layout_marginStart="4dp"
-
-        />
+        android:layout_toRightOf="@+id/app_icon"
+        android:layout_marginLeft="4dp"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -47,7 +44,7 @@
         android:layout_below="@+id/app_icon"
         android:layout_marginTop="4dp"
         android:layout_marginStart="4dp"
-        />
+        android:layout_marginLeft="4dp"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -59,7 +56,7 @@
         android:textSize="20dp"
         android:layout_marginTop="4dp"
         android:layout_marginStart="4dp"
-        />
+        android:layout_marginLeft="4dp"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -68,7 +65,7 @@
         android:id="@+id/developers"
         android:layout_below="@+id/developers_title"
         android:layout_marginStart="4dp"
-        />
+        android:layout_marginLeft="4dp"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -80,7 +77,7 @@
         android:textSize="20dp"
         android:layout_marginTop="4dp"
         android:layout_marginStart="4dp"
-        />
+        android:layout_marginLeft="4dp"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -89,7 +86,7 @@
         android:id="@+id/translators"
         android:layout_below="@+id/translators_title"
         android:layout_marginStart="4dp"
-        />
+        android:layout_marginLeft="4dp"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -100,7 +97,7 @@
         android:layout_below="@+id/translators"
         android:layout_marginStart="4dp"
         android:textSize="20dp"
-        />
+        android:layout_marginLeft="4dp"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -109,9 +106,8 @@
         android:id="@+id/source_code"
         android:layout_below="@+id/source"
         android:layout_marginStart="4dp"
-        android:autoLink="web"
-
-        />
+        android:layout_marginLeft="4dp"
+        android:autoLink="web"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -123,7 +119,7 @@
         android:layout_marginTop="4dp"
         android:layout_marginStart="4dp"
         android:textSize="20dp"
-        />
+        android:layout_marginLeft="4dp"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -133,7 +129,7 @@
         android:layout_below="@+id/xda"
         android:layout_marginStart="4dp"
         android:autoLink="web"
-        />
+        android:layout_marginLeft="4dp"/>
 
 </RelativeLayout>
 </ScrollView>

@@ -21,7 +21,9 @@
             android:gravity="top|start"
             android:paddingBottom="5dp"
             android:paddingStart="32dp"
-            android:paddingEnd="8dp">
+            android:paddingEnd="8dp"
+            android:paddingLeft="32dp"
+            android:paddingRight="8dp">
 
         <TextView
                 android:id="@+id/cf_details"

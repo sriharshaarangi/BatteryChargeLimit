@@ -43,7 +43,8 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:gravity="center_horizontal"
-            android:layout_marginEnd="20dp">
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp">
 
             <NumberPicker
                 android:id="@+id/max_picker"
@@ -93,21 +94,24 @@
             android:id="@+id/status_label"
             android:text="@string/status"
             android:textColor="@android:color/black"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:layout_marginRight="5dp"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/status"
             android:layout_toEndOf="@+id/status_label"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:layout_toRightOf="@+id/status_label"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/battery_info"
             android:layout_toEndOf="@+id/status"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:layout_toRightOf="@+id/status"/>
     </RelativeLayout>
 
     <Switch
