@@ -124,6 +124,6 @@
   "details": "HTC One (M9)",
   "chargeOn": "1",
   "chargeOff": "0",
-  "experimental": false
+  "experimental": true
 }
 ]
