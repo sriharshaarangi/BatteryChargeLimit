@@ -91,10 +91,8 @@ object SharedMethods {
         if (alwaysWrite) {
             suShell.addCommand(switchCommands)
         } else {
-            /* Consider adding an extra member in control_files.json specifying a file that returns
-               the current charging status so that we can compare it to the desired status. */ 
             suShell.addCommand("cat $file", 0) { _, _, output ->
-                if (output.size() > 0 || output[0] != newState) {
+                if (output.size() == 0 || output[0] != newState) {
                     setChangePending()
                     suShell.addCommand(switchCommands)
                 }
