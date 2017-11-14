@@ -61,6 +61,12 @@
             <meta-data android:name="android.appwidget.provider" android:resource="@xml/enable_widget" />
         </receiver>
 
+        <receiver android:name=".receivers.ServiceReceiver">
+            <intent-filter>
+                <action android:name="com.slash.batterychargelimit.DISABLE" />
+            </intent-filter>
+        </receiver>
+
         <service android:name="com.slash.batterychargelimit.ForegroundService" />
     </application>
 

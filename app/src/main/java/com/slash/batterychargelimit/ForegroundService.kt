@@ -12,6 +12,7 @@ import com.slash.batterychargelimit.receivers.BatteryReceiver
 import com.slash.batterychargelimit.Constants.SETTINGS
 import com.slash.batterychargelimit.Constants.NOTIFICATION_LIVE
 import com.slash.batterychargelimit.Constants.AUTO_RESET_STATS
+import com.slash.batterychargelimit.Constants.INTENT_DISABLE_ACTION
 
 /**
  * Created by harsha on 30/1/17.
@@ -42,8 +43,9 @@ class ForegroundService : Service() {
         notifyID = 1
         settings.edit().putBoolean(NOTIFICATION_LIVE, true).apply()
 
-        val notificationIntent = Intent(this, MainActivity::class.java)
-        val pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0)
+        // val notificationIntent = Intent(this, MainActivity::class.java)
+        // val pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0)
+        val pendingIntent = PendingIntent.getBroadcast(this, 0, Intent().setAction(INTENT_DISABLE_ACTION), PendingIntent.FLAG_UPDATE_CURRENT)
         val notification = mNotifyBuilder
                 .setPriority(NotificationCompat.PRIORITY_MAX)
                 .setCategory(NotificationCompat.CATEGORY_SYSTEM)
