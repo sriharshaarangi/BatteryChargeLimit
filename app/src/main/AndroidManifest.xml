@@ -32,6 +32,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.About"/>
+        <activity android:name=".activities.DisableServiceActivity"/>
 
         <receiver android:name=".receivers.BootReceiver">
             <intent-filter>
