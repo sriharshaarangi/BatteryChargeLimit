@@ -1,12 +1,9 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 
-def keystoreProperties = new Properties()
-keystoreProperties.load(new FileInputStream(rootProject.file("private/keystore.properties")))
-
 android {
     compileSdkVersion 25
-    buildToolsVersion '26.0.1'
+    buildToolsVersion '26.0.2'
     defaultConfig {
         applicationId "com.slash.batterychargelimit"
         minSdkVersion 14
@@ -19,14 +16,6 @@ android {
     lintOptions {
         abortOnError false
     }
-    signingConfigs {
-        release {
-            storeFile rootProject.file(keystoreProperties['storeFile'])
-            storePassword keystoreProperties['storePassword']
-            keyAlias keystoreProperties['keyAlias']
-            keyPassword keystoreProperties['keyPassword']
-        }
-    }
     buildTypes {
         debug {
             minifyEnabled false
@@ -37,7 +26,6 @@ android {
             shrinkResources true
             zipAlignEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.release
         }
     }
     productFlavors {
