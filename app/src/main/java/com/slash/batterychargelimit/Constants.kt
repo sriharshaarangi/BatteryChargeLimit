@@ -26,6 +26,7 @@ object Constants {
     const val MAX_BACK_OFF_TIME: Long = 30000
 
     const val INTENT_TOGGLE_ACTION = "com.slash.batterychargelimit.TOGGLE"
+    const val INTENT_DISABLE_ACTION = "com.slash.batterychargelimit.DISABLE"
 
     const val XDA_THREAD = "https://forum.xda-developers.com/android/apps-games/root-battery-charge-limit-t3557002/"
     const val SOURCE_CODE = "https://github.com/sriharshaarangi/BatteryChargeLimit"
