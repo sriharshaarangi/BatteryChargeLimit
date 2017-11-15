@@ -12,7 +12,7 @@ import com.slash.batterychargelimit.SharedMethods
 class ServiceReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         if (intent.action == INTENT_DISABLE_ACTION) {
-            SharedMethods.stopService(context)
+            SharedMethods.stopService(context, false)
         }
     }
 }
