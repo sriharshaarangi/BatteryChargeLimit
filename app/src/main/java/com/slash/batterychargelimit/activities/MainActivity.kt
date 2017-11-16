@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity() {
 
         // Exit immediately if no root support
         if (!Shell.SU.available()) {
-            Toast.makeText(this, R.string.root_denied, Toast.LENGTH_LONG)
+            Toast.makeText(this, R.string.root_denied, Toast.LENGTH_SHORT)
             AlertDialog.Builder(this@MainActivity)
                     .setMessage(R.string.root_denied)
                     .setCancelable(false)

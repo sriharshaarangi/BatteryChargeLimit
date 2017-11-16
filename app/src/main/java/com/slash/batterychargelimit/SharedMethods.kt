@@ -177,7 +177,7 @@ object SharedMethods {
         //            // on Exception, fall back to conventional method
         suShell.addCommand("dumpsys batterystats --reset", 0) { _, exitCode, _ ->
             if (exitCode == 0) {
-                Toast.makeText(context, R.string.stats_reset_success, Toast.LENGTH_LONG).show()
+                Toast.makeText(context, R.string.stats_reset_success, Toast.LENGTH_SHORT).show()
             } else {
                 Log.e(TAG, "Statistics reset failed")
             }
@@ -217,7 +217,7 @@ object SharedMethods {
                 throw NumberFormatException("Battery limit out of range!")
             }
         } catch (fe: NumberFormatException) {
-            Toast.makeText(context, R.string.intent_limit_invalid, Toast.LENGTH_LONG).show()
+            Toast.makeText(context, R.string.intent_limit_invalid, Toast.LENGTH_SHORT).show()
         }
 
     }
@@ -228,7 +228,7 @@ object SharedMethods {
                 if (SharedMethods.isPhonePluggedIn(context)) {
                     context.startService(Intent(context, ForegroundService::class.java))
                     // display service enabled Toast message
-                    Toast.makeText(context, R.string.service_enabled, Toast.LENGTH_LONG).show()
+                    Toast.makeText(context, R.string.service_enabled, Toast.LENGTH_SHORT).show()
                 }
             }, CHARGING_CHANGE_TOLERANCE_MS)
         }
@@ -241,7 +241,7 @@ object SharedMethods {
         context.stopService(Intent(context, ForegroundService::class.java))
         SharedMethods.changeState(context, CHARGE_ON)
         // display service disabled Toast message
-        Toast.makeText(context, R.string.service_disabled, Toast.LENGTH_LONG).show()
+        Toast.makeText(context, R.string.service_disabled, Toast.LENGTH_SHORT).show()
     }
 
 }
