@@ -10,6 +10,8 @@ import com.slash.batterychargelimit.Constants.MAX_BACK_OFF_TIME
 import com.slash.batterychargelimit.Constants.CHARGING_CHANGE_TOLERANCE_MS
 import com.slash.batterychargelimit.Constants.LIMIT
 import com.slash.batterychargelimit.Constants.MIN
+import com.slash.batterychargelimit.Constants.NOTIF_CHARGE
+import com.slash.batterychargelimit.Constants.NOTIF_MAINTAIN
 import com.slash.batterychargelimit.Constants.SETTINGS
 import com.slash.batterychargelimit.ForegroundService
 import com.slash.batterychargelimit.R
@@ -116,6 +118,7 @@ class BatteryReceiver(private val service: ForegroundService) : BroadcastReceive
                 Log.d("Charging State", "CHARGE_FULL " + this.hashCode())
                 SharedMethods.changeState(service, SharedMethods.CHARGE_ON)
                 service.setNotificationTitle(service.getString(R.string.waiting_until_x, limitPercentage))
+                service.setNotificationContentText(service.getString(R.string.waiting_description))
                 stopIfUnplugged()
             }
         } else if (batteryLevel >= limitPercentage) {
@@ -132,6 +135,8 @@ class BatteryReceiver(private val service: ForegroundService) : BroadcastReceive
                 // set the "maintain" notification, this must not change from now
                 service.setNotificationTitle(service.getString(R.string.maintaining_x_to_y,
                         rechargePercentage, limitPercentage))
+                service.setNotificationContentText(service.getString(R.string.maintaining_description))
+                service.setNotificationIcon(NOTIF_MAINTAIN)
             } else if (currentStatus == BatteryManager.BATTERY_STATUS_CHARGING
                     && prefs.getBoolean(SettingsFragment.KEY_ENFORCE_CHARGE_LIMIT, true)) {
                 //Double the back off time with every unsuccessful round up to MAX_BACK_OFF_TIME
@@ -149,13 +154,16 @@ class BatteryReceiver(private val service: ForegroundService) : BroadcastReceive
         } else if (batteryLevel < rechargePercentage) {
             if (switchState(CHARGE_REFRESH)) {
                 Log.d("Charging State", "CHARGE_REFRESH " + this.hashCode())
+                service.setNotificationIcon(NOTIF_CHARGE)
+                service.setNotificationTitle(service.getString(R.string.waiting_until_x, limitPercentage))
+                service.setNotificationContentText(service.getString(R.string.waiting_description))
                 SharedMethods.changeState(service, SharedMethods.CHARGE_ON)
                 stopIfUnplugged()
             }
         }
 
         // update battery status information and rebuild notification
-        service.setNotificationContentText(SharedMethods.getBatteryInfo(service, intent, useFahrenheit))
+        // service.setNotificationContentText(SharedMethods.getBatteryInfo(service, intent, useFahrenheit))
         service.updateNotification()
         service.removeNotificationSound()
         Log.d("BatteryReceiver", "onReceive executed " + this.hashCode())

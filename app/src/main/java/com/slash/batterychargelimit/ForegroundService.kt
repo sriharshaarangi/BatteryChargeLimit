@@ -13,6 +13,8 @@ import com.slash.batterychargelimit.Constants.SETTINGS
 import com.slash.batterychargelimit.Constants.NOTIFICATION_LIVE
 import com.slash.batterychargelimit.Constants.AUTO_RESET_STATS
 import com.slash.batterychargelimit.Constants.INTENT_DISABLE_ACTION
+import com.slash.batterychargelimit.Constants.NOTIF_CHARGE
+import com.slash.batterychargelimit.Constants.NOTIF_MAINTAIN
 
 /**
  * Created by harsha on 30/1/17.
@@ -38,21 +40,24 @@ class ForegroundService : Service() {
     }
 
     override fun onCreate() {
+
         isRunning = true
 
         notifyID = 1
         settings.edit().putBoolean(NOTIFICATION_LIVE, true).apply()
 
-        // val notificationIntent = Intent(this, MainActivity::class.java)
-        // val pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0)
-        val pendingIntent = PendingIntent.getBroadcast(this, 0, Intent().setAction(INTENT_DISABLE_ACTION), PendingIntent.FLAG_UPDATE_CURRENT)
+        val notificationIntent = Intent(this, MainActivity::class.java)
+        val pendingIntentApp = PendingIntent.getActivity(this, 0, notificationIntent, 0)
+        val pendingIntentDisable = PendingIntent.getBroadcast(this, 0, Intent().setAction(INTENT_DISABLE_ACTION), PendingIntent.FLAG_UPDATE_CURRENT)
         val notification = mNotifyBuilder
                 .setPriority(NotificationCompat.PRIORITY_MAX)
                 .setCategory(NotificationCompat.CATEGORY_SYSTEM)
+                .addAction(0, getString(R.string.disable), pendingIntentDisable)
+                .addAction(0, getString(R.string.open_app), pendingIntentApp)
                 .setOngoing(true)
                 .setContentTitle(getString(R.string.please_wait))
-                .setSmallIcon(R.drawable.bcl_n)
-                .setContentIntent(pendingIntent)
+                .setContentInfo(getString(R.string.please_wait))
+                .setSmallIcon(R.drawable.ic_notif_charge)
                 .build()
         startForeground(notifyID, notification)
 
@@ -73,6 +78,14 @@ class ForegroundService : Service() {
 
     fun setNotificationContentText(contentText: String) {
         mNotifyBuilder.setContentText(contentText)
+    }
+
+    fun setNotificationIcon(iconType: String) {
+        if (iconType == NOTIF_MAINTAIN) {
+            mNotifyBuilder.setSmallIcon(R.drawable.ic_notif_maintain)
+        } else if (iconType == NOTIF_CHARGE) {
+            mNotifyBuilder.setSmallIcon(R.drawable.ic_notif_charge)
+        }
     }
 
     fun updateNotification() {

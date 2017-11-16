@@ -26,6 +26,9 @@ object Constants {
     const val CHARGING_CHANGE_TOLERANCE_MS: Long = 500
     const val MAX_BACK_OFF_TIME: Long = 30000
 
+    const val NOTIF_MAINTAIN = "ic_maintain"
+    const val NOTIF_CHARGE = "ic_charge"
+
     const val INTENT_TOGGLE_ACTION = "com.slash.batterychargelimit.TOGGLE"
     const val INTENT_DISABLE_ACTION = "com.slash.batterychargelimit.DISABLE"
 
