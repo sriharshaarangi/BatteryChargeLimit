@@ -120,7 +120,7 @@
   "experimental": true
 },{
   "file": "/sys/devices/platform/mt-battery/disable_charger",
-  "label": "EnableCharger",
+  "label": "ChargerSwitch",
   "details": "Le 1s (x3)",
   "chargeOn": "0",
   "chargeOff": "1",
