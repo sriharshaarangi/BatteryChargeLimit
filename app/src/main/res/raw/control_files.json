@@ -125,5 +125,12 @@
   "chargeOn": "0",
   "chargeOff": "1",
   "experimental": true
+},{
+  "file": "/sys/devices/platform/huawei_charger/enable_charger",
+  "label": "huawei_charger/enable_charger",
+  "details": "Huawei P10 Lite",
+  "chargeOn": "1",
+  "chargeOff": "0",
+  "experimental": true
 }
 ]
