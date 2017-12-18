@@ -80,10 +80,20 @@
         </LinearLayout>
     </LinearLayout>
 
+    <Switch
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/notify"
+        android:textSize="14sp"
+        android:id="@+id/notification_sound"
+        android:layout_below="@+id/range_layout"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="16dp"
+        />
     <RelativeLayout
         android:id="@+id/stat"
         android:layout_width="wrap_content"
-        android:layout_below="@+id/range_layout"
+        android:layout_below="@+id/notification_sound"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp">
 

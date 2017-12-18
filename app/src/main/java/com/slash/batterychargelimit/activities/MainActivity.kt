@@ -25,6 +25,7 @@ import com.slash.batterychargelimit.Constants.ENABLE
 import com.slash.batterychargelimit.Constants.LIMIT
 import com.slash.batterychargelimit.Constants.MIN
 import com.slash.batterychargelimit.Constants.AUTO_RESET_STATS
+import com.slash.batterychargelimit.Constants.NOTIFICATION_SOUND
 
 class MainActivity : AppCompatActivity() {
     private val minPicker by lazy(LazyThreadSafetyMode.NONE) {findViewById(R.id.min_picker) as NumberPicker}
@@ -127,8 +128,10 @@ class MainActivity : AppCompatActivity() {
 
         val resetBatteryStats_Button = findViewById(R.id.reset_battery_stats) as Button
         val autoResetSwitch = findViewById(R.id.auto_stats_reset) as Switch
+        val notificationSound = findViewById(R.id.notification_sound) as Switch
 
         autoResetSwitch.isChecked = settings.getBoolean(AUTO_RESET_STATS, false)
+        notificationSound.isChecked = settings.getBoolean(NOTIFICATION_SOUND, false)
         maxPicker.minValue = 40
         maxPicker.maxValue = 99
         minPicker.minValue = 0
@@ -149,7 +152,8 @@ class MainActivity : AppCompatActivity() {
         resetBatteryStats_Button.setOnClickListener { SharedMethods.resetBatteryStats(this@MainActivity) }
         autoResetSwitch.setOnCheckedChangeListener { _, isChecked ->
             settings.edit().putBoolean(AUTO_RESET_STATS, isChecked).apply() }
-
+        notificationSound.setOnCheckedChangeListener { _, isChecked ->
+            settings.edit().putBoolean(NOTIFICATION_SOUND, isChecked).apply() }
         //The onCreate() process was not stopped via return, UI elements should be available
         initComplete = true
     }

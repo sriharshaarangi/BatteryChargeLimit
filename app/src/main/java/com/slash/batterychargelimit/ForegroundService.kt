@@ -3,6 +3,7 @@ package com.slash.batterychargelimit
 import android.app.PendingIntent
 import android.app.Service
 import android.content.*
+import android.net.Uri
 import android.os.IBinder
 import android.support.v4.app.NotificationCompat
 import com.slash.batterychargelimit.activities.MainActivity
@@ -73,6 +74,13 @@ class ForegroundService : Service() {
         startForeground(notifyID, mNotifyBuilder.build())
     }
 
+    fun setNotificationSound(soundUri: Uri) {
+        mNotifyBuilder.setSound(soundUri)
+    }
+
+    fun removeNotificationSound() {
+        mNotifyBuilder.setSound(null)
+    }
     override fun onDestroy() {
         if (autoResetActive && !ignoreAutoReset && settings.getBoolean(AUTO_RESET_STATS, false)) {
             SharedMethods.resetBatteryStats(this)

@@ -15,6 +15,9 @@ import com.slash.batterychargelimit.ForegroundService
 import com.slash.batterychargelimit.R
 import com.slash.batterychargelimit.SharedMethods
 import com.slash.batterychargelimit.settings.SettingsFragment
+import android.media.RingtoneManager
+import com.slash.batterychargelimit.Constants.NOTIFICATION_SOUND
+
 
 /**
  * Created by Michael on 01.04.2017.
@@ -89,6 +92,14 @@ class BatteryReceiver(private val service: ForegroundService) : BroadcastReceive
         }, POWER_CHANGE_TOLERANCE_MS)
     }
 
+    /**
+     *
+     */
+    private fun notifyLimitReached() {
+        val soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
+        service.setNotificationSound(soundUri)
+    }
+
     override fun onReceive(context: Context?, intent: Intent) {
         // ignore events while trying to fix charging state, see below
         if (SharedMethods.isChangePending(backOffTime * 2)) {
@@ -109,6 +120,9 @@ class BatteryReceiver(private val service: ForegroundService) : BroadcastReceive
         } else if (batteryLevel >= limitPercentage) {
             if (switchState(CHARGE_STOP)) {
                 Log.d("Charging State", "CHARGE_STOP " + this.hashCode())
+                val settings = service.getSharedPreferences(SETTINGS, 0)
+                if(settings.getBoolean(NOTIFICATION_SOUND, false) && !chargedToLimit)
+                    notifyLimitReached()
                 // remember that we let the device charge until limit at least once
                 chargedToLimit = true
                 // active auto reset on service shutdown
@@ -142,6 +156,7 @@ class BatteryReceiver(private val service: ForegroundService) : BroadcastReceive
         // update battery status information and rebuild notification
         service.setNotificationContentText(SharedMethods.getBatteryInfo(service, intent, useFahrenheit))
         service.updateNotification()
+        service.removeNotificationSound()
     }
 
     fun detach() {
