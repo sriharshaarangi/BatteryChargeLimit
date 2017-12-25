@@ -1,5 +1,12 @@
 [
 {
+  "file": "/sys/class/power_supply/battery/charge_disable",
+  "label": "charge_disable",
+  "details": "Pixel 2",
+  "chargeOn": "0",
+  "chargeOff": "1",
+  "experimental": true
+},{
   "file": "/sys/class/power_supply/battery/battery_charging_enabled",
   "label": "battery_charging_enabled",
   "details": "Nexus/Pixel",
