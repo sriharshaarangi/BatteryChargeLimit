@@ -30,7 +30,7 @@
                 android:defaultValue="false"/>
 
         <CheckBoxPreference
-                android:key="write_blindly"
+                android:key="always_write_cf"
                 android:title="@string/always_write_cf"
                 android:summary="@string/always_write_cf_desc"
                 android:defaultValue="false"/>
