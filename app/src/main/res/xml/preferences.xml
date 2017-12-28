@@ -1,12 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <PreferenceCategory android:title="@string/main_settings">
+    <PreferenceCategory android:title="@string/control_file_settings">
+
+        <SwitchPreference
+            android:key="custom_ctrl_file_data"
+            android:title="@string/custom_ctrl_file_data_title"
+            android:summaryOn="@string/control_file_option_summary_on"
+            android:summaryOff="@string/control_file_option_summary_off"
+            android:defaultValue="false" />
 
         <com.slash.batterychargelimit.settings.ControlFilePreference
                 android:key="control_file"
                 android:title="@string/set_control_file"
                 android:dialogTitle="@string/select_control_file"/>
+
+        <Preference
+            android:key="custom_ctrl_file_setup"
+            android:title="@string/custom_ctrl_file_data_setup_title"
+            android:enabled="false"
+            android:defaultValue="false" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/main_settings">
 
         <CheckBoxPreference
                 android:key="temp_fahrenheit"

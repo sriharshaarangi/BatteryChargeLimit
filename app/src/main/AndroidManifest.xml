@@ -78,6 +78,8 @@
         </receiver>
 
         <service android:name=".ForegroundService" />
-        
+
+        <activity android:name=".activities.CustomCtrlFileData" />
+
     </application>
 </manifest>

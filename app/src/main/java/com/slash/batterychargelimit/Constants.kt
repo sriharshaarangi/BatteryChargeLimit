@@ -36,4 +36,8 @@ object Constants {
     const val SOURCE_CODE = "https://github.com/sriharshaarangi/BatteryChargeLimit"
     val DEVELOPERS = arrayOf("Sri Harsha Arangi", "Michael Lux", "Mike xdnax")
     val TRANSLATORS = arrayOf("Caio Roberto")
+
+    const val SAVED_PATH_DATA = "saved_ctrl_path_data"
+    const val SAVED_ENABLED_DATA = "saved_ctrl_enabled_data"
+    const val SAVED_DISABLED_DATA = "saved_ctrl_disabled_data"
 }

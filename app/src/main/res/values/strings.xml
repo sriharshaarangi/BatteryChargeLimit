@@ -60,4 +60,23 @@
     <string name="advanced_settings">Advanced Settings</string>
     <string name="immediate_power_intent_handling">Always Handle Power Events</string>
     <string name="immediate_power_intent_handling_desc">If enabled, power changes will be recognized immediately, even directly after control file changes.\nUse only for supported control files like battery_charging_enabled or store_mode!</string>
+
+    <string name="control_file_settings">Control File Data</string>
+    <string name="current_ctrl_data_title">Configured File Data</string>
+    <string name="control_file_option_summary_on">User specified CTRL. file data being utilized</string>
+    <string name="control_file_option_summary_off">Pre-defined CTRL. file being utilized</string>
+    <string name="control_file_alert_title">Advanced Users Only!</string>
+    <string name="control_file_alert_desc">WARNING: Tampering with this section without knowledge of what you are changing may cause problems to your device that are unforeseen. Rebooting the device usually fixes a lot of issues, however, some may not be as easily fixed. PROCEED WITH CAUTION!</string>
+    <string name="control_understand">I understand</string>
+
+    <string name="custom_ctrl_file_data_title">Configurable CTRL. File Data</string>
+    <string name="custom_ctrl_file_data_setup_title">Configure Control Data</string>
+    <string name="custom_ctrl_file_path_title">Set Path to Desired File</string>
+    <string name="custom_ctrl_file_path_hint">/sys/folder/folder/desired_file</string>
+    <string name="custom_ctrl_file_enabled_title">Set Enabled Value</string>
+    <string name="custom_ctrl_file_enabled_hint">1, enabled, desired_value</string>
+    <string name="custom_ctrl_file_disabled_title">Set Disabled Value</string>
+    <string name="custom_ctrl_file_disabled_hint">0, disabled, desired_value</string>
+    <string name="custom_ctrl_file_updated_info">Updated data will appear here once you update the information</string>
+    <string name="custom_ctrl_file_heads_up">If you experience issues with app crashes or the service not working properly, try enabling Always Write CTRL File in settings. There is NO guarantee that this configurable control file function will support all devices and files/values. Try adjusting the settings if issues occur or ensure the data is correct.</string>
 </resources>

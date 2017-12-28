@@ -1,18 +1,60 @@
 package com.slash.batterychargelimit.settings
 
+import android.content.Intent
 import android.os.Bundle
+import android.preference.Preference
 import android.preference.PreferenceFragment
+import android.preference.SwitchPreference
 import android.support.v4.content.ContextCompat
+import android.support.v7.app.AlertDialog
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.slash.batterychargelimit.R
+import com.slash.batterychargelimit.activities.CustomCtrlFileData
 
 class SettingsFragment : PreferenceFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         addPreferencesFromResource(R.xml.preferences)
+
+        val customCtrlFileDataSwitch:SwitchPreference = findPreference("custom_ctrl_file_data") as SwitchPreference
+        val ctrlFilePreference:ControlFilePreference = findPreference("control_file") as ControlFilePreference
+        val ctrlFileSetupPreference:Preference = findPreference("custom_ctrl_file_setup") as Preference
+
+        customCtrlFileDataSwitch.setOnPreferenceChangeListener { _, newValue ->
+            if (newValue as Boolean) {
+                ctrlFilePreference.isEnabled = false
+                ctrlFileSetupPreference.isEnabled = true
+            } else {
+                if (!newValue) {
+                    ctrlFilePreference.isEnabled = true
+                    ctrlFileSetupPreference.isEnabled = false
+                }
+            }
+            true
+        }
+
+        ctrlFileSetupPreference.setOnPreferenceClickListener {
+            AlertDialog.Builder(view.context)
+                    .setTitle(R.string.control_file_alert_title)
+                    .setMessage(R.string.control_file_alert_desc)
+                    .setCancelable(false)
+                    .setPositiveButton(R.string.control_understand) { _, _ ->
+                        val CtrlFileIntent = Intent(view.context, CustomCtrlFileData::class.java)
+                        startActivity(CtrlFileIntent)
+                    }.create().show()
+            true
+        }
+
+        if (customCtrlFileDataSwitch.isChecked) {
+            ctrlFilePreference.isEnabled = false
+            ctrlFileSetupPreference.isEnabled = true
+        } else {
+            ctrlFilePreference.isEnabled = true
+            ctrlFileSetupPreference.isEnabled = false
+        }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup, savedInstanceState: Bundle?): View {

@@ -1,0 +1,160 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginStart="10dp"
+    android:layout_marginEnd="10dp"
+    android:layout_marginTop="5dp"
+    android:layout_marginBottom="5dp"
+    android:fillViewport="true"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.slash.batterychargelimit.activities.CustomCtrlFileData">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteY="8dp"
+        tools:layout_editor_absoluteX="8dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:orientation="vertical">
+
+            <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:foreground="?selectableItemBackground"
+                card_view:cardBackgroundColor="@android:color/white"
+                card_view:cardCornerRadius="12dp"
+                card_view:cardElevation="3dp"
+                card_view:contentPadding="4dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:id="@+id/path_data_title"
+                        android:text="@string/custom_ctrl_file_path_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:textColor="@android:color/black"
+                        android:layout_marginEnd="6dp"
+                        android:layout_marginRight="6dp" />
+
+                    <EditText
+                        android:id="@+id/edit_path_file"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/path_data_title"
+                        android:hint="@string/custom_ctrl_file_path_hint"
+                        />
+
+                    <TextView
+                        android:id="@+id/path_on_title"
+                        android:layout_marginTop="15dp"
+                        android:text="@string/custom_ctrl_file_enabled_title"
+                        android:layout_below="@+id/edit_path_file"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:textColor="@android:color/black"
+                        android:layout_marginEnd="6dp"
+                        android:layout_marginRight="6dp" />
+
+                    <EditText
+                        android:id="@+id/edit_path_enabled"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/path_on_title"
+                        android:hint="@string/custom_ctrl_file_enabled_hint"
+                        />
+
+                    <TextView
+                        android:id="@+id/path_off_title"
+                        android:layout_marginTop="15dp"
+                        android:text="@string/custom_ctrl_file_disabled_title"
+                        android:layout_below="@+id/edit_path_enabled"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:textColor="@android:color/black"
+                        android:layout_marginEnd="6dp"
+                        android:layout_marginRight="6dp" />
+
+                    <EditText
+                        android:id="@+id/edit_path_disabled"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/path_off_title"
+                        android:hint="@string/custom_ctrl_file_disabled_hint"
+                        />
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/btn_update_custom"
+                        android:layout_marginTop="10dp"
+                        android:layout_below="@+id/edit_path_disabled"
+                        android:text="UPDATE CTRL FILE DATA"/>
+
+
+                </RelativeLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:foreground="?selectableItemBackground"
+                card_view:cardBackgroundColor="@android:color/white"
+                card_view:cardCornerRadius="12dp"
+                card_view:cardElevation="3dp"
+                card_view:contentPadding="4dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/custom_data_title"
+                        android:text="@string/current_ctrl_data_title"
+                        android:textColor="@android:color/black"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/custom_data_updated"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/custom_data_title"
+                        android:layout_marginTop="5dp"
+                        android:textSize="14sp"
+                        android:hint="@string/custom_ctrl_file_updated_info" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/ctrl_file_heads_up"
+                        android:layout_below="@+id/custom_data_updated"
+                        android:layout_marginTop="20dp"
+                        android:textSize="14sp"
+                        android:text="@string/custom_ctrl_file_heads_up"/>
+
+                </RelativeLayout>
+            </android.support.v7.widget.CardView>
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

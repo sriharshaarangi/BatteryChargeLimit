@@ -75,15 +75,28 @@ object SharedMethods {
 
     fun changeState(context: Context, chargeMode: Int) {
         val settings = context.getSharedPreferences(SETTINGS, 0)
-        val file = settings.getString(FILE_KEY,
-                "/sys/class/power_supply/battery/charging_enabled")!!
         val preferences = PreferenceManager.getDefaultSharedPreferences(context)
         val alwaysWrite = preferences.getBoolean(SettingsFragment.KEY_ALWAYS_WRITE_CF, false)
 
-        val newState = if (chargeMode == CHARGE_ON) {
-            settings.getString(CHARGE_ON_KEY, "1")
+        val file: String?
+        val newState: String?
+        if (preferences.getBoolean("custom_ctrl_file_data", false)) {
+            // Custom Data Enabled
+            file = settings.getString(Constants.SAVED_PATH_DATA, "/sys/class/power_supply/battery/charging_enabled")!!
+            newState = if (chargeMode == CHARGE_ON) {
+                settings.getString(Constants.SAVED_ENABLED_DATA, "1")
+            } else {
+                settings.getString(Constants.SAVED_DISABLED_DATA, "0")
+            }
         } else {
-            settings.getString(CHARGE_OFF_KEY, "0")
+            // Custom Data Disabled
+            file = settings.getString(FILE_KEY,
+                    "/sys/class/power_supply/battery/charging_enabled")!!
+            newState = if (chargeMode == CHARGE_ON) {
+                settings.getString(CHARGE_ON_KEY, "1")
+            } else {
+                settings.getString(CHARGE_OFF_KEY, "0")
+            }
         }
 
         val switchCommands = arrayOf("mount -o rw,remount $file", "echo \"$newState\" > $file")
