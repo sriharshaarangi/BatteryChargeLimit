@@ -6,6 +6,7 @@ import android.content.*
 import android.net.Uri
 import android.os.IBinder
 import android.support.v4.app.NotificationCompat
+import android.util.Log
 import com.slash.batterychargelimit.activities.MainActivity
 import com.slash.batterychargelimit.receivers.BatteryReceiver
 import com.slash.batterychargelimit.Constants.SETTINGS
@@ -55,6 +56,8 @@ class ForegroundService : Service() {
 
         batteryReceiver = BatteryReceiver(this@ForegroundService)
         registerReceiver(batteryReceiver, IntentFilter(Intent.ACTION_BATTERY_CHANGED))
+        Log.d("BatteryReceiver", "registered " + batteryReceiver!!.hashCode())
+
     }
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
@@ -90,6 +93,8 @@ class ForegroundService : Service() {
         settings.edit().putBoolean(NOTIFICATION_LIVE, false).apply()
         // unregister the battery event receiver
         unregisterReceiver(batteryReceiver)
+
+        Log.d("BatteryReceiver", "unregistered " + batteryReceiver!!.hashCode())
         // make the BatteryReceiver and dependencies ready for garbage-collection
         batteryReceiver!!.detach()
         // clear the reference to the battery receiver for GC

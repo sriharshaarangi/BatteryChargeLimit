@@ -105,6 +105,7 @@ class BatteryReceiver(private val service: ForegroundService) : BroadcastReceive
         if (SharedMethods.isChangePending(backOffTime * 2)) {
             return
         }
+        Log.d("BatteryReceiver", "onReceive " + this.hashCode())
 
         val batteryLevel = SharedMethods.getBatteryLevel(intent)
         val currentStatus = intent.getIntExtra(BatteryManager.EXTRA_STATUS, BatteryManager.BATTERY_STATUS_UNKNOWN)
@@ -157,6 +158,8 @@ class BatteryReceiver(private val service: ForegroundService) : BroadcastReceive
         service.setNotificationContentText(SharedMethods.getBatteryInfo(service, intent, useFahrenheit))
         service.updateNotification()
         service.removeNotificationSound()
+        Log.d("BatteryReceiver", "onReceive executed " + this.hashCode())
+
     }
 
     fun detach() {
