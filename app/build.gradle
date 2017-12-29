@@ -6,7 +6,6 @@ keystoreProperties.load(new FileInputStream(rootProject.file("private/keystore.p
 
 android {
     compileSdkVersion 25
-    buildToolsVersion '26.0.1'
     defaultConfig {
         applicationId "com.slash.batterychargelimit"
         minSdkVersion 14
