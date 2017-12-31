@@ -7,6 +7,13 @@
   "chargeOff": "1",
   "experimental": true
 },{
+  "file": "/sys/class/power_supply/battery/input_suspend",
+  "label": "input_suspend",
+  "details": "Pixel 2 alt.",
+  "chargeOn": "0",
+  "chargeOff": "1",
+  "experimental": false
+  },{
   "file": "/sys/class/power_supply/battery/battery_charging_enabled",
   "label": "battery_charging_enabled",
   "details": "Nexus/Pixel",
