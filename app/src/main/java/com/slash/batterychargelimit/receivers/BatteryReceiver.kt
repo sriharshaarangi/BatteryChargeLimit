@@ -18,6 +18,8 @@ import com.slash.batterychargelimit.R
 import com.slash.batterychargelimit.SharedMethods
 import com.slash.batterychargelimit.settings.SettingsFragment
 import android.media.RingtoneManager
+import com.slash.batterychargelimit.Constants
+import com.slash.batterychargelimit.Constants.ENABLE
 import com.slash.batterychargelimit.Constants.NOTIFICATION_SOUND
 
 
@@ -103,6 +105,7 @@ class BatteryReceiver(private val service: ForegroundService) : BroadcastReceive
     }
 
     override fun onReceive(context: Context?, intent: Intent) {
+        val settings = context!!.getSharedPreferences(Constants.SETTINGS, 0)
         // ignore events while trying to fix charging state, see below
         if (SharedMethods.isChangePending(backOffTime * 2)) {
             return
@@ -112,53 +115,54 @@ class BatteryReceiver(private val service: ForegroundService) : BroadcastReceive
         val batteryLevel = SharedMethods.getBatteryLevel(intent)
         val currentStatus = intent.getIntExtra(BatteryManager.EXTRA_STATUS, BatteryManager.BATTERY_STATUS_UNKNOWN)
 
-        // when the service was "freshly started", charge until limit
-        if (!chargedToLimit && batteryLevel < limitPercentage) {
-            if (switchState(CHARGE_FULL)) {
-                Log.d("Charging State", "CHARGE_FULL " + this.hashCode())
-                SharedMethods.changeState(service, SharedMethods.CHARGE_ON)
-                service.setNotificationTitle(service.getString(R.string.waiting_until_x, limitPercentage))
-                service.setNotificationContentText(service.getString(R.string.waiting_description))
-                stopIfUnplugged()
-            }
-        } else if (batteryLevel >= limitPercentage) {
-            if (switchState(CHARGE_STOP)) {
-                Log.d("Charging State", "CHARGE_STOP " + this.hashCode())
-                val settings = service.getSharedPreferences(SETTINGS, 0)
-                if(settings.getBoolean(NOTIFICATION_SOUND, false) && !chargedToLimit)
-                    notifyLimitReached()
-                // remember that we let the device charge until limit at least once
-                chargedToLimit = true
-                // active auto reset on service shutdown
-                service.enableAutoReset()
-                SharedMethods.changeState(service, SharedMethods.CHARGE_OFF)
-                // set the "maintain" notification, this must not change from now
-                service.setNotificationTitle(service.getString(R.string.maintaining_x_to_y,
-                        rechargePercentage, limitPercentage))
-                service.setNotificationContentText(service.getString(R.string.maintaining_description))
-                service.setNotificationIcon(NOTIF_MAINTAIN)
-            } else if (currentStatus == BatteryManager.BATTERY_STATUS_CHARGING
-                    && prefs.getBoolean(SettingsFragment.KEY_ENFORCE_CHARGE_LIMIT, true)) {
-                //Double the back off time with every unsuccessful round up to MAX_BACK_OFF_TIME
-                backOffTime = Math.min(backOffTime * 2, MAX_BACK_OFF_TIME)
-                Log.d("Charging State", "Fixing state w. CHARGE_ON/CHARGE_OFF " + this.hashCode()
-                        + " (Delay: $backOffTime)")
-                // if the device did not stop charging, try to "cycle" the state to fix this
-                SharedMethods.changeState(service, SharedMethods.CHARGE_ON)
-                // schedule the charging stop command to be executed after CHARGING_CHANGE_TOLERANCE_MS
-                val service = this.service
-                handler.postDelayed({ SharedMethods.changeState(service, SharedMethods.CHARGE_OFF) }, backOffTime)
-            } else {
-                backOffTime = CHARGING_CHANGE_TOLERANCE_MS
-            }
-        } else if (batteryLevel < rechargePercentage) {
-            if (switchState(CHARGE_REFRESH)) {
-                Log.d("Charging State", "CHARGE_REFRESH " + this.hashCode())
-                service.setNotificationIcon(NOTIF_CHARGE)
-                service.setNotificationTitle(service.getString(R.string.waiting_until_x, limitPercentage))
-                service.setNotificationContentText(service.getString(R.string.waiting_description))
-                SharedMethods.changeState(service, SharedMethods.CHARGE_ON)
-                stopIfUnplugged()
+        if (settings.getBoolean(ENABLE, false)) {
+            // when the service was "freshly started", charge until limit
+            if (!chargedToLimit && batteryLevel < limitPercentage) {
+                if (switchState(CHARGE_FULL)) {
+                    Log.d("Charging State", "CHARGE_FULL " + this.hashCode())
+                    SharedMethods.changeState(service, SharedMethods.CHARGE_ON)
+                    service.setNotificationTitle(service.getString(R.string.waiting_until_x, limitPercentage))
+                    service.setNotificationContentText(service.getString(R.string.waiting_description))
+                    stopIfUnplugged()
+                }
+            } else if (batteryLevel >= limitPercentage) {
+                if (switchState(CHARGE_STOP)) {
+                    Log.d("Charging State", "CHARGE_STOP " + this.hashCode())
+                    if(settings.getBoolean(NOTIFICATION_SOUND, false) && !chargedToLimit)
+                        notifyLimitReached()
+                    // remember that we let the device charge until limit at least once
+                    chargedToLimit = true
+                    // active auto reset on service shutdown
+                    service.enableAutoReset()
+                    SharedMethods.changeState(service, SharedMethods.CHARGE_OFF)
+                    // set the "maintain" notification, this must not change from now
+                    service.setNotificationTitle(service.getString(R.string.maintaining_x_to_y,
+                            rechargePercentage, limitPercentage))
+                    service.setNotificationContentText(service.getString(R.string.maintaining_description))
+                    service.setNotificationIcon(NOTIF_MAINTAIN)
+                } else if (currentStatus == BatteryManager.BATTERY_STATUS_CHARGING
+                        && prefs.getBoolean(SettingsFragment.KEY_ENFORCE_CHARGE_LIMIT, true)) {
+                    //Double the back off time with every unsuccessful round up to MAX_BACK_OFF_TIME
+                    backOffTime = Math.min(backOffTime * 2, MAX_BACK_OFF_TIME)
+                    Log.d("Charging State", "Fixing state w. CHARGE_ON/CHARGE_OFF " + this.hashCode()
+                            + " (Delay: $backOffTime)")
+                    // if the device did not stop charging, try to "cycle" the state to fix this
+                    SharedMethods.changeState(service, SharedMethods.CHARGE_ON)
+                    // schedule the charging stop command to be executed after CHARGING_CHANGE_TOLERANCE_MS
+                    val service = this.service
+                    handler.postDelayed({ SharedMethods.changeState(service, SharedMethods.CHARGE_OFF) }, backOffTime)
+                } else {
+                    backOffTime = CHARGING_CHANGE_TOLERANCE_MS
+                }
+            } else if (batteryLevel < rechargePercentage) {
+                if (switchState(CHARGE_REFRESH)) {
+                    Log.d("Charging State", "CHARGE_REFRESH " + this.hashCode())
+                    service.setNotificationIcon(NOTIF_CHARGE)
+                    service.setNotificationTitle(service.getString(R.string.waiting_until_x, limitPercentage))
+                    service.setNotificationContentText(service.getString(R.string.waiting_description))
+                    SharedMethods.changeState(service, SharedMethods.CHARGE_ON)
+                    stopIfUnplugged()
+                }
             }
         }
 
