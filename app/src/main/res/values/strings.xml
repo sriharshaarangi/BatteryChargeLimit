@@ -30,7 +30,7 @@
 
     <string name="please_wait">Please wait…</string>
     <string name="maintaining_x_to_y">Maintaining from %1$d%% - %2$d%%</string>
-    <string name="maintaining_description">If unplugged, disable service</string>
+    <string name="maintaining_description">If device becomes unplugged, disable service</string>
     <string name="waiting_until_x">Charging to %1$d%%</string>
     <string name="waiting_description">Charging will stop once limit is reached</string>
     <string name="battery_info_C">U: %1$.3f V, T: %2$.1f &#8451;</string>
@@ -60,7 +60,7 @@
     <string name="advanced_settings">Advanced Settings</string>
     <string name="immediate_power_intent_handling">Always Handle Power Events</string>
     <string name="immediate_power_intent_handling_desc">If enabled, power changes will be recognized immediately, even directly after control file changes.\nUse only for supported control files like battery_charging_enabled or store_mode!</string>
-
+    
     <string name="control_file_settings">Control File Data</string>
     <string name="current_ctrl_data_title">Configured File Data</string>
     <string name="control_file_option_summary_on">User specified CTRL. file data being utilized</string>
