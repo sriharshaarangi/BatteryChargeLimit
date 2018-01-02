@@ -32,7 +32,7 @@
     <string name="maintaining_x_to_y">Maintaining from %1$d%% - %2$d%%</string>
     <string name="maintaining_description">If device becomes unplugged, disable service</string>
     <string name="waiting_until_x">Charging to %1$d%%</string>
-    <string name="waiting_description">Charging will stop once limit is reached</string>
+    <string name="waiting_description">Battery will stop charging once limit is reached</string>
     <string name="battery_info_C">U: %1$.3f V, T: %2$.1f &#8451;</string>
     <string name="battery_info_F">U: %1$.3f V, T: %2$.1f &#8457;</string>
 

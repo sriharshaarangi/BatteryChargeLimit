@@ -58,6 +58,7 @@ class ForegroundService : Service() {
                 .setContentTitle(getString(R.string.please_wait))
                 .setContentInfo(getString(R.string.please_wait))
                 .setSmallIcon(R.drawable.ic_notif_charge)
+                .setColor(resources.getColor(R.color.colorPrimary))
                 .build()
         startForeground(notifyID, notification)
 
