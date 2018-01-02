@@ -11,17 +11,18 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">>
+        android:theme="@style/AppTheme">
         <activity
             android:name=".activities.MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:launchMode= "singleTop">
+            android:launchMode= "singleTop"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".LimitChangeActivity"
             android:label="@string/intent_handle_activity">
@@ -31,34 +32,43 @@
                 <data android:mimeType="@string/mime_battery_limit" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.About"/>
+
+        <activity android:name=".activities.About" />
 
         <receiver android:name=".receivers.BootReceiver">
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
+
         <receiver android:name=".receivers.PowerConnectionReceiver">
             <intent-filter>
-                <action android:name="android.intent.action.ACTION_POWER_CONNECTED"/>
-                <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED"/>
+                <action android:name="android.intent.action.ACTION_POWER_CONNECTED" />
+                <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />
             </intent-filter>
         </receiver>
-        <receiver android:name=".LimitChangeReceiver" android:label="@string/receiver_limit">
+
+        <receiver
+            android:name=".LimitChangeReceiver"
+            android:label="@string/receiver_limit">
             <intent-filter>
                 <action android:name="com.slash.batterychargelimit.CHANGE_LIMIT" />
             </intent-filter>
         </receiver>
+
         <receiver android:name=".receivers.EnableWidgetIntentReceiver">
             <intent-filter>
                 <action android:name="com.slash.batterychargelimit.TOGGLE" />
             </intent-filter>
         </receiver>
+
         <receiver android:name=".EnableWidget">
             <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
-            <meta-data android:name="android.appwidget.provider" android:resource="@xml/enable_widget" />
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/enable_widget" />
         </receiver>
 
         <receiver android:name=".receivers.ServiceReceiver">
@@ -67,7 +77,7 @@
             </intent-filter>
         </receiver>
 
-        <service android:name="com.slash.batterychargelimit.ForegroundService" />
+        <service android:name=".ForegroundService" />
+        
     </application>
-
 </manifest>
