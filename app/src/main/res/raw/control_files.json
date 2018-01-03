@@ -21,9 +21,16 @@
   "chargeOff": "1",
   "experimental": true
 },{
+  "file": "/sys/class/power_supply/battery/charger_control",
+  "label": "charger_control",
+  "details": "Pixel/HTC One M7",
+  "chargeOn": "1",
+  "chargeOff": "0",
+  "experimental": true
+},{
   "file": "/sys/class/power_supply/battery/battery_charging_enabled",
   "label": "battery_charging_enabled",
-  "details": "Nexus/Pixel",
+  "details": "Nexus",
   "chargeOn": "1",
   "chargeOff": "0",
   "experimental": false
