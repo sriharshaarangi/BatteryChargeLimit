@@ -14,6 +14,10 @@ object Constants {
     const val CHARGE_ON_KEY = "charge_on"
     const val CHARGE_OFF_KEY = "charge_off"
 
+    const val DEFAULT_FILE = "/sys/class/power_supply/battery/charging_enabled"
+    const val DEFAULT_ENABLED = "1"
+    const val DEFAULT_DISABLED = "0"
+
     const val LIMIT = "limit"
     const val MIN = "min"
     const val ENABLE = "enable"
