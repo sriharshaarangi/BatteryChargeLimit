@@ -8,6 +8,9 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import com.slash.batterychargelimit.Constants
+import com.slash.batterychargelimit.Constants.DEFAULT_DISABLED
+import com.slash.batterychargelimit.Constants.DEFAULT_ENABLED
+import com.slash.batterychargelimit.Constants.DEFAULT_FILE
 import com.slash.batterychargelimit.R
 import com.slash.batterychargelimit.SharedMethods
 
@@ -25,9 +28,9 @@ class CustomCtrlFileData : AppCompatActivity() {
         val editDisabledData = findViewById(R.id.edit_path_disabled) as EditText
         val btnUpdateData = findViewById(R.id.btn_update_custom) as Button
         val settings = this.getSharedPreferences(Constants.SETTINGS, 0)
-        val savedPathData = settings.getString(Constants.SAVED_PATH_DATA, "/sys/class/power_supply/battery/charge_disable")
-        val savedEnabledData = settings.getString(Constants.SAVED_ENABLED_DATA, "1")
-        val savedDisabledData = settings.getString(Constants.SAVED_DISABLED_DATA, "0")
+        val savedPathData = settings.getString(Constants.SAVED_PATH_DATA, DEFAULT_FILE)
+        val savedEnabledData = settings.getString(Constants.SAVED_ENABLED_DATA, DEFAULT_ENABLED)
+        val savedDisabledData = settings.getString(Constants.SAVED_DISABLED_DATA, DEFAULT_DISABLED)
         val updatedDataText = findViewById(R.id.custom_data_updated) as TextView
 
         updatedDataText.hint = "Path Data: " + savedPathData + "\nEnable Value: " + savedEnabledData + "\nDisabled Value: " + savedDisabledData
