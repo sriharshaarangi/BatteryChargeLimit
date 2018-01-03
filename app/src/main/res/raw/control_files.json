@@ -67,7 +67,7 @@
   {
     "file": "/sys/class/power_supply/battery/input_suspend",
     "label": "input_suspend",
-    "details": "Xiaomi Mi6/Pixel 2",
+    "details": "Pixel 2/Xiaomi Mi6",
     "chargeOn": "0",
     "chargeOff": "1"
   },
