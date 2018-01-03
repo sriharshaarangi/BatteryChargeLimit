@@ -12,6 +12,7 @@
     <string name="recharge_below">Recharge below %1$d%%</string>
     <string name="status">Status: </string>
     <string name="experimental">EXPERIMENTAL</string>
+    <string name="issues">KNOWN ISSUES</string>
     <string name="auto_reset_stats">Automatically reset battery stats</string>
     <string name="reset_stats">Reset Battery Stats</string>
     <string name="disable">Disable</string>

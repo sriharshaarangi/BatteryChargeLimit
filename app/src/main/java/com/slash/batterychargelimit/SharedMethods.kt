@@ -119,8 +119,9 @@ object SharedMethods {
             try {
                 val r = InputStreamReader(context.resources.openRawResource(R.raw.control_files),
                         Charset.forName("UTF-8"))
-                val gson = Gson()
-                ctrlFiles = gson.fromJson<List<ControlFile>>(r, object : TypeToken<List<ControlFile>>() {}.type)
+                val type = object : TypeToken<List<ControlFile>>() {}.type
+                ctrlFiles = Gson().fromJson<List<ControlFile>>(r, type)!!.sortedWith(compareBy(
+                        { it.order }, { it.issues }, { it.experimental }, { it.file }))
             } catch (e: Exception) {
                 Log.wtf(context.javaClass.simpleName, e)
                 return emptyList()

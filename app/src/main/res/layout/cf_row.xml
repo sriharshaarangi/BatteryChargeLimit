@@ -1,45 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="5dp">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="5dp">
 
     <RadioButton
-            android:id="@+id/cf_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@android:color/black" />
+        android:id="@+id/cf_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@android:color/black" />
 
     <LinearLayout
-            android:layout_below="@+id/cf_label"
-            android:layout_width="match_parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/cf_label"
+        android:gravity="top|start"
+        android:orientation="horizontal"
+        android:paddingBottom="5dp"
+        android:paddingEnd="8dp"
+        android:paddingLeft="32dp"
+        android:paddingRight="8dp"
+        android:paddingStart="32dp">
+
+        <TextView
+            android:id="@+id/cf_details"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="top|start"
-            android:paddingBottom="5dp"
-            android:paddingStart="32dp"
-            android:paddingEnd="8dp"
-            android:paddingLeft="32dp"
-            android:paddingRight="8dp">
+            android:layout_weight="1"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@android:color/black" />
 
         <TextView
-                android:id="@+id/cf_details"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="@android:color/black"
-                android:layout_weight="1"/>
+            android:id="@+id/cf_experimental"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
+            android:text="@string/experimental"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/red" />
 
         <TextView
-                android:id="@+id/cf_experimental"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="@color/red"
-                android:text="@string/experimental"/>
+            android:id="@+id/cf_issues"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
+            android:text="@string/issues"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/red" />
 
     </LinearLayout>
 

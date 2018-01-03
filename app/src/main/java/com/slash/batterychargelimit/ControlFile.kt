@@ -10,18 +10,15 @@ import android.support.annotation.Keep
  * The "Keep" annotation makes ProGuard ignore those fields instead of optimizing them away.
  */
 class ControlFile {
-    @Keep
-    val file: String? = null
-    @Keep
-    val label: String? = null
-    @Keep
-    val details: String? = null
-    @Keep
-    val chargeOn: String? = null
-    @Keep
-    val chargeOff: String? = null
-    @Keep
-    val experimental: Boolean? = false
+
+    @Keep val file: String? = null
+    @Keep val label: String? = null
+    @Keep val details: String? = null
+    @Keep val chargeOn: String? = null
+    @Keep val chargeOff: String? = null
+    @Keep val experimental: Boolean? = false
+    @Keep val order: Int? = 0
+    @Keep val issues: Boolean? = false
     @Transient private var checked = false
     @Transient private var valid = false
 

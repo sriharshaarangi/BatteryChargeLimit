@@ -4,32 +4,28 @@
     "label": "enable_charger",
     "details": "Huawei",
     "chargeOn": "1",
-    "chargeOff": "0",
-    "experimental": false
+    "chargeOff": "0"
   },
   {
     "file": "/sys/class/power_supply/ac/charging_enabled",
     "label": "ac/charging_enabled",
     "details": "Nexus 5",
     "chargeOn": "1",
-    "chargeOff": "0",
-    "experimental": false
+    "chargeOff": "0"
   },
   {
     "file": "/sys/class/power_supply/battery/batt_slate_mode",
     "label": "batt_slate_mode",
     "details": "Samsung",
     "chargeOn": "0",
-    "chargeOff": "1",
-    "experimental": false
+    "chargeOff": "1"
   },
   {
     "file": "/sys/class/power_supply/battery/battery_charging_enabled",
     "label": "battery_charging_enabled",
     "details": "Nexus",
     "chargeOn": "1",
-    "chargeOff": "0",
-    "experimental": false
+    "chargeOff": "0"
   },
   {
     "file": "/sys/class/power_supply/battery/charge_disable",
@@ -44,8 +40,7 @@
     "label": "charge_enabled",
     "details": "Galaxy Nexus (maguro)",
     "chargeOn": "1",
-    "chargeOff": "0",
-    "experimental": false
+    "chargeOff": "0"
   },
   {
     "file": "/sys/class/power_supply/battery/charger_control",
@@ -60,24 +55,21 @@
     "label": "charging_enabled",
     "details": "Generic",
     "chargeOn": "1",
-    "chargeOff": "0",
-    "experimental": false
+    "chargeOff": "0"
   },
   {
     "file": "/sys/class/power_supply/battery/device/Charging_Enable",
     "label": "Charging_Enable",
     "details": "Amazon Fire",
     "chargeOn": "1",
-    "chargeOff": "0",
-    "experimental": false
+    "chargeOff": "0"
   },
   {
     "file": "/sys/class/power_supply/battery/input_suspend",
     "label": "input_suspend",
     "details": "Xiaomi Mi6/Pixel 2",
     "chargeOn": "0",
-    "chargeOff": "1",
-    "experimental": false
+    "chargeOff": "1"
   },
   {
     "file": "/sys/class/power_supply/battery/store_mode",
@@ -85,7 +77,7 @@
     "details": "Samsung Note",
     "chargeOn": "0",
     "chargeOff": "1",
-    "experimental": false
+    "issues": true
   },
   {
     "file": "/sys/class/power_supply/bq2589x_charger/enable_charging",
@@ -116,8 +108,7 @@
     "label": "7000c400.i2c",
     "details": "Nvidia Shield",
     "chargeOn": "enabled",
-    "chargeOff": "disabled",
-    "experimental": false
+    "chargeOff": "disabled"
   },
   {
     "file": "/sys/devices/platform/battery/ChargerEnable",
@@ -164,7 +155,6 @@
     "label": "pm8921_charger",
     "details": "Nexus 4",
     "chargeOn": "0",
-    "chargeOff": "1",
-    "experimental": false
+    "chargeOff": "1"
   }
 ]
