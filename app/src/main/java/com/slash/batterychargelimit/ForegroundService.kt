@@ -6,6 +6,7 @@ import android.content.*
 import android.net.Uri
 import android.os.IBinder
 import android.support.v4.app.NotificationCompat
+import android.support.v4.content.ContextCompat
 import android.util.Log
 import com.slash.batterychargelimit.activities.MainActivity
 import com.slash.batterychargelimit.receivers.BatteryReceiver
@@ -58,7 +59,7 @@ class ForegroundService : Service() {
                 .setContentTitle(getString(R.string.please_wait))
                 .setContentInfo(getString(R.string.please_wait))
                 .setSmallIcon(R.drawable.ic_notif_charge)
-                .setColor(resources.getColor(R.color.colorPrimary))
+                .setColor(ContextCompat.getColor(this, R.color.colorPrimary))
                 .build()
         startForeground(notifyID, notification)
 
