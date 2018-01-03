@@ -123,6 +123,7 @@ class BatteryReceiver(private val service: ForegroundService) : BroadcastReceive
                     SharedMethods.changeState(service, SharedMethods.CHARGE_ON)
                     service.setNotificationTitle(service.getString(R.string.waiting_until_x, limitPercentage))
                     service.setNotificationContentText(service.getString(R.string.waiting_description))
+                    service.setNotificationIcon(NOTIF_CHARGE)
                     stopIfUnplugged()
                 }
             } else if (batteryLevel >= limitPercentage) {
