@@ -154,6 +154,9 @@ class MainActivity : AppCompatActivity() {
             settings.edit().putBoolean(AUTO_RESET_STATS, isChecked).apply() }
         notificationSound.setOnCheckedChangeListener { _, isChecked ->
             settings.edit().putBoolean(NOTIFICATION_SOUND, isChecked).apply() }
+
+        val statusCTRLData = findViewById(R.id.status_ctrl_data) as TextView
+        statusCTRLData.text = SharedMethods.getCtrlFileData(this) + ", " + SharedMethods.getCtrlEnabledData(this) + ", " + SharedMethods.getCtrlDisabledData(this)
         //The onCreate() process was not stopped via return, UI elements should be available
         initComplete = true
     }
