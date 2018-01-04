@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import com.slash.batterychargelimit.Constants
 import com.slash.batterychargelimit.R
 import com.slash.batterychargelimit.SharedMethods
 import com.slash.batterychargelimit.activities.CustomCtrlFileData
@@ -25,6 +26,20 @@ class SettingsFragment : PreferenceFragment() {
         val customCtrlFileDataSwitch:SwitchPreference = findPreference("custom_ctrl_file_data") as SwitchPreference
         val ctrlFilePreference:ControlFilePreference = findPreference("control_file") as ControlFilePreference
         val ctrlFileSetupPreference:Preference = findPreference("custom_ctrl_file_setup") as Preference
+
+        ctrlFilePreference.setOnPreferenceClickListener {
+            val settings = view.context.getSharedPreferences(Constants.SETTINGS, 0)
+            if (!settings.getBoolean("has_opened_ctrl_file", false)) {
+                AlertDialog.Builder(view.context)
+                        .setTitle(R.string.control_file_heads_up_title)
+                        .setMessage(R.string.control_file_heads_up_desc)
+                        .setCancelable(false)
+                        .setPositiveButton(R.string.control_understand) { _, _ ->
+                            settings.edit().putBoolean("has_opened_ctrl_file", true).apply()
+                        }.create().show()
+            }
+            true
+        }
 
         customCtrlFileDataSwitch.setOnPreferenceChangeListener { _, newValue ->
             if (newValue as Boolean) {
