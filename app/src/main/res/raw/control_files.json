@@ -45,7 +45,7 @@
   {
     "file": "/sys/class/power_supply/battery/charger_control",
     "label": "charger_control",
-    "details": "Pixel/HTC One M7",
+    "details": "Pixel/HTC One",
     "chargeOn": "1",
     "chargeOff": "0",
     "experimental": true
@@ -70,6 +70,14 @@
     "details": "Pixel 2/Xiaomi Mi6",
     "chargeOn": "0",
     "chargeOff": "1"
+  },
+  {
+    "file": "/sys/class/power_supply/battery/status",
+    "label": "status",
+    "details": "Motorola Defy+ (MB526)",
+    "chargeOn": "Charging",
+    "chargeOff": "Discharging",
+    "experimental": true
   },
   {
     "file": "/sys/class/power_supply/battery/store_mode",
@@ -140,6 +148,14 @@
     "details": "Nexus 9",
     "chargeOn": "enabled",
     "chargeOff": "disabled",
+    "experimental": true
+  },
+  {
+    "file": "/sys/devices/soc/qpnp-smbcharger-18/power_supply/battery/battery_charging_enabled",
+    "label": "qpnp-smbcharger-18",
+    "details": "Xiaomi Mi A1",
+    "chargeOn": "1",
+    "chargeOff": "0",
     "experimental": true
   },
   {
