@@ -2,20 +2,20 @@ package com.slash.batterychargelimit
 
 import android.app.PendingIntent
 import android.app.Service
-import android.content.*
-import android.net.Uri
+import android.content.Intent
+import android.content.IntentFilter
+import android.media.RingtoneManager
 import android.os.IBinder
 import android.support.v4.app.NotificationCompat
 import android.support.v4.content.ContextCompat
-import android.util.Log
-import com.slash.batterychargelimit.activities.MainActivity
-import com.slash.batterychargelimit.receivers.BatteryReceiver
-import com.slash.batterychargelimit.Constants.SETTINGS
-import com.slash.batterychargelimit.Constants.NOTIFICATION_LIVE
 import com.slash.batterychargelimit.Constants.AUTO_RESET_STATS
 import com.slash.batterychargelimit.Constants.INTENT_DISABLE_ACTION
+import com.slash.batterychargelimit.Constants.NOTIFICATION_LIVE
 import com.slash.batterychargelimit.Constants.NOTIF_CHARGE
 import com.slash.batterychargelimit.Constants.NOTIF_MAINTAIN
+import com.slash.batterychargelimit.Constants.SETTINGS
+import com.slash.batterychargelimit.activities.MainActivity
+import com.slash.batterychargelimit.receivers.BatteryReceiver
 
 /**
  * Created by harsha on 30/1/17.
@@ -41,7 +41,6 @@ class ForegroundService : Service() {
     }
 
     override fun onCreate() {
-
         isRunning = true
 
         notifyID = 1
@@ -65,8 +64,6 @@ class ForegroundService : Service() {
 
         batteryReceiver = BatteryReceiver(this@ForegroundService)
         registerReceiver(batteryReceiver, IntentFilter(Intent.ACTION_BATTERY_CHANGED))
-        Log.d("BatteryReceiver", "registered " + batteryReceiver!!.hashCode())
-
     }
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
@@ -94,13 +91,15 @@ class ForegroundService : Service() {
         startForeground(notifyID, mNotifyBuilder.build())
     }
 
-    fun setNotificationSound(soundUri: Uri) {
+    fun setNotificationSound() {
+        val soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
         mNotifyBuilder.setSound(soundUri)
     }
 
     fun removeNotificationSound() {
         mNotifyBuilder.setSound(null)
     }
+
     override fun onDestroy() {
         if (autoResetActive && !ignoreAutoReset && settings.getBoolean(AUTO_RESET_STATS, false)) {
             SharedMethods.resetBatteryStats(this)
@@ -111,9 +110,8 @@ class ForegroundService : Service() {
         // unregister the battery event receiver
         unregisterReceiver(batteryReceiver)
 
-        Log.d("BatteryReceiver", "unregistered " + batteryReceiver!!.hashCode())
         // make the BatteryReceiver and dependencies ready for garbage-collection
-        batteryReceiver!!.detach()
+        batteryReceiver!!.detach(this)
         // clear the reference to the battery receiver for GC
         batteryReceiver = null
 
