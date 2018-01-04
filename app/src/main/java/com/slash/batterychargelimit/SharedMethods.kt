@@ -93,7 +93,7 @@ object SharedMethods {
             suShell.addCommand(switchCommands)
         } else {
             suShell.addCommand("cat $file", 0) { _, _, output ->
-                if (output[0] != newState) {
+                if (output.size == 0 || output[0] != newState) {
                     setChangePending()
                     suShell.addCommand(switchCommands)
                 }
