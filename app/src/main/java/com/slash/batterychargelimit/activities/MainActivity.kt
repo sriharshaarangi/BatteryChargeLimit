@@ -156,7 +156,9 @@ class MainActivity : AppCompatActivity() {
             settings.edit().putBoolean(NOTIFICATION_SOUND, isChecked).apply() }
 
         val statusCTRLData = findViewById(R.id.status_ctrl_data) as TextView
-        statusCTRLData.text = SharedMethods.getCtrlFileData(this) + ", " + SharedMethods.getCtrlEnabledData(this) + ", " + SharedMethods.getCtrlDisabledData(this)
+        statusCTRLData.text = SharedMethods.getCtrlFileData(this) + ", " +
+                SharedMethods.getCtrlEnabledData(this) + ", " +
+                SharedMethods.getCtrlDisabledData(this)
         //The onCreate() process was not stopped via return, UI elements should be available
         initComplete = true
     }
@@ -256,8 +258,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onDestroy() {
-        //Technically not necessary, but it prevents inlining of this required field
-        //See end of https://developer.android.com/guide/topics/ui/settings.html#Listening
+        PreferenceManager.getDefaultSharedPreferences(baseContext)
+                .unregisterOnSharedPreferenceChangeListener(preferenceChangeListener)
+        // technically not necessary, but it prevents inlining of this required field
+        // see end of https://developer.android.com/guide/topics/ui/settings.html#Listening
         preferenceChangeListener = null
         super.onDestroy()
     }
