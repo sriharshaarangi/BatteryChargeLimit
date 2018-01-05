@@ -175,16 +175,15 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/battery_info"
-                        android:layout_toEndOf="@+id/status"
-                        android:textSize="16sp"
-                        android:layout_toRightOf="@+id/status"/>
+                        android:layout_below="@+id/status"
+                        android:textSize="16sp" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/status_ctrl_data"
-                        android:layout_marginTop="4dp"
-                        android:layout_below="@+id/status_label"
+                        android:layout_marginTop="5dp"
+                        android:layout_below="@+id/battery_info"
                         android:textSize="16sp"
                         android:text="FILE DATA"/>
 
