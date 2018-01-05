@@ -79,7 +79,7 @@ class CustomCtrlFileData : AppCompatActivity() {
         })
 
         btnUpdateData.setOnClickListener({
-            SharedMethods.stopService(this, true)
+            SharedMethods.stopService(this)
             settings.edit().putString(Constants.SAVED_PATH_DATA, customPathData).apply()
             settings.edit().putString(Constants.SAVED_ENABLED_DATA, customEnabledData).apply()
             settings.edit().putString(Constants.SAVED_DISABLED_DATA, customDisabledData).apply()

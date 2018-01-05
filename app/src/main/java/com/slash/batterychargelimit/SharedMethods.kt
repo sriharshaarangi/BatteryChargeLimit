@@ -126,7 +126,7 @@ object SharedMethods {
 
     fun setCtrlFile(context: Context, cf: ControlFile) {
         //This will immediately reset the current control file
-        SharedMethods.stopService(context, true)
+        SharedMethods.stopService(context)
         PreferenceManager.getDefaultSharedPreferences(context)
                 .edit().putString(SettingsFragment.KEY_CONTROL_FILE, cf.file).apply()
         context.getSharedPreferences(SETTINGS, 0)
