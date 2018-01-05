@@ -61,7 +61,9 @@
     <string name="advanced_settings">Advanced Settings</string>
     <string name="immediate_power_intent_handling">Always Handle Power Events</string>
     <string name="immediate_power_intent_handling_desc">If enabled, power changes will be recognized immediately, even directly after control file changes.\nUse only for supported control files like battery_charging_enabled or store_mode!</string>
-    
+
+    <string name="hide_toast_on_service_change">Hide Toast on Service Changes</string>
+
     <string name="control_file_settings">Control File Data</string>
     <string name="current_ctrl_data_title">Configured File Data</string>
     <string name="control_file_option_summary_on">User specified CTRL. file data being utilized</string>

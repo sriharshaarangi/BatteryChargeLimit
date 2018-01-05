@@ -36,6 +36,11 @@
                 android:summary="@string/enforce_charge_limit_desc"
                 android:defaultValue="true"/>
 
+        <SwitchPreference
+            android:key="hide_toast_on_service_changes"
+            android:title="@string/hide_toast_on_service_change"
+            android:defaultValue="false" />
+
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/advanced_settings">

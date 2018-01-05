@@ -229,8 +229,10 @@ object SharedMethods {
             Handler().postDelayed({
                 if (SharedMethods.isPhonePluggedIn(context)) {
                     context.startService(Intent(context, ForegroundService::class.java))
-                    // display service enabled Toast message
-                    Toast.makeText(context, R.string.service_enabled, Toast.LENGTH_SHORT).show()
+                    // display service enabled Toast message if not disabled in settings
+                    if (!PreferenceManager.getDefaultSharedPreferences(context).getBoolean("hide_toast_on_service_changes", false)) {
+                        Toast.makeText(context, R.string.service_enabled, Toast.LENGTH_SHORT).show()
+                    }
                 }
             }, CHARGING_CHANGE_TOLERANCE_MS)
         }
@@ -242,8 +244,10 @@ object SharedMethods {
         }
         context.stopService(Intent(context, ForegroundService::class.java))
         SharedMethods.changeState(context, CHARGE_ON)
-        // display service disabled Toast message
-        Toast.makeText(context, R.string.service_disabled, Toast.LENGTH_SHORT).show()
+        // display service disabled Toast message if not disabled in settings
+        if (!PreferenceManager.getDefaultSharedPreferences(context).getBoolean("hide_toast_on_service_changes", false)) {
+            Toast.makeText(context, R.string.service_disabled, Toast.LENGTH_SHORT).show()
+        }
     }
 
     fun getCtrlFileData (context: Context): String? {
