@@ -70,7 +70,7 @@
     <string name="control_file_alert_desc">WARNING: Tampering with this section without knowledge of what you are changing may cause problems to your device that are unforeseen. Rebooting the device usually fixes a lot of issues, however, some may not be as easily fixed. PROCEED WITH CAUTION!</string>
     <string name="control_understand">I understand</string>
     <string name="control_file_heads_up_title">Control File Information</string>
-    <string name="control_file_heads_up_desc">Only control files detected on your device will show up as available. If a control file is detected, but for another device, it is stable to use. Open an issue on GitHub or post on XDA your device and the control file and support will be updated.</string>
+    <string name="control_file_heads_up_desc">Only control files detected on your device will show up as available. If a control file is detected, but for another device, it should be safe to use. Open an issue or send a pull request on GitHub for your device with the control file data to be added to this list.</string>
 
     <string name="custom_ctrl_file_data_title">Configurable CTRL. File Data</string>
     <string name="custom_ctrl_file_data_setup_title">Configure Control Data</string>
