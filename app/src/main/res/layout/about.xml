@@ -143,8 +143,26 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:text="Help &amp; Support"
+                        android:id="@+id/help_and_support"
+                        android:textStyle="bold"
+                        android:textSize="20dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="@string/help_desc"
+                        android:id="@+id/help_desc"
+                        android:layout_below="@+id/help_and_support" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
                         android:text="Source code "
                         android:id="@+id/source"
+                        android:layout_below="@id/help_desc"
                         android:textStyle="bold"
                         android:textSize="20dp" />
 
