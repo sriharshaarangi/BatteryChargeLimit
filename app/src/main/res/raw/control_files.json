@@ -53,7 +53,7 @@
   {
     "file": "/sys/class/power_supply/battery/charging_enabled",
     "label": "charging_enabled",
-    "details": "OnePlus/Generic",
+    "details": "Universal",
     "chargeOn": "1",
     "chargeOff": "0"
   },
