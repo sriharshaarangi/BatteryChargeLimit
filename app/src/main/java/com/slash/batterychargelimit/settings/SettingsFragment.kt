@@ -94,7 +94,6 @@ class SettingsFragment : PreferenceFragment() {
         super.onDetach()
         val statusCTRLData = activity.findViewById(R.id.status_ctrl_data) as TextView
         statusCTRLData.text = SharedMethods.getCtrlFileData(activity) + ", " + SharedMethods.getCtrlEnabledData(activity) + ", " + SharedMethods.getCtrlDisabledData(activity)
-
     }
 
     companion object {

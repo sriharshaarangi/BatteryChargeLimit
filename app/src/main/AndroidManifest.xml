@@ -33,8 +33,6 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".activities.About" />
-
         <receiver android:name=".receivers.BootReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
