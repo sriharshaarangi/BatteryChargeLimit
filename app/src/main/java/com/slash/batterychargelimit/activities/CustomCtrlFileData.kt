@@ -19,6 +19,7 @@ class CustomCtrlFileData : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_custom_ctrl_file_data)
+        supportActionBar!!.title = getString(R.string.custom_ctrl_file_data_setup_title)
 
         var customPathData: String? = null
         var customEnabledData: String? = null
