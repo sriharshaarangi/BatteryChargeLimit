@@ -13,7 +13,7 @@ import com.slash.batterychargelimit.R
 class About : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.about)
+        setContentView(R.layout.activity_about)
 
         displayVersion()
         displayDevelopers()
