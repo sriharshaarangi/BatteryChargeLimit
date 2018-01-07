@@ -14,7 +14,7 @@ import com.slash.batterychargelimit.Constants.INTENT_TOGGLE_ACTION
 
 class EnableWidget : AppWidgetProvider() {
     override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
-        val remoteViews = RemoteViews(context.packageName, R.layout.enable)
+        val remoteViews = RemoteViews(context.packageName, R.layout.widget_button)
         val settings = context.getSharedPreferences(SETTINGS, 0)
         val is_enabled = settings.getBoolean(ENABLE, false)
         remoteViews.setImageViewResource(R.id.enable, EnableWidgetIntentReceiver.getImage(is_enabled))
