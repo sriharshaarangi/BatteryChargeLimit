@@ -26,6 +26,7 @@ import com.slash.batterychargelimit.Constants.LIMIT
 import com.slash.batterychargelimit.Constants.MIN
 import com.slash.batterychargelimit.Constants.AUTO_RESET_STATS
 import com.slash.batterychargelimit.Constants.NOTIFICATION_SOUND
+import com.slash.batterychargelimit.fragments.AboutFragment
 
 class MainActivity : AppCompatActivity() {
     private val minPicker by lazy(LazyThreadSafetyMode.NONE) {findViewById(R.id.min_picker) as NumberPicker}
@@ -226,12 +227,17 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.about -> {
-                val intent = Intent(this, About::class.java)
-                this.startActivity(intent)
+            R.id.about -> if (!AboutFragment.aboutVisible()) {
+                supportActionBar!!.title = getString(R.string.about)
+                fragmentManager.popBackStack()
+                fragmentManager.beginTransaction()
+                        .replace(R.id.fragment_container, AboutFragment())
+                        .addToBackStack(null).commit()
             }
             R.id.action_settings -> if (!SettingsFragment.settingsVisible()) {
+                supportActionBar!!.title = getString(R.string.action_settings)
                 CtrlFileHelper.validateFiles(this, Runnable {
+                    fragmentManager.popBackStack()
                     fragmentManager.beginTransaction()
                             .replace(R.id.fragment_container, SettingsFragment())
                             .addToBackStack(null).commit()
@@ -239,6 +245,11 @@ class MainActivity : AppCompatActivity() {
             }
         }
         return true
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        supportActionBar!!.title = getString(R.string.app_name)
     }
 
     public override fun onStop() {
