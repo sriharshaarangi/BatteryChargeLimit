@@ -34,7 +34,8 @@ class BatteryReceiver(private val service: ForegroundService) : BroadcastReceive
     private var rechargePercentage: Int = 0
     private val prefs: SharedPreferences
     private var preferenceChangeListener: android.content.SharedPreferences.OnSharedPreferenceChangeListener? = null
-    private var useNotificationSound = false
+    private val settings = service.getSharedPreferences(SETTINGS, 0)
+    private var useNotificationSound = settings.getBoolean(NOTIFICATION_SOUND, false)
 
     init {
         preferenceChangeListener = SharedPreferences.OnSharedPreferenceChangeListener { sharedPreferences, key ->
@@ -50,13 +51,12 @@ class BatteryReceiver(private val service: ForegroundService) : BroadcastReceive
                     reset(sharedPreferences)
                 }
                 NOTIFICATION_SOUND -> {
-                    this.useNotificationSound = sharedPreferences.getBoolean(NOTIFICATION_SOUND, false)
+                    this.useNotificationSound = settings.getBoolean(NOTIFICATION_SOUND, false)
                 }
             }
         }
         prefs = PreferenceManager.getDefaultSharedPreferences(service.baseContext)
         prefs.registerOnSharedPreferenceChangeListener(preferenceChangeListener)
-        val settings = service.getSharedPreferences(SETTINGS, 0)
         settings.registerOnSharedPreferenceChangeListener(preferenceChangeListener)
         this.useFahrenheit = prefs.getBoolean(SettingsFragment.KEY_TEMP_FAHRENHEIT, false)
         reset(settings)
