@@ -31,15 +31,15 @@
                 android:defaultValue="false"/>
 
         <CheckBoxPreference
+            android:key="hide_toast_on_service_changes"
+            android:title="@string/hide_toast_on_service_change"
+            android:defaultValue="false" />
+
+        <CheckBoxPreference
                 android:key="enforce_charge_limit"
                 android:title="@string/enforce_charge_limit"
                 android:summary="@string/enforce_charge_limit_desc"
                 android:defaultValue="true"/>
-
-        <SwitchPreference
-            android:key="hide_toast_on_service_changes"
-            android:title="@string/hide_toast_on_service_change"
-            android:defaultValue="false" />
 
     </PreferenceCategory>
 

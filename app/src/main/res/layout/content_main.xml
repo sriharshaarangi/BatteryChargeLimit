@@ -1,20 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="5dp"
     android:fillViewport="true"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.slash.batterychargelimit.activities.MainActivity"
     tools:showIn="@layout/activity_main">
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:layout_editor_absoluteY="8dp"
-        tools:layout_editor_absoluteX="8dp">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -25,17 +22,18 @@
                 xmlns:card_view="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
+                android:layout_marginTop="@dimen/card_margin"
+                android:layout_marginLeft="@dimen/card_margin"
+                android:layout_marginRight="@dimen/card_margin"
                 android:foreground="?selectableItemBackground"
-                card_view:cardBackgroundColor="@android:color/white"
-                card_view:cardCornerRadius="12dp"
+                card_view:cardBackgroundColor="@color/card_color"
+                card_view:cardCornerRadius="@dimen/card_corner_radius"
                 card_view:cardElevation="3dp"
-                card_view:contentPadding="4dp">
+                card_view:contentPadding="@dimen/card_content_padding">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="16dp">
+                    android:layout_height="wrap_content">
 
                     <Switch
                         android:layout_width="match_parent"
@@ -51,17 +49,18 @@
                 xmlns:card_view="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
+                android:layout_marginTop="@dimen/card_margin"
+                android:layout_marginLeft="@dimen/card_margin"
+                android:layout_marginRight="@dimen/card_margin"
                 android:foreground="?selectableItemBackground"
-                card_view:cardBackgroundColor="@android:color/white"
-                card_view:cardCornerRadius="12dp"
+                card_view:cardBackgroundColor="@color/card_color"
+                card_view:cardCornerRadius="@dimen/card_corner_radius"
                 card_view:cardElevation="3dp"
-                card_view:contentPadding="4dp">
+                card_view:contentPadding="@dimen/card_content_padding">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="16dp">
+                    android:layout_height="wrap_content">
 
                     <LinearLayout
                         android:id="@+id/lin_spinners"
@@ -136,17 +135,18 @@
                 xmlns:card_view="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
+                android:layout_marginTop="@dimen/card_margin"
+                android:layout_marginLeft="@dimen/card_margin"
+                android:layout_marginRight="@dimen/card_margin"
                 android:foreground="?selectableItemBackground"
-                card_view:cardBackgroundColor="@android:color/white"
-                card_view:cardCornerRadius="12dp"
+                card_view:cardBackgroundColor="@color/card_color"
+                card_view:cardCornerRadius="@dimen/card_corner_radius"
                 card_view:cardElevation="3dp"
-                card_view:contentPadding="4dp">
+                card_view:contentPadding="@dimen/card_content_padding">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="16dp">
+                    android:layout_height="wrap_content">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -176,29 +176,42 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/status_ctrl_data"
-                        android:layout_marginTop="5dp"
+                        android:layout_marginTop="8dp"
                         android:layout_below="@+id/battery_info"
+                        android:id="@+id/status_ctrl_data_label"
+                        android:text="@string/status_ctrl_data_label"
+                        android:textColor="@android:color/black"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/status_ctrl_data"
+                        android:layout_below="@+id/status_ctrl_data_label"
                         android:textSize="16sp"
-                        android:text="FILE DATA"/>
+                        android:text="@string/file_data"/>
 
                 </RelativeLayout>
             </android.support.v7.widget.CardView>
+
+            <!-- Bottom most card - include android:layout_marginBottom for proper looks -->
             <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:card_view="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
+                android:layout_marginTop="@dimen/card_margin"
+                android:layout_marginLeft="@dimen/card_margin"
+                android:layout_marginRight="@dimen/card_margin"
+                android:layout_marginBottom="@dimen/card_bottom_margin"
                 android:foreground="?selectableItemBackground"
-                card_view:cardBackgroundColor="@android:color/white"
-                card_view:cardCornerRadius="12dp"
+                card_view:cardBackgroundColor="@color/card_color"
+                card_view:cardCornerRadius="@dimen/card_corner_radius"
                 card_view:cardElevation="3dp"
-                card_view:contentPadding="4dp">
+                card_view:contentPadding="@dimen/card_content_padding">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="16dp">
+                    android:layout_height="wrap_content">
 
                     <Switch
                         android:id="@+id/auto_stats_reset"
