@@ -31,6 +31,11 @@
                 android:defaultValue="false"/>
 
         <CheckBoxPreference
+            android:key="temp_in_notif"
+            android:title="@string/show_temperature_in_notification"
+            android:defaultValue="false"/>
+
+        <CheckBoxPreference
             android:key="hide_toast_on_service_changes"
             android:title="@string/hide_toast_on_service_change"
             android:defaultValue="false" />

@@ -57,6 +57,7 @@
     <string name="set_control_file">Set Control File</string>
     <string name="select_control_file">Select Control File</string>
     <string name="show_temperature_fahrenheit">Show Temperature in &#8457;</string>
+    <string name="show_temperature_in_notification">Show Temperature in Notification</string>
     <string name="enforce_charge_limit">Enforce Charge Limit</string>
     <string name="enforce_charge_limit_desc">Attempt to force the device to recognize changes to the control file by toggling its state with an increasing delay</string>
     <string name="always_write_cf">Always Write CTRL File</string>
