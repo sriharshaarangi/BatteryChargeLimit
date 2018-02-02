@@ -116,6 +116,7 @@ class BatteryReceiver(private val service: ForegroundService) : BroadcastReceive
 
         val preferences = PreferenceManager.getDefaultSharedPreferences(context)
         val showTempInNotif = preferences.getBoolean("temp_in_notif", false)
+        val preventCharging = !chargedToLimit && lastState == -1 && chargeBelowLowerLimitOnly && batteryLevel >= rechargePercentage
 
         // when the service was "freshly started", charge until limit
         if (!chargedToLimit && !chargeBelowLowerLimitOnly && batteryLevel < limitPercentage) {
@@ -127,11 +128,11 @@ class BatteryReceiver(private val service: ForegroundService) : BroadcastReceive
                 service.setNotificationIcon(NOTIF_CHARGE)
                 stopIfUnplugged()
             }
-        } else if (batteryLevel >= limitPercentage || (!chargedToLimit && lastState == -1 && chargeBelowLowerLimitOnly && batteryLevel >= rechargePercentage)) {
+        } else if (batteryLevel >= limitPercentage || preventCharging) {
             if (switchState(CHARGE_STOP)) {
                 Log.d("Charging State", "CHARGE_STOP " + this.hashCode())
                 // play sound only the first time when the limit was reached
-                if(useNotificationSound && !chargedToLimit) {
+                if(useNotificationSound && !chargedToLimit && !preventCharging) {
                     service.setNotificationSound()
                 }
                 // remember that we let the device charge until limit at least once
