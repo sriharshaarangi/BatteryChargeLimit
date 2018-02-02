@@ -37,6 +37,7 @@ class BatteryReceiver(private val service: ForegroundService) : BroadcastReceive
     private var preferenceChangeListener: android.content.SharedPreferences.OnSharedPreferenceChangeListener? = null
     private val settings = service.getSharedPreferences(SETTINGS, 0)
     private var useNotificationSound = settings.getBoolean(NOTIFICATION_SOUND, false)
+    private var chargeBelowLowerLimitOnly = false
 
     init {
         preferenceChangeListener = SharedPreferences.OnSharedPreferenceChangeListener { sharedPreferences, key ->
@@ -67,7 +68,8 @@ class BatteryReceiver(private val service: ForegroundService) : BroadcastReceive
     }
 
     private fun reset(settings: SharedPreferences) {
-        chargedToLimit = settings.getBoolean(CHARGE_BELOW_LOWER_LIMIT_ONLY, false)
+        chargeBelowLowerLimitOnly = settings.getBoolean(CHARGE_BELOW_LOWER_LIMIT_ONLY, false)
+        chargedToLimit = false
         lastState = -1
         backOffTime = CHARGING_CHANGE_TOLERANCE_MS
         limitPercentage = settings.getInt(LIMIT, 80)
@@ -116,7 +118,7 @@ class BatteryReceiver(private val service: ForegroundService) : BroadcastReceive
         val showTempInNotif = preferences.getBoolean("temp_in_notif", false)
 
         // when the service was "freshly started", charge until limit
-        if (!chargedToLimit && batteryLevel < limitPercentage) {
+        if (!chargedToLimit && !chargeBelowLowerLimitOnly && batteryLevel < limitPercentage) {
             if (switchState(CHARGE_FULL)) {
                 Log.d("Charging State", "CHARGE_FULL " + this.hashCode())
                 SharedMethods.changeState(service, SharedMethods.CHARGE_ON)
@@ -125,7 +127,7 @@ class BatteryReceiver(private val service: ForegroundService) : BroadcastReceive
                 service.setNotificationIcon(NOTIF_CHARGE)
                 stopIfUnplugged()
             }
-        } else if (batteryLevel >= limitPercentage || (chargedToLimit && batteryLevel >= rechargePercentage)) {
+        } else if (batteryLevel >= limitPercentage || (!chargedToLimit && lastState == -1 && chargeBelowLowerLimitOnly && batteryLevel >= rechargePercentage)) {
             if (switchState(CHARGE_STOP)) {
                 Log.d("Charging State", "CHARGE_STOP " + this.hashCode())
                 // play sound only the first time when the limit was reached
