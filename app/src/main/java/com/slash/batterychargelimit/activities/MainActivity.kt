@@ -25,6 +25,7 @@ import com.slash.batterychargelimit.Constants.ENABLE
 import com.slash.batterychargelimit.Constants.LIMIT
 import com.slash.batterychargelimit.Constants.MIN
 import com.slash.batterychargelimit.Constants.AUTO_RESET_STATS
+import com.slash.batterychargelimit.Constants.CHARGE_BELOW_LOWER_LIMIT_ONLY
 import com.slash.batterychargelimit.Constants.NOTIFICATION_SOUND
 import com.slash.batterychargelimit.fragments.AboutFragment
 
@@ -130,9 +131,11 @@ class MainActivity : AppCompatActivity() {
         val resetBatteryStats_Button = findViewById(R.id.reset_battery_stats) as Button
         val autoResetSwitch = findViewById(R.id.auto_stats_reset) as Switch
         val notificationSound = findViewById(R.id.notification_sound) as Switch
+        var chargeBelowLowerLimitOnly = findViewById(R.id.charge_below_lower_limit) as Switch
 
         autoResetSwitch.isChecked = settings.getBoolean(AUTO_RESET_STATS, false)
         notificationSound.isChecked = settings.getBoolean(NOTIFICATION_SOUND, false)
+        chargeBelowLowerLimitOnly.isChecked = settings.getBoolean(CHARGE_BELOW_LOWER_LIMIT_ONLY, false)
         maxPicker.minValue = 40
         maxPicker.maxValue = 99
         minPicker.minValue = 0
@@ -155,6 +158,9 @@ class MainActivity : AppCompatActivity() {
             settings.edit().putBoolean(AUTO_RESET_STATS, isChecked).apply() }
         notificationSound.setOnCheckedChangeListener { _, isChecked ->
             settings.edit().putBoolean(NOTIFICATION_SOUND, isChecked).apply() }
+        chargeBelowLowerLimitOnly.setOnCheckedChangeListener { _, isChecked ->
+            settings.edit().putBoolean(CHARGE_BELOW_LOWER_LIMIT_ONLY, isChecked).apply() }
+
 
         val statusCTRLData = findViewById(R.id.status_ctrl_data) as TextView
         statusCTRLData.text = SharedMethods.getCtrlFileData(this) + ", " +
