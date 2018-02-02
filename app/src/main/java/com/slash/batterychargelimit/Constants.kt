@@ -24,6 +24,7 @@ object Constants {
     const val NOTIFICATION_LIVE = "notificationLive"
     const val AUTO_RESET_STATS = "auto_reset_stats"
     const val NOTIFICATION_SOUND = "notificationSound"
+    const val CHARGE_BELOW_LOWER_LIMIT_ONLY = "chargeBelowLowerLimitOnly"
 
     // ms after reaching limit, where the "unplug" event is recognized as power cut instead of action unplugging
     const val POWER_CHANGE_TOLERANCE_MS: Long = 3000
