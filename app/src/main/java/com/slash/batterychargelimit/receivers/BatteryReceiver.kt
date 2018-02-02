@@ -54,6 +54,9 @@ class BatteryReceiver(private val service: ForegroundService) : BroadcastReceive
                 NOTIFICATION_SOUND -> {
                     this.useNotificationSound = settings.getBoolean(NOTIFICATION_SOUND, false)
                 }
+                CHARGE_BELOW_LOWER_LIMIT_ONLY -> {
+                    this.reset(settings)
+                }
             }
         }
         prefs = PreferenceManager.getDefaultSharedPreferences(service.baseContext)
