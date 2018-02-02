@@ -5,6 +5,7 @@ import android.os.BatteryManager
 import android.os.Handler
 import android.preference.PreferenceManager
 import android.util.Log
+import com.slash.batterychargelimit.Constants.CHARGE_BELOW_LOWER_LIMIT_ONLY
 import com.slash.batterychargelimit.Constants.CHARGING_CHANGE_TOLERANCE_MS
 import com.slash.batterychargelimit.Constants.LIMIT
 import com.slash.batterychargelimit.Constants.MAX_BACK_OFF_TIME
@@ -63,7 +64,7 @@ class BatteryReceiver(private val service: ForegroundService) : BroadcastReceive
     }
 
     private fun reset(settings: SharedPreferences) {
-        chargedToLimit = false
+        chargedToLimit = settings.getBoolean(CHARGE_BELOW_LOWER_LIMIT_ONLY, false)
         lastState = -1
         backOffTime = CHARGING_CHANGE_TOLERANCE_MS
         limitPercentage = settings.getInt(LIMIT, 80)
@@ -121,7 +122,7 @@ class BatteryReceiver(private val service: ForegroundService) : BroadcastReceive
                 service.setNotificationIcon(NOTIF_CHARGE)
                 stopIfUnplugged()
             }
-        } else if (batteryLevel >= limitPercentage) {
+        } else if (batteryLevel >= limitPercentage || (chargedToLimit && batteryLevel >= rechargePercentage)) {
             if (switchState(CHARGE_STOP)) {
                 Log.d("Charging State", "CHARGE_STOP " + this.hashCode())
                 // play sound only the first time when the limit was reached
