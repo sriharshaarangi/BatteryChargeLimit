@@ -50,4 +50,5 @@
     <string name="advanced_settings">Profi-Einstellungen</string>
     <string name="immediate_power_intent_handling">Power-Events immer verarbeiten</string>
     <string name="immediate_power_intent_handling_desc">Wenn aktiviert, reagiert die App sofort auf Änderungen der Stromversorgung, auch nach der Änderung der Steuerungsdatei.\nNur für unterstützte Steuerdateien wie battery_charging_enabled oder store_mode!</string>
+    <string name="charge_below_lower_limit">Nach dem Einstecken nur dann aufladen, wenn die untere Grenze unterschritten wird.</string>
 </resources>
