@@ -14,6 +14,9 @@ import com.google.gson.reflect.TypeToken
 import com.slash.batterychargelimit.Constants.CHARGE_OFF_KEY
 import com.slash.batterychargelimit.Constants.CHARGE_ON_KEY
 import com.slash.batterychargelimit.Constants.CHARGING_CHANGE_TOLERANCE_MS
+import com.slash.batterychargelimit.Constants.DEFAULT_DISABLED
+import com.slash.batterychargelimit.Constants.DEFAULT_ENABLED
+import com.slash.batterychargelimit.Constants.DEFAULT_FILE
 import com.slash.batterychargelimit.Constants.ENABLE
 import com.slash.batterychargelimit.Constants.FILE_KEY
 import com.slash.batterychargelimit.Constants.LIMIT
@@ -74,16 +77,14 @@ object SharedMethods {
     val executor: ExecutorService = Executors.newSingleThreadExecutor()
 
     fun changeState(context: Context, chargeMode: Int) {
-        val settings = context.getSharedPreferences(SETTINGS, 0)
-        val file = settings.getString(FILE_KEY,
-                "/sys/class/power_supply/battery/charging_enabled")!!
         val preferences = PreferenceManager.getDefaultSharedPreferences(context)
         val alwaysWrite = preferences.getBoolean(SettingsFragment.KEY_ALWAYS_WRITE_CF, false)
 
+        val file = getCtrlFileData(context)
         val newState = if (chargeMode == CHARGE_ON) {
-            settings.getString(CHARGE_ON_KEY, "1")
+            getCtrlEnabledData(context)
         } else {
-            settings.getString(CHARGE_OFF_KEY, "0")
+            getCtrlDisabledData(context)
         }
 
         val switchCommands = arrayOf("mount -o rw,remount $file", "echo \"$newState\" > $file")
@@ -92,7 +93,7 @@ object SharedMethods {
             suShell.addCommand(switchCommands)
         } else {
             suShell.addCommand("cat $file", 0) { _, _, output ->
-                if (output.size() == 0 || output[0] != newState) {
+                if (output.size == 0 || output[0] != newState) {
                     setChangePending()
                     suShell.addCommand(switchCommands)
                 }
@@ -106,8 +107,9 @@ object SharedMethods {
             try {
                 val r = InputStreamReader(context.resources.openRawResource(R.raw.control_files),
                         Charset.forName("UTF-8"))
-                val gson = Gson()
-                ctrlFiles = gson.fromJson<List<ControlFile>>(r, object : TypeToken<List<ControlFile>>() {}.type)
+                val type = object : TypeToken<List<ControlFile>>() {}.type
+                ctrlFiles = Gson().fromJson<List<ControlFile>>(r, type)!!.sortedWith(compareBy(
+                        { it.order }, { it.issues }, { it.experimental }, { it.file }))
             } catch (e: Exception) {
                 Log.wtf(context.javaClass.simpleName, e)
                 return emptyList()
@@ -124,7 +126,7 @@ object SharedMethods {
 
     fun setCtrlFile(context: Context, cf: ControlFile) {
         //This will immediately reset the current control file
-        SharedMethods.stopService(context, true)
+        SharedMethods.stopService(context)
         PreferenceManager.getDefaultSharedPreferences(context)
                 .edit().putString(SettingsFragment.KEY_CONTROL_FILE, cf.file).apply()
         context.getSharedPreferences(SETTINGS, 0)
@@ -177,7 +179,7 @@ object SharedMethods {
         //            // on Exception, fall back to conventional method
         suShell.addCommand("dumpsys batterystats --reset", 0) { _, exitCode, _ ->
             if (exitCode == 0) {
-                Toast.makeText(context, R.string.stats_reset_success, Toast.LENGTH_LONG).show()
+                Toast.makeText(context, R.string.stats_reset_success, Toast.LENGTH_SHORT).show()
             } else {
                 Log.e(TAG, "Statistics reset failed")
             }
@@ -217,7 +219,7 @@ object SharedMethods {
                 throw NumberFormatException("Battery limit out of range!")
             }
         } catch (fe: NumberFormatException) {
-            Toast.makeText(context, R.string.intent_limit_invalid, Toast.LENGTH_LONG).show()
+            Toast.makeText(context, R.string.intent_limit_invalid, Toast.LENGTH_SHORT).show()
         }
 
     }
@@ -227,8 +229,10 @@ object SharedMethods {
             Handler().postDelayed({
                 if (SharedMethods.isPhonePluggedIn(context)) {
                     context.startService(Intent(context, ForegroundService::class.java))
-                    // display service enabled Toast message
-                    Toast.makeText(context, R.string.service_enabled, Toast.LENGTH_LONG).show()
+                    // display service enabled Toast message if not disabled in settings
+                    if (!PreferenceManager.getDefaultSharedPreferences(context).getBoolean("hide_toast_on_service_changes", false)) {
+                        Toast.makeText(context, R.string.service_enabled, Toast.LENGTH_SHORT).show()
+                    }
                 }
             }, CHARGING_CHANGE_TOLERANCE_MS)
         }
@@ -240,8 +244,48 @@ object SharedMethods {
         }
         context.stopService(Intent(context, ForegroundService::class.java))
         SharedMethods.changeState(context, CHARGE_ON)
-        // display service disabled Toast message
-        Toast.makeText(context, R.string.service_disabled, Toast.LENGTH_LONG).show()
+        // display service disabled Toast message if not disabled in settings
+        if (!PreferenceManager.getDefaultSharedPreferences(context).getBoolean("hide_toast_on_service_changes", false)) {
+            Toast.makeText(context, R.string.service_disabled, Toast.LENGTH_SHORT).show()
+        }
     }
 
+    fun getCtrlFileData (context: Context): String? {
+        val settings = context.getSharedPreferences(SETTINGS, 0)
+        val preferences = PreferenceManager.getDefaultSharedPreferences(context)
+
+        return if (preferences.getBoolean("custom_ctrl_file_data", false)) {
+            // Custom Data Enabled
+            settings.getString(Constants.SAVED_PATH_DATA, DEFAULT_FILE)!!
+        } else {
+            // Custom Data Disabled
+            settings.getString(FILE_KEY, DEFAULT_FILE)!!
+        }
+    }
+
+    fun getCtrlEnabledData(context: Context) : String {
+        val settings = context.getSharedPreferences(SETTINGS, 0)
+        val preferences = PreferenceManager.getDefaultSharedPreferences(context)
+
+        return if (preferences.getBoolean("custom_ctrl_file_data", false)) {
+            // Custom Data Enabled
+            settings.getString(Constants.SAVED_ENABLED_DATA, DEFAULT_ENABLED)
+        } else {
+            // Custom Data Disabled
+            settings.getString(CHARGE_ON_KEY, DEFAULT_ENABLED)
+        }
+    }
+
+    fun getCtrlDisabledData(context: Context) : String {
+        val settings = context.getSharedPreferences(SETTINGS, 0)
+        val preferences = PreferenceManager.getDefaultSharedPreferences(context)
+
+        return if (preferences.getBoolean("custom_ctrl_file_data", false)) {
+            // Custom Data Enabled
+            settings.getString(Constants.SAVED_DISABLED_DATA, DEFAULT_DISABLED)
+        } else {
+            // Custom Data Disabled
+            settings.getString(CHARGE_OFF_KEY, DEFAULT_DISABLED)
+        }
+    }
 }

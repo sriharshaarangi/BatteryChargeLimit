@@ -1,17 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <PreferenceCategory android:title="@string/main_settings">
+    <PreferenceCategory android:title="@string/control_file_settings">
+
+        <SwitchPreference
+            android:key="custom_ctrl_file_data"
+            android:title="@string/custom_ctrl_file_data_title"
+            android:summaryOn="@string/control_file_option_summary_on"
+            android:summaryOff="@string/control_file_option_summary_off"
+            android:defaultValue="false" />
 
         <com.slash.batterychargelimit.settings.ControlFilePreference
                 android:key="control_file"
                 android:title="@string/set_control_file"
                 android:dialogTitle="@string/select_control_file"/>
 
+        <Preference
+            android:key="custom_ctrl_file_setup"
+            android:title="@string/custom_ctrl_file_data_setup_title"
+            android:enabled="false"
+            android:defaultValue="false" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/main_settings">
+
         <CheckBoxPreference
                 android:key="temp_fahrenheit"
                 android:title="@string/show_temperature_fahrenheit"
                 android:defaultValue="false"/>
+
+        <CheckBoxPreference
+            android:key="temp_in_notif"
+            android:title="@string/show_temperature_in_notification"
+            android:defaultValue="false"/>
+
+        <CheckBoxPreference
+            android:key="hide_toast_on_service_changes"
+            android:title="@string/hide_toast_on_service_change"
+            android:defaultValue="false" />
 
         <CheckBoxPreference
                 android:key="enforce_charge_limit"
@@ -30,7 +57,7 @@
                 android:defaultValue="false"/>
 
         <CheckBoxPreference
-                android:key="write_blindly"
+                android:key="always_write_cf"
                 android:title="@string/always_write_cf"
                 android:summary="@string/always_write_cf_desc"
                 android:defaultValue="false"/>

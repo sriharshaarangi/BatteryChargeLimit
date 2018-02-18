@@ -37,7 +37,7 @@ class EnableWidgetIntentReceiver : BroadcastReceiver() {
     companion object {
 
         fun updateWidget(context: Context, enable: Boolean) {
-            val remoteViews = RemoteViews(context.packageName, R.layout.enable)
+            val remoteViews = RemoteViews(context.packageName, R.layout.widget_button)
 
             remoteViews.setImageViewResource(R.id.enable, getImage(enable))
             remoteViews.setOnClickPendingIntent(R.id.enable, EnableWidget.buildButtonPendingIntent(context))

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Translation by Jose(XDA username: Joseahfer) on 03/11/2017-->
+<resources>
+        <string name="action_settings">Ajustes</string>
+        <string name="source_code"><a href="https://github.com/sriharshaarangi/BatteryChargeLimit">Código fuente</a></string>
+        <string name="xda_thread"><a href="https://forum.xda-developers.com/android/apps-games/root-battery-charge-limit-t3557002/">Hilo de XDA</a></string>
+        <string name="about">Sobre la aplicación</string>
+        <string name="enable">Activar límite de carga</string>
+        <string name="limit">Limitar a un %1$d%%</string>
+        <string name="recharge_below">Recargar tras un %1$d%%</string>
+        <string name="status">Estado: </string>
+        <string name="experimental">EXPERIMENTAL</string>
+        <string name="auto_reset_stats">Restaurar estadísticas automáticamente</string>
+        <string name="reset_stats">Restaurar estadísticas</string>
+
+        <string name="previously_started">Antes de empezar</string>
+        <string name="device_not_supported">¡Dispositivo no soportado (aún)!</string>
+        <string name="ok">VALE</string>
+        <string name="no_recharge">Sin recarga automática</string>
+
+        <string name="charging">CARGANDO</string>
+        <string name="discharging">DESCARGANDO</string>
+        <string name="full">LLENO</string>
+        <string name="not_charging">SIN CARGARSE</string>
+        <string name="unknown">DESCONOCIDO</string>
+
+        <string name="please_wait">Espere, por favor</string>
+        <string name="maintaining_x_to_y">Manteniendo %1$d%% - %2$d%% SI está conectado"</string>
+        <string name="waiting_until_x">Esperando hasta %1$d%%</string>
+        <string name="battery_info_C">V: %1$.3f v, T: %2$.1f &#8451;</string>
+        <string name="battery_info_F">V: %1$.3f v, T: %2$.1f &#8457;</string>
+
+        <string name="root_denied">Aplicación o dispositivo sin acceso root.</string>
+        <string name="stats_reset_success">Estadísticas de batería restaurados</string>
+
+        <string name="intent_handle_activity">Registro de actividades</string>
+        <string name="intent_invalid">El intento de carga no fue válido.</string>
+        <string name="intent_limit_invalid">El límite proporcionado no es válido.</string>
+        <string name="intent_limit_accepted">Límite de carga cambiado a %1$d%%.</string>
+
+        <string name="service_enabled"> Limitante de batería activado </string>
+        <string name="service_disabled"> Limitante de batería desactivado </string>
+
+        <string name="main_settings">Ajustes principales</string>
+        <string name="set_control_file">Establecer archivo de control</string>
+        <string name="select_control_file">Seleccionar archivo de control</string>
+        <string name="show_temperature_fahrenheit">Mostrar temperatura en &#8457;</string>
+        <string name="enforce_charge_limit">Forzar límite de carga</string>
+        <string name="enforce_charge_limit_desc">Trata de forzar el dispositivo a reconocer los cambios del archivo de control, añade retardo.</string>
+        <string name="always_write_cf">Escribir siempre archivo de control</string>
+        <string name="always_write_cf_desc">Sobrescribir siempre archivo de control, incluso si ya tiene el nuevo contenido.</string>
+
+        <string name="advanced_settings">Ajustes avanzados</string>
+        <string name="immediate_power_intent_handling">Siempre registrar eventos</string>
+        <string name="immediate_power_intent_handling_desc">Si se activa, los cambios de carga serán reconocidos inmediatamente incluso directamente después de los cambios del archivo de control.\n¡Úsalo sólo en archivos de control soportados como battery_charging_enabled o store_mode!</string>
+</resources>

@@ -4,12 +4,12 @@
       tools:context="com.slash.batterychargelimit.activities.MainActivity">
     <item android:id="@+id/action_settings"
           android:title="@string/action_settings"
-          android:icon="@android:drawable/ic_menu_preferences"
+          android:icon="@drawable/ic_menu_settings"
           android:orderInCategory="90"
           app:showAsAction="ifRoom"/>
     <item android:id="@+id/about"
           android:title="@string/about"
-          android:icon="@android:drawable/ic_menu_info_details"
+          android:icon="@drawable/ic_menu_about"
           android:orderInCategory="100"
           app:showAsAction="ifRoom"/>
 </menu>

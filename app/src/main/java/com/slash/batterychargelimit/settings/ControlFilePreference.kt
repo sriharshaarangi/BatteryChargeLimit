@@ -28,6 +28,7 @@ class ControlFilePreference(context: Context, attrs: AttributeSet?) : DialogPref
             internal var label: RadioButton? = null
             internal var details: TextView? = null
             internal var experimental: TextView? = null
+            internal var issues: TextView? = null
         }
 
         override fun getView(position: Int, pConvertView: View?, parent: ViewGroup): View {
@@ -49,6 +50,7 @@ class ControlFilePreference(context: Context, attrs: AttributeSet?) : DialogPref
                 }
                 h.details = convertView.findViewById(R.id.cf_details) as TextView
                 h.experimental = convertView.findViewById(R.id.cf_experimental) as TextView
+                h.issues = convertView.findViewById(R.id.cf_issues) as TextView
                 convertView.tag = h
             } else {
                 h = convertView.tag as ViewHolder
@@ -59,7 +61,8 @@ class ControlFilePreference(context: Context, attrs: AttributeSet?) : DialogPref
             h.label!!.tag = cf
             h.label!!.isChecked = cf.file == getPersistedString(null)
             h.details!!.text = cf.details
-            h.experimental!!.visibility = if (cf.experimental!!) View.VISIBLE else View.INVISIBLE
+            h.experimental!!.visibility = if (cf.experimental!!) View.VISIBLE else View.GONE
+            h.issues!!.visibility = if (cf.issues!!) View.VISIBLE else View.GONE
 
             return convertView
         }
@@ -67,7 +70,7 @@ class ControlFilePreference(context: Context, attrs: AttributeSet?) : DialogPref
 
     override fun onCreateDialogView(): View {
         val v = ListView(context)
-        v.adapter = ControlFileAdapter(ctrlFiles, context)
+        v.adapter = ControlFileAdapter(ctrlFiles.filter { it.isValid }, context)
         return v
     }
 }

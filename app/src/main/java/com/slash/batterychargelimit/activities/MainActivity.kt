@@ -25,6 +25,8 @@ import com.slash.batterychargelimit.Constants.ENABLE
 import com.slash.batterychargelimit.Constants.LIMIT
 import com.slash.batterychargelimit.Constants.MIN
 import com.slash.batterychargelimit.Constants.AUTO_RESET_STATS
+import com.slash.batterychargelimit.Constants.NOTIFICATION_SOUND
+import com.slash.batterychargelimit.fragments.AboutFragment
 
 class MainActivity : AppCompatActivity() {
     private val minPicker by lazy(LazyThreadSafetyMode.NONE) {findViewById(R.id.min_picker) as NumberPicker}
@@ -46,7 +48,7 @@ class MainActivity : AppCompatActivity() {
 
         // Exit immediately if no root support
         if (!Shell.SU.available()) {
-            Toast.makeText(this, R.string.root_denied, Toast.LENGTH_LONG)
+            Toast.makeText(this, R.string.root_denied, Toast.LENGTH_SHORT)
             AlertDialog.Builder(this@MainActivity)
                     .setMessage(R.string.root_denied)
                     .setCancelable(false)
@@ -127,8 +129,10 @@ class MainActivity : AppCompatActivity() {
 
         val resetBatteryStats_Button = findViewById(R.id.reset_battery_stats) as Button
         val autoResetSwitch = findViewById(R.id.auto_stats_reset) as Switch
+        val notificationSound = findViewById(R.id.notification_sound) as Switch
 
         autoResetSwitch.isChecked = settings.getBoolean(AUTO_RESET_STATS, false)
+        notificationSound.isChecked = settings.getBoolean(NOTIFICATION_SOUND, false)
         maxPicker.minValue = 40
         maxPicker.maxValue = 99
         minPicker.minValue = 0
@@ -149,7 +153,13 @@ class MainActivity : AppCompatActivity() {
         resetBatteryStats_Button.setOnClickListener { SharedMethods.resetBatteryStats(this@MainActivity) }
         autoResetSwitch.setOnCheckedChangeListener { _, isChecked ->
             settings.edit().putBoolean(AUTO_RESET_STATS, isChecked).apply() }
+        notificationSound.setOnCheckedChangeListener { _, isChecked ->
+            settings.edit().putBoolean(NOTIFICATION_SOUND, isChecked).apply() }
 
+        val statusCTRLData = findViewById(R.id.status_ctrl_data) as TextView
+        statusCTRLData.text = SharedMethods.getCtrlFileData(this) + ", " +
+                SharedMethods.getCtrlEnabledData(this) + ", " +
+                SharedMethods.getCtrlDisabledData(this)
         //The onCreate() process was not stopped via return, UI elements should be available
         initComplete = true
     }
@@ -183,7 +193,7 @@ class MainActivity : AppCompatActivity() {
                     }
                     BatteryManager.BATTERY_STATUS_DISCHARGING -> {
                         statusText.setText(R.string.discharging)
-                        statusText.setTextColor(Color.DKGRAY)
+                        statusText.setTextColor(ContextCompat.getColor(this@MainActivity, R.color.gray_text))
                     }
                     BatteryManager.BATTERY_STATUS_FULL -> {
                         statusText.setText(R.string.full)
@@ -195,7 +205,7 @@ class MainActivity : AppCompatActivity() {
                     }
                     else -> {
                         statusText.setText(R.string.unknown)
-                        statusText.setTextColor(Color.BLACK)
+                        statusText.setTextColor(ContextCompat.getColor(this@MainActivity, R.color.red))
                     }
                 }
             }
@@ -217,12 +227,17 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.about -> {
-                val intent = Intent(this, About::class.java)
-                this.startActivity(intent)
+            R.id.about -> if (!AboutFragment.aboutVisible()) {
+                supportActionBar!!.title = getString(R.string.about)
+                fragmentManager.popBackStack()
+                fragmentManager.beginTransaction()
+                        .replace(R.id.fragment_container, AboutFragment())
+                        .addToBackStack(null).commit()
             }
             R.id.action_settings -> if (!SettingsFragment.settingsVisible()) {
+                supportActionBar!!.title = getString(R.string.action_settings)
                 CtrlFileHelper.validateFiles(this, Runnable {
+                    fragmentManager.popBackStack()
                     fragmentManager.beginTransaction()
                             .replace(R.id.fragment_container, SettingsFragment())
                             .addToBackStack(null).commit()
@@ -230,6 +245,11 @@ class MainActivity : AppCompatActivity() {
             }
         }
         return true
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        supportActionBar!!.title = getString(R.string.app_name)
     }
 
     public override fun onStop() {
@@ -249,8 +269,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onDestroy() {
-        //Technically not necessary, but it prevents inlining of this required field
-        //See end of https://developer.android.com/guide/topics/ui/settings.html#Listening
+        PreferenceManager.getDefaultSharedPreferences(baseContext)
+                .unregisterOnSharedPreferenceChangeListener(preferenceChangeListener)
+        // technically not necessary, but it prevents inlining of this required field
+        // see end of https://developer.android.com/guide/topics/ui/settings.html#Listening
         preferenceChangeListener = null
         super.onDestroy()
     }

@@ -1,129 +1,184 @@
 [
-{
-  "file": "/sys/class/power_supply/battery/battery_charging_enabled",
-  "label": "battery_charging_enabled",
-  "details": "Nexus/Pixel",
-  "chargeOn": "1",
-  "chargeOff": "0",
-  "experimental": false
-},{
-  "file": "/sys/class/power_supply/battery/charging_enabled",
-  "label": "charging_enabled",
-  "details": "Generic",
-  "chargeOn": "1",
-  "chargeOff": "0",
-  "experimental": false
-},{
-  "file": "/sys/class/power_supply/battery/store_mode",
-  "label": "store_mode",
-  "details": "Samsung Note",
-  "chargeOn": "0",
-  "chargeOff": "1",
-  "experimental": false
-},{
-  "file": "/sys/class/power_supply/battery/batt_slate_mode",
-  "label": "batt_slate_mode",
-  "details": "Samsung",
-  "chargeOn": "0",
-  "chargeOff": "1",
-  "experimental": false
-},{
-  "file": "/sys/class/hw_power/charger/charge_data/enable_charger",
-  "label": "enable_charger",
-  "details": "Huawei",
-  "chargeOn": "1",
-  "chargeOff": "0",
-  "experimental": false
-},{
-  "file": "/sys/module/pm8921_charger/parameters/disabled",
-  "label": "pm8921_charger",
-  "details": "Nexus 4",
-  "chargeOn": "0",
-  "chargeOff": "1",
-  "experimental": false
-},{
-  "file": "/sys/class/power_supply/battery/device/Charging_Enable",
-  "label": "Charging_Enable",
-  "details": "Amazon Fire",
-  "chargeOn": "1",
-  "chargeOff": "0",
-  "experimental": false
-},{
-  "file": "/sys/devices/virtual/power_supply/manta-battery/charge_enabled",
-  "label": "manta-battery",
-  "details": "Nexus 10",
-  "chargeOn": "1",
-  "chargeOff": "0",
-  "experimental": true
-},{
-  "file": "/sys/devices/platform/7000c400.i2c/i2c-1/1-006b/charging_state",
-  "label": "7000c400.i2c",
-  "details": "Nvidia Shield",
-  "chargeOn": "enabled",
-  "chargeOff": "disabled",
-  "experimental": false
-},{
-  "file": "/sys/class/power_supply/battery/input_suspend",
-  "label": "input_suspend",
-  "details": "Xiaomi Mi6",
-  "chargeOn": "0",
-  "chargeOff": "1",
-  "experimental": false
-},{
-  "file": "/sys/class/power_supply/bq2589x_charger/enable_charging",
-  "label": "bq2589x_charger",
-  "details": "Xiaomi MiPad 2",
-  "chargeOn": "1",
-  "chargeOff": "0",
-  "experimental": true
-},{
-  "file": "/sys/class/power_supply/ac/charging_enabled",
-  "label": "ac/charging_enabled",
-  "details": "Nexus 5",
-  "chargeOn": "1",
-  "chargeOff": "0",
-  "experimental": false
-},{
-  "file": "/sys/class/power_supply/dollar_cove_charger/present",
-  "label": "dollar_cove_charger",
-  "details": "Teclast X98 Air III",
-  "chargeOn": "1",
-  "chargeOff": "0",
-  "experimental": true
-},{
-  "file": "/sys/devices/platform/tegra12-i2c.0/i2c-0/0-006b/charging_state",
-  "label": "tegra12-i2c.0",
-  "details": "Nexus 9",
-  "chargeOn": "enabled",
-  "chargeOff": "disabled",
-  "experimental": true
-},{
-  "file": "/sys/class/power_supply/battery/charge_enabled",
-  "label": "charge_enabled",
-  "details": "Galaxy Nexus (maguro)",
-  "chargeOn": "1",
-  "chargeOff": "0",
-  "experimental": false
-},{
-  "file": "/sys/devices/platform/battery/ChargerEnable",
-  "label": "ChargerEnable",
-  "details": "Xiaomi Redmi Note 2 (hermes)",
-  "chargeOn": "1",
-  "chargeOff": "0",
-  "experimental": true
-},{
-  "file": "/sys/class/power_supply/chargalg/disable_charging",
-  "label": "chargalg/disable_charging",
-  "details": "Sony XPERIA Mini ST15i",
-  "chargeOn": "0",
-  "chargeOff": "1",
-  "experimental": true
-},{
-  "file": "/sys/class/power_supply/battery/charger_control",
-  "label": "charger_control",
-  "details": "HTC One (M9)",
-  "chargeOn": "1",
-  "chargeOff": "0",
-  "experimental": true
+  {
+    "file": "/sys/class/hw_power/charger/charge_data/enable_charger",
+    "label": "enable_charger",
+    "details": "Huawei",
+    "chargeOn": "1",
+    "chargeOff": "0"
+  },
+  {
+    "file": "/sys/class/power_supply/ac/charging_enabled",
+    "label": "ac/charging_enabled",
+    "details": "Nexus 5",
+    "chargeOn": "1",
+    "chargeOff": "0"
+  },
+  {
+    "file": "/sys/class/power_supply/battery/batt_slate_mode",
+    "label": "batt_slate_mode",
+    "details": "Samsung",
+    "chargeOn": "0",
+    "chargeOff": "1"
+  },
+  {
+    "file": "/sys/class/power_supply/battery/battery_charging_enabled",
+    "label": "battery_charging_enabled",
+    "details": "Nexus",
+    "chargeOn": "1",
+    "chargeOff": "0"
+  },
+  {
+    "file": "/sys/class/power_supply/battery/charge_disable",
+    "label": "charge_disable",
+    "details": "Pixel 2",
+    "chargeOn": "0",
+    "chargeOff": "1",
+    "experimental": true
+  },
+  {
+    "file": "/sys/class/power_supply/battery/charge_enabled",
+    "label": "charge_enabled",
+    "details": "Galaxy Nexus (maguro)",
+    "chargeOn": "1",
+    "chargeOff": "0"
+  },
+  {
+    "file": "/sys/class/power_supply/battery/charger_control",
+    "label": "charger_control",
+    "details": "Pixel/HTC One",
+    "chargeOn": "1",
+    "chargeOff": "0",
+    "experimental": true
+  },
+  {
+    "file": "/sys/class/power_supply/battery/charging_enabled",
+    "label": "charging_enabled",
+    "details": "Universal",
+    "chargeOn": "1",
+    "chargeOff": "0"
+  },
+  {
+    "file": "/sys/class/power_supply/battery/device/Charging_Enable",
+    "label": "Charging_Enable",
+    "details": "Amazon Fire",
+    "chargeOn": "1",
+    "chargeOff": "0"
+  },
+  {
+    "file": "/sys/class/power_supply/battery/input_suspend",
+    "label": "input_suspend",
+    "details": "Pixel 2/Xiaomi Mi6",
+    "chargeOn": "0",
+    "chargeOff": "1"
+  },
+  {
+    "file": "/sys/class/power_supply/battery/status",
+    "label": "status",
+    "details": "Motorola Defy+ (MB526)",
+    "chargeOn": "Charging",
+    "chargeOff": "Discharging",
+    "experimental": true
+  },
+  {
+    "file": "/sys/class/power_supply/battery/store_mode",
+    "label": "store_mode",
+    "details": "Samsung Note",
+    "chargeOn": "0",
+    "chargeOff": "1",
+    "issues": true
+  },
+  {
+    "file": "/sys/class/power_supply/bq2589x_charger/enable_charging",
+    "label": "bq2589x_charger",
+    "details": "Xiaomi MiPad 2",
+    "chargeOn": "1",
+    "chargeOff": "0",
+    "experimental": true
+  },
+  {
+    "file": "/sys/class/power_supply/chargalg/disable_charging",
+    "label": "chargalg/disable_charging",
+    "details": "Sony XPERIA Mini ST15i",
+    "chargeOn": "0",
+    "chargeOff": "1",
+    "experimental": true
+  },
+  {
+    "file": "/sys/class/power_supply/dollar_cove_charger/present",
+    "label": "dollar_cove_charger",
+    "details": "Teclast X98 Air III",
+    "chargeOn": "1",
+    "chargeOff": "0",
+    "experimental": true
+  },
+  {
+    "file": "/sys/devices/platform/7000c400.i2c/i2c-1/1-006b/charging_state",
+    "label": "7000c400.i2c",
+    "details": "Nvidia Shield",
+    "chargeOn": "enabled",
+    "chargeOff": "disabled"
+  },
+  {
+    "file": "/sys/devices/platform/battery/ChargerEnable",
+    "label": "ChargerEnable",
+    "details": "Xiaomi Redmi Note 2 (hermes)",
+    "chargeOn": "1",
+    "chargeOff": "0",
+    "experimental": true
+  },
+  {
+    "file": "/sys/devices/platform/huawei_charger/enable_charger",
+    "label": "huawei_charger/enable_charger",
+    "details": "Huawei P10 Lite",
+    "chargeOn": "1",
+    "chargeOff": "0",
+    "experimental": true
+  },
+  {
+    "file": "/sys/devices/platform/mt-battery/disable_charger",
+    "label": "mt-battery",
+    "details": "Le 1s (x3)",
+    "chargeOn": "0",
+    "chargeOff": "1",
+    "experimental": true
+  },
+  {
+    "file": "/sys/devices/platform/tegra12-i2c.0/i2c-0/0-006b/charging_state",
+    "label": "tegra12-i2c.0",
+    "details": "Nexus 9",
+    "chargeOn": "enabled",
+    "chargeOff": "disabled",
+    "experimental": true
+  },
+  {
+    "file": "/sys/devices/soc/qpnp-smbcharger-18/power_supply/battery/battery_charging_enabled",
+    "label": "qpnp-smbcharger-18",
+    "details": "Xiaomi Mi A1",
+    "chargeOn": "1",
+    "chargeOff": "0",
+    "experimental": true
+  },
+  {
+    "file": "/sys/devices/virtual/power_supply/manta-battery/charge_enabled",
+    "label": "manta-battery",
+    "details": "Nexus 10",
+    "chargeOn": "1",
+    "chargeOff": "0",
+    "experimental": true
+  },
+  {
+    "file": "/sys/module/pm8921_charger/parameters/disabled",
+    "label": "pm8921_charger",
+    "details": "Nexus 4",
+    "chargeOn": "0",
+    "chargeOff": "1"
+  },
+  {
+    "file": "/sys/class/power_supply/battery/charger_control",
+    "label": "charger_control",
+    "details": "HTC One (M9)",
+    "chargeOn": "1",
+    "chargeOff": "0",
+    "experimental": true
 }
 ]

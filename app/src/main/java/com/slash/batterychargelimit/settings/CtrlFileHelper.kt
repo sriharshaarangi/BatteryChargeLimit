@@ -11,7 +11,7 @@ object CtrlFileHelper {
         val handler = Handler()
         val dialog = ProgressDialog(context)
         dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER)
-        dialog.setMessage("Checking control files, please wait...")
+        dialog.setMessage("Checking control file data, please wait...")
         dialog.isIndeterminate = true
         dialog.setCanceledOnTouchOutside(false)
         dialog.show()

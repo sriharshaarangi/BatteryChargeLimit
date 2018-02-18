@@ -6,5 +6,6 @@
     android:layout_width="match_parent"
     android:minHeight="40dp"
     android:minWidth="40dp"
-    android:initialLayout="@layout/activity_main">
+    android:initialLayout="@layout/widget_button"
+    android:previewImage="@drawable/widget_enabled">
 </appwidget-provider>

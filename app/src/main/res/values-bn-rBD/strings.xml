@@ -1,0 +1,44 @@
+<resources>
+    <string name="service_disabled" modified="true">ব্যাটারি লিমিট সার্ভিস বন্ধ!</string>
+    <string name="enforce_charge_limit_desc" modified="true">জোরপূর্বক ডিভাইসকে কন্ট্রল ফাইলের পরিবর্তনগুলোকে চিনাবে।</string>
+    <string name="discharging" modified="true">চার্জ হারাচ্ছে</string>
+    <string name="device_not_supported" modified="true">তোমার ডিভাইস সমর্থিত নয়! (এখনো পর্যন্ত)</string>
+    <string name="immediate_power_intent_handling" modified="true">সর্বদা পাওয়ার ঘটনাবলি নিয়ন্ত্রণ</string>
+    <string name="maintaining_x_to_y" modified="true">%1$d%% - %2$d%% সীমা বজায় রাখছে। যদি চার্জার প্লাগড ইন থাকে!</string>
+    <string name="intent_invalid" modified="true">নির্ধারিত ইনটেন্ট অকার্যকর।</string>
+    <string name="waiting_until_x" modified="true">%1$d%% এর জন্য অপেক্ষমান</string>
+    <string name="set_control_file" modified="true">কন্ট্রল ফাইল নির্ধারণ</string>
+    <string name="enable" modified="true">ব্যাটারি চার্জ লিমিট চালু কর</string>
+    <string name="status" modified="true">অবস্থা:</string>
+    <string name="action_settings" modified="true">সেটিংস</string>
+    <string name="reset_stats" modified="true">ব্যাটারি তত্ত্ব পুনঃস্থাপন</string>
+    <string name="battery_info_F" modified="true">ভ: %1$.3f ভো., ত: %2$.1f °ফা</string>
+    <string name="main_settings" modified="true">প্রধান সেটিংস</string>
+    <string name="limit" modified="true">%1$d%% সীমায় চার্জিং নির্ধারিত</string>
+    <string name="unknown" modified="true">অজানা</string>
+    <string name="enforce_charge_limit" modified="true">জোরদার চার্জ লিমিট</string>
+    <string name="service_enabled" modified="true">ব্যাটারি লিমিট সার্ভিস চালু!</string>
+    <string name="root_denied" modified="true">অ্যাপকে রুট পারমিশন দেয়া হয়নি অথবা ডিভাইসটি রুটেড নয়!</string>
+    <string name="advanced_settings" modified="true">উন্নমিত সেটিংস</string>
+    <string name="intent_limit_accepted" modified="true">ব্যাটারি চার্জিং সীমা %1$d%% তে পরিবর্তিত হয়েছে।</string>
+    <string name="auto_reset_stats" modified="true">স্বয়ংক্রিয়ভাবে ব্যাটারি তত্ত্ব পুনঃস্থাপিত হবে</string>
+    <string name="immediate_power_intent_handling_desc" modified="true">যদি চালু থাকে, পাওয়ার পরিবর্তন স্বয়ংক্রিয়ভাবে ধারণ হয়ে যাবে, যদিওবা কন্ট্রল ফাইল পরিবর্তিত হয়।\n এটা ব্যবহার কর শুধুমাত্র battery_charging_enabled অথবা store_mode এর জন্য!</string>
+    <string name="please_wait" modified="true">দয়া করে অপেক্ষা কর…</string>
+    <string name="previously_started" modified="true">পূর্বে শুরু হওয়া</string>
+    <string name="full" modified="true">সম্পূর্ণ</string>
+    <string name="intent_limit_invalid" modified="true">নির্ধারিত সীমা অকার্যকর।</string>
+    <string name="battery_info_C" modified="true">ভ: %1$.3f ভো., ত: %2$.1f °সে</string>
+    <string name="ok" modified="true">ঠিক আছে</string>
+    <string name="stats_reset_success" modified="true">ব্যাটারি তত্ত্ব সফলভাবে পুনঃস্থাপিত হয়েছে!</string>
+    <string name="recharge_below" modified="true">%1$d%% এর নিচে পুনঃচার্জ</string>
+    <string name="not_charging" modified="true">চার্জ হচ্ছে না</string>
+    <string name="charging" modified="true">চার্জিং</string>
+    <string name="experimental" modified="true">পরীক্ষামূলক</string>
+    <string name="always_write_cf_desc" modified="true">সর্বদাই কন্ট্রল ফাইল ওভাররাইট করা হবে, যদিওবা নতুন কোন বিষয় ফাইলে যুক্ত থাকে!</string>
+    <string name="intent_handle_activity" modified="true">ব্যাটারি চার্জ লিমিট নিয়ন্ত্রিতকরণ</string>
+    <string name="about" modified="true">সম্বন্ধে</string>
+    <string name="show_temperature_fahrenheit" modified="true">তাপমাত্রা ফারেনহাইটে দেখাবে</string>
+    <string name="select_control_file" modified="true">কন্ট্রল ফাইল নির্বাচন</string>
+    <string name="always_write_cf" modified="true">সবসময় Ctrl. ফাইল লেখা হবে</string>
+    <string name="no_recharge" modified="true">স্বয়ংক্রিয়ভাবে রিচার্জ হবে না</string>
+</resources>
