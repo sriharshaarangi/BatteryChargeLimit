@@ -87,7 +87,7 @@ object SharedMethods {
             getCtrlDisabledData(context)
         }
 
-        val switchCommands = arrayOf("mount -o rw,remount $file", "echo \"$newState\" > $file")
+        val switchCommands = arrayOf("mount -o rw,remount $file", "chmod 644 $file", "echo \"$newState\" > $file")
 
         if (alwaysWrite) {
             suShell.addCommand(switchCommands)
