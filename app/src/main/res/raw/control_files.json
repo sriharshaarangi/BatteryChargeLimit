@@ -173,4 +173,12 @@
     "chargeOn": "0",
     "chargeOff": "1"
   }
+  ,
+  {
+    "file": "/sys/devices/platform/omap/omap_i2c.3/i2c-3/3-005f/charge_enable",
+    "label": "charge_enable",
+    "details": "Amazon Tate LineageOS 14.1",
+    "chargeOn": "1",
+    "chargeOff": "0"
+  }
 ]
