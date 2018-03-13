@@ -37,6 +37,9 @@ object SharedMethods {
     // remember pending state change
     private var changePending: Long = 0
 
+    // remember initialization
+    private var cfInitialized: Boolean = false
+
     /**
      * Inform the BatteryReceiver instance(es) to ignore events for CHARGING_CHANGE_TOLERANCE_MS,
      * in order to let the state change settle.
@@ -87,7 +90,14 @@ object SharedMethods {
             getCtrlDisabledData(context)
         }
 
-        val switchCommands = arrayOf("mount -o rw,remount $file", "chmod 644 $file", "echo \"$newState\" > $file")
+        val switchCommands: Array<String>
+        if (cfInitialized) {
+            switchCommands = arrayOf("echo \"$newState\" > $file")
+        } else {
+            cfInitialized = true
+            switchCommands = arrayOf("mount -o rw,remount $file", "chmod u+w $file",
+                    "echo \"$newState\" > $file")
+        }
 
         if (alwaysWrite) {
             suShell.addCommand(switchCommands)

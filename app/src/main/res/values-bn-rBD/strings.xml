@@ -1,44 +1,87 @@
 <resources>
-    <string name="service_disabled" modified="true">ব্যাটারি লিমিট সার্ভিস বন্ধ!</string>
-    <string name="enforce_charge_limit_desc" modified="true">জোরপূর্বক ডিভাইসকে কন্ট্রল ফাইলের পরিবর্তনগুলোকে চিনাবে।</string>
-    <string name="discharging" modified="true">চার্জ হারাচ্ছে</string>
-    <string name="device_not_supported" modified="true">তোমার ডিভাইস সমর্থিত নয়! (এখনো পর্যন্ত)</string>
-    <string name="immediate_power_intent_handling" modified="true">সর্বদা পাওয়ার ঘটনাবলি নিয়ন্ত্রণ</string>
-    <string name="maintaining_x_to_y" modified="true">%1$d%% - %2$d%% সীমা বজায় রাখছে। যদি চার্জার প্লাগড ইন থাকে!</string>
-    <string name="intent_invalid" modified="true">নির্ধারিত ইনটেন্ট অকার্যকর।</string>
-    <string name="waiting_until_x" modified="true">%1$d%% এর জন্য অপেক্ষমান</string>
-    <string name="set_control_file" modified="true">কন্ট্রল ফাইল নির্ধারণ</string>
-    <string name="enable" modified="true">ব্যাটারি চার্জ লিমিট চালু কর</string>
-    <string name="status" modified="true">অবস্থা:</string>
-    <string name="action_settings" modified="true">সেটিংস</string>
-    <string name="reset_stats" modified="true">ব্যাটারি তত্ত্ব পুনঃস্থাপন</string>
-    <string name="battery_info_F" modified="true">ভ: %1$.3f ভো., ত: %2$.1f °ফা</string>
-    <string name="main_settings" modified="true">প্রধান সেটিংস</string>
-    <string name="limit" modified="true">%1$d%% সীমায় চার্জিং নির্ধারিত</string>
-    <string name="unknown" modified="true">অজানা</string>
-    <string name="enforce_charge_limit" modified="true">জোরদার চার্জ লিমিট</string>
-    <string name="service_enabled" modified="true">ব্যাটারি লিমিট সার্ভিস চালু!</string>
-    <string name="root_denied" modified="true">অ্যাপকে রুট পারমিশন দেয়া হয়নি অথবা ডিভাইসটি রুটেড নয়!</string>
-    <string name="advanced_settings" modified="true">উন্নমিত সেটিংস</string>
-    <string name="intent_limit_accepted" modified="true">ব্যাটারি চার্জিং সীমা %1$d%% তে পরিবর্তিত হয়েছে।</string>
-    <string name="auto_reset_stats" modified="true">স্বয়ংক্রিয়ভাবে ব্যাটারি তত্ত্ব পুনঃস্থাপিত হবে</string>
-    <string name="immediate_power_intent_handling_desc" modified="true">যদি চালু থাকে, পাওয়ার পরিবর্তন স্বয়ংক্রিয়ভাবে ধারণ হয়ে যাবে, যদিওবা কন্ট্রল ফাইল পরিবর্তিত হয়।\n এটা ব্যবহার কর শুধুমাত্র battery_charging_enabled অথবা store_mode এর জন্য!</string>
-    <string name="please_wait" modified="true">দয়া করে অপেক্ষা কর…</string>
-    <string name="previously_started" modified="true">পূর্বে শুরু হওয়া</string>
-    <string name="full" modified="true">সম্পূর্ণ</string>
-    <string name="intent_limit_invalid" modified="true">নির্ধারিত সীমা অকার্যকর।</string>
-    <string name="battery_info_C" modified="true">ভ: %1$.3f ভো., ত: %2$.1f °সে</string>
-    <string name="ok" modified="true">ঠিক আছে</string>
-    <string name="stats_reset_success" modified="true">ব্যাটারি তত্ত্ব সফলভাবে পুনঃস্থাপিত হয়েছে!</string>
-    <string name="recharge_below" modified="true">%1$d%% এর নিচে পুনঃচার্জ</string>
-    <string name="not_charging" modified="true">চার্জ হচ্ছে না</string>
-    <string name="charging" modified="true">চার্জিং</string>
-    <string name="experimental" modified="true">পরীক্ষামূলক</string>
-    <string name="always_write_cf_desc" modified="true">সর্বদাই কন্ট্রল ফাইল ওভাররাইট করা হবে, যদিওবা নতুন কোন বিষয় ফাইলে যুক্ত থাকে!</string>
-    <string name="intent_handle_activity" modified="true">ব্যাটারি চার্জ লিমিট নিয়ন্ত্রিতকরণ</string>
-    <string name="about" modified="true">সম্বন্ধে</string>
-    <string name="show_temperature_fahrenheit" modified="true">তাপমাত্রা ফারেনহাইটে দেখাবে</string>
-    <string name="select_control_file" modified="true">কন্ট্রল ফাইল নির্বাচন</string>
-    <string name="always_write_cf" modified="true">সবসময় Ctrl. ফাইল লেখা হবে</string>
-    <string name="no_recharge" modified="true">স্বয়ংক্রিয়ভাবে রিচার্জ হবে না</string>
+    <string name="app_name" translatable="false">Battery Charge Limit</string>
+    <string name="receiver_limit" translatable="false">Limit BroadcastReceiver</string>
+    <string name="action_settings">সেটিংস</string>
+    <string name="source_code" translatable="false"><a href="https://github.com/sriharshaarangi/BatteryChargeLimit">সোর্স কোড</a></string>
+    <string name="xda_thread" translatable="false"><a href="https://forum.xda-developers.com/android/apps-games/root-battery-charge-limit-t3557002/">XDA থ্রেড</a></string>
+    <string name="about">সম্বন্ধে</string>
+    <string name="enable">ব্যাটারি চার্জ লিমিট সচল</string>
+    <string name="notify">নির্ধারিত সীমায় পৌঁছলে আমাকে অবহিত কর</string>
+    <string name="limit">%1$d%% সীমায় চার্জিং নির্ধারিত</string>
+    <string name="recharge_below">%1$d%% এর নিচে পুনঃচার্জ</string>
+    <string name="status">অবস্থা: </string>
+    <string name="experimental">পরীক্ষামূলক</string>
+    <string name="issues">জানা সমস্যা</string>
+    <string name="auto_reset_stats">স্বয়ংক্রিয়ভাবে ব্যাটারি তত্ত্ব পুনঃস্থাপিত হবে</string>
+    <string name="reset_stats">ব্যাটারি তত্ত্ব পুনঃস্থাপন</string>
+    <string name="disable">বন্ধ</string>
+    <string name="open_app">অ্যাপ চালু</string>
+
+    <string name="previously_started">পূর্বে শুরু হওয়া</string>
+    <string name="device_not_supported">তোমার ডিভাইস সমর্থিত নয়! (এখনো পর্যন্ত)</string>
+    <string name="ok">ঠিক আছে</string>
+    <string name="no_recharge">স্বয়ংক্রিয়ভাবে রিচার্জ হবে না</string>
+
+    <string name="charging">চার্জ হচ্ছে/string>
+    <string name="discharging">চার্জ হারাচ্ছে</string>
+    <string name="full">সম্পূর্ণ</string>
+    <string name="not_charging">চার্জ হচ্ছে না</string>
+    <string name="unknown">অজানা</string>
+
+    <string name="please_wait">দয়া করে অপেক্ষা কর…</string>
+    <string name="maintaining_x_to_y">%1$d%% - %2$d%% সীমা বজায় রাখছে।</string>
+    <string name="maintaining_description">চার্জার খুলে ফেললে, সার্ভিস বন্ধ কর</string>
+    <string name="waiting_until_x">%1$d%% এর জন্য অপেক্ষমান</string>
+    <string name="waiting_description">নির্ধারিত সীমায় পৌঁছলে ব্যাটারি চার্জ হওয়া বন্ধ করে দিবে</string>
+    <string name="battery_info_C">ইউ: %1$.3f ভো., তা: %2$.1f &#8451;</string>
+    <string name="battery_info_F">ইউ: %1$.3f ভো., তা: %2$.1f &#8457;</string>
+
+    <string name="root_denied">অ্যাপকে রুট পারমিশন দেয়া হয়নি অথবা ডিভাইসটি রুটেড নয়!</string>
+    <string name="stats_reset_success">ব্যাটারি তত্ত্ব সফলভাবে পুনঃস্থাপিত হয়েছে!</string>
+
+    <string name="intent_handle_activity">ব্যাটারি চার্জ লিমিট নিয়ন্ত্রিতকরণ</string>
+    <string name="intent_invalid">নির্ধারিত ইনটেন্ট অকার্যকর।</string>
+    <string name="intent_limit_invalid">নির্ধারিত সীমা অকার্যকর।</string>
+    <string name="intent_limit_accepted">ব্যাটারি চার্জিং সীমা %1$d%% তে পরিবর্তিত হয়েছে।</string>
+    <string name="mime_battery_limit" translatable="false">text/x-battery-limit</string>
+
+    <string name="service_enabled"> ব্যাটারি লিমিট সার্ভিস চালু! </string>
+    <string name="service_disabled"> ব্যাটারি লিমিট সার্ভিস বন্ধ! </string>
+
+    <string name="main_settings">প্রধান সেটিংস</string>
+    <string name="set_control_file">কন্ট্রল ফাইল নির্ধারণ</string>
+    <string name="select_control_file">কন্ট্রল ফাইল নির্বাচন</string>
+    <string name="show_temperature_fahrenheit">তাপমাত্রা &#8457; দেখাবে</string>
+    <string name="enforce_charge_limit">জোরদার চার্জ লিমিট</string>
+    <string name="enforce_charge_limit_desc">জোরপূর্বক ডিভাইসকে কন্ট্রল ফাইলের পরিবর্তনগুলোকে চিনাবে।</string>
+    <string name="always_write_cf">সবসময় Ctrl. ফাইল লেখা হবে</string>
+    <string name="always_write_cf_desc">সর্বদাই কন্ট্রল ফাইল ওভাররাইট করা হবে, যদিওবা নতুন কোন বিষয় ফাইলে যুক্ত থাকে।</string>
+
+    <string name="advanced_settings">উন্নমিত সেটিংস</string>
+    <string name="immediate_power_intent_handling">সর্বদা পাওয়ার ঘটনাবলি নিয়ন্ত্রণ</string>
+    <string name="immediate_power_intent_handling_desc">যদি চালু থাকে, পাওয়ার পরিবর্তন স্বয়ংক্রিয়ভাবে ধারণ হয়ে যাবে, যদিওবা কন্ট্রল ফাইল পরিবর্তিত হয়।\n এটা ব্যবহার কর শুধুমাত্র battery_charging_enabled অথবা store_mode এর জন্য!</string>
+
+    <string name="hide_toast_on_service_change">সার্ভিস পরিবর্তনের সময় টোস্ট বন্ধ</string>
+    <string name="help_desc">কোন সমস্যা? নিঃসঙ্কোচে গিটহাবে ইস্যু খুলে আমাদের জানাতে পারেন অতবা XDA থ্রেড চেক করুন অতিরিক্ত সেবার জন্য।</string>
+
+    <string name="control_file_settings">কন্ট্রল ফাইল তত্ত্ব</string>
+    <string name="current_ctrl_data_title">কনফিগারড ফাইল তত্ত্ব</string>
+    <string name="control_file_option_summary_on">ব্যবহারকারীর নির্ধারিত কন্ট্রল ফাইল ব্যবহৃত হচ্ছে</string>
+    <string name="control_file_option_summary_off">পূর্ব-নির্ধারিত কন্ট্রল ফাইল ব্যবহৃত হচ্ছে</string>
+    <string name="control_file_alert_title">উন্নমিত ব্যবহারকারীদের জন্য মাত্র!</string>
+    <string name="control_file_alert_desc">সতর্কবার্তাঃ এই অংশে নিজ জ্ঞান না থাকলে কাজ করবে না! সামান্য কোন ভুলে ডিভাইসের বড় কোন ক্ষতি হয়ে যেতে পারে। অনেক সময় ডিভাইস রিবুটেও অনেক সমস্যা ঠিক হয়ে যায়। সাবধানতার সাথে কাজ কর!</string>
+    <string name="control_understand">আমি বুঝেছি</string>
+    <string name="control_file_heads_up_title">কন্ট্রল ফাইল তথ্য</string>
+    <string name="control_file_heads_up_desc">তোমার ডিভাইসে সনাক্ত কন্ট্রল ফাইলগুলোই শুধুমাত্র দেখাবে। যদি অন্য কোন কন্ট্রল ফাইল নির্ধারিত হয়ে যায়, এটা নিরাপদ ব্যবহারের জন্য। তোমার ডিভাইসের কন্ট্রল ফাইল না দেখালে গিটহাবে ইস্যু খুলে বা পুল রিকুয়েস্ট করে আমাদের জানাতে পার।</string>
+
+    <string name="custom_ctrl_file_data_title">কনফিগারযোগ্য কন্ট্রল ফাইল তত্ত্ব</string>
+    <string name="custom_ctrl_file_data_setup_title">কনফিগার কন্ট্রল তত্ত্ব</string>
+    <string name="custom_ctrl_file_path_title">নির্ধারিত ফাইলের স্থান নির্দেশ করে দাও</string>
+    <string name="custom_ctrl_file_path_hint">/sys/folder/folder/নির্ধারিত_ফাইল</string>
+    <string name="custom_ctrl_file_enabled_title">সচল মান নির্ধারণ</string>
+    <string name="custom_ctrl_file_enabled_hint">1, সচল, নির্ধারিত_মান</string>
+    <string name="custom_ctrl_file_disabled_title">বন্ধের মান নির্ধারণ</string>
+    <string name="custom_ctrl_file_disabled_hint">0, বন্ধ, নির্ধারিত_মান</string>
+    <string name="custom_ctrl_file_updated_info">হালনাগাদকৃত তত্ত্ব এখানে দেখাবে, যখন তুমি তথ্য হালনাগাদ করবে।</string>
+    <string name="custom_ctrl_file_heads_up">যদি অ্যাপ কাজ না করে অথবা ক্রাশ করে, তাহলে সেটিংস থেকে কন্ট্রল ফাইল চালু করে দেখতে পারো। তবে এর কাজ করার কোন নিশ্চয়তা নেই, খেয়াল রাখবে নির্ধারিত মান ও ফাইল ঠিকঠাক আছে।</string>
 </resources>
