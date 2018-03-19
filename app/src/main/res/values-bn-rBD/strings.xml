@@ -22,7 +22,7 @@
     <string name="ok">ঠিক আছে</string>
     <string name="no_recharge">স্বয়ংক্রিয়ভাবে রিচার্জ হবে না</string>
 
-    <string name="charging">চার্জ হচ্ছে/string>
+    <string name="charging">চার্জ হচ্ছে</string>
     <string name="discharging">চার্জ হারাচ্ছে</string>
     <string name="full">সম্পূর্ণ</string>
     <string name="not_charging">চার্জ হচ্ছে না</string>
