@@ -179,5 +179,13 @@
     "details": "Nexus 4",
     "chargeOn": "0",
     "chargeOff": "1"
+  },
+  {
+    "file": "/sys/class/power_supply/battery/charger_control",
+    "label": "charger_control",
+    "details": "HTC One (M9)",
+    "chargeOn": "1",
+    "chargeOff": "0",
+    "experimental": true
   }
 ]
