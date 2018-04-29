@@ -66,7 +66,7 @@ class ForegroundService : Service() {
         registerReceiver(batteryReceiver, IntentFilter(Intent.ACTION_BATTERY_CHANGED))
     }
 
-    override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         ignoreAutoReset = false
         return super.onStartCommand(intent, flags, startId)
     }
