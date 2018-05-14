@@ -1,14 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="action_settings">Einstellungen</string>
+    <string name="xda_thread_title">XDA Thema</string>
+    <string name="source_code_title">Quelltext</string>
     <string name="about">Über</string>
     <string name="enable">Aktiviere Battery Charge Limit</string>
+    <string name="notify">Benachrichtigen wenn Grenze erreicht</string>
     <string name="limit">Laden bis max. %1$d%%</string>
     <string name="recharge_below">Wiederaufladen unter %1$d%%</string>
-    <string name="status">Status: </string>
+    <string name="status">Status:</string>
+    <string name="status_ctrl_data_label">Steuerdatei-Daten</string>
     <string name="experimental">EXPERIMENTELL</string>
+    <string name="issues">BEKANNTE PROBLEME</string>
     <string name="auto_reset_stats">Batterie-Statistik automatisch zurücksetzen</string>
     <string name="reset_stats">Batterie-Statistik zurücksetzen</string>
+    <string name="disable">Abschalten</string>
+    <string name="open_app">Anwendung öffnen</string>
+    <string name="file_data">(Steuerdatei-Daten werden hier erscgeinen)</string>
 
     <string name="previously_started">Previously Started</string>
     <string name="device_not_supported">Dein Gerät wird (noch) nicht unterstützt!</string>
@@ -23,9 +31,11 @@
 
     <string name="please_wait">Bitte warten…</string>
     <string name="maintaining_x_to_y">Halte %1$d%% - %2$d%% WENN verbunden"</string>
+    <string name="maintaining_description">Wenn das Gerät abgesteckt wird, Dienst abschalten</string>
     <string name="waiting_until_x">Warte bis %1$d%%</string>
-    <string name="battery_info_C">U: %1$.3f V, T: %2$.1f &#8451;</string>
-    <string name="battery_info_F">U: %1$.3f V, T: %2$.1f &#8457;</string>
+    <string name="waiting_description">Die Batterie wird nicht mehr geladen sobald die Grenze erreicht ist</string>
+    <string name="battery_info_C">U: %1$.3f V, T: %2$.1f ℃</string>
+    <string name="battery_info_F">U: %1$.3f V, T: %2$.1f ℉</string>
 
     <string name="root_denied">Rootzugriff verweigert oder Gerät nicht gerootet!</string>
     <string name="stats_reset_success">Reset der Batterie-Statistik erfolgreich</string>
@@ -35,19 +45,47 @@
     <string name="intent_limit_invalid">Das übergebene Limit war ungültig.</string>
     <string name="intent_limit_accepted">Die Ladegrenze wurde auf %1$d%% gesetzt.</string>
 
-    <string name="service_enabled"> Battery Limit Dienst aktiviert! </string>
-    <string name="service_disabled"> Battery Limit Dienst deaktiviert! </string>
+    <string name="service_enabled">Battery Limit Dienst aktiviert!</string>
+    <string name="service_disabled">Battery Limit Dienst deaktiviert!</string>
 
     <string name="main_settings">Hauptkonfiguration</string>
     <string name="set_control_file">Steuerungsdatei auswählen</string>
     <string name="select_control_file">Wählen Sie die Steuerungsdatei:</string>
-    <string name="show_temperature_fahrenheit">Temperatur in &#8457; anzeigen</string>
+    <string name="show_temperature_fahrenheit">Temperatur in ℉ anzeigen</string>
+    <string name="show_temperature_in_notification">Temperatur in Benachrichtigung zeigen</string>
     <string name="enforce_charge_limit">Limit erzwingen</string>
     <string name="enforce_charge_limit_desc">Versuchen, das Gerät zum Einhalten des Limits zu zwingen, indem die Steuerungsdatei mit exp. ansteigender Verzögerung umgeschaltet wird</string>
     <string name="always_write_cf">Steuerungsdatei immer schreiben</string>
     <string name="always_write_cf_desc">Die Steuerungsdatei immer blind überschreiben, auch wenn sie bereits den neuen Inhalt enthält.</string>
+    <string name="help_and_support_title">Hilfe &amp; Unterstützung</string>
 
     <string name="advanced_settings">Profi-Einstellungen</string>
     <string name="immediate_power_intent_handling">Power-Events immer verarbeiten</string>
-    <string name="immediate_power_intent_handling_desc">Wenn aktiviert, reagiert die App sofort auf Änderungen der Stromversorgung, auch nach der Änderung der Steuerungsdatei.\nNur für unterstützte Steuerdateien wie battery_charging_enabled oder store_mode!</string>
+    <string name="immediate_power_intent_handling_desc">Wenn aktiviert, reagiert die App sofort auf Änderungen der Stromversorgung, auch nach der Änderung der Steuerungsdatei.\n
+  Nur für unterstützte Steuerdateien wie battery_charging_enabled oder store_mode!</string>
+
+    <string name="hide_toast_on_service_change">Verstecke Begrüßung bei Netzänderungen</string>
+    <string name="help_desc">Ein Problem gefunden? Bitte ein Issue öffnen bei GitHub und den Diskussionsfaden bei XDA ansehen für mehr Unterstützung!</string>
+
+    <string name="control_file_settings">Steuerdatei-Daten</string>
+    <string name="current_ctrl_data_title">Konfigurierte Dateidaten</string>
+    <string name="control_file_option_summary_on">Nutzerspezifizierte Steuerdatei-Daten die benutzt werden</string>
+    <string name="control_file_option_summary_off">Vordefinierte Steuerdatei die benutzt wird</string>
+    <string name="control_file_alert_title">Nur für erfahrene Anwender!</string>
+    <string name="control_file_alert_desc">ACHTUNG: Änderungen in diesem Bereich ohne Wissen was man ändert kann unvorhergesehene Probleme mit dem Gerät verursachen. Der Neustart des Geräts hilft meistens solche Probleme zu lösen doch einige Probleme können nicht so leicht behoben werden! HIER NUR MIT VORSICHT UND WISSEN WEITERMACHEN!</string>
+    <string name="control_understand">Ich verstehe</string>
+    <string name="control_file_heads_up_title">Steuerdatei Information</string>
+    <string name="control_file_heads_up_desc">Nur Steuerdateien die auf dem Gerät gefunden wurden, werden als verfügbar angezeigt. Wen eine Steuerdatei entdeckt wurde die zu einem anderen Gerät gehört, könnte sie zur Nutzung sicher sein. Öffnen sie ein Issue auf Github oder senden Sie einen Pull Request bei Github für Ihr Gerät mit der Steuerdatei die zu dieser Liste hinzugefügt werden soll.</string>
+
+    <string name="custom_ctrl_file_data_title">Konfigurierbare Steuerdatei-Daten</string>
+    <string name="custom_ctrl_file_data_setup_title">Konfiguriere Steuerdaten</string>
+    <string name="custom_ctrl_file_path_title">Setze den Pfad zur gewünschten Datei</string>
+    <string name="custom_ctrl_file_path_hint">/sys/verzeichnis/verzeichnis/gewünschte_datei</string>
+    <string name="custom_ctrl_file_enabled_title">Setze eingeschalteten Wert</string>
+    <string name="custom_ctrl_file_enabled_hint">1, eingeschaltet, gewünschter Wert</string>
+    <string name="custom_ctrl_file_disabled_title">Setze abgeschalteten Wert</string>
+    <string name="custom_ctrl_file_disabled_hint">0, abgeschaltet, gewünschter Wert</string>
+    <string name="custom_ctrl_file_updated_info">Aktualisierte Daten werden hier erscheinen wenn Sie die Infirmationen aktualisieren</string>
+    <string name="custom_ctrl_file_heads_up">Wenn Probleme mit Anwendungsabstürzen auftreten oder dieser Dienst nicht arbeitet wie er soll, bitte versuchen, in den Einstellungen Immer Steuerdatei schreiben einzuschalten. Es gibt keine Garantie das diese Funktion der konfigurierbaren Steuerdatei alle Geräte Dateien/Werte unterstützt. Wenn Probleme auftreten versuchsweise diese Einstellungen abgleichen oder sicherstellen, dass die Daten korrekt sind.</string>
+    <string name="custom_ctrl_file_update_data">AKTUALISIERE STEUERDATEI-DATEN</string>
 </resources>
