@@ -193,7 +193,7 @@ class MainActivity : AppCompatActivity() {
                     }
                     BatteryManager.BATTERY_STATUS_DISCHARGING -> {
                         statusText.setText(R.string.discharging)
-                        statusText.setTextColor(Color.DKGRAY)
+                        statusText.setTextColor(ContextCompat.getColor(this@MainActivity, R.color.gray_text))
                     }
                     BatteryManager.BATTERY_STATUS_FULL -> {
                         statusText.setText(R.string.full)
@@ -205,7 +205,7 @@ class MainActivity : AppCompatActivity() {
                     }
                     else -> {
                         statusText.setText(R.string.unknown)
-                        statusText.setTextColor(Color.BLACK)
+                        statusText.setTextColor(ContextCompat.getColor(this@MainActivity, R.color.red))
                     }
                 }
             }
