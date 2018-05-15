@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Translation by Ричард Иванов on 23/04/2018-->
 <resources>
-    <string name="app_name" translatable="false">Battery Charge Limit</string>
-    <string name="receiver_limit" translatable="false">Limit BroadcastReceiver</string>
     <string name="action_settings">Настройки</string>
     <string name="xda_thread_title">Тема на XDA</string>
     <string name="source_code_title">Исходный код</string>
-    <string name="source_code" translatable="false"><a href="https://github.com/sriharshaarangi/BatteryChargeLimit">Source Code</a></string>
-    <string name="xda_thread" translatable="false"><a href="https://forum.xda-developers.com/android/apps-games/root-battery-charge-limit-t3557002/">XDA Thread</a></string>
     <string name="about">О приложении</string>
     <string name="enable">Активировать Battery Charge Limit</string>
     <string name="notify">Оповещать, когда лимит достигнут</string>
@@ -49,7 +45,6 @@
     <string name="intent_invalid">The supplied intent was invalid.</string>
     <string name="intent_limit_invalid">Установленный Вами лимит недействителен.</string>
     <string name="intent_limit_accepted">Лимит заряда аккумулятора установлен на %1$d%%.</string>
-    <string name="mime_battery_limit" translatable="false">text/x-battery-limit</string>
 
     <string name="service_enabled"> Сервис Battery Limit - включён! </string>
     <string name="service_disabled"> Сервис Battery Limit - отключён! </string>

@@ -1,9 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">Battery Charge Limit</string>
-    <string name="receiver_limit" translatable="false">Limit BroadcastReceiver</string>
     <string name="action_settings">সেটিংস</string>
-    <string name="source_code" translatable="false"><a href="https://github.com/sriharshaarangi/BatteryChargeLimit">সোর্স কোড</a></string>
-    <string name="xda_thread" translatable="false"><a href="https://forum.xda-developers.com/android/apps-games/root-battery-charge-limit-t3557002/">XDA থ্রেড</a></string>
     <string name="about">সম্বন্ধে</string>
     <string name="enable">ব্যাটারি চার্জ লিমিট সচল</string>
     <string name="notify">নির্ধারিত সীমায় পৌঁছলে আমাকে অবহিত কর</string>
@@ -43,7 +39,6 @@
     <string name="intent_invalid">নির্ধারিত ইনটেন্ট অকার্যকর।</string>
     <string name="intent_limit_invalid">নির্ধারিত সীমা অকার্যকর।</string>
     <string name="intent_limit_accepted">ব্যাটারি চার্জিং সীমা %1$d%% তে পরিবর্তিত হয়েছে।</string>
-    <string name="mime_battery_limit" translatable="false">text/x-battery-limit</string>
 
     <string name="service_enabled"> ব্যাটারি লিমিট সার্ভিস চালু! </string>
     <string name="service_disabled"> ব্যাটারি লিমিট সার্ভিস বন্ধ! </string>
