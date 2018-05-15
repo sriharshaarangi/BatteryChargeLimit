@@ -148,7 +148,7 @@ object SharedMethods {
     }
 
     fun isPhonePluggedIn(context: Context): Boolean {
-        val batteryIntent = context.registerReceiver(null,
+        val batteryIntent = context.applicationContext.registerReceiver(null,
                 IntentFilter(Intent.ACTION_BATTERY_CHANGED))
         return (batteryIntent.getIntExtra(BatteryManager.EXTRA_STATUS, -1)
                 == BatteryManager.BATTERY_STATUS_CHARGING
