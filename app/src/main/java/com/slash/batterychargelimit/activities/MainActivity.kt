@@ -134,7 +134,7 @@ class MainActivity : AppCompatActivity() {
         autoResetSwitch.isChecked = settings.getBoolean(AUTO_RESET_STATS, false)
         notificationSound.isChecked = settings.getBoolean(NOTIFICATION_SOUND, false)
         maxPicker.minValue = 40
-        maxPicker.maxValue = 99
+        maxPicker.maxValue = 100
         minPicker.minValue = 0
 
         enableSwitch.setOnCheckedChangeListener(switchListener)
