@@ -31,8 +31,8 @@ import java.util.concurrent.*
 
 object SharedMethods {
     private val TAG = SharedMethods::class.java.simpleName
-    val CHARGE_ON = 0
-    val CHARGE_OFF = 1
+    const val CHARGE_ON = 0
+    const val CHARGE_OFF = 1
 
     // remember pending state change
     private var changePending: Long = 0
@@ -174,27 +174,30 @@ object SharedMethods {
                 if (useFahrenheit) 32f + batteryTemperature * 1.8f / 10f else batteryTemperature / 10f)
     }
 
+//    @SuppressLint("PrivateApi")
     fun resetBatteryStats(context: Context) {
-        //        try {
-        //            // new technique for PureNexus-powered devices
-        //            Class<?> helperClass = Class.forName("com.android.internal.os.BatteryStatsHelper");
-        //            Constructor<?> constructor = helperClass.getConstructor(Context.class, boolean.class, boolean.class);
-        //            Object instance = constructor.newInstance(context, false, false);
-        //            Method createMethod = helperClass.getMethod("create", Bundle.class);
-        //            createMethod.invoke(instance, (Bundle) null);
-        //            Method resetMethod = helperClass.getMethod("resetStatistics");
-        //            resetMethod.invoke(instance);
-        //        } catch (Exception e) {
-        //            Log.i("New reset method failed", e.getMessage(), e);
-        //            // on Exception, fall back to conventional method
-        suShell.addCommand("dumpsys batterystats --reset", 0) { _, exitCode, _ ->
-            if (exitCode == 0) {
-                Toast.makeText(context, R.string.stats_reset_success, Toast.LENGTH_SHORT).show()
-            } else {
-                Log.e(TAG, "Statistics reset failed")
+//        try {
+//            // new technique for PureNexus-powered devices
+//            val helperClass = Class.forName("com.android.internal.os.BatteryStatsHelper")
+//            val constructor = helperClass.getConstructor(Context::class.java,
+//                    Boolean::class.javaPrimitiveType, Boolean::class.javaPrimitiveType)
+//            val instance = constructor.newInstance(context, false, false)
+//            val createMethod = helperClass.getMethod("create", Bundle::class.javaPrimitiveType)
+//            createMethod.invoke(instance, null)
+//            val resetMethod = helperClass.getMethod("resetStatistics")
+//            resetMethod.invoke(instance)
+//            Toast.makeText(context, R.string.stats_reset_success, Toast.LENGTH_SHORT).show()
+//        } catch (e: Exception) {
+//            Log.i("New reset method failed", e.message, e)
+            // on Exception, fall back to conventional method
+            suShell.addCommand("dumpsys batterystats --reset", 0) { _, exitCode, _ ->
+                if (exitCode == 0) {
+                    Toast.makeText(context, R.string.stats_reset_success, Toast.LENGTH_SHORT).show()
+                } else {
+                    Log.e(TAG, "Statistics reset failed")
+                }
             }
-        }
-        //        }
+//        }
     }
 
     fun setLimit(limit: Int, settings: SharedPreferences) {
