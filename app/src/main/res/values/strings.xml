@@ -19,6 +19,8 @@
     <string name="auto_reset_stats">Automatically reset battery stats</string>
     <string name="reset_stats">Reset Battery Stats</string>
     <string name="disable">Disable</string>
+    <string name="disable_temporarily">Disable temporarily</string>
+    <string name="dismiss">Dismiss</string>
     <string name="open_app">Open App</string>
     <string name="file_data">(CTRL file data will appear here)</string>
 

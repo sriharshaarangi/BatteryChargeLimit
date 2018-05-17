@@ -119,6 +119,7 @@ class BatteryReceiver(private val service: ForegroundService) : BroadcastReceive
                 SharedMethods.changeState(service, SharedMethods.CHARGE_ON)
                 service.setNotificationTitle(service.getString(R.string.waiting_until_x, limitPercentage))
                 service.setNotificationIcon(NOTIF_CHARGE)
+                service.setNotificationActionText(service.getString(R.string.disable_temporarily))
                 stopIfUnplugged()
             }
         } else if (batteryLevel >= limitPercentage) {
@@ -137,6 +138,7 @@ class BatteryReceiver(private val service: ForegroundService) : BroadcastReceive
                 service.setNotificationTitle(service.getString(R.string.maintaining_x_to_y,
                         rechargePercentage, limitPercentage))
                 service.setNotificationIcon(NOTIF_MAINTAIN)
+                service.setNotificationActionText(service.getString(R.string.dismiss))
             } else if (currentStatus == BatteryManager.BATTERY_STATUS_CHARGING
                     && prefs.getBoolean(SettingsFragment.KEY_ENFORCE_CHARGE_LIMIT, true)) {
                 //Double the back off time with every unsuccessful round up to MAX_BACK_OFF_TIME
@@ -156,6 +158,7 @@ class BatteryReceiver(private val service: ForegroundService) : BroadcastReceive
                 Log.d("Charging State", "CHARGE_REFRESH " + this.hashCode())
                 service.setNotificationIcon(NOTIF_CHARGE)
                 service.setNotificationTitle(service.getString(R.string.waiting_until_x, limitPercentage))
+                service.setNotificationActionText(service.getString(R.string.disable_temporarily))
                 SharedMethods.changeState(service, SharedMethods.CHARGE_ON)
                 stopIfUnplugged()
             }
