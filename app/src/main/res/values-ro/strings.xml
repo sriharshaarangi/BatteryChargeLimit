@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Translation by Y0lin(XDA username: Y0lin) on 16/08/2018-->
+<resources>
+    <string name="action_settings">Setari</string>
+    <string name="xda_thread_title">Postarea de pe XDA</string>
+    <string name="source_code_title">Cod sursa</string>
+    <string name="about">Despre</string>
+    <string name="enable">Activeaza Battery Charge Limit</string>
+    <string name="notify">Trimite-mi o notificare atunci cand limita a fost atinsa</string>
+    <string name="limit">Limiteaza incarcarea la %1$d%%</string>
+    <string name="recharge_below">Reincarca sub %1$d%%</string>
+    <string name="status">Stare: </string>
+    <string name="status_ctrl_data_label">Fisierul de control</string>
+    <string name="experimental">EXPERIMENTAL</string>
+    <string name="issues">PROBLEME STIUTE</string>
+    <string name="auto_reset_stats">Reseteaza automat starea bateriei</string>
+    <string name="reset_stats">Reseteaza starea bateriei</string>
+    <string name="disable">Dezactiveaza</string>
+    <string name="disable_temporarily">Dezactiveaza temporar</string>
+    <string name="dismiss">Revocare</string>
+    <string name="open_app">Deschide aplicatia</string>
+    <string name="file_data">(Fisierul CTRL va aparea aici)</string>
+
+    <string name="previously_started">Inceputa anterior</string>
+    <string name="device_not_supported">Dispozitivul tau nu este compatibil (inca)!</string>
+    <string name="ok">OK</string>
+    <string name="no_recharge">Fara reincarcare automata</string>
+
+    <string name="charging">INCARCARE</string>
+    <string name="discharging">DESCARCARE</string>
+    <string name="full">PLINA</string>
+    <string name="not_charging">NU SE INCARCA</string>
+    <string name="unknown">NECUNOSCUT</string>
+
+    <string name="please_wait">Te rog asteapta…</string>
+    <string name="maintaining_x_to_y">Se mentine intre %1$d%% - %2$d%%</string>
+    <string name="maintaining_description">Daca dispozitivul este deconectat, dezactiveaza serviciul</string>
+    <string name="waiting_until_x">Se incarca pana la %1$d%%</string>
+    <string name="waiting_description">Bateria se ve opri din incarcat atunci cand limita a fost atinsa</string>
+    <string name="battery_info_C">U: %1$.3f V, T: %2$.1f &#8451;</string>
+    <string name="battery_info_F">U: %1$.3f V, T: %2$.1f &#8457;</string>
+
+    <string name="root_denied">Aplicatia nu are acces ROOT sau dispozitivul nu este ROOTAT!</string>
+    <string name="stats_reset_success">Starea bateriei a fost resetata cu succes</string>
+
+    <string name="intent_handle_activity">Battery Charge Limit are grija de activitate</string>
+    <string name="intent_invalid">Valoarea aleasa a fost invalida.</string>
+    <string name="intent_limit_invalid">Limita aleasa a fost invalida.</string>
+    <string name="intent_limit_accepted">Limita de incarcare a bateriei a fost schimbata la %1$d%%.</string>
+
+    <string name="service_enabled"> Serviciul Battery Limit este activat! </string>
+    <string name="service_disabled"> Serviciul Battery Limit este dezactivat! </string>
+
+    <string name="main_settings">Setari generale</string>
+    <string name="set_control_file">Seteaza fisierul de control</string>
+    <string name="select_control_file">Selecteaza fisierul de control</string>
+    <string name="show_temperature_fahrenheit">Arata temperatura in &#8457;</string>
+    <string name="show_temperature_in_notification">Arata temperatura in notificare</string>
+    <string name="enforce_charge_limit">Forteaza limita de incarcare</string>
+    <string name="enforce_charge_limit_desc">Forteaza dispozitivul sa recunoasca schimbarile facute fisierului de control prin schimbarea starii cu o viteza crescatoare</string>
+    <string name="always_write_cf">Modifica neconditionat fisierul CTRL</string>
+    <string name="always_write_cf_desc">Suprascrie fisierul de control indiferent daca continutul cel nou este deja prezent</string>
+    <string name="help_and_support_title">Ajutor &amp; Suport</string>
+
+    <string name="advanced_settings">Setari avansate</string>
+    <string name="immediate_power_intent_handling">Ai grija mereu de schimbarile de curent</string>
+    <string name="immediate_power_intent_handling_desc">Schimbarile de curent vor fi recunoscute imediat, exact dupa ce fisierul de control se schimba.\nSe foloseste doar pentru fisierele de control compatibile, ca si battery_charging_enabled sau store_mode!</string>
+
+    <string name="hide_toast_on_service_change">Ascunde Toast in schimbarile de serviciu</string>
+    <string name="help_desc">Ai intampinat vreo problema? Simte-te liber sa o postezi pe GitHub si verifica postul de pe XDA pentru mai mult suport!</string>
+
+    <string name="control_file_settings">Fisierul de control</string>
+    <string name="current_ctrl_data_title">Fisier configurat</string>
+    <string name="control_file_option_summary_on">Se foloseste fisierul CTRL, specificat de utilizator</string>
+    <string name="control_file_option_summary_off">Se foloseste fisierul CTRL predefinit</string>
+    <string name="control_file_alert_title">Doar pentru utilizatorii avansati!</string>
+    <string name="control_file_alert_desc">ATENTIE: Modificarea acestei sectiuni poate cauza probleme neprevazute. Prin repornirea dispozitivului se repara, de obicei, unele probleme, dar unele pot fi foarte greu de reparat. ATENTIE MARE!</string>
+    <string name="control_understand">Am inteles</string>
+    <string name="control_file_heads_up_title">Informatii despre fisierul de control</string>
+    <string name="control_file_heads_up_desc">Doar fisierele de control detectate in dispozitiv vor fi valabile. Daca un fisier de control de pe un alt dispozitiv este detectat, poate fi folosit in siguranta. Acceseaza GitHub si trimite fisierul tau de control ca sa fie adaugat pe lista.</string>
+
+    <string name="custom_ctrl_file_data_title">Fisier CTRL configurabil</string>
+    <string name="custom_ctrl_file_data_setup_title">Configureaza fisierul de control</string>
+    <string name="custom_ctrl_file_path_title">Seteaza calea catre fisierul dorit</string>
+    <string name="custom_ctrl_file_path_hint">/sys/folder/folder/fisier_dorit</string>
+    <string name="custom_ctrl_file_enabled_title">Seteaza valorile de activare</string>
+    <string name="custom_ctrl_file_enabled_hint">1, enabled, valoarea_dorita</string>
+    <string name="custom_ctrl_file_disabled_title">Seteaza valorile de dezactivare</string>
+    <string name="custom_ctrl_file_disabled_hint">0, disabled, valoarea_dorita</string>
+    <string name="custom_ctrl_file_updated_info">Datele actualizate vor aparea aici dupa ce actualizezi informatiile</string>
+    <string name="custom_ctrl_file_heads_up">Daca ai probleme cu aplicatia sau serviciul nu functioneaza corect, incearca sa activezi 'Modifica neconditionat fisierul CTRL' in setari. Nu este nicio garantie ca fisierul configurabil de control va fi compatibil cu toate dispozitivele si cu fisierele/valorile setate. Daca ai probleme incearca sa ajustezi setarile sau verifica daca datele introduse sunt corecte.</string>
+    <string name="custom_ctrl_file_update_data">ACTUALIZEAZA FISIERUL CTRL</string>
+</resources>
