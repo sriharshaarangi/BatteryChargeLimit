@@ -41,7 +41,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="16sp"
-                        android:textColor="@android:color/black" />
+                        android:textColor="@color/primary_text"/>
 
                     <EditText
                         android:id="@+id/edit_path_file"
@@ -59,7 +59,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="16sp"
-                        android:textColor="@android:color/black" />
+                        android:textColor="@color/primary_text" />
 
                     <EditText
                         android:id="@+id/edit_path_enabled"
@@ -77,7 +77,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="16sp"
-                        android:textColor="@android:color/black" />
+                        android:textColor="@color/primary_text" />
 
                     <EditText
                         android:id="@+id/edit_path_disabled"
@@ -122,7 +122,7 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/custom_data_title"
                         android:text="@string/current_ctrl_data_title"
-                        android:textColor="@android:color/black"
+                        android:textColor="@color/primary_text"
                         android:textSize="16sp" />
 
                     <TextView
@@ -141,7 +141,8 @@
                         android:layout_below="@+id/custom_data_updated"
                         android:layout_marginTop="20dp"
                         android:textSize="14sp"
-                        android:text="@string/custom_ctrl_file_heads_up"/>
+                        android:text="@string/custom_ctrl_file_heads_up"
+                        android:textColor="@color/secondary_text"/>
 
                 </RelativeLayout>
             </android.support.v7.widget.CardView>

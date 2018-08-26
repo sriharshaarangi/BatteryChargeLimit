@@ -40,7 +40,8 @@
                         android:layout_height="wrap_content"
                         android:text="@string/enable"
                         android:textSize="16sp"
-                        android:id="@+id/enable_switch" />
+                        android:id="@+id/enable_switch"
+                        android:textColor="@color/primary_text"/>
 
                 </RelativeLayout>
             </android.support.v7.widget.CardView>
@@ -102,7 +103,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:textSize="16sp"
-                            android:textColor="@android:color/black"
+                            android:textColor="@color/primary_text"
                             android:layout_marginEnd="6dp"
                             android:layout_marginRight="6dp" />
 
@@ -111,7 +112,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:textColor="@android:color/black"
+                            android:textColor="@color/primary_text"
                             android:textSize="16sp"
                             android:layout_marginStart="6dp"
                             android:layout_marginLeft="6dp" />
@@ -126,6 +127,7 @@
                         android:id="@+id/notification_sound"
                         android:layout_below="@+id/lin_limits"
                         android:layout_marginTop="12dp"
+                        android:textColor="@color/primary_text"
                         />
 
                 </RelativeLayout>
@@ -154,9 +156,9 @@
                         android:layout_marginEnd="5dp"
                         android:id="@+id/status_label"
                         android:text="@string/status"
-                        android:textColor="@android:color/black"
                         android:textSize="16sp"
-                        android:layout_marginRight="5dp"/>
+                        android:layout_marginRight="5dp"
+                        android:textColor="@color/primary_text"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -171,7 +173,8 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/battery_info"
                         android:layout_below="@+id/status"
-                        android:textSize="16sp" />
+                        android:textSize="16sp"
+                        android:textColor="@color/secondary_text" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -180,8 +183,8 @@
                         android:layout_below="@+id/battery_info"
                         android:id="@+id/status_ctrl_data_label"
                         android:text="@string/status_ctrl_data_label"
-                        android:textColor="@android:color/black"
-                        android:textSize="16sp" />
+                        android:textSize="16sp"
+                        android:textColor="@color/primary_text" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -189,7 +192,8 @@
                         android:id="@+id/status_ctrl_data"
                         android:layout_below="@+id/status_ctrl_data_label"
                         android:textSize="16sp"
-                        android:text="@string/file_data"/>
+                        android:text="@string/file_data"
+                        android:textColor="@color/secondary_text"/>
 
                 </RelativeLayout>
             </android.support.v7.widget.CardView>
@@ -219,7 +223,8 @@
                         android:layout_height="wrap_content"
                         android:text="@string/auto_reset_stats"
                         android:textSize="16sp"
-                        android:layout_marginBottom="10dp" />
+                        android:layout_marginBottom="10dp"
+                        android:textColor="@color/primary_text" />
 
                     <Button style="@style/Widget.AppCompat.Button.Colored"
                         android:layout_width="wrap_content"
