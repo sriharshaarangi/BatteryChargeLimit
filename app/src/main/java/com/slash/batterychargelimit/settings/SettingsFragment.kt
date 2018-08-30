@@ -1,12 +1,14 @@
 package com.slash.batterychargelimit.settings
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.preference.Preference
 import android.preference.PreferenceFragment
 import android.preference.SwitchPreference
-import android.support.v4.content.ContextCompat
+import android.support.annotation.AttrRes
 import android.support.v7.app.AlertDialog
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,9 +24,21 @@ class SettingsFragment : PreferenceFragment() {
         super.onCreate(savedInstanceState)
         addPreferencesFromResource(R.xml.preferences)
 
+        val darkTheme:SwitchPreference = findPreference("dark_theme") as SwitchPreference
         val customCtrlFileDataSwitch:SwitchPreference = findPreference("custom_ctrl_file_data") as SwitchPreference
         val ctrlFilePreference:ControlFilePreference = findPreference("control_file") as ControlFilePreference
         val ctrlFileSetupPreference:Preference = findPreference("custom_ctrl_file_setup") as Preference
+
+        darkTheme.setOnPreferenceChangeListener { _, newValue ->
+            if (newValue as Boolean) {
+                activity.setTheme(R.style.AppTheme_Dark_NoActionBar)
+            }
+            else {
+                activity.setTheme(R.style.AppTheme_Light_NoActionBar)
+            }
+            activity.recreate()
+            true
+        }
 
         ctrlFilePreference.setOnPreferenceClickListener {
             val settings = view.context.getSharedPreferences(Constants.SETTINGS, 0)
@@ -76,8 +90,17 @@ class SettingsFragment : PreferenceFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup, savedInstanceState: Bundle?): View {
         val view = super.onCreateView(inflater, container, savedInstanceState)
-        view.setBackgroundColor(ContextCompat.getColor(activity, android.R.color.white))
+        view.setBackgroundColor(view.context.getColorFromAttr(R.attr.card_color))
         return view
+    }
+
+    fun Context.getColorFromAttr(
+            @AttrRes attrColor: Int,
+            typedValue: TypedValue = TypedValue(),
+            resolveRefs: Boolean = true
+    ): Int {
+        theme.resolveAttribute(attrColor, typedValue, resolveRefs)
+        return typedValue.data
     }
 
     override fun onStart() {

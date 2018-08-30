@@ -1,21 +1,71 @@
 <resources>
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme.Light" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="primary_text">#000000</item>
+        <item name="secondary_text">#757575</item>
+        <item name="card_color">#ffffff</item>
+        <item name="layout_background">#eeeeee</item>
+
+        <item name="android:textColorPrimary" >@color/primary_text_color_selector</item>
+        <item name="android:textColorSecondary">?attr/secondary_text</item>
+
+        <item name="android:alertDialogTheme">@style/MyAlertDialogStyle</item>
+        <item name="alertDialogTheme">@style/MyAlertDialogStyle</item>
+
+        <item name="colorSwitchThumbNormal">?attr/primary_text</item>
+        <item name="android:colorForeground">?attr/primary_text</item>
     </style>
 
-    <style name="AppTheme.NoActionBar">
+    <style name="AppTheme.Dark" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="primary_text">#ffffff</item>
+        <item name="secondary_text">#9e9e9e</item>
+        <item name="card_color">#212121</item>
+        <item name="layout_background">#000000</item>
+
+        <item name="android:textColorPrimary" >@color/primary_text_color_selector</item>
+        <item name="android:textColorSecondary">?attr/secondary_text</item>
+
+        <item name="android:alertDialogTheme">@style/MyAlertDialogStyle</item>
+        <item name="alertDialogTheme">@style/MyAlertDialogStyle</item>
+
+        <item name="colorSwitchThumbNormal">?attr/primary_text</item>
+        <item name="android:colorForeground">?attr/primary_text</item>
+
+    </style>
+
+    <style name="AppTheme.Light.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.Dark.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat" />
 
     <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
         <item name="android:windowBackground">@drawable/background_splash</item>
     </style>
 
+    <style name="AppTheme.Picker" parent="Theme.AppCompat.NoActionBar" >
+        <item name="android:textColorPrimary">?attr/primary_text</item>
+        <item name="android:textColorSecondary">?attr/secondary_text</item>
+    </style>
+
+    <style name="MyAlertDialogStyle" parent="Theme.AppCompat.Dialog.Alert">
+        <item name="colorAccent">#ff9800</item>
+        <item name="android:textColorPrimary">?attr/primary_text</item>
+        <item name="android:background">?attr/card_color</item>
+    </style>
 </resources>
