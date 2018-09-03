@@ -39,7 +39,14 @@ object Constants {
     const val XDA_THREAD = "https://forum.xda-developers.com/android/apps-games/root-battery-charge-limit-t3557002/"
     const val SOURCE_CODE = "https://github.com/sriharshaarangi/BatteryChargeLimit"
     val DEVELOPERS = arrayOf("Sri Harsha Arangi", "Michael Lux", "Mike xdnax")
-    val TRANSLATORS = arrayOf("Brazilian Portuguese: Caio Roberto", "Bengali: AdroitAdorKhan", "Spanish: Jose", "Russian: Ричард Иванов", "Italian: BombeerHC")
+    val TRANSLATORS = arrayOf("Brazilian Portuguese: Caio Roberto",
+            "Bengali: AdroitAdorKhan",
+            "Spanish: Jose",
+            "Russian: Ричард Иванов",
+            "Italian: BombeerHC",
+            "Romanian: Y0lin",
+            "Dutch: hypothermic"
+    )
 
     const val SAVED_PATH_DATA = "saved_ctrl_path_data"
     const val SAVED_ENABLED_DATA = "saved_ctrl_enabled_data"
