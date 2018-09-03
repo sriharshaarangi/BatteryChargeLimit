@@ -179,5 +179,13 @@
     "details": "Nexus 4",
     "chargeOn": "0",
     "chargeOff": "1"
+  },
+  {
+    "file": "/sys/devices/platform/battery/CCIChargerSwitch",
+    "label": "CCIChargerSwitch",
+    "details": "CAT B15Q",
+    "chargeOn": "1",
+    "chargeOff": "0",
+    "experimental": true
   }
 ]
