@@ -15,6 +15,8 @@
     <string name="auto_reset_stats">Batterie-Statistik automatisch zurücksetzen</string>
     <string name="reset_stats">Batterie-Statistik zurücksetzen</string>
     <string name="disable">Abschalten</string>
+    <string name="disable_temporarily">Temporär deaktivieren</string>
+    <string name="dismiss">Verwerfen</string>
     <string name="open_app">Anwendung öffnen</string>
     <string name="file_data">(Steuerdatei-Daten werden hier erscgeinen)</string>
 
@@ -30,7 +32,7 @@
     <string name="unknown">UNBEKANNT</string>
 
     <string name="please_wait">Bitte warten…</string>
-    <string name="maintaining_x_to_y">Halte %1$d%% - %2$d%% WENN verbunden"</string>
+    <string name="maintaining_x_to_y">Halte %1$d%% - %2$d%% WENN verbunden\"</string>
     <string name="maintaining_description">Wenn das Gerät abgesteckt wird, Dienst abschalten</string>
     <string name="waiting_until_x">Warte bis %1$d%%</string>
     <string name="waiting_description">Die Batterie wird nicht mehr geladen sobald die Grenze erreicht ist</string>
@@ -62,7 +64,7 @@
     <string name="advanced_settings">Profi-Einstellungen</string>
     <string name="immediate_power_intent_handling">Power-Events immer verarbeiten</string>
     <string name="immediate_power_intent_handling_desc">Wenn aktiviert, reagiert die App sofort auf Änderungen der Stromversorgung, auch nach der Änderung der Steuerungsdatei.\n
-  Nur für unterstützte Steuerdateien wie battery_charging_enabled oder store_mode!</string>
+     Nur für unterstützte Steuerdateien wie battery_charging_enabled oder store_mode!</string>
 
     <string name="hide_toast_on_service_change">Verstecke Begrüßung bei Netzänderungen</string>
     <string name="help_desc">Ein Problem gefunden? Bitte ein Issue öffnen bei GitHub und den Diskussionsfaden bei XDA ansehen für mehr Unterstützung!</string>
