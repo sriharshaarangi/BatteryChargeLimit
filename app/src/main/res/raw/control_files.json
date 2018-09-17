@@ -187,5 +187,13 @@
     "chargeOn": "1",
     "chargeOff": "0",
     "experimental": true
+  },
+  {
+    "file": "/proc/smb1357_disable_chrg",
+    "label": "SMB1357",
+    "details": "Zenfone 2, Zenfone Zoom",
+    "chargeOn": "0",
+    "chargeOff": "1",
+    "experimental": true
   }
 ]
