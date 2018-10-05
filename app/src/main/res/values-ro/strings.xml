@@ -88,6 +88,6 @@
     <string name="custom_ctrl_file_disabled_title">Seteaza valorile de dezactivare</string>
     <string name="custom_ctrl_file_disabled_hint">0, disabled, valoarea_dorita</string>
     <string name="custom_ctrl_file_updated_info">Datele actualizate vor aparea aici dupa ce actualizezi informatiile</string>
-    <string name="custom_ctrl_file_heads_up">Daca ai probleme cu aplicatia sau serviciul nu functioneaza corect, incearca sa activezi 'Modifica neconditionat fisierul CTRL' in setari. Nu este nicio garantie ca fisierul configurabil de control va fi compatibil cu toate dispozitivele si cu fisierele/valorile setate. Daca ai probleme incearca sa ajustezi setarile sau verifica daca datele introduse sunt corecte.</string>
+    <string name="custom_ctrl_file_heads_up">Daca ai probleme cu aplicatia sau serviciul nu functioneaza corect, incearca sa activezi \'Modifica neconditionat fisierul CTRL\' in setari. Nu este nicio garantie ca fisierul configurabil de control va fi compatibil cu toate dispozitivele si cu fisierele/valorile setate. Daca ai probleme incearca sa ajustezi setarile sau verifica daca datele introduse sunt corecte.</string>
     <string name="custom_ctrl_file_update_data">ACTUALIZEAZA FISIERUL CTRL</string>
 </resources>
