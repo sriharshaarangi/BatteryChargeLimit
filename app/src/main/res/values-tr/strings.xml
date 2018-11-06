@@ -1,12 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name" translatable="false">Battery Charge Limit</string>
-    <string name="receiver_limit" translatable="false">Limit BroadcastReceiver</string>
     <string name="action_settings">Ayarlar</string>
     <string name="xda_thread_title">XDA Konusu</string>
     <string name="source_code_title">Kaynak Kodu</string>
-    <string name="source_code" translatable="false"><a href="https://github.com/sriharshaarangi/BatteryChargeLimit">Kaynak Kodu</a></string>
-    <string name="xda_thread" translatable="false"><a href="https://forum.xda-developers.com/android/apps-games/root-battery-charge-limit-t3557002/">XDA Konusu</a></string>
     <string name="about">Hakkında</string>
     <string name="enable">Battery Charge Limit\'i Etkinleştir</string>
     <string name="notify">Limit aşıldığında bildir</string>
@@ -50,7 +46,6 @@
     <string name="intent_invalid">Sağlanan amaç geçersizdi.</string>
     <string name="intent_limit_invalid">Sağlanan limit geçersizdi.</string>
     <string name="intent_limit_accepted">Pil şarj limiti %1$d%% olarak değiştirildi.</string>
-    <string name="mime_battery_limit" translatable="false">text/x-battery-limit</string>
 
     <string name="service_enabled"> Pil Limiti Hizmeti Etkin! </string>
     <string name="service_disabled"> Pil Limiti Hizmeti Devre Dışı! </string>
