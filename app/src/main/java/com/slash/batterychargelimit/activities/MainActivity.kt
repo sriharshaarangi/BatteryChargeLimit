@@ -28,6 +28,7 @@ import com.slash.batterychargelimit.Constants.AUTO_RESET_STATS
 import com.slash.batterychargelimit.Constants.CHARGE_BELOW_LOWER_LIMIT_ONLY
 import com.slash.batterychargelimit.Constants.NOTIFICATION_SOUND
 import com.slash.batterychargelimit.fragments.AboutFragment
+import android.content.Intent
 
 class MainActivity : AppCompatActivity() {
     private val minPicker by lazy(LazyThreadSafetyMode.NONE) {findViewById(R.id.min_picker) as NumberPicker}
@@ -42,6 +43,10 @@ class MainActivity : AppCompatActivity() {
     private var preferenceChangeListener: SharedPreferences.OnSharedPreferenceChangeListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        val preferences = PreferenceManager.getDefaultSharedPreferences(this)
+        if (preferences.getBoolean("dark_theme", false))
+            setTheme(R.style.AppTheme_Dark_NoActionBar)
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         val toolbar = findViewById(R.id.toolbar) as Toolbar
@@ -137,7 +142,7 @@ class MainActivity : AppCompatActivity() {
         notificationSound.isChecked = settings.getBoolean(NOTIFICATION_SOUND, false)
         chargeBelowLowerLimitOnly.isChecked = settings.getBoolean(CHARGE_BELOW_LOWER_LIMIT_ONLY, false)
         maxPicker.minValue = 40
-        maxPicker.maxValue = 99
+        maxPicker.maxValue = 100
         minPicker.minValue = 0
 
         enableSwitch.setOnCheckedChangeListener(switchListener)
@@ -199,15 +204,15 @@ class MainActivity : AppCompatActivity() {
                     }
                     BatteryManager.BATTERY_STATUS_DISCHARGING -> {
                         statusText.setText(R.string.discharging)
-                        statusText.setTextColor(ContextCompat.getColor(this@MainActivity, R.color.gray_text))
+                        statusText.setTextColor(ContextCompat.getColor(this@MainActivity, R.color.orange))
                     }
                     BatteryManager.BATTERY_STATUS_FULL -> {
                         statusText.setText(R.string.full)
-                        statusText.setTextColor(Color.BLACK)
+                        statusText.setTextColor(ContextCompat.getColor(this@MainActivity, R.color.darkGreen))
                     }
                     BatteryManager.BATTERY_STATUS_NOT_CHARGING -> {
                         statusText.setText(R.string.not_charging)
-                        statusText.setTextColor(Color.BLACK)
+                        statusText.setTextColor(ContextCompat.getColor(this@MainActivity, R.color.orange))
                     }
                     else -> {
                         statusText.setText(R.string.unknown)

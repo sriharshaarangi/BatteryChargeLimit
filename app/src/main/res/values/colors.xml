@@ -2,11 +2,8 @@
 <resources>
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
-    <!--<color name="colorAccent">#FF4081</color>-->
     <color name="colorAccent">#ff9800</color>
-    <color name="darkGreen">#4CAF50</color>
-    <color name="red">#ff0000</color>
-    <color name="gray_text">#8a000000</color>
-    <color name="card_color">@android:color/white</color>
-    <color name="layout_background">#ffeeeeee</color>
+    <color name="darkGreen">#388e3c</color>
+    <color name="orange">#ff6f00</color>
+    <color name="red">#bf360c</color>
 </resources>

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/layout_background"
+    android:background="?attr/layout_background"
     android:fillViewport="true"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
@@ -24,7 +24,7 @@
                 android:layout_marginLeft="@dimen/card_margin"
                 android:layout_marginRight="@dimen/card_margin"
                 android:foreground="?selectableItemBackground"
-                card_view:cardBackgroundColor="@color/card_color"
+                card_view:cardBackgroundColor="?attr/card_color"
                 card_view:cardCornerRadius="@dimen/card_corner_radius"
                 card_view:cardElevation="3dp"
                 card_view:contentPadding="@dimen/card_content_padding">
@@ -47,7 +47,8 @@
                         android:textStyle="bold"
                         android:layout_toEndOf="@+id/app_icon"
                         android:textSize="16dp"
-                        android:layout_toRightOf="@+id/app_icon"/>
+                        android:layout_toRightOf="@+id/app_icon"
+                        android:textColor="?attr/secondary_text"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -55,7 +56,8 @@
                         android:layout_below="@+id/app_name"
                         android:layout_toEndOf="@+id/app_icon"
                         android:id="@+id/app_version"
-                        android:layout_toRightOf="@+id/app_icon" />
+                        android:layout_toRightOf="@+id/app_icon"
+                        android:textColor="?attr/secondary_text" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -63,7 +65,8 @@
                         android:text="License: GPL-3.0"
                         android:id="@+id/licence"
                         android:textStyle="bold"
-                        android:layout_below="@+id/app_icon" />
+                        android:layout_below="@+id/app_icon"
+                        android:textColor="?attr/secondary_text" />
 
                 </RelativeLayout>
             </android.support.v7.widget.CardView>
@@ -76,7 +79,7 @@
                 android:layout_marginLeft="@dimen/card_margin"
                 android:layout_marginRight="@dimen/card_margin"
                 android:foreground="?selectableItemBackground"
-                card_view:cardBackgroundColor="@color/card_color"
+                card_view:cardBackgroundColor="?attr/card_color"
                 card_view:cardCornerRadius="@dimen/card_corner_radius"
                 card_view:cardElevation="3dp"
                 card_view:contentPadding="@dimen/card_content_padding">
@@ -91,7 +94,8 @@
                         android:text="@string/help_and_support_title"
                         android:id="@+id/help_and_support"
                         android:textStyle="bold"
-                        android:textSize="20dp" />
+                        android:textSize="20dp"
+                        android:textColor="?attr/secondary_text" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -99,7 +103,8 @@
                         android:layout_marginTop="2dp"
                         android:text="@string/help_desc"
                         android:id="@+id/help_desc"
-                        android:layout_below="@+id/help_and_support" />
+                        android:layout_below="@+id/help_and_support"
+                        android:textColor="?attr/secondary_text" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -109,7 +114,8 @@
                         android:id="@+id/source"
                         android:layout_below="@id/help_desc"
                         android:textStyle="bold"
-                        android:textSize="20dp" />
+                        android:textSize="20dp"
+                        android:textColor="?attr/secondary_text" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -127,7 +133,8 @@
                         android:textStyle="bold"
                         android:layout_below="@+id/source_code"
                         android:layout_marginTop="6dp"
-                        android:textSize="20dp" />
+                        android:textSize="20dp"
+                        android:textColor="?attr/secondary_text" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -150,7 +157,7 @@
                 android:layout_marginRight="@dimen/card_margin"
                 android:layout_marginBottom="@dimen/card_bottom_margin"
                 android:foreground="?selectableItemBackground"
-                card_view:cardBackgroundColor="@color/card_color"
+                card_view:cardBackgroundColor="?attr/card_color"
                 card_view:cardCornerRadius="@dimen/card_corner_radius"
                 card_view:cardElevation="3dp"
                 card_view:contentPadding="@dimen/card_content_padding">
@@ -165,14 +172,16 @@
                         android:text="Developers "
                         android:id="@+id/developers_title"
                         android:textStyle="bold"
-                        android:textSize="20dp" />
+                        android:textSize="20dp"
+                        android:textColor="?attr/secondary_text" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text=""
                         android:id="@+id/developers"
-                        android:layout_below="@+id/developers_title" />
+                        android:layout_below="@+id/developers_title"
+                        android:textColor="?attr/secondary_text" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -181,14 +190,16 @@
                         android:id="@+id/translators_title"
                         android:textStyle="bold"
                         android:layout_below="@+id/developers"
-                        android:textSize="20dp" />
+                        android:textSize="20dp"
+                        android:textColor="?attr/secondary_text" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text=""
                         android:id="@+id/translators"
-                        android:layout_below="@+id/translators_title" />
+                        android:layout_below="@+id/translators_title"
+                        android:textColor="?attr/secondary_text" />
 
                 </RelativeLayout>
             </android.support.v7.widget.CardView>

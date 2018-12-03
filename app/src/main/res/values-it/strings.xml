@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_settings">Impostazioni</string>
+    <string name="xda_thread_title">XDA Thread</string>
+    <string name="source_code_title">Codice sorgente</string>
+    <string name="about">Info su</string>
+    <string name="enable">Abilita Battery Charge Limit</string>
+    <string name="notify">Notifica quando il limite viene raggiunto</string>
+    <string name="limit">Limita la carica a %1$d%%</string>
+    <string name="recharge_below">Ricarica al di sotto del %1$d%%</string>
+    <string name="status">Stato: </string>
+    <string name="status_ctrl_data_label">File di controllo</string>
+    <string name="experimental">SPERIMENTALE</string>
+    <string name="issues">PROBLEMI NOTI</string>
+    <string name="auto_reset_stats">Reset automatico "Battery Stats"</string>
+    <string name="reset_stats">Reset "Battery Stats"</string>
+    <string name="disable">Disabilita</string>
+    <string name="disable_temporarily">Disabilita temporaneamente</string>
+    <string name="dismiss">Annulla</string>
+    <string name="open_app">Apri App</string>
+    <string name="file_data">(Il File di Controllo appare qui)</string>
+
+    <string name="previously_started">Avviato Precedentemente</string>
+    <string name="device_not_supported">Il tuo dispositivo non è supportato (per il momento)!</string>
+    <string name="ok">OK</string>
+    <string name="no_recharge">Nessuna ricarica automatica</string>
+
+    <string name="charging">IN CARICA</string>
+    <string name="discharging">IN SCARICA</string>
+    <string name="full">CARICO</string>
+    <string name="not_charging">SCARICO</string>
+    <string name="unknown">SCONOSCIUTO</string>
+
+    <string name="please_wait">Attendere…</string>
+    <string name="maintaining_x_to_y">In mantenimento tra %1$d%% - %2$d%%</string>
+    <string name="maintaining_description">Se il dispositivo viene staccato, disabilita il servizio</string>
+    <string name="waiting_until_x">In carica fino al %1$d%%</string>
+    <string name="waiting_description">La batteria smette di ricaricarsi quando il limite è stato raggiunto</string>
+    <string name="battery_info_C">U: %1$.3f V, T: %2$.1f &#8451;</string>
+    <string name="battery_info_F">U: %1$.3f V, T: %2$.1f &#8457;</string>
+
+    <string name="root_denied">L\'app ha bisogno dei permessi di ROOT o il dispositivo non è ROOTATO!</string>
+    <string name="stats_reset_success">"Battery Stats" reset avvenuto</string>
+
+    <string name="intent_handle_activity">Battery Charge Limit Handling Activity</string>
+    <string name="intent_invalid">Il comando fornito è invalido.</string>
+    <string name="intent_limit_invalid">Il limite fornito è invalido.</string>
+    <string name="intent_limit_accepted">Il limite di carica della batteria è stato cambiato a %1$d%%.</string>
+
+    <string name="service_enabled"> Servizio limitatore di carica: ATTIVO </string>
+    <string name="service_disabled"> Servizio limitatore di carica: DISATTIVO </string>
+
+    <string name="main_settings">Impostazioni Principali</string>
+    <string name="set_control_file">Imposta File di Controllo</string>
+    <string name="select_control_file">Seleziona File di Controllo</string>
+    <string name="show_temperature_fahrenheit">Mostra Temperatura in &#8457;</string>
+    <string name="show_temperature_in_notification">Mostra Temperatura nella Notifica</string>
+    <string name="enforce_charge_limit">Forza il Limite di Carica</string>
+    <string name="enforce_charge_limit_desc">Tentare di forzare il dispositivo a riconoscere le modifiche apportate al File di Controllo commutando il suo stato con un ritardo crescente</string>
+    <string name="always_write_cf">Forza scrittura File di Controllo</string>
+    <string name="always_write_cf_desc">Sovrascrive comunque il File di Controllo, anche se contiene già il nuovo contenuto</string>
+    <string name="help_and_support_title">Aiuto e Supporto</string>
+
+    <string name="advanced_settings">Impostazioni Avanzate</string>
+    <string name="immediate_power_intent_handling">Gestisci sempre gli eventi di ricarica</string>
+    <string name="immediate_power_intent_handling_desc">I cambiamenti alla ricarica vengono riconosciuti immediatamente, anche dopo il cambiamento del File di Controllo.\nUsa solo per i File di Controllo supportati, come battery_charging_enabled o store_mode!</string>
+
+    <string name="hide_toast_on_service_change">Nascondi la notifica toast quando abiliti/disabiliti il servizio</string>
+    <string name="help_desc">Riscontri errori? Sentiti libero di aprire una segnalazione di errore su GitHub e consultare il thread su XDA per avere maggiore supporto!</string>
+
+    <string name="control_file_settings">Impostazioni File di Controllo</string>
+    <string name="current_ctrl_data_title">Configura File di Controllo</string>
+    <string name="control_file_option_summary_on">Dati del File di Controllo utilizzato dall\'utente</string>
+    <string name="control_file_option_summary_off"> File di controllo predefinito che viene utilizzato</string>
+    <string name="control_file_alert_title">SOLO UTENTI AVANZATI!</string>
+    <string name="control_file_alert_desc">ATTENZIONE: Modificare questi parametri senza conoscere quello che stai facendo può cousare danni indesiderati. Riavviare il telefono tipicamente risolve un gran numero di errori, d\'altra parte, qualcosa potrebbe comunque andar storto. PROCEDI CON ATTENZIONE!</string>
+    <string name="control_understand">Ho capito</string>
+    <string name="control_file_heads_up_title">Informazioni File di Controllo</string>
+    <string name="control_file_heads_up_desc">Solo i File di Controllo adatti al tuo dispositivo dovrebbero risultare visibili. Un File di Controllo può essere appartenente ad un\'altro disposito, nella maggior parte dei casi questo non influisce il corretto funzionamento. Apri un problema o invia una richiesta pull su GitHub con i dati del File di Controllo del tuo dispositivo per aggiungerlo a questo elenco.</string>
+
+    <string name="custom_ctrl_file_data_title">Configurazione File di Controllo</string>
+    <string name="custom_ctrl_file_data_setup_title">Configura il File di Controllo</string>
+    <string name="custom_ctrl_file_path_title">Imposta percorso del File di Controllo</string>
+    <string name="custom_ctrl_file_path_hint">/sys/folder/folder/desired_file</string>
+    <string name="custom_ctrl_file_enabled_title">Abilita</string>
+    <string name="custom_ctrl_file_enabled_hint">1, enabled, desired_value</string>
+    <string name="custom_ctrl_file_disabled_title">Disabilita</string>
+    <string name="custom_ctrl_file_disabled_hint">0, disabled, desired_value</string>
+    <string name="custom_ctrl_file_updated_info">I dati aggiornati appariranno una volta che aggiornerai le informazioni</string>
+    <string name="custom_ctrl_file_heads_up">Se riscontri qualche errore o qualche crash, prova a abilitare "Forza scrittura File di Controllo" nelle impostazioni. Non c\'è NESSUNA garanzia che questo tipo di configurazione del File di Controllo funzioni per tutti i tipi di dispositivi. Prova a regolare le impostazioni in caso di problemi o assicurati che i dati siano corretti.</string>
+    <string name="custom_ctrl_file_update_data">AGGIORNA DATI DEL FILE DI CONTROLLO</string>
+</resources>

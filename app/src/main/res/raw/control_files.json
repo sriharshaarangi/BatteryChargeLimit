@@ -143,6 +143,13 @@
     "experimental": true
   },
   {
+    "file": "/sys/devices/platform/omap/omap_i2c.3/i2c-3/3-005f/charge_enable",
+    "label": "charge_enable",
+    "details": "Amazon Tate LineageOS 14.1",
+    "chargeOn": "1",
+    "chargeOff": "0"
+  },
+  {
     "file": "/sys/devices/platform/tegra12-i2c.0/i2c-0/0-006b/charging_state",
     "label": "tegra12-i2c.0",
     "details": "Nexus 9",
@@ -160,7 +167,7 @@
   },
   {
     "file": "/sys/devices/virtual/power_supply/manta-battery/charge_enabled",
-    "label": "manta-battery",
+    "label": "manta-battery/charge_enabled",
     "details": "Nexus 10",
     "chargeOn": "1",
     "chargeOff": "0",
@@ -172,5 +179,21 @@
     "details": "Nexus 4",
     "chargeOn": "0",
     "chargeOff": "1"
+  },
+  {
+    "file": "/sys/devices/platform/battery/CCIChargerSwitch",
+    "label": "CCIChargerSwitch",
+    "details": "CAT B15Q",
+    "chargeOn": "1",
+    "chargeOff": "0",
+    "experimental": true
+  },
+  {
+    "file": "/proc/smb1357_disable_chrg",
+    "label": "SMB1357",
+    "details": "Zenfone 2, Zenfone Zoom",
+    "chargeOn": "0",
+    "chargeOff": "1",
+    "experimental": true
   }
 ]

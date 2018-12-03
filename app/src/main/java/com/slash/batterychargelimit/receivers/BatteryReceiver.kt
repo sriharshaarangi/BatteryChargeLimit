@@ -118,14 +118,15 @@ class BatteryReceiver(private val service: ForegroundService) : BroadcastReceive
         val showTempInNotif = preferences.getBoolean("temp_in_notif", false)
         val preventCharging = !chargedToLimit && lastState == -1 && chargeBelowLowerLimitOnly && batteryLevel >= rechargePercentage
 
+        if (!showTempInNotif) service.setNotificationContentText(service.getString(R.string.waiting_description)) else service.setNotificationContentText(SharedMethods.getBatteryInfo(service, intent, useFahrenheit))
         // when the service was "freshly started", charge until limit
         if (!chargedToLimit && !chargeBelowLowerLimitOnly && batteryLevel < limitPercentage) {
             if (switchState(CHARGE_FULL)) {
                 Log.d("Charging State", "CHARGE_FULL " + this.hashCode())
                 SharedMethods.changeState(service, SharedMethods.CHARGE_ON)
                 service.setNotificationTitle(service.getString(R.string.waiting_until_x, limitPercentage))
-                if (!showTempInNotif) service.setNotificationContentText(service.getString(R.string.waiting_description)) else service.setNotificationContentText(SharedMethods.getBatteryInfo(service, intent, useFahrenheit))
                 service.setNotificationIcon(NOTIF_CHARGE)
+                service.setNotificationActionText(service.getString(R.string.disable_temporarily))
                 stopIfUnplugged()
             }
         } else if (batteryLevel >= limitPercentage || preventCharging) {
@@ -143,8 +144,8 @@ class BatteryReceiver(private val service: ForegroundService) : BroadcastReceive
                 // set the "maintain" notification, this must not change from now
                 service.setNotificationTitle(service.getString(R.string.maintaining_x_to_y,
                         rechargePercentage, limitPercentage))
-                if (!showTempInNotif) service.setNotificationContentText(service.getString(R.string.maintaining_description)) else service.setNotificationContentText(SharedMethods.getBatteryInfo(service, intent, useFahrenheit))
                 service.setNotificationIcon(NOTIF_MAINTAIN)
+                service.setNotificationActionText(service.getString(R.string.dismiss))
             } else if (currentStatus == BatteryManager.BATTERY_STATUS_CHARGING
                     && prefs.getBoolean(SettingsFragment.KEY_ENFORCE_CHARGE_LIMIT, true)) {
                 //Double the back off time with every unsuccessful round up to MAX_BACK_OFF_TIME
@@ -164,7 +165,7 @@ class BatteryReceiver(private val service: ForegroundService) : BroadcastReceive
                 Log.d("Charging State", "CHARGE_REFRESH " + this.hashCode())
                 service.setNotificationIcon(NOTIF_CHARGE)
                 service.setNotificationTitle(service.getString(R.string.waiting_until_x, limitPercentage))
-                if (!showTempInNotif) service.setNotificationContentText(service.getString(R.string.waiting_description)) else service.setNotificationContentText(SharedMethods.getBatteryInfo(service, intent, useFahrenheit))
+                service.setNotificationActionText(service.getString(R.string.disable_temporarily))
                 SharedMethods.changeState(service, SharedMethods.CHARGE_ON)
                 stopIfUnplugged()
             }

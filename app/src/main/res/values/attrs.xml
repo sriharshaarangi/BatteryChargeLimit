@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="BCLAppTheme">
+        <attr name="colorPrimary" format="color"/>
+        <attr name="colorPrimaryDark" format="color"/>
+        <attr name="colorAccent" format="color"/>
+
+
+        <attr name="primary_text" format="color"/>
+        <attr name="secondary_text" format="color"/>
+        <attr name="card_color" format="color"/>
+        <attr name="layout_background" format="color"/>
+        
+    </declare-styleable>
+</resources>

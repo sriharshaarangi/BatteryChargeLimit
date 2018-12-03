@@ -2,6 +2,7 @@ package com.slash.batterychargelimit.activities
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.Button
@@ -17,6 +18,10 @@ import com.slash.batterychargelimit.SharedMethods
 class CustomCtrlFileData : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        val preferences = PreferenceManager.getDefaultSharedPreferences(this)
+        if (preferences.getBoolean("dark_theme", false))
+            setTheme(R.style.AppTheme_Dark)
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_custom_ctrl_file_data)
         supportActionBar!!.title = getString(R.string.custom_ctrl_file_data_setup_title)

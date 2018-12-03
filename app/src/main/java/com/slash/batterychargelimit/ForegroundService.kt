@@ -46,14 +46,9 @@ class ForegroundService : Service() {
         notifyID = 1
         settings.edit().putBoolean(NOTIFICATION_LIVE, true).apply()
 
-        val notificationIntent = Intent(this, MainActivity::class.java)
-        val pendingIntentApp = PendingIntent.getActivity(this, 0, notificationIntent, 0)
-        val pendingIntentDisable = PendingIntent.getBroadcast(this, 0, Intent().setAction(INTENT_DISABLE_ACTION), PendingIntent.FLAG_UPDATE_CURRENT)
         val notification = mNotifyBuilder
                 .setPriority(NotificationCompat.PRIORITY_MAX)
                 .setCategory(NotificationCompat.CATEGORY_SYSTEM)
-                .addAction(0, getString(R.string.disable), pendingIntentDisable)
-                .addAction(0, getString(R.string.open_app), pendingIntentApp)
                 .setOngoing(true)
                 .setContentTitle(getString(R.string.please_wait))
                 .setContentInfo(getString(R.string.please_wait))
@@ -66,9 +61,18 @@ class ForegroundService : Service() {
         registerReceiver(batteryReceiver, IntentFilter(Intent.ACTION_BATTERY_CHANGED))
     }
 
-    override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         ignoreAutoReset = false
         return super.onStartCommand(intent, flags, startId)
+    }
+
+    fun setNotificationActionText(actionText: String){
+        mNotifyBuilder.mActions.clear()
+        val notificationIntent = Intent(this, MainActivity::class.java)
+        val pendingIntentApp = PendingIntent.getActivity(this, 0, notificationIntent, 0)
+        val pendingIntentDisable = PendingIntent.getBroadcast(this, 0, Intent().setAction(INTENT_DISABLE_ACTION), PendingIntent.FLAG_UPDATE_CURRENT)
+        mNotifyBuilder.addAction(0, actionText, pendingIntentDisable)
+                .addAction(0, getString(R.string.open_app), pendingIntentApp)
     }
 
     fun setNotificationTitle(title: String) {

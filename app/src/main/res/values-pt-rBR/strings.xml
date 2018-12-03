@@ -1,19 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<!-- Translated to Brazilian Portuguese by Caio Roberto - caiorrs, on 04/05/2017* (*May the fourth be with you)-->
 <resources>
     <string name="action_settings">Configurações</string>
+    <string name="xda_thread_title">Tópico XDA</string>
+    <string name="source_code_title">Código Fonte</string>
+    <string name="about">Sobre</string>
     <string name="enable">Habilitar Battery Charge Limit</string>
+    <string name="notify">Notificar quando o limite for atingido</string>
     <string name="limit">Limite: %1$d%%</string>
+    <string name="recharge_below">Recarregar abaixo de %1$d%%</string>
     <string name="status">Estado: </string>
+    <string name="status_ctrl_data_label">Arquivo de dados de controle</string>
     <string name="experimental">EXPERIMENTAL</string>
+    <string name="issues">PROBLEMAS CONHECIDOS</string>
     <string name="auto_reset_stats">Restaura automaticamente as estatísticas da bateria</string>
     <string name="reset_stats">Restaurar Estatísticas da Bateria</string>
+    <string name="disable">Desabilitar</string>
+    <string name="open_app">Abrir App</string>
+    <string name="file_data">(O arquivo de dados de controle aparecerá aqui)</string>
 
     <string name="previously_started">Anteriormente Iniciado</string>
     <string name="device_not_supported">Seu dispositivo não é compatível (ainda)!</string>
     <string name="ok">OK</string>
-    <string name="recharge_below">Recarregar abaixo de %1$d%%</string>
+    <string name="no_recharge">Sem recarga automática</string>    
 
     <string name="charging">CARREGANDO</string>
     <string name="discharging">DESCARREGANDO</string>
@@ -23,8 +31,11 @@
 
     <string name="please_wait">Por favor aguarde…</string>
     <string name="maintaining_x_to_y">Mantendo %1$d%% - %2$d%% SE conectado"</string>
-    <string name="waiting_until_x">Esperando até %1$d%%</string>
+    <string name="maintaining_description">Se desconectar, desabilita o serviço</string>
+    <string name="waiting_until_x">Carregando até %1$d%%</string>
+    <string name="waiting_description">Battery will stop charging once limit is reached</string>
     <string name="battery_info_C">U: %1$.3f V, T: %2$.1f &#8451;</string>
+    <string name="battery_info_F">U: %1$.3f V, T: %2$.1f &#8457;</string>
 
     <string name="root_denied">Foi negado acesso ROOT ao app ou o dispositivo não possui root!</string>
     <string name="stats_reset_success">Estatísticas da Bateria foram restauradas com sucesso</string>
@@ -33,4 +44,46 @@
     <string name="intent_invalid">O objetivo fornecido era inválido.</string>
     <string name="intent_limit_invalid">O limite fornecido era inválido.</string>
     <string name="intent_limit_accepted">O limite de carga da bateria foi mudado para %1$d%%.</string>
+    <string name="service_enabled"> Serviço Battery Limit Habilitado! </string>
+    <string name="service_disabled"> Serviço Battery Limit Desabilitado! </string>
+
+    <string name="main_settings">Configurações Principais</string>
+    <string name="set_control_file">Definir Arquivo de Controle</string>
+    <string name="select_control_file">Selecionar Arquivo de Controle</string>
+    <string name="show_temperature_fahrenheit">Mostrar Temperatura em &#8457;</string>
+    <string name="show_temperature_in_notification">Mostrar Notificação de Temperatura</string>
+    <string name="enforce_charge_limit">Forçar Limite de Carga</string>
+    <string name="enforce_charge_limit_desc">Tentar forçar que o dispositivo reconheça as alterações ao arquivo de controle ao habilitar este estado com um atraso crescente</string>
+    <string name="always_write_cf">Sempre Escrever arquivo de Controle</string>
+    <string name="always_write_cf_desc">Sempre sobrescrever o arquivo de controle cegamente, mesmo que já contenha o novo conteúdo</string>
+    <string name="help_and_support_title">Ajuda &amp; Suporte</string>
+
+    <string name="advanced_settings">Configurações Avançadas</string>
+    <string name="immediate_power_intent_handling">Sempre Lidar com Eventos de Energia</string>
+    <string name="immediate_power_intent_handling_desc">As alterações de energia serão reconhecidas imediatamente, mesmo diretamente após alterações no arquivo de controle.\nUse apenas para arquivos de controle suportados como battery_charging_enabled ou store_mode!</string>
+
+    <string name="hide_toast_on_service_change">Esconder Toast nas Alterações do Serviço</string>
+    <string name="help_desc">Está com algum problema? Sinta-se à vontade para abrir um issue no GitHub e verificar o tópico no XDA depois para mais suporte!</string>
+
+    <string name="control_file_settings">Dados de Arquivo de Controle</string>
+    <string name="current_ctrl_data_title">Dados do Arquivos Configurados</string>
+    <string name="control_file_option_summary_on">Usando arquivo de controle definido pelo usuário</string>
+    <string name="control_file_option_summary_off">Usando arquivo de controle pré-definido</string>
+    <string name="control_file_alert_title">Apenas para Usuários Avançados!</string>
+    <string name="control_file_alert_desc">AVISO: Alterar configurações nesta seção sem conhecimento do que você está alterando pode causar problemas ao seu dispositivo que nunca foram vistos. Reiniciar o dispositivo normalmente arruma muitos dos problemas, entretanto, alguns podem não ser tão facilmente arrumados. PROCEDA COM CAUTELA!</string>
+    <string name="control_understand">Eu entendo</string>
+    <string name="control_file_heads_up_title">Informações do Arquivo de Controle</string>
+    <string name="control_file_heads_up_desc">Apenas arquivos de controle detectados no seu dispositivo aparecerão como disponíveis. Se um arquivo de controle for detectado, mas para outro dispositivo, deve ser seguro utilizar. Abra um issue ou mande um pull request no GitHub para o seu dispositivo com o arquivo de dados de controle para ser adicionado à essa lista.</string>
+
+    <string name="custom_ctrl_file_data_title">Arquivo de Dados de Controle Configurável</string>
+    <string name="custom_ctrl_file_data_setup_title">Configurar Dados de Controle</string>
+    <string name="custom_ctrl_file_path_title">Definir Caminho para Arquivo Desejado</string>
+    <string name="custom_ctrl_file_path_hint">/sys/folder/folder/desired_file</string>
+    <string name="custom_ctrl_file_enabled_title">Setar Valor Habilitado</string>
+    <string name="custom_ctrl_file_enabled_hint">1, enabled, desired_value</string>
+    <string name="custom_ctrl_file_disabled_title">Setar Valor Desabiltado</string>
+    <string name="custom_ctrl_file_disabled_hint">0, disabled, desired_value</string>
+    <string name="custom_ctrl_file_updated_info">Dados atualizados aparecerão aqui assim que você atualizar a informação</string>
+    <string name="custom_ctrl_file_heads_up">Se você experimentar problemas com qubras do app ou o serviço não funcionar direito, tente habilitar Sempre Escrever Arquivo de Controle nas configurações. NÃO há garantia de que esta função de arquivo de controle configurável suportará todos os dispositivos e arquivos/valores. Tente ajustar as configurações de ocorrerem erros ou garanta que os dados estão corretos.</string>
+    <string name="custom_ctrl_file_update_data">ATUALIZAR DADOS DO ARQUIVO DE CONTROLE</string>
 </resources>
