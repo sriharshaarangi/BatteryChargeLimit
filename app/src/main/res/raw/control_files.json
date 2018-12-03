@@ -195,5 +195,12 @@
     "chargeOn": "0",
     "chargeOff": "1",
     "experimental": true
+  },
+  {
+    "file": "/sys/class/power_supply/battery/charging_enabled",
+    "label": "chargin_enabled",
+    "details": "ZTE Axon 7",
+    "chargeOn": "1",
+    "chargeOff": "0"
   }
 ]
