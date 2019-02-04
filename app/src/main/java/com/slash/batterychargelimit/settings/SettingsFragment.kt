@@ -10,6 +10,7 @@ import android.support.annotation.AttrRes
 import android.support.v7.app.AlertDialog
 import android.util.TypedValue
 import android.view.LayoutInflater
+import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
@@ -20,9 +21,12 @@ import com.slash.batterychargelimit.activities.CustomCtrlFileData
 
 class SettingsFragment : PreferenceFragment() {
 
+    private lateinit var menu: Menu
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         addPreferencesFromResource(R.xml.preferences)
+
+        setHasOptionsMenu(true)
 
         val darkTheme:SwitchPreference = findPreference("dark_theme") as SwitchPreference
         val customCtrlFileDataSwitch:SwitchPreference = findPreference("custom_ctrl_file_data") as SwitchPreference
@@ -101,6 +105,11 @@ class SettingsFragment : PreferenceFragment() {
     ): Int {
         theme.resolveAttribute(attrColor, typedValue, resolveRefs)
         return typedValue.data
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu) {
+        val item = menu.findItem(R.id.action_settings)
+        item.isVisible = false
     }
 
     override fun onStart() {

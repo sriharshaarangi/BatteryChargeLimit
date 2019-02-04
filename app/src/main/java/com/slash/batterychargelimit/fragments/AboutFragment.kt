@@ -4,6 +4,7 @@ import android.app.Fragment
 import android.os.Bundle
 import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
+import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
@@ -15,6 +16,8 @@ class AboutFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater!!.inflate(R.layout.fragment_about, container, false)
 
+        setHasOptionsMenu(true)
+
         displayVersion(view)
         displayDevelopers(view)
         displayTranslators(view)
@@ -22,6 +25,11 @@ class AboutFragment : Fragment() {
         displayXdaLink(view)
 
         return view
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu) {
+        val item = menu.findItem(R.id.about)
+        item.isVisible = false
     }
 
     override fun onStart() {
