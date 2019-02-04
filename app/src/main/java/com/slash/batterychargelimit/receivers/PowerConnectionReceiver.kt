@@ -1,11 +1,10 @@
 package com.slash.batterychargelimit.receivers
 
 import android.content.*
-import android.preference.PreferenceManager
 import android.util.Log
 import com.slash.batterychargelimit.Constants.POWER_CHANGE_TOLERANCE_MS
 import com.slash.batterychargelimit.ForegroundService
-import com.slash.batterychargelimit.SharedMethods
+import com.slash.batterychargelimit.Utils
 import com.slash.batterychargelimit.settings.SettingsFragment
 
 /**
@@ -22,9 +21,9 @@ class PowerConnectionReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         val action = intent.action
         //Ignore new events after power change or during state fixing
-        if (!SharedMethods.getPrefs(context)
+        if (!Utils.getPrefs(context)
                 .getBoolean(SettingsFragment.KEY_IMMEDIATE_POWER_INTENT_HANDLING, false)
-                && SharedMethods.isChangePending(
+                && Utils.isChangePending(
                 Math.max(POWER_CHANGE_TOLERANCE_MS, BatteryReceiver.backOffTime * 2))) {
             if (action == Intent.ACTION_POWER_CONNECTED) {
                 //Ignore connected event only if service is running
@@ -39,10 +38,10 @@ class PowerConnectionReceiver : BroadcastReceiver() {
         }
         if (action == Intent.ACTION_POWER_CONNECTED) {
             Log.d("Power State", "ACTION_POWER_CONNECTED")
-            SharedMethods.startService(context)
+            Utils.startService(context)
         } else if (action == Intent.ACTION_POWER_DISCONNECTED) {
             Log.d("Power State", "ACTION_POWER_DISCONNECTED")
-            SharedMethods.stopService(context, false)
+            Utils.stopService(context, false)
         }
     }
 }

@@ -2,10 +2,8 @@ package com.slash.batterychargelimit.activities
 
 import android.content.*
 import android.content.pm.PackageManager
-import android.graphics.Color
 import android.os.BatteryManager
 import android.os.Bundle
-import android.preference.PreferenceManager
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
@@ -42,7 +40,7 @@ class MainActivity : AppCompatActivity() {
     private var preferenceChangeListener: SharedPreferences.OnSharedPreferenceChangeListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        val preferences = SharedMethods.getPrefs(this)
+        val preferences = Utils.getPrefs(this)
         if (preferences.getBoolean("dark_theme", false))
             setTheme(R.style.AppTheme_Dark_NoActionBar)
 
@@ -61,7 +59,7 @@ class MainActivity : AppCompatActivity() {
             return
         }
 
-        val prefs = SharedMethods.getPrefs(baseContext)
+        val prefs = Utils.getPrefs(baseContext)
         preferenceChangeListener = SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
             when (key) {
                 SettingsFragment.KEY_TEMP_FAHRENHEIT -> updateBatteryInfo(baseContext.registerReceiver(null,
@@ -72,9 +70,9 @@ class MainActivity : AppCompatActivity() {
         if (!prefs.contains(SettingsFragment.KEY_CONTROL_FILE)) {
             CtrlFileHelper.validateFiles(this, Runnable {
                 var found = false
-                for (cf in SharedMethods.getCtrlFiles(this@MainActivity)) {
+                for (cf in Utils.getCtrlFiles(this@MainActivity)) {
                     if (cf.isValid) {
-                        SharedMethods.setCtrlFile(this@MainActivity, cf)
+                        Utils.setCtrlFile(this@MainActivity, cf)
                         found = true
                         break
                     }
@@ -89,9 +87,9 @@ class MainActivity : AppCompatActivity() {
         }
         if (!prefs.getBoolean(getString(R.string.previously_started), false)) {
             // whitelist App for Doze Mode
-            SharedMethods.suShell.addCommand("dumpsys deviceidle whitelist +com.slash.batterychargelimit",
+            Utils.suShell.addCommand("dumpsys deviceidle whitelist +com.slash.batterychargelimit",
                     0) { _, _, _ ->
-                SharedMethods.getPrefs(baseContext)
+                Utils.getPrefs(baseContext)
                         .edit().putBoolean(getString(R.string.previously_started), true).apply()
             }
         }
@@ -128,7 +126,7 @@ class MainActivity : AppCompatActivity() {
 
         val is_enabled = settings.getBoolean(ENABLE, false)
 
-        if (is_enabled && SharedMethods.isPhonePluggedIn(this)) {
+        if (is_enabled && Utils.isPhonePluggedIn(this)) {
             this.startService(Intent(this, ForegroundService::class.java))
         }
 
@@ -144,14 +142,14 @@ class MainActivity : AppCompatActivity() {
 
         enableSwitch.setOnCheckedChangeListener(switchListener)
         maxPicker.setOnValueChangedListener { _, _, max ->
-            SharedMethods.setLimit(max, settings)
+            Utils.setLimit(max, settings)
             maxText.text = getString(R.string.limit, max)
             val min = settings.getInt(MIN, max - 2)
             minPicker.maxValue = max
             minPicker.value = min
             updateMinText(min)
-            if (!ForegroundService.isRunning && !SharedMethods.getPrefs(this).getBoolean(SettingsFragment.KEY_ENABLE_AUTO_RECHARGE, true)) {
-                SharedMethods.startService(this)
+            if (!ForegroundService.isRunning && !Utils.getPrefs(this).getBoolean(SettingsFragment.KEY_ENABLE_AUTO_RECHARGE, true)) {
+                Utils.startService(this)
             }
         }
 
@@ -159,16 +157,16 @@ class MainActivity : AppCompatActivity() {
             settings.edit().putInt(MIN, min).apply()
             updateMinText(min)
         }
-        resetBatteryStats_Button.setOnClickListener { SharedMethods.resetBatteryStats(this@MainActivity) }
+        resetBatteryStats_Button.setOnClickListener { Utils.resetBatteryStats(this@MainActivity) }
         autoResetSwitch.setOnCheckedChangeListener { _, isChecked ->
             settings.edit().putBoolean(AUTO_RESET_STATS, isChecked).apply() }
         notificationSound.setOnCheckedChangeListener { _, isChecked ->
             settings.edit().putBoolean(NOTIFICATION_SOUND, isChecked).apply() }
 
         val statusCTRLData = findViewById(R.id.status_ctrl_data) as TextView
-        statusCTRLData.text = SharedMethods.getCtrlFileData(this) + ", " +
-                SharedMethods.getCtrlEnabledData(this) + ", " +
-                SharedMethods.getCtrlDisabledData(this)
+        statusCTRLData.text = Utils.getCtrlFileData(this) + ", " +
+                Utils.getCtrlEnabledData(this) + ", " +
+                Utils.getCtrlDisabledData(this)
         //The onCreate() process was not stopped via return, UI elements should be available
         initComplete = true
     }
@@ -179,9 +177,9 @@ class MainActivity : AppCompatActivity() {
         override fun onCheckedChanged(buttonView: CompoundButton, isChecked: Boolean) {
             settings.edit().putBoolean(ENABLE, isChecked).apply()
             if (isChecked) {
-                SharedMethods.startService(context)
+                Utils.startService(context)
             } else {
-                SharedMethods.stopService(context)
+                Utils.stopService(context)
             }
             EnableWidgetIntentReceiver.updateWidget(context, isChecked)
         }
@@ -223,8 +221,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun updateBatteryInfo(intent: Intent) {
-        batteryInfo.text = " (" + SharedMethods.getBatteryInfo(this, intent,
-                SharedMethods.getPrefs(this)
+        batteryInfo.text = " (" + Utils.getBatteryInfo(this, intent,
+                Utils.getPrefs(this)
                         .getBoolean(SettingsFragment.KEY_TEMP_FAHRENHEIT, false)) + ")"
     }
 
@@ -278,7 +276,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onDestroy() {
-        SharedMethods.getPrefs(baseContext)
+        Utils.getPrefs(baseContext)
                 .unregisterOnSharedPreferenceChangeListener(preferenceChangeListener)
         // technically not necessary, but it prevents inlining of this required field
         // see end of https://developer.android.com/guide/topics/ui/settings.html#Listening

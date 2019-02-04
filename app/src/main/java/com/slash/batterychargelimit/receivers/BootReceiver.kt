@@ -3,7 +3,7 @@ package com.slash.batterychargelimit.receivers
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import com.slash.batterychargelimit.SharedMethods
+import com.slash.batterychargelimit.Utils
 
 /**
  * Created by Michael on 20.04.2017.
@@ -14,7 +14,7 @@ import com.slash.batterychargelimit.SharedMethods
 class BootReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         if (Intent.ACTION_BOOT_COMPLETED == intent.action) {
-            SharedMethods.startService(context)
+            Utils.startService(context)
         }
     }
 }

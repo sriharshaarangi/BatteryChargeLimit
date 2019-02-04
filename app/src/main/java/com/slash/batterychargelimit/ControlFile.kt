@@ -31,7 +31,7 @@ class ControlFile {
         }
 
     fun validate() {
-        val suShell = SharedMethods.suShell
+        val suShell = Utils.suShell
         if (!checked) {
             suShell.addCommand("test -e " + file!!, 0) { _, exitCode, _ ->
                 valid = 0 == exitCode

@@ -29,8 +29,8 @@ import java.io.InputStreamReader
 import java.nio.charset.Charset
 import java.util.concurrent.*
 
-object SharedMethods {
-    private val TAG = SharedMethods::class.java.simpleName
+object Utils {
+    private val TAG = Utils::class.java.simpleName
     const val CHARGE_ON = 0
     const val CHARGE_OFF = 1
 
@@ -136,7 +136,7 @@ object SharedMethods {
 
     fun setCtrlFile(context: Context, cf: ControlFile) {
         //This will immediately reset the current control file
-        SharedMethods.stopService(context)
+        Utils.stopService(context)
         getPrefs(context)
                 .edit().putString(SettingsFragment.KEY_CONTROL_FILE, cf.file).apply()
         context.getSharedPreferences(SETTINGS, 0)
@@ -144,7 +144,7 @@ object SharedMethods {
                 .putString(CHARGE_ON_KEY, cf.chargeOn)
                 .putString(CHARGE_OFF_KEY, cf.chargeOff).apply()
         //Respawn the service if necessary
-        SharedMethods.startService(context)
+        Utils.startService(context)
     }
 
     fun isPhonePluggedIn(context: Context): Boolean {
@@ -240,10 +240,10 @@ object SharedMethods {
     fun startService(context: Context) {
         if (context.getSharedPreferences(SETTINGS, 0).getBoolean(ENABLE, false)) {
             if (!getPrefs(context).getBoolean(SettingsFragment.KEY_ENABLE_AUTO_RECHARGE, true)) {
-                changeState(context, SharedMethods.CHARGE_ON)
+                changeState(context, Utils.CHARGE_ON)
             }
             Handler().postDelayed({
-                if (SharedMethods.isPhonePluggedIn(context)) {
+                if (Utils.isPhonePluggedIn(context)) {
                     context.startService(Intent(context, ForegroundService::class.java))
                     // display service enabled Toast message if not disabled in settings
                     if (!getPrefs(context).getBoolean("hide_toast_on_service_changes", false)) {
@@ -264,7 +264,7 @@ object SharedMethods {
         }
         context.stopService(Intent(context, ForegroundService::class.java))
         if(getPrefs(context).getBoolean(SettingsFragment.KEY_ENABLE_AUTO_RECHARGE, true))
-            SharedMethods.changeState(context, CHARGE_ON)
+            Utils.changeState(context, CHARGE_ON)
         // display service disabled Toast message if not disabled in settings
         if (!getPrefs(context).getBoolean("hide_toast_on_service_changes", false)) {
             Toast.makeText(context, R.string.service_disabled, Toast.LENGTH_SHORT).show()

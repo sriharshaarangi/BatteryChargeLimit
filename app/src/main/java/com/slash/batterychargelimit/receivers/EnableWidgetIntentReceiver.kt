@@ -7,7 +7,7 @@ import android.widget.RemoteViews
 import android.widget.Toast
 
 import com.slash.batterychargelimit.R
-import com.slash.batterychargelimit.SharedMethods
+import com.slash.batterychargelimit.Utils
 import eu.chainfire.libsuperuser.Shell
 
 import com.slash.batterychargelimit.Constants.ENABLE
@@ -23,9 +23,9 @@ class EnableWidgetIntentReceiver : BroadcastReceiver() {
                 val enable = !settings.getBoolean(ENABLE, false)
                 settings.edit().putBoolean(ENABLE, enable).apply()
                 if (enable) {
-                    SharedMethods.startService(context)
+                    Utils.startService(context)
                 } else {
-                    SharedMethods.stopService(context)
+                    Utils.stopService(context)
                 }
                 updateWidget(context, enable)
             } else {

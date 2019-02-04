@@ -16,7 +16,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.slash.batterychargelimit.Constants
 import com.slash.batterychargelimit.R
-import com.slash.batterychargelimit.SharedMethods
+import com.slash.batterychargelimit.Utils
 import com.slash.batterychargelimit.activities.CustomCtrlFileData
 
 class SettingsFragment : PreferenceFragment() {
@@ -125,7 +125,7 @@ class SettingsFragment : PreferenceFragment() {
     override fun onDetach() {
         super.onDetach()
         val statusCTRLData = activity.findViewById(R.id.status_ctrl_data) as TextView
-        statusCTRLData.text = SharedMethods.getCtrlFileData(activity) + ", " + SharedMethods.getCtrlEnabledData(activity) + ", " + SharedMethods.getCtrlDisabledData(activity)
+        statusCTRLData.text = Utils.getCtrlFileData(activity) + ", " + Utils.getCtrlEnabledData(activity) + ", " + Utils.getCtrlDisabledData(activity)
     }
 
     companion object {

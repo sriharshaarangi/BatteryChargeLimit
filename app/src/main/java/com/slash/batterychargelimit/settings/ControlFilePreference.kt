@@ -10,7 +10,7 @@ import android.view.ViewGroup
 import android.widget.*
 import com.slash.batterychargelimit.ControlFile
 import com.slash.batterychargelimit.R
-import com.slash.batterychargelimit.SharedMethods
+import com.slash.batterychargelimit.Utils
 
 @Keep
 class ControlFilePreference(context: Context, attrs: AttributeSet?) : DialogPreference(context, attrs) {
@@ -18,7 +18,7 @@ class ControlFilePreference(context: Context, attrs: AttributeSet?) : DialogPref
 
     init {
         positiveButtonText = null
-        ctrlFiles = SharedMethods.getCtrlFiles(context)
+        ctrlFiles = Utils.getCtrlFiles(context)
     }
 
     inner class ControlFileAdapter internal constructor(private val data: List<ControlFile>, pContext: Context)
@@ -44,7 +44,7 @@ class ControlFilePreference(context: Context, attrs: AttributeSet?) : DialogPref
                 h.label = convertView.findViewById(R.id.cf_label) as RadioButton
                 h.label!!.setOnClickListener { v ->
                     if (v.isEnabled) {
-                        SharedMethods.setCtrlFile(context, v.tag as ControlFile)
+                        Utils.setCtrlFile(context, v.tag as ControlFile)
                         this@ControlFilePreference.dialog.dismiss()
                     }
                 }

@@ -2,7 +2,6 @@ package com.slash.batterychargelimit.activities
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.preference.PreferenceManager
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.Button
@@ -13,12 +12,12 @@ import com.slash.batterychargelimit.Constants.DEFAULT_DISABLED
 import com.slash.batterychargelimit.Constants.DEFAULT_ENABLED
 import com.slash.batterychargelimit.Constants.DEFAULT_FILE
 import com.slash.batterychargelimit.R
-import com.slash.batterychargelimit.SharedMethods
+import com.slash.batterychargelimit.Utils
 
 class CustomCtrlFileData : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        val preferences = SharedMethods.getPrefs(this)
+        val preferences = Utils.getPrefs(this)
         if (preferences.getBoolean("dark_theme", false))
             setTheme(R.style.AppTheme_Dark)
 
@@ -85,12 +84,12 @@ class CustomCtrlFileData : AppCompatActivity() {
         })
 
         btnUpdateData.setOnClickListener({
-            SharedMethods.stopService(this)
+            Utils.stopService(this)
             settings.edit().putString(Constants.SAVED_PATH_DATA, customPathData).apply()
             settings.edit().putString(Constants.SAVED_ENABLED_DATA, customEnabledData).apply()
             settings.edit().putString(Constants.SAVED_DISABLED_DATA, customDisabledData).apply()
             updatedDataText.hint = "Path Data: $customPathData\nEnable Value: $customEnabledData\nDisabled Value: $customDisabledData"
-            SharedMethods.startService(this)
+            Utils.startService(this)
         })
     }
 }

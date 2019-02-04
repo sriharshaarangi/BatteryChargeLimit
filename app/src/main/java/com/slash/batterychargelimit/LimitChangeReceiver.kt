@@ -12,7 +12,7 @@ import android.content.Intent
 class LimitChangeReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
-        SharedMethods.handleLimitChange(context, intent.extras.get(Intent.EXTRA_TEXT))
+        Utils.handleLimitChange(context, intent.extras.get(Intent.EXTRA_TEXT))
     }
 
 }

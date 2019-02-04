@@ -106,7 +106,7 @@ class ForegroundService : Service() {
 
     override fun onDestroy() {
         if (autoResetActive && !ignoreAutoReset && settings.getBoolean(AUTO_RESET_STATS, false)) {
-            SharedMethods.resetBatteryStats(this)
+            Utils.resetBatteryStats(this)
         }
         ignoreAutoReset = false
 
