@@ -259,6 +259,7 @@ object Utils {
     }
 
     fun stopService(context: Context, ignoreAutoReset: Boolean = true) {
+        val wasServiceRunning = ForegroundService.isRunning
         if (ignoreAutoReset) {
             ForegroundService.ignoreAutoReset()
         }
@@ -266,7 +267,7 @@ object Utils {
         if(getPrefs(context).getBoolean(SettingsFragment.KEY_ENABLE_AUTO_RECHARGE, true))
             Utils.changeState(context, CHARGE_ON)
         // display service disabled Toast message if not disabled in settings
-        if (!getPrefs(context).getBoolean("hide_toast_on_service_changes", false)) {
+        if (wasServiceRunning && !getPrefs(context).getBoolean("hide_toast_on_service_changes", false)) {
             Toast.makeText(context, R.string.service_disabled, Toast.LENGTH_SHORT).show()
         }
     }
