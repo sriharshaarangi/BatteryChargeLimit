@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity() {
     private var preferenceChangeListener: SharedPreferences.OnSharedPreferenceChangeListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        val preferences = PreferenceManager.getDefaultSharedPreferences(this)
+        val preferences = SharedMethods.getPrefs(this)
         if (preferences.getBoolean("dark_theme", false))
             setTheme(R.style.AppTheme_Dark_NoActionBar)
 
@@ -61,7 +61,7 @@ class MainActivity : AppCompatActivity() {
             return
         }
 
-        val prefs = PreferenceManager.getDefaultSharedPreferences(baseContext)
+        val prefs = SharedMethods.getPrefs(baseContext)
         preferenceChangeListener = SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
             when (key) {
                 SettingsFragment.KEY_TEMP_FAHRENHEIT -> updateBatteryInfo(baseContext.registerReceiver(null,
@@ -91,7 +91,7 @@ class MainActivity : AppCompatActivity() {
             // whitelist App for Doze Mode
             SharedMethods.suShell.addCommand("dumpsys deviceidle whitelist +com.slash.batterychargelimit",
                     0) { _, _, _ ->
-                PreferenceManager.getDefaultSharedPreferences(baseContext)
+                SharedMethods.getPrefs(baseContext)
                         .edit().putBoolean(getString(R.string.previously_started), true).apply()
             }
         }
@@ -150,7 +150,11 @@ class MainActivity : AppCompatActivity() {
             minPicker.maxValue = max
             minPicker.value = min
             updateMinText(min)
+            if (!ForegroundService.isRunning && !SharedMethods.getPrefs(this).getBoolean(SettingsFragment.KEY_ENABLE_AUTO_RECHARGE, true)) {
+                SharedMethods.startService(this)
+            }
         }
+
         minPicker.setOnValueChangedListener { _, _, min ->
             settings.edit().putInt(MIN, min).apply()
             updateMinText(min)
@@ -220,7 +224,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun updateBatteryInfo(intent: Intent) {
         batteryInfo.text = " (" + SharedMethods.getBatteryInfo(this, intent,
-                PreferenceManager.getDefaultSharedPreferences(this)
+                SharedMethods.getPrefs(this)
                         .getBoolean(SettingsFragment.KEY_TEMP_FAHRENHEIT, false)) + ")"
     }
 
@@ -274,7 +278,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onDestroy() {
-        PreferenceManager.getDefaultSharedPreferences(baseContext)
+        SharedMethods.getPrefs(baseContext)
                 .unregisterOnSharedPreferenceChangeListener(preferenceChangeListener)
         // technically not necessary, but it prevents inlining of this required field
         // see end of https://developer.android.com/guide/topics/ui/settings.html#Listening

@@ -134,6 +134,7 @@ class SettingsFragment : PreferenceFragment() {
         const val KEY_IMMEDIATE_POWER_INTENT_HANDLING = "immediate_power_intent_handling"
         const val KEY_ENFORCE_CHARGE_LIMIT = "enforce_charge_limit"
         const val KEY_ALWAYS_WRITE_CF = "always_write_cf"
+        const val KEY_ENABLE_AUTO_RECHARGE = "enable_auto_recharge"
 
         private var visible = false
 

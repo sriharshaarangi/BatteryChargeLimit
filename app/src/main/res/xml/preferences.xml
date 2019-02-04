@@ -77,6 +77,14 @@
                 android:defaultValue="false"
                 android:textColor="?attr/primary_text"/>
 
+        <CheckBoxPreference
+            android:key="enable_auto_recharge"
+            android:title="@string/enable_auto_recharge"
+            android:summary="@string/enable_auto_recharge_desc"
+            android:defaultValue="true"
+            android:textColor="?attr/primary_text"/>
+
+
     </PreferenceCategory>
 
 </PreferenceScreen>

@@ -18,7 +18,7 @@ import com.slash.batterychargelimit.SharedMethods
 class CustomCtrlFileData : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        val preferences = PreferenceManager.getDefaultSharedPreferences(this)
+        val preferences = SharedMethods.getPrefs(this)
         if (preferences.getBoolean("dark_theme", false))
             setTheme(R.style.AppTheme_Dark)
 

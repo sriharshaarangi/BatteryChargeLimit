@@ -55,7 +55,7 @@ class BatteryReceiver(private val service: ForegroundService) : BroadcastReceive
                 }
             }
         }
-        prefs = PreferenceManager.getDefaultSharedPreferences(service.baseContext)
+        prefs = SharedMethods.getPrefs(service.baseContext)
         prefs.registerOnSharedPreferenceChangeListener(preferenceChangeListener)
         settings.registerOnSharedPreferenceChangeListener(preferenceChangeListener)
         this.useFahrenheit = prefs.getBoolean(SettingsFragment.KEY_TEMP_FAHRENHEIT, false)
@@ -134,6 +134,10 @@ class BatteryReceiver(private val service: ForegroundService) : BroadcastReceive
                 // active auto reset on service shutdown
                 service.enableAutoReset()
                 SharedMethods.changeState(service, SharedMethods.CHARGE_OFF)
+
+                if (!preferences.getBoolean(SettingsFragment.KEY_ENABLE_AUTO_RECHARGE, true))
+                    SharedMethods.stopService(service, false)
+
                 // set the "maintain" notification, this must not change from now
                 service.setNotificationTitle(service.getString(R.string.maintaining_x_to_y,
                         rechargePercentage, limitPercentage))

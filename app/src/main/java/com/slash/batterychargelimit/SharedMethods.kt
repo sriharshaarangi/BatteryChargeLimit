@@ -80,7 +80,7 @@ object SharedMethods {
     val executor: ExecutorService = Executors.newSingleThreadExecutor()
 
     fun changeState(context: Context, chargeMode: Int) {
-        val preferences = PreferenceManager.getDefaultSharedPreferences(context)
+        val preferences = getPrefs(context)
         val alwaysWrite = preferences.getBoolean(SettingsFragment.KEY_ALWAYS_WRITE_CF, false)
 
         val file = getCtrlFileData(context)
@@ -137,7 +137,7 @@ object SharedMethods {
     fun setCtrlFile(context: Context, cf: ControlFile) {
         //This will immediately reset the current control file
         SharedMethods.stopService(context)
-        PreferenceManager.getDefaultSharedPreferences(context)
+        getPrefs(context)
                 .edit().putString(SettingsFragment.KEY_CONTROL_FILE, cf.file).apply()
         context.getSharedPreferences(SETTINGS, 0)
                 .edit().putString(FILE_KEY, cf.file)
@@ -239,11 +239,14 @@ object SharedMethods {
 
     fun startService(context: Context) {
         if (context.getSharedPreferences(SETTINGS, 0).getBoolean(ENABLE, false)) {
+            if (!getPrefs(context).getBoolean(SettingsFragment.KEY_ENABLE_AUTO_RECHARGE, true)) {
+                changeState(context, SharedMethods.CHARGE_ON)
+            }
             Handler().postDelayed({
                 if (SharedMethods.isPhonePluggedIn(context)) {
                     context.startService(Intent(context, ForegroundService::class.java))
                     // display service enabled Toast message if not disabled in settings
-                    if (!PreferenceManager.getDefaultSharedPreferences(context).getBoolean("hide_toast_on_service_changes", false)) {
+                    if (!getPrefs(context).getBoolean("hide_toast_on_service_changes", false)) {
                         Toast.makeText(context, R.string.service_enabled, Toast.LENGTH_SHORT).show()
                     }
                 }
@@ -251,21 +254,26 @@ object SharedMethods {
         }
     }
 
+    fun getPrefs(context: Context): SharedPreferences {
+        return PreferenceManager.getDefaultSharedPreferences(context)
+    }
+
     fun stopService(context: Context, ignoreAutoReset: Boolean = true) {
         if (ignoreAutoReset) {
             ForegroundService.ignoreAutoReset()
         }
         context.stopService(Intent(context, ForegroundService::class.java))
-        SharedMethods.changeState(context, CHARGE_ON)
+        if(getPrefs(context).getBoolean(SettingsFragment.KEY_ENABLE_AUTO_RECHARGE, true))
+            SharedMethods.changeState(context, CHARGE_ON)
         // display service disabled Toast message if not disabled in settings
-        if (!PreferenceManager.getDefaultSharedPreferences(context).getBoolean("hide_toast_on_service_changes", false)) {
+        if (!getPrefs(context).getBoolean("hide_toast_on_service_changes", false)) {
             Toast.makeText(context, R.string.service_disabled, Toast.LENGTH_SHORT).show()
         }
     }
 
     fun getCtrlFileData (context: Context): String? {
         val settings = context.getSharedPreferences(SETTINGS, 0)
-        val preferences = PreferenceManager.getDefaultSharedPreferences(context)
+        val preferences = getPrefs(context)
 
         return if (preferences.getBoolean("custom_ctrl_file_data", false)) {
             // Custom Data Enabled
@@ -278,7 +286,7 @@ object SharedMethods {
 
     fun getCtrlEnabledData(context: Context) : String {
         val settings = context.getSharedPreferences(SETTINGS, 0)
-        val preferences = PreferenceManager.getDefaultSharedPreferences(context)
+        val preferences = getPrefs(context)
 
         return if (preferences.getBoolean("custom_ctrl_file_data", false)) {
             // Custom Data Enabled
@@ -291,7 +299,7 @@ object SharedMethods {
 
     fun getCtrlDisabledData(context: Context) : String {
         val settings = context.getSharedPreferences(SETTINGS, 0)
-        val preferences = PreferenceManager.getDefaultSharedPreferences(context)
+        val preferences = getPrefs(context)
 
         return if (preferences.getBoolean("custom_ctrl_file_data", false)) {
             // Custom Data Enabled
