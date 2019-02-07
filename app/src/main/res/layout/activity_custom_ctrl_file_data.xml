@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
-    android:background="?attr/layout_background"
+    android:background="?attr/layoutBackground"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.slash.batterychargelimit.activities.CustomCtrlFileData">
 
@@ -26,9 +26,9 @@
                 android:layout_marginLeft="@dimen/card_margin"
                 android:layout_marginRight="@dimen/card_margin"
                 android:foreground="?selectableItemBackground"
-                card_view:cardBackgroundColor="?attr/card_color"
+                card_view:cardBackgroundColor="?attr/cardColor"
                 card_view:cardCornerRadius="@dimen/card_corner_radius"
-                card_view:cardElevation="3dp"
+                card_view:cardElevation="0dp"
                 card_view:contentPadding="@dimen/card_content_padding">
 
                 <RelativeLayout
@@ -41,7 +41,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="16sp"
-                        android:textColor="?attr/primary_text"/>
+                        android:textColor="?attr/primaryText"/>
 
                     <EditText
                         android:id="@+id/edit_path_file"
@@ -49,8 +49,8 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/path_data_title"
                         android:hint="@string/custom_ctrl_file_path_hint"
-                        android:textColor="?attr/primary_text"
-                        android:textColorHint="?attr/secondary_text"
+                        android:textColor="?attr/primaryText"
+                        android:textColorHint="?attr/secondaryText"
                         />
 
                     <TextView
@@ -61,7 +61,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="16sp"
-                        android:textColor="?attr/primary_text" />
+                        android:textColor="?attr/primaryText" />
 
                     <EditText
                         android:id="@+id/edit_path_enabled"
@@ -69,8 +69,8 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/path_on_title"
                         android:hint="@string/custom_ctrl_file_enabled_hint"
-                        android:textColor="?attr/primary_text"
-                        android:textColorHint="?attr/secondary_text"
+                        android:textColor="?attr/primaryText"
+                        android:textColorHint="?attr/secondaryText"
                         />
 
                     <TextView
@@ -81,7 +81,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="16sp"
-                        android:textColor="?attr/primary_text" />
+                        android:textColor="?attr/primaryText" />
 
                     <EditText
                         android:id="@+id/edit_path_disabled"
@@ -89,8 +89,8 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/path_off_title"
                         android:hint="@string/custom_ctrl_file_disabled_hint"
-                        android:textColor="?attr/primary_text"
-                        android:textColorHint="?attr/secondary_text"
+                        android:textColor="?attr/primaryText"
+                        android:textColorHint="?attr/secondaryText"
                         />
 
                     <Button style="@style/Widget.AppCompat.Button.Colored"
@@ -99,6 +99,7 @@
                         android:id="@+id/btn_update_custom"
                         android:layout_marginTop="10dp"
                         android:layout_below="@+id/edit_path_disabled"
+                        android:textColor="?attr/layoutBackground"
                         android:text="@string/custom_ctrl_file_update_data"/>
 
                 </RelativeLayout>
@@ -114,9 +115,9 @@
                 android:layout_marginRight="@dimen/card_margin"
                 android:layout_marginBottom="@dimen/card_bottom_margin"
                 android:foreground="?selectableItemBackground"
-                card_view:cardBackgroundColor="?attr/card_color"
+                card_view:cardBackgroundColor="?attr/cardColor"
                 card_view:cardCornerRadius="@dimen/card_corner_radius"
-                card_view:cardElevation="3dp"
+                card_view:cardElevation="0dp"
                 card_view:contentPadding="@dimen/card_content_padding">
 
                 <RelativeLayout
@@ -128,7 +129,7 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/custom_data_title"
                         android:text="@string/current_ctrl_data_title"
-                        android:textColor="?attr/primary_text"
+                        android:textColor="?attr/primaryText"
                         android:textSize="16sp" />
 
                     <TextView
@@ -139,7 +140,7 @@
                         android:layout_marginTop="5dp"
                         android:textSize="14sp"
                         android:hint="@string/custom_ctrl_file_updated_info"
-                        android:textColorHint="?attr/secondary_text"/>
+                        android:textColorHint="?attr/secondaryText"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -149,7 +150,7 @@
                         android:layout_marginTop="20dp"
                         android:textSize="14sp"
                         android:text="@string/custom_ctrl_file_heads_up"
-                        android:textColor="?attr/secondary_text"/>
+                        android:textColor="?attr/secondaryText"/>
 
                 </RelativeLayout>
             </android.support.v7.widget.CardView>

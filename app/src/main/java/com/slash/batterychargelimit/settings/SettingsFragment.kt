@@ -35,10 +35,10 @@ class SettingsFragment : PreferenceFragment() {
 
         darkTheme.setOnPreferenceChangeListener { _, newValue ->
             if (newValue as Boolean) {
-                activity.setTheme(R.style.AppTheme_Dark_NoActionBar)
+                activity.setTheme(R.style.AppThemeDark_NoActionBar)
             }
             else {
-                activity.setTheme(R.style.AppTheme_Light_NoActionBar)
+                activity.setTheme(R.style.AppThemeLight_NoActionBar)
             }
             activity.recreate()
             true
@@ -94,7 +94,7 @@ class SettingsFragment : PreferenceFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup, savedInstanceState: Bundle?): View {
         val view = super.onCreateView(inflater, container, savedInstanceState)
-        view.setBackgroundColor(view.context.getColorFromAttr(R.attr.card_color))
+        view.setBackgroundColor(view.context.getColorFromAttr(R.attr.cardColor))
         return view
     }
 

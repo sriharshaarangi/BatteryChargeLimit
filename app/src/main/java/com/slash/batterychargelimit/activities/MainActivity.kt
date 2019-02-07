@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         val preferences = Utils.getPrefs(this)
         if (preferences.getBoolean("dark_theme", false))
-            setTheme(R.style.AppTheme_Dark_NoActionBar)
+            setTheme(R.style.AppThemeDark_NoActionBar)
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)

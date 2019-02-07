@@ -19,7 +19,7 @@ class CustomCtrlFileData : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         val preferences = Utils.getPrefs(this)
         if (preferences.getBoolean("dark_theme", false))
-            setTheme(R.style.AppTheme_Dark)
+            setTheme(R.style.AppThemeDark)
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_custom_ctrl_file_data)

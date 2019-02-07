@@ -7,7 +7,7 @@
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
         android:focusableInTouchMode="true"
-        android:background="?attr/layout_background"
+        android:background="?attr/layoutBackground"
         tools:context="com.slash.batterychargelimit.activities.MainActivity">
 
     <android.support.design.widget.AppBarLayout
@@ -19,7 +19,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/colorPrimary"
+            app:titleTextColor="?attr/primaryText"
             app:popupTheme="@style/AppTheme.PopupOverlay" />
 
     </android.support.design.widget.AppBarLayout>

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
-    android:background="?attr/layout_background"
+    android:background="?attr/layoutBackground"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.slash.batterychargelimit.activities.MainActivity"
     tools:showIn="@layout/activity_main">
@@ -27,9 +27,9 @@
                 android:layout_marginLeft="@dimen/card_margin"
                 android:layout_marginRight="@dimen/card_margin"
                 android:foreground="?selectableItemBackground"
-                card_view:cardBackgroundColor="?attr/card_color"
+                card_view:cardBackgroundColor="?attr/cardColor"
                 card_view:cardCornerRadius="@dimen/card_corner_radius"
-                card_view:cardElevation="3dp"
+                card_view:cardElevation="0dp"
                 card_view:contentPadding="@dimen/card_content_padding">
 
                 <RelativeLayout
@@ -42,7 +42,7 @@
                         android:text="@string/enable"
                         android:textSize="16sp"
                         android:id="@+id/enable_switch"
-                        android:textColor="?attr/primary_text"/>
+                        android:textColor="?attr/primaryText"/>
 
                 </RelativeLayout>
             </android.support.v7.widget.CardView>
@@ -55,9 +55,9 @@
                 android:layout_marginLeft="@dimen/card_margin"
                 android:layout_marginRight="@dimen/card_margin"
                 android:foreground="?selectableItemBackground"
-                card_view:cardBackgroundColor="?attr/card_color"
+                card_view:cardBackgroundColor="?attr/cardColor"
                 card_view:cardCornerRadius="@dimen/card_corner_radius"
-                card_view:cardElevation="3dp"
+                card_view:cardElevation="0dp"
                 card_view:contentPadding="@dimen/card_content_padding">
 
                 <RelativeLayout
@@ -106,7 +106,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:textSize="16sp"
-                            android:textColor="?attr/primary_text"
+                            android:textColor="?attr/primaryText"
                             android:layout_marginEnd="6dp"
                             android:layout_marginRight="6dp" />
 
@@ -115,7 +115,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:textColor="?attr/primary_text"
+                            android:textColor="?attr/primaryText"
                             android:textSize="16sp"
                             android:layout_marginStart="6dp"
                             android:layout_marginLeft="6dp" />
@@ -130,7 +130,7 @@
                         android:id="@+id/notification_sound"
                         android:layout_below="@+id/lin_limits"
                         android:layout_marginTop="12dp"
-                        android:textColor="?attr/primary_text"
+                        android:textColor="?attr/primaryText"
                         />
 
                 </RelativeLayout>
@@ -144,9 +144,9 @@
                 android:layout_marginLeft="@dimen/card_margin"
                 android:layout_marginRight="@dimen/card_margin"
                 android:foreground="?selectableItemBackground"
-                card_view:cardBackgroundColor="?attr/card_color"
+                card_view:cardBackgroundColor="?attr/cardColor"
                 card_view:cardCornerRadius="@dimen/card_corner_radius"
-                card_view:cardElevation="3dp"
+                card_view:cardElevation="0dp"
                 card_view:contentPadding="@dimen/card_content_padding">
 
                 <RelativeLayout
@@ -161,7 +161,7 @@
                         android:text="@string/status"
                         android:textSize="16sp"
                         android:layout_marginRight="5dp"
-                        android:textColor="?attr/primary_text"/>
+                        android:textColor="?attr/primaryText"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -177,7 +177,7 @@
                         android:id="@+id/battery_info"
                         android:layout_below="@+id/status"
                         android:textSize="16sp"
-                        android:textColor="?attr/secondary_text" />
+                        android:textColor="?attr/secondaryText" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -187,7 +187,7 @@
                         android:id="@+id/status_ctrl_data_label"
                         android:text="@string/status_ctrl_data_label"
                         android:textSize="16sp"
-                        android:textColor="?attr/primary_text" />
+                        android:textColor="?attr/primaryText" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -196,7 +196,7 @@
                         android:layout_below="@+id/status_ctrl_data_label"
                         android:textSize="16sp"
                         android:text="@string/file_data"
-                        android:textColor="?attr/secondary_text"/>
+                        android:textColor="?attr/secondaryText"/>
 
                 </RelativeLayout>
             </android.support.v7.widget.CardView>
@@ -211,9 +211,9 @@
                 android:layout_marginRight="@dimen/card_margin"
                 android:layout_marginBottom="@dimen/card_bottom_margin"
                 android:foreground="?selectableItemBackground"
-                card_view:cardBackgroundColor="?attr/card_color"
+                card_view:cardBackgroundColor="?attr/cardColor"
                 card_view:cardCornerRadius="@dimen/card_corner_radius"
-                card_view:cardElevation="3dp"
+                card_view:cardElevation="0dp"
                 card_view:contentPadding="@dimen/card_content_padding">
 
                 <RelativeLayout
@@ -227,12 +227,13 @@
                         android:text="@string/auto_reset_stats"
                         android:textSize="16sp"
                         android:layout_marginBottom="10dp"
-                        android:textColor="?attr/primary_text" />
+                        android:textColor="?attr/primaryText" />
 
                     <Button style="@style/Widget.AppCompat.Button.Colored"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/reset_stats"
+                        android:textColor="?attr/cardColor"
                         android:id="@+id/reset_battery_stats"
                         android:layout_centerHorizontal="true"
                         android:layout_below="@+id/auto_stats_reset" />
