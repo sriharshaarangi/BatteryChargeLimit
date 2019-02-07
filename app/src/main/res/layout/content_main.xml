@@ -39,9 +39,19 @@
                     <Switch
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:text="@string/disable_charge_now"
+                        android:textSize="16sp"
+                        android:id="@+id/disable_charge_switch"
+                        android:textColor="?attr/primaryText"/>
+
+                    <Switch
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:text="@string/enable"
                         android:textSize="16sp"
                         android:id="@+id/enable_switch"
+                        android:layout_marginTop="12dp"
+                        android:layout_below="@+id/disable_charge_switch"
                         android:textColor="?attr/primaryText"/>
 
                 </RelativeLayout>

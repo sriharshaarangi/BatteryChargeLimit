@@ -26,6 +26,12 @@ import com.slash.batterychargelimit.Constants.AUTO_RESET_STATS
 import com.slash.batterychargelimit.Constants.NOTIFICATION_SOUND
 import com.slash.batterychargelimit.fragments.AboutFragment
 import android.content.Intent
+import android.view.View
+import android.R.attr.data
+import android.graphics.Color
+import android.util.TypedValue
+import com.slash.batterychargelimit.Constants.DISABLE_CHARGE_NOW
+
 
 class MainActivity : AppCompatActivity() {
     private val minPicker by lazy(LazyThreadSafetyMode.NONE) {findViewById(R.id.min_picker) as NumberPicker}
@@ -36,6 +42,7 @@ class MainActivity : AppCompatActivity() {
     private val statusText by lazy(LazyThreadSafetyMode.NONE) {findViewById(R.id.status) as TextView}
     private val batteryInfo by lazy(LazyThreadSafetyMode.NONE) {findViewById(R.id.battery_info) as TextView}
     private val enableSwitch by lazy(LazyThreadSafetyMode.NONE) {findViewById(R.id.enable_switch) as Switch}
+    private val disableChargeSwitch by lazy(LazyThreadSafetyMode.NONE) {findViewById(R.id.disable_charge_switch) as Switch}
     private var initComplete = false
     private var preferenceChangeListener: SharedPreferences.OnSharedPreferenceChangeListener? = null
 
@@ -141,6 +148,7 @@ class MainActivity : AppCompatActivity() {
         minPicker.minValue = 0
 
         enableSwitch.setOnCheckedChangeListener(switchListener)
+        disableChargeSwitch.setOnCheckedChangeListener(switchListener)
         maxPicker.setOnValueChangedListener { _, _, max ->
             Utils.setLimit(max, settings)
             maxText.text = getString(R.string.limit, max)
@@ -175,14 +183,42 @@ class MainActivity : AppCompatActivity() {
     private val switchListener = object : CompoundButton.OnCheckedChangeListener {
         internal val context: Context = this@MainActivity
         override fun onCheckedChanged(buttonView: CompoundButton, isChecked: Boolean) {
-            settings.edit().putBoolean(ENABLE, isChecked).apply()
-            if (isChecked) {
-                Utils.startService(context)
-            } else {
-                Utils.stopService(context)
+            when(buttonView.id) {
+                R.id.enable_switch -> {
+                    settings.edit().putBoolean(ENABLE, isChecked).apply()
+                    if (isChecked) {
+                        Utils.startService(context)
+                        disableChargeSwitch.isClickable = false
+                        disableChargeSwitch.setTextColor(getColorFromAttr(R.attr.secondaryText, this@MainActivity))
+                    } else {
+                        Utils.stopService(context)
+                        disableChargeSwitch.isClickable = true
+                        disableChargeSwitch.setTextColor(getColorFromAttr(R.attr.primaryText, this@MainActivity))
+                    }
+                    EnableWidgetIntentReceiver.updateWidget(context, isChecked)
+                }
+                R.id.disable_charge_switch -> {
+                    if (isChecked) {
+                        Utils.changeState(this@MainActivity, Utils.CHARGE_OFF)
+                        enableSwitch.isClickable = false
+                        enableSwitch.setTextColor(getColorFromAttr(R.attr.secondaryText, this@MainActivity))
+                        settings.edit().putBoolean(DISABLE_CHARGE_NOW, true).apply()
+                    } else {
+                        Utils.changeState(this@MainActivity, Utils.CHARGE_ON)
+                        enableSwitch.isClickable = true
+                        enableSwitch.setTextColor(getColorFromAttr(R.attr.primaryText, this@MainActivity))
+                        settings.edit().putBoolean(DISABLE_CHARGE_NOW, false).apply()
+                    }
+                }
             }
-            EnableWidgetIntentReceiver.updateWidget(context, isChecked)
         }
+    }
+
+    fun getColorFromAttr(attr: Int, context: Context): Int {
+        val typedValue = TypedValue()
+        context.theme.resolveAttribute(attr, typedValue, true)
+        val color = typedValue.data
+        return color
     }
 
     //to update battery status on UI
@@ -293,6 +329,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun updateUi() {
         enableSwitch.isChecked = settings.getBoolean(ENABLE, false)
+        disableChargeSwitch.isChecked = settings.getBoolean(DISABLE_CHARGE_NOW, false)
         val max = settings.getInt(LIMIT, 80)
         val min = settings.getInt(MIN, max - 2)
         maxPicker.value = max

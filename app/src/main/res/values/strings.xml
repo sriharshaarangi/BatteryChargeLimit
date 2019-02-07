@@ -8,6 +8,7 @@
     <string name="source_code" translatable="false"><a href="https://github.com/sriharshaarangi/BatteryChargeLimit">Source Code</a></string>
     <string name="xda_thread" translatable="false"><a href="https://forum.xda-developers.com/android/apps-games/root-battery-charge-limit-t3557002/">XDA Thread</a></string>
     <string name="about">About</string>
+    <string name="disable_charge_now">Disable Charge Now</string>
     <string name="enable">Enable Battery Charge Limit</string>
     <string name="notify">Notify when limit is reached</string>
     <string name="limit">Limit charging to %1$d%%</string>
