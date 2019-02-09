@@ -138,8 +138,8 @@ class MainActivity : AppCompatActivity() {
         }
 
         val resetBatteryStats_Button = findViewById(R.id.reset_battery_stats) as Button
-        val autoResetSwitch = findViewById(R.id.auto_stats_reset) as Switch
-        val notificationSound = findViewById(R.id.notification_sound) as Switch
+        val autoResetSwitch = findViewById(R.id.auto_stats_reset) as CheckBox
+        val notificationSound = findViewById(R.id.notification_sound) as CheckBox
 
         autoResetSwitch.isChecked = settings.getBoolean(AUTO_RESET_STATS, false)
         notificationSound.isChecked = settings.getBoolean(NOTIFICATION_SOUND, false)
