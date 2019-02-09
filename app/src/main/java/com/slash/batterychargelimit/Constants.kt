@@ -46,7 +46,8 @@ object Constants {
             "Russian: Ричард Иванов",
             "Italian: BombeerHC",
             "Romanian: Y0lin",
-            "Dutch: hypothermic"
+            "Dutch: hypothermic",
+            "Turkish: FatihFIRINCI"
     )
 
     const val SAVED_PATH_DATA = "saved_ctrl_path_data"
