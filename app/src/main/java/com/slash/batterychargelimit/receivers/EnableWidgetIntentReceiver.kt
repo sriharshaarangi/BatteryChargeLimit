@@ -5,15 +5,13 @@ import android.content.Context
 import android.content.Intent
 import android.widget.RemoteViews
 import android.widget.Toast
-
+import com.slash.batterychargelimit.Constants.ENABLE
+import com.slash.batterychargelimit.Constants.INTENT_TOGGLE_ACTION
+import com.slash.batterychargelimit.Constants.SETTINGS
+import com.slash.batterychargelimit.EnableWidget
 import com.slash.batterychargelimit.R
 import com.slash.batterychargelimit.Utils
 import eu.chainfire.libsuperuser.Shell
-
-import com.slash.batterychargelimit.Constants.ENABLE
-import com.slash.batterychargelimit.Constants.SETTINGS
-import com.slash.batterychargelimit.Constants.INTENT_TOGGLE_ACTION
-import com.slash.batterychargelimit.EnableWidget
 
 class EnableWidgetIntentReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {

@@ -7,7 +7,10 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.ArrayAdapter
+import android.widget.ListView
+import android.widget.RadioButton
+import android.widget.TextView
 import com.slash.batterychargelimit.ControlFile
 import com.slash.batterychargelimit.R
 import com.slash.batterychargelimit.Utils

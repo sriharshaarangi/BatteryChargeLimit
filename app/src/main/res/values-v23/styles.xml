@@ -6,4 +6,8 @@
     <style name="AppThemeDark" parent="BaseThemeDark">
         <item name="android:windowLightStatusBar">false</item>
     </style>
+
+    <style name="AppThemeBlack" parent="BaseThemeBlack">
+        <item name="android:windowLightStatusBar">false</item>
+    </style>
 </resources>

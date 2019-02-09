@@ -16,18 +16,8 @@ tools:showIn="@layout/activity_main">
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:card_view="http://schemas.android.com/apk/res-auto"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/card_margin"
-            android:layout_marginLeft="@dimen/card_margin"
-            android:layout_marginRight="@dimen/card_margin"
-            android:foreground="?selectableItemBackground"
-            card_view:cardBackgroundColor="?attr/cardColor"
-            card_view:cardCornerRadius="@dimen/card_corner_radius"
-            card_view:cardElevation="0dp"
-            card_view:contentPadding="@dimen/card_content_padding">
+        <android.support.design.card.MaterialCardView
+            style="@style/CustomMaterialCard">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -42,20 +32,10 @@ tools:showIn="@layout/activity_main">
                     android:textColor="?attr/primaryText"/>
 
             </RelativeLayout>
-        </android.support.v7.widget.CardView>
+        </android.support.design.card.MaterialCardView>
 
-        <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:card_view="http://schemas.android.com/apk/res-auto"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/card_margin"
-            android:layout_marginLeft="@dimen/card_margin"
-            android:layout_marginRight="@dimen/card_margin"
-            android:foreground="?selectableItemBackground"
-            card_view:cardBackgroundColor="?attr/cardColor"
-            card_view:cardCornerRadius="@dimen/card_corner_radius"
-            card_view:cardElevation="0dp"
-            card_view:contentPadding="@dimen/card_content_padding">
+        <android.support.design.card.MaterialCardView
+            style="@style/CustomMaterialCard">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -68,58 +48,56 @@ tools:showIn="@layout/activity_main">
                     android:orientation="horizontal"
                     android:weightSum="2">
 
-                    <NumberPicker
-                        android:theme="@style/AppTheme.Picker"
-                        android:id="@+id/max_picker"
-                        android:layout_weight="1"
-                        android:layout_width="0dp"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="3dp"
-                        android:layout_marginRight="3dp" />
-
-                    <NumberPicker
-                        android:theme="@style/AppTheme.Picker"
-                        android:id="@+id/min_picker"
-                        android:layout_weight="1"
-                        android:layout_width="0dp"
+                        android:orientation="vertical"
+                        android:gravity="center_horizontal"
+                        android:layout_weight="1">
+                        <NumberPicker
+                            android:theme="@style/CustomPicker"
+                            android:id="@+id/max_picker"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:layout_marginLeft="3dp"
+                            android:layout_marginRight="3dp"
+                            />
+                        <TextView
+                            android:id="@+id/max_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="16sp"
+                            android:textColor="?attr/primaryText"
+                            android:layout_marginLeft="6dp"
+                            android:layout_marginRight="6dp"
+                            android:gravity="center_horizontal"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="3dp"
-                        android:layout_marginLeft="3dp" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/lin_limits"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:weightSum="2"
-                    android:layout_below="@+id/lin_spinners"
-                    android:orientation="horizontal"
-                    android:gravity="center_horizontal">
-
-                    <TextView
-                        android:id="@+id/max_text"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
                         android:layout_weight="1"
-
-                        android:textSize="16sp"
-                        android:textColor="?attr/primaryText"
-                        android:layout_marginEnd="6dp"
-                        android:layout_marginRight="6dp"
-                        android:gravity="center_horizontal"/>
-
-                    <TextView
-                        android:id="@+id/min_text"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:textColor="?attr/primaryText"
-                        android:textSize="16sp"
-                        android:layout_marginStart="6dp"
-                        android:layout_marginLeft="6dp"
-                        android:gravity="center_horizontal"/>
-
+                        android:gravity="center_horizontal">
+                        <NumberPicker
+                            android:theme="@style/CustomPicker"
+                            android:id="@+id/min_picker"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="3dp"
+                            android:layout_marginRight="3dp"
+                            android:gravity="center_horizontal"
+                            />
+                        <TextView
+                            android:id="@+id/min_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="?attr/primaryText"
+                            android:textSize="16sp"
+                            android:layout_marginLeft="6dp"
+                            android:layout_marginRight="6dp"
+                            android:gravity="center_horizontal"/>
+                    </LinearLayout>
                 </LinearLayout>
 
                 <CheckBox
@@ -128,7 +106,7 @@ tools:showIn="@layout/activity_main">
                     android:text="@string/notify"
                     android:textSize="16sp"
                     android:id="@+id/notification_sound"
-                    android:layout_below="@+id/lin_limits"
+                    android:layout_below="@+id/lin_spinners"
                     android:layout_marginTop="12dp"
                     android:textColor="?attr/primaryText"
                     />
@@ -144,30 +122,28 @@ tools:showIn="@layout/activity_main">
                     android:textColor="?attr/primaryText"
                     android:layout_below="@id/notification_sound"/>
 
-                <Button style="@style/Widget.AppCompat.Button.Colored"
+                <android.support.design.button.MaterialButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/reset_stats"
-                    android:textColor="?attr/cardColor"
+                    app:strokeColor="?secondaryBackground"
+                    app:strokeWidth="1dp"
+                    app:backgroundTint="?attr/cardColor"
+                    android:textColor="?attr/colorAccent"
+                    android:textStyle="bold"
+                    android:textAllCaps="false"
                     android:id="@+id/reset_battery_stats"
                     android:layout_centerHorizontal="true"
-                    android:layout_below="@id/auto_stats_reset"/>
+                    android:layout_below="@id/auto_stats_reset"
+                    app:rippleColor="@color/colorAccentLight"
+                    android:stateListAnimator="@null"
+                    android:elevation="0dp"/>
 
             </RelativeLayout>
-        </android.support.v7.widget.CardView>
+        </android.support.design.card.MaterialCardView>
 
-        <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:card_view="http://schemas.android.com/apk/res-auto"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/card_margin"
-            android:layout_marginLeft="@dimen/card_margin"
-            android:layout_marginRight="@dimen/card_margin"
-            android:foreground="?selectableItemBackground"
-            card_view:cardBackgroundColor="?attr/cardColor"
-            card_view:cardCornerRadius="@dimen/card_corner_radius"
-            card_view:cardElevation="0dp"
-            card_view:contentPadding="@dimen/card_content_padding">
+        <android.support.design.card.MaterialCardView
+            style="@style/CustomMaterialCard">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -219,22 +195,12 @@ tools:showIn="@layout/activity_main">
                     android:textColor="?attr/secondaryText"/>
 
             </RelativeLayout>
-        </android.support.v7.widget.CardView>
+        </android.support.design.card.MaterialCardView>
 
         <!-- Bottom most card - include android:layout_marginBottom for proper looks -->
-        <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:card_view="http://schemas.android.com/apk/res-auto"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/card_margin"
-            android:layout_marginLeft="@dimen/card_margin"
-            android:layout_marginRight="@dimen/card_margin"
-            android:layout_marginBottom="@dimen/card_bottom_margin"
-            android:foreground="?selectableItemBackground"
-            card_view:cardBackgroundColor="?attr/cardColor"
-            card_view:cardCornerRadius="@dimen/card_corner_radius"
-            card_view:cardElevation="0dp"
-            card_view:contentPadding="@dimen/card_content_padding">
+        <android.support.design.card.MaterialCardView
+            style="@style/CustomMaterialCard"
+            android:layout_marginBottom="@dimen/card_bottom_margin">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -248,7 +214,7 @@ tools:showIn="@layout/activity_main">
                     android:id="@+id/disable_charge_switch"
                     android:textColor="?attr/primaryText"/>
             </RelativeLayout>
-        </android.support.v7.widget.CardView>
+        </android.support.design.card.MaterialCardView>
 
     </LinearLayout>
 </ScrollView>

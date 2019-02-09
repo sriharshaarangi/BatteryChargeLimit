@@ -11,24 +11,17 @@
         android:icon="@mipmap/ic_launcher_adaptive"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/BaseThemeDark">
-
-        <activity
-            android:name=".activities.SplashActivity"
-            android:theme="@style/SplashTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        android:theme="@style/AppThemeLight.NoActionBar">
 
         <activity
             android:name=".activities.MainActivity"
             android:label="@string/app_name"
             android:launchMode= "singleTop"
-            android:theme="@style/AppThemeLight.NoActionBar">
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
@@ -41,6 +34,11 @@
                 <data android:mimeType="@string/mime_battery_limit" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".activities.CustomCtrlFileData"
+            android:windowSoftInputMode="stateAlwaysHidden"
+            android:theme="@style/AppThemeLight.NoActionBar"/>
 
         <receiver android:name=".receivers.BootReceiver">
             <intent-filter>
@@ -85,10 +83,6 @@
         </receiver>
 
         <service android:name=".ForegroundService" />
-
-        <activity
-            android:name=".activities.CustomCtrlFileData"
-            android:windowSoftInputMode="stateAlwaysHidden" />
 
     </application>
 </manifest>

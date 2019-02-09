@@ -9,28 +9,26 @@ import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.util.Log
+import android.util.TypedValue
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.*
-import com.slash.batterychargelimit.*
-import com.slash.batterychargelimit.settings.CtrlFileHelper
-import com.slash.batterychargelimit.settings.SettingsFragment
-import com.slash.batterychargelimit.receivers.EnableWidgetIntentReceiver
-import eu.chainfire.libsuperuser.Shell
-import com.slash.batterychargelimit.Constants.SETTINGS
-import com.slash.batterychargelimit.Constants.SETTINGS_VERSION
+import com.slash.batterychargelimit.Constants.AUTO_RESET_STATS
+import com.slash.batterychargelimit.Constants.DISABLE_CHARGE_NOW
 import com.slash.batterychargelimit.Constants.ENABLE
 import com.slash.batterychargelimit.Constants.LIMIT
 import com.slash.batterychargelimit.Constants.MIN
-import com.slash.batterychargelimit.Constants.AUTO_RESET_STATS
 import com.slash.batterychargelimit.Constants.NOTIFICATION_SOUND
+import com.slash.batterychargelimit.Constants.SETTINGS
+import com.slash.batterychargelimit.Constants.SETTINGS_VERSION
+import com.slash.batterychargelimit.ForegroundService
+import com.slash.batterychargelimit.R
+import com.slash.batterychargelimit.Utils
 import com.slash.batterychargelimit.fragments.AboutFragment
-import android.content.Intent
-import android.view.View
-import android.R.attr.data
-import android.graphics.Color
-import android.util.TypedValue
-import com.slash.batterychargelimit.Constants.DISABLE_CHARGE_NOW
+import com.slash.batterychargelimit.receivers.EnableWidgetIntentReceiver
+import com.slash.batterychargelimit.settings.CtrlFileHelper
+import com.slash.batterychargelimit.settings.SettingsFragment
+import eu.chainfire.libsuperuser.Shell
 
 
 class MainActivity : AppCompatActivity() {
@@ -47,9 +45,7 @@ class MainActivity : AppCompatActivity() {
     private var preferenceChangeListener: SharedPreferences.OnSharedPreferenceChangeListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        val preferences = Utils.getPrefs(this)
-        if (preferences.getBoolean("dark_theme", false))
-            setTheme(R.style.AppThemeDark_NoActionBar)
+        Utils.setTheme(this)
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)

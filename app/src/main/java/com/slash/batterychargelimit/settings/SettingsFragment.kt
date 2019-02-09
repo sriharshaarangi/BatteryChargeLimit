@@ -3,6 +3,7 @@ package com.slash.batterychargelimit.settings
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.preference.ListPreference
 import android.preference.Preference
 import android.preference.PreferenceFragment
 import android.preference.SwitchPreference
@@ -19,6 +20,7 @@ import com.slash.batterychargelimit.R
 import com.slash.batterychargelimit.Utils
 import com.slash.batterychargelimit.activities.CustomCtrlFileData
 
+
 class SettingsFragment : PreferenceFragment() {
 
     private lateinit var menu: Menu
@@ -28,19 +30,15 @@ class SettingsFragment : PreferenceFragment() {
 
         setHasOptionsMenu(true)
 
-        val darkTheme:SwitchPreference = findPreference("dark_theme") as SwitchPreference
+        val theme:ListPreference = findPreference("theme") as ListPreference
         val customCtrlFileDataSwitch:SwitchPreference = findPreference("custom_ctrl_file_data") as SwitchPreference
         val ctrlFilePreference:ControlFilePreference = findPreference("control_file") as ControlFilePreference
         val ctrlFileSetupPreference:Preference = findPreference("custom_ctrl_file_setup") as Preference
 
-        darkTheme.setOnPreferenceChangeListener { _, newValue ->
-            if (newValue as Boolean) {
-                activity.setTheme(R.style.AppThemeDark_NoActionBar)
+        theme.setOnPreferenceChangeListener { preference, newValue ->
+            if (preference is ListPreference) {
+                activity.recreate()
             }
-            else {
-                activity.setTheme(R.style.AppThemeLight_NoActionBar)
-            }
-            activity.recreate()
             true
         }
 
@@ -135,6 +133,7 @@ class SettingsFragment : PreferenceFragment() {
         const val KEY_ENFORCE_CHARGE_LIMIT = "enforce_charge_limit"
         const val KEY_ALWAYS_WRITE_CF = "always_write_cf"
         const val KEY_ENABLE_AUTO_RECHARGE = "enable_auto_recharge"
+        const val KEY_THEME = "theme"
 
         private var visible = false
 

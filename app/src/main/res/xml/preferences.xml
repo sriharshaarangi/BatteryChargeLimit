@@ -27,12 +27,12 @@
 
     <PreferenceCategory android:title="@string/main_settings">
 
-
-        <SwitchPreference
-            android:key="dark_theme"
-            android:title="@string/dark_theme"
-            android:defaultValue="false"
-            android:textColor="?attr/primaryText"/>
+        <ListPreference
+            android:key="theme"
+            android:title="Theme"
+            android:entryValues="@array/themeKeys"
+            android:entries="@array/themeValues"
+            android:summary="%1$s"/>
 
         <CheckBoxPreference
                 android:key="temp_fahrenheit"

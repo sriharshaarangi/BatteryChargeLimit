@@ -52,4 +52,8 @@ object Constants {
     const val SAVED_PATH_DATA = "saved_ctrl_path_data"
     const val SAVED_ENABLED_DATA = "saved_ctrl_enabled_data"
     const val SAVED_DISABLED_DATA = "saved_ctrl_disabled_data"
+
+    const val LIGHT = "light"
+    const val DARK = "dark"
+    const val BLACK = "black"
 }

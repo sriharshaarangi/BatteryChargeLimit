@@ -1,5 +1,6 @@
 package com.slash.batterychargelimit
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
@@ -309,5 +310,17 @@ object Utils {
             // Custom Data Disabled
             settings.getString(CHARGE_OFF_KEY, DEFAULT_DISABLED)
         }
+    }
+
+    fun setTheme(activity: Activity) {
+        val preferences = getPrefs(activity)
+        val getTheme = preferences.getString(SettingsFragment.KEY_THEME, "light")
+        var theme = R.style.AppThemeLight_NoActionBar
+        when (getTheme) {
+            Constants.LIGHT -> { theme = R.style.AppThemeLight_NoActionBar }
+            Constants.DARK -> { theme = R.style.AppThemeDark_NoActionBar }
+            Constants.BLACK -> { theme = R.style.AppThemeBlack_NoActionBar }
+        }
+        activity.setTheme(theme)
     }
 }

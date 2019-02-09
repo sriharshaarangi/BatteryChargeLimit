@@ -1,54 +1,63 @@
 <resources>
-    <style name="BaseThemeLight" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorPrimary">@color/white</item>
-        <item name="colorPrimaryDark">@color/white</item>
-        <item name="colorAccent">@color/colorAccent</item>
-
-        <item name="primaryText">@color/black</item>
-        <item name="secondaryText">@color/darkGray</item>
-        <item name="cardColor">@color/white</item>
-        <item name="layoutBackground">@color/white</item>
+    <style name="BaseTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
 
         <item name="android:textColorPrimary" >@color/primary_text_color_selector</item>
         <item name="android:textColorSecondary">?attr/secondaryText</item>
 
-        <item name="android:alertDialogTheme">@style/MyAlertDialogStyle</item>
-        <item name="alertDialogTheme">@style/MyAlertDialogStyle</item>
-
-        <item name="elevation">0dp</item>
-
-        <!--The following are for coloring switch-->
-        <!--<item name="colorSwitchThumbNormal">#000000</item>-->
-        <item name="android:colorForeground">?attr/primaryText</item>
-    </style>
-
-    <style name="BaseThemeDark" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorPrimary">@color/black</item>
-        <item name="colorPrimaryDark">@color/black</item>
-        <item name="colorAccent">@color/colorAccent</item>
-
-        <item name="primaryText">@color/white</item>
-        <item name="secondaryText">@color/lightGray</item>
-        <item name="cardColor">@color/black</item>
-        <item name="layoutBackground">@color/black</item>
-
-        <item name="android:textColorPrimary" >@color/primary_text_color_selector</item>
-        <item name="android:textColorSecondary">?attr/secondaryText</item>
-
-        <item name="android:alertDialogTheme">@style/MyAlertDialogStyle</item>
-        <item name="alertDialogTheme">@style/MyAlertDialogStyle</item>
+        <item name="android:alertDialogTheme">@style/CustomAlertDialog</item>
+        <item name="alertDialogTheme">@style/CustomAlertDialog</item>
 
         <item name="elevation">0dp</item>
 
         <!--The following are for coloring switch-->
         <!--<item name="colorSwitchThumbNormal">?attr/primary_text</item>-->
         <item name="android:colorForeground">?attr/primaryText</item>
+    </style>
 
+    <style name="BaseThemeLight" parent="BaseTheme">
+        <item name="colorPrimary">@color/white</item>
+        <item name="colorPrimaryDark">@color/white</item>
+        <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="primaryText">@color/black</item>
+        <item name="secondaryText">@color/darkGray</item>
+        <item name="tertiaryText">@color/lightGray</item>
+        <item name="cardColor">@color/white</item>
+        <item name="layoutBackground">@color/white</item>
+        <item name="secondaryBackground">@color/lighterGray</item>
+    </style>
+
+    <style name="BaseThemeDark" parent="BaseTheme">
+        <item name="colorPrimary">@color/darkestGray</item>
+        <item name="colorPrimaryDark">@color/darkestGray</item>
+        <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="primaryText">@color/white</item>
+        <item name="secondaryText">@color/lightGray</item>
+        <item name="tertiaryText">@color/darkGray</item>
+        <item name="cardColor">@color/darkestGray</item>
+        <item name="layoutBackground">@color/darkestGray</item>
+        <item name="secondaryBackground">@color/darkerGray</item>
+    </style>
+
+    <style name="BaseThemeBlack" parent="BaseTheme">
+        <item name="colorPrimary">@color/black</item>
+        <item name="colorPrimaryDark">@color/black</item>
+        <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="primaryText">@color/white</item>
+        <item name="secondaryText">@color/lightGray</item>
+        <item name="tertiaryText">@color/darkGray</item>
+        <item name="cardColor">@color/black</item>
+        <item name="layoutBackground">@color/black</item>
+        <item name="secondaryBackground">@color/darkestGray</item>
     </style>
 
     <style name="AppThemeLight" parent="BaseThemeLight"/>
 
     <style name="AppThemeDark" parent="BaseThemeDark"/>
+
+    <style name="AppThemeBlack" parent="BaseThemeBlack"/>
 
     <style name="AppThemeLight.NoActionBar">
         <item name="windowActionBar">false</item>
@@ -60,22 +69,53 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="AppThemeBlack.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
 
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat" />
+    <style name="AppTheme.AppBarOverlay" parent="Base.Theme.MaterialComponents.Light.DarkActionBar" />
 
-    <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
+    <style name="AppTheme.PopupOverlay" parent="Base.Theme.MaterialComponents" />
+
+    <style name="SplashTheme" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="colorPrimary">@color/black</item>
+        <item name="colorPrimaryDark">@color/black</item>
         <item name="android:windowBackground">@drawable/background_splash</item>
     </style>
 
-    <style name="AppTheme.Picker" parent="Theme.AppCompat.NoActionBar" >
+    <style name="CustomPicker" parent="Theme.MaterialComponents.NoActionBar" >
         <item name="android:textColorPrimary">?attr/primaryText</item>
-        <item name="android:textColorSecondary">?attr/secondaryText</item>
+        <item name="android:textColorSecondary">?attr/secondaryBackground</item>
     </style>
 
-    <style name="MyAlertDialogStyle" parent="Theme.AppCompat.Dialog.Alert">
+
+    <style name="CustomAlertDialog" parent="Base.Theme.MaterialComponents.Dialog">
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:textColorPrimary">?attr/primaryText</item>
+        <item name="android:textColorSecondary">?attr/secondaryText</item>
+        <item name="android:textColorAlertDialogListItem">?attr/primaryText</item>
         <item name="android:background">?attr/cardColor</item>
+
+        <!--<item name="android:windowIsFloating">true</item>-->
+        <!--<item name="android:windowIsTranslucent">true</item>-->
+        <!--<item name="android:windowBackground">?attr/primaryText</item>-->
+        <!--<item name="android:windowContentOverlay">@color/white</item>-->
     </style>
+
+    <style name="CustomMaterialCard">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/card_margin</item>
+        <item name="android:layout_marginLeft">@dimen/card_margin</item>
+        <item name="android:layout_marginRight">@dimen/card_margin</item>
+        <item name="android:foreground">?selectableItemBackground</item>
+        <item name="contentPadding">16dp</item>
+        <item name="cardCornerRadius">@dimen/card_corner_radius</item>
+        <item name="cardBackgroundColor">?attr/cardColor</item>
+        <item name="strokeColor">?secondaryBackground</item>
+        <item name="strokeWidth">1dp</item>
+        <item name="cardElevation">0dp</item>
+    </style>
+
 </resources>

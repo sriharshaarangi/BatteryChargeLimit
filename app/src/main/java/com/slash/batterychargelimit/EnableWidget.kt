@@ -7,10 +7,10 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.widget.RemoteViews
-import com.slash.batterychargelimit.receivers.EnableWidgetIntentReceiver
-import com.slash.batterychargelimit.Constants.SETTINGS
 import com.slash.batterychargelimit.Constants.ENABLE
 import com.slash.batterychargelimit.Constants.INTENT_TOGGLE_ACTION
+import com.slash.batterychargelimit.Constants.SETTINGS
+import com.slash.batterychargelimit.receivers.EnableWidgetIntentReceiver
 
 class EnableWidget : AppWidgetProvider() {
     override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
