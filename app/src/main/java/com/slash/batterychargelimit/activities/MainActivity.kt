@@ -152,7 +152,7 @@ class MainActivity : AppCompatActivity() {
             minPicker.maxValue = max
             minPicker.value = min
             updateMinText(min)
-            if (!ForegroundService.isRunning && !Utils.getPrefs(this).getBoolean(SettingsFragment.KEY_ENABLE_AUTO_RECHARGE, true)) {
+            if (!ForegroundService.isRunning) {
                 Utils.startService(this)
             }
         }

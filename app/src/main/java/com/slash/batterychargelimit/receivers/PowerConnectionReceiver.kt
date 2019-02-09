@@ -23,13 +23,11 @@ class PowerConnectionReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         val action = intent.action
         //Ignore new events after power change or during state fixing
-        if (!Utils.getPrefs(context)
-                .getBoolean(SettingsFragment.KEY_IMMEDIATE_POWER_INTENT_HANDLING, false)
-                && Utils.isChangePending(
-                Math.max(POWER_CHANGE_TOLERANCE_MS, BatteryReceiver.backOffTime * 2))) {
+        if (!Utils.getPrefs(context).getBoolean(SettingsFragment.KEY_IMMEDIATE_POWER_INTENT_HANDLING, false)
+                && Utils.isChangePending(Math.max(POWER_CHANGE_TOLERANCE_MS, BatteryReceiver.backOffTime * 2))) {
             if (action == Intent.ACTION_POWER_CONNECTED) {
                 //Ignore connected event only if service is running
-                if (ForegroundService.isRunning) {
+                if (ForegroundService.isRunning || !Utils.getPrefs(context).getBoolean(SettingsFragment.KEY_ENABLE_AUTO_RECHARGE, true)) {
                     Log.d("Power State", "ACTION_POWER_CONNECTED ignored")
                     return
                 }
