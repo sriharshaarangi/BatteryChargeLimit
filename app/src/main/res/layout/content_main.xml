@@ -7,7 +7,8 @@ android:layout_width="match_parent"
 android:layout_height="match_parent"
 android:fillViewport="true"
 android:background="?attr/layoutBackground"
-app:layout_behavior="@string/appbar_scrolling_view_behavior"
+style="@style/CustomScrollView"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
 tools:context="com.slash.batterychargelimit.activities.MainActivity"
 tools:showIn="@layout/activity_main">
 
@@ -16,12 +17,13 @@ tools:showIn="@layout/activity_main">
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <android.support.design.card.MaterialCardView
+        <com.google.android.material.card.MaterialCardView
             style="@style/CustomMaterialCard">
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
                 <Switch
                     android:layout_width="match_parent"
@@ -31,118 +33,30 @@ tools:showIn="@layout/activity_main">
                     android:id="@+id/enable_switch"
                     android:textColor="?attr/primaryText"/>
 
-            </RelativeLayout>
-        </android.support.design.card.MaterialCardView>
-
-        <android.support.design.card.MaterialCardView
-            style="@style/CustomMaterialCard">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <LinearLayout
-                    android:id="@+id/lin_spinners"
+                <Switch
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:weightSum="2">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:gravity="center_horizontal"
-                        android:layout_weight="1">
-                        <NumberPicker
-                            android:theme="@style/CustomPicker"
-                            android:id="@+id/max_picker"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_horizontal"
-                            android:layout_marginLeft="3dp"
-                            android:layout_marginRight="3dp"
-                            />
-                        <TextView
-                            android:id="@+id/max_text"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="16sp"
-                            android:textColor="?attr/primaryText"
-                            android:layout_marginLeft="6dp"
-                            android:layout_marginRight="6dp"
-                            android:gravity="center_horizontal"/>
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_weight="1"
-                        android:gravity="center_horizontal">
-                        <NumberPicker
-                            android:theme="@style/CustomPicker"
-                            android:id="@+id/min_picker"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="3dp"
-                            android:layout_marginRight="3dp"
-                            android:gravity="center_horizontal"
-                            />
-                        <TextView
-                            android:id="@+id/min_text"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textColor="?attr/primaryText"
-                            android:textSize="16sp"
-                            android:layout_marginLeft="6dp"
-                            android:layout_marginRight="6dp"
-                            android:gravity="center_horizontal"/>
-                    </LinearLayout>
-                </LinearLayout>
-
-                <CheckBox
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/notify"
+                    android:text="@string/limit_by_voltage"
                     android:textSize="16sp"
-                    android:id="@+id/notification_sound"
-                    android:layout_below="@+id/lin_spinners"
+                    android:id="@+id/limit_by_voltage"
                     android:layout_marginTop="12dp"
                     android:textColor="?attr/primaryText"
                     />
 
-
-                <CheckBox
-                    android:id="@+id/auto_stats_reset"
+                <Switch
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/auto_reset_stats"
+                    android:text="@string/disable_charge_now"
                     android:textSize="16sp"
-                    android:layout_marginBottom="10dp"
-                    android:textColor="?attr/primaryText"
-                    android:layout_below="@id/notification_sound"/>
+                    android:layout_marginTop="12dp"
+                    android:id="@+id/disable_charge_switch"
+                    android:layout_below="@+id/status_ctrl_data"
+                    android:textColor="?attr/primaryText"/>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
 
-                <android.support.design.button.MaterialButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/reset_stats"
-                    app:strokeColor="?secondaryBackground"
-                    app:strokeWidth="1dp"
-                    app:backgroundTint="?attr/cardColor"
-                    android:textColor="?attr/colorAccent"
-                    android:textStyle="bold"
-                    android:textAllCaps="false"
-                    android:id="@+id/reset_battery_stats"
-                    android:layout_centerHorizontal="true"
-                    android:layout_below="@id/auto_stats_reset"
-                    app:rippleColor="@color/colorAccentLight"
-                    android:stateListAnimator="@null"
-                    android:elevation="0dp"/>
-
-            </RelativeLayout>
-        </android.support.design.card.MaterialCardView>
-
-        <android.support.design.card.MaterialCardView
+        <!--FUTURE add live current-->
+        <com.google.android.material.card.MaterialCardView
             style="@style/CustomMaterialCard">
 
             <RelativeLayout
@@ -195,26 +109,218 @@ tools:showIn="@layout/activity_main">
                     android:textColor="?attr/secondaryText"/>
 
             </RelativeLayout>
-        </android.support.design.card.MaterialCardView>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            style="@style/CustomMaterialCard">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/relative_layout_1">
+
+                <LinearLayout
+                    android:id="@+id/lin_spinners"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="center_horizontal"
+                        android:layout_weight="1">
+                        <NumberPicker
+                            android:theme="@style/CustomPicker"
+                            android:id="@+id/max_picker"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:layout_marginLeft="3dp"
+                            android:layout_marginRight="3dp"
+                            android:descendantFocusability="blocksDescendants"
+                            />
+                        <TextView
+                            android:id="@+id/max_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="16sp"
+                            android:textColor="?attr/primaryText"
+                            android:layout_marginLeft="6dp"
+                            android:layout_marginRight="6dp"
+                            android:gravity="center_horizontal"
+                            />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal">
+                        <NumberPicker
+                            android:theme="@style/CustomPicker"
+                            android:id="@+id/min_picker"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="3dp"
+                            android:layout_marginRight="3dp"
+                            android:gravity="center_horizontal"
+                            android:descendantFocusability="blocksDescendants"
+                            />
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/min_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="?attr/primaryText"
+                            android:textSize="16sp"
+                            android:layout_marginLeft="6dp"
+                            android:layout_marginRight="6dp"
+                            android:gravity="center_horizontal"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!--<com.google.android.material.checkbox.MaterialCheckBox-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="@string/notify"-->
+                    <!--android:textSize="16sp"-->
+                    <!--android:id="@+id/notification_sound"-->
+                    <!--android:layout_below="@+id/lin_spinners"-->
+                    <!--android:layout_marginTop="12dp"-->
+                    <!--android:textColor="?attr/primaryText"-->
+                    <!--/>-->
+
+
+                <!--<com.google.android.material.checkbox.MaterialCheckBox-->
+                    <!--android:id="@+id/auto_stats_reset"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="@string/auto_reset_stats"-->
+                    <!--android:textSize="16sp"-->
+                    <!--android:layout_marginTop="-12dp"-->
+                    <!--android:textColor="?attr/primaryText"-->
+                    <!--android:layout_below="@id/notification_sound"/>-->
+
+                <com.google.android.material.button.MaterialButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/reset_stats"
+                    app:strokeColor="?attr/colorAccent"
+                    app:strokeWidth="1dp"
+                    app:backgroundTint="?attr/cardColor"
+                    android:textColor="?attr/colorAccent"
+                    android:textAllCaps="false"
+                    android:id="@+id/reset_battery_stats"
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@id/lin_spinners"
+                    app:rippleColor="@color/colorAccentLight"
+                    android:layout_marginTop="6dp"
+                    android:stateListAnimator="@null"
+                    android:elevation="0dp"/>
+
+            </RelativeLayout>
+        </com.google.android.material.card.MaterialCardView>
 
         <!-- Bottom most card - include android:layout_marginBottom for proper looks -->
-        <android.support.design.card.MaterialCardView
+        <com.google.android.material.card.MaterialCardView
             style="@style/CustomMaterialCard"
             android:layout_marginBottom="@dimen/card_bottom_margin">
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:focusable="true"
+                android:focusableInTouchMode="true">
 
-                <Switch
+                <GridLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/disable_charge_now"
-                    android:textSize="16sp"
-                    android:id="@+id/disable_charge_switch"
-                    android:textColor="?attr/primaryText"/>
+                    android:id="@+id/voltage_grid_layout"
+                    android:columnCount="2">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/voltage_threshold_text"
+                        android:layout_below="@id/limit_by_voltage"
+                        android:text="@string/custom_voltage_threshold"
+                        android:textSize="16sp"
+                        android:textColor="?attr/primaryText"
+                        android:layout_gravity="center_vertical|left"/>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/text_input_layout"
+                        android:layout_toRightOf="@+id/voltage_threshold_text"
+                        app:boxStrokeWidth="5dp"
+                        android:layout_below="@id/limit_by_voltage"
+                        style="@style/Base.Widget.MaterialComponents.TextInputLayout"
+                        app:boxStrokeColor="@color/custom_box"
+                        android:layout_gravity="center_vertical|right"
+                        >
+                        <com.slash.batterychargelimit.CustomEditText
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/voltage_threshold"
+                            android:numeric="decimal"
+                            android:maxLines="1"
+                            android:minWidth="100dp"
+                            android:gravity="center"
+                            android:imeOptions="actionGo"
+                            android:imeActionId="666"
+                            android:imeActionLabel="Some Label"
+                            android:textColor="?attr/primaryText"
+                            android:background="@null"
+                            android:padding="6dp"
+                            android:textSize="16sp"
+                            />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="?attr/primaryText"
+                        android:textSize="16sp"
+                        android:text="Current Voltage Threshold"
+                        android:layout_marginTop="8dp"
+                        android:id="@+id/current_voltage_threshold_label"
+                        android:layout_gravity="center_vertical|left"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="?attr/primaryText"
+                        android:textSize="16sp"
+                        android:layout_marginTop="8dp"
+                        android:id="@+id/current_voltage_threshold"
+                        android:layout_gravity="center_vertical|right"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="?attr/primaryText"
+                        android:textSize="16sp"
+                        android:text="Default Voltage Threshold"
+                        android:layout_marginTop="16dp"
+                        android:id="@+id/default_voltage_threshold_label"
+                        android:layout_gravity="center_vertical|left"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="?attr/primaryText"
+                        android:textSize="16sp"
+                        android:layout_marginTop="16dp"
+                        android:id="@+id/default_voltage_threshold"
+                        android:layout_gravity="center_vertical|right"/>
+
+                </GridLayout>
             </RelativeLayout>
-        </android.support.design.card.MaterialCardView>
+        </com.google.android.material.card.MaterialCardView>
 
     </LinearLayout>
 </ScrollView>

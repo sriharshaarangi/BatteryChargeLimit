@@ -1,12 +1,12 @@
 package com.slash.batterychargelimit.activities
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import com.slash.batterychargelimit.Constants
 import com.slash.batterychargelimit.Constants.DEFAULT_DISABLED
 import com.slash.batterychargelimit.Constants.DEFAULT_ENABLED
@@ -14,7 +14,7 @@ import com.slash.batterychargelimit.Constants.DEFAULT_FILE
 import com.slash.batterychargelimit.R
 import com.slash.batterychargelimit.Utils
 
-class CustomCtrlFileData : AppCompatActivity() {
+class CustomCtrlFileDataActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         Utils.setTheme(this)
@@ -86,7 +86,7 @@ class CustomCtrlFileData : AppCompatActivity() {
             settings.edit().putString(Constants.SAVED_ENABLED_DATA, customEnabledData).apply()
             settings.edit().putString(Constants.SAVED_DISABLED_DATA, customDisabledData).apply()
             updatedDataText.hint = "Path Data: $customPathData\nEnable Value: $customEnabledData\nDisabled Value: $customDisabledData"
-            Utils.startService(this)
+            Utils.startServiceIfLimitEnabled(this)
         })
     }
 }

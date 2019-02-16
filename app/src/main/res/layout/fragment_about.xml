@@ -16,19 +16,8 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <android.support.design.card.MaterialCardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/card_margin"
-                android:layout_marginLeft="@dimen/card_margin"
-                android:layout_marginRight="@dimen/card_margin"
-                android:foreground="?selectableItemBackground"
-                app:contentPadding="18dp"
-                app:cardCornerRadius="@dimen/card_corner_radius"
-                app:cardBackgroundColor="?attr/cardColor"
-                app:strokeColor="?secondaryBackground"
-                app:strokeWidth="1dp"
-                app:cardElevation="0dp">
+            <com.google.android.material.card.MaterialCardView
+                style="@style/CustomMaterialCard">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -72,9 +61,9 @@
                         android:textColor="?attr/primaryText" />
 
                 </RelativeLayout>
-            </android.support.design.card.MaterialCardView>
+            </com.google.android.material.card.MaterialCardView>
 
-            <android.support.design.card.MaterialCardView
+            <com.google.android.material.card.MaterialCardView
                 style="@style/CustomMaterialCard">
 
                 <RelativeLayout
@@ -135,10 +124,10 @@
                         android:autoLink="web" />
 
                 </RelativeLayout>
-            </android.support.design.card.MaterialCardView>
+            </com.google.android.material.card.MaterialCardView>
 
             <!-- Bottom most card - include android:layout_marginBottom for proper looks -->
-            <android.support.design.card.MaterialCardView
+            <com.google.android.material.card.MaterialCardView
                 style="@style/CustomMaterialCard"
                 android:layout_marginBottom="@dimen/card_bottom_margin">
 
@@ -160,7 +149,8 @@
                         android:text=""
                         android:id="@+id/developers"
                         android:layout_below="@+id/developers_title"
-                        android:textColor="?attr/secondaryText" />
+                        android:textColor="?attr/secondaryText"
+                        android:layout_marginBottom="8dp"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -180,7 +170,7 @@
                         android:textColor="?attr/secondaryText" />
 
                 </RelativeLayout>
-            </android.support.design.card.MaterialCardView>
+            </com.google.android.material.card.MaterialCardView>
 
         </LinearLayout>
     </ScrollView>

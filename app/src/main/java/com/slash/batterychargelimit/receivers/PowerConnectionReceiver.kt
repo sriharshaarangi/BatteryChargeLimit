@@ -7,7 +7,7 @@ import android.util.Log
 import com.slash.batterychargelimit.Constants.POWER_CHANGE_TOLERANCE_MS
 import com.slash.batterychargelimit.ForegroundService
 import com.slash.batterychargelimit.Utils
-import com.slash.batterychargelimit.settings.SettingsFragment
+import com.slash.batterychargelimit.settings.PrefsFragment
 
 /**
  * Created by harsha on 30/1/17.
@@ -22,12 +22,15 @@ import com.slash.batterychargelimit.settings.SettingsFragment
 class PowerConnectionReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         val action = intent.action
+
+        Utils.setVoltageThreshold(null, true, context, null)
+
         //Ignore new events after power change or during state fixing
-        if (!Utils.getPrefs(context).getBoolean(SettingsFragment.KEY_IMMEDIATE_POWER_INTENT_HANDLING, false)
+        if (!Utils.getPrefs(context).getBoolean(PrefsFragment.KEY_IMMEDIATE_POWER_INTENT_HANDLING, false)
                 && Utils.isChangePending(Math.max(POWER_CHANGE_TOLERANCE_MS, BatteryReceiver.backOffTime * 2))) {
             if (action == Intent.ACTION_POWER_CONNECTED) {
                 //Ignore connected event only if service is running
-                if (ForegroundService.isRunning || !Utils.getPrefs(context).getBoolean(SettingsFragment.KEY_ENABLE_AUTO_RECHARGE, true)) {
+                if (ForegroundService.isRunning || Utils.getPrefs(context).getBoolean(PrefsFragment.KEY_DISABLE_AUTO_RECHARGE, false)) {
                     Log.d("Power State", "ACTION_POWER_CONNECTED ignored")
                     return
                 }
@@ -36,9 +39,10 @@ class PowerConnectionReceiver : BroadcastReceiver() {
                 return
             }
         }
+
         if (action == Intent.ACTION_POWER_CONNECTED) {
             Log.d("Power State", "ACTION_POWER_CONNECTED")
-            Utils.startService(context)
+            Utils.startServiceIfLimitEnabled(context)
         } else if (action == Intent.ACTION_POWER_DISCONNECTED) {
             Log.d("Power State", "ACTION_POWER_DISCONNECTED")
             Utils.stopService(context, false)

@@ -9,7 +9,6 @@ import com.slash.batterychargelimit.Constants.CHARGING_CHANGE_TOLERANCE_MS
 import com.slash.batterychargelimit.Constants.LIMIT
 import com.slash.batterychargelimit.Constants.MAX_BACK_OFF_TIME
 import com.slash.batterychargelimit.Constants.MIN
-import com.slash.batterychargelimit.Constants.NOTIFICATION_SOUND
 import com.slash.batterychargelimit.Constants.NOTIF_CHARGE
 import com.slash.batterychargelimit.Constants.NOTIF_MAINTAIN
 import com.slash.batterychargelimit.Constants.POWER_CHANGE_TOLERANCE_MS
@@ -17,7 +16,7 @@ import com.slash.batterychargelimit.Constants.SETTINGS
 import com.slash.batterychargelimit.ForegroundService
 import com.slash.batterychargelimit.R
 import com.slash.batterychargelimit.Utils
-import com.slash.batterychargelimit.settings.SettingsFragment
+import com.slash.batterychargelimit.settings.PrefsFragment
 
 
 /**
@@ -32,16 +31,16 @@ class BatteryReceiver(private val service: ForegroundService) : BroadcastReceive
     private var lastState = -1
     private var limitPercentage: Int = 0
     private var rechargePercentage: Int = 0
-    private val prefs: SharedPreferences
+    private val prefs = Utils.getPrefs(service.baseContext)
     private var preferenceChangeListener: android.content.SharedPreferences.OnSharedPreferenceChangeListener? = null
     private val settings = service.getSharedPreferences(SETTINGS, 0)
-    private var useNotificationSound = settings.getBoolean(NOTIFICATION_SOUND, false)
+    private var useNotificationSound = prefs.getBoolean(PrefsFragment.KEY_NOTIFICATION_SOUND, false)
 
     init {
         preferenceChangeListener = SharedPreferences.OnSharedPreferenceChangeListener { sharedPreferences, key ->
             when (key) {
-                SettingsFragment.KEY_TEMP_FAHRENHEIT -> {
-                    useFahrenheit = sharedPreferences.getBoolean(SettingsFragment.KEY_TEMP_FAHRENHEIT, false)
+                PrefsFragment.KEY_TEMP_FAHRENHEIT -> {
+                    useFahrenheit = sharedPreferences.getBoolean(PrefsFragment.KEY_TEMP_FAHRENHEIT, false)
                     service.setNotificationContentText(Utils.getBatteryInfo(service,
                             service.registerReceiver(null, IntentFilter(Intent.ACTION_BATTERY_CHANGED)),
                             useFahrenheit))
@@ -50,15 +49,14 @@ class BatteryReceiver(private val service: ForegroundService) : BroadcastReceive
                 LIMIT, MIN -> {
                     reset(sharedPreferences)
                 }
-                NOTIFICATION_SOUND -> {
-                    this.useNotificationSound = settings.getBoolean(NOTIFICATION_SOUND, false)
+                PrefsFragment.KEY_NOTIFICATION_SOUND -> {
+                    this.useNotificationSound = prefs.getBoolean(PrefsFragment.KEY_NOTIFICATION_SOUND, false)
                 }
             }
         }
-        prefs = Utils.getPrefs(service.baseContext)
         prefs.registerOnSharedPreferenceChangeListener(preferenceChangeListener)
         settings.registerOnSharedPreferenceChangeListener(preferenceChangeListener)
-        this.useFahrenheit = prefs.getBoolean(SettingsFragment.KEY_TEMP_FAHRENHEIT, false)
+        this.useFahrenheit = prefs.getBoolean(PrefsFragment.KEY_TEMP_FAHRENHEIT, false)
         reset(settings)
     }
 
@@ -135,8 +133,9 @@ class BatteryReceiver(private val service: ForegroundService) : BroadcastReceive
                 service.enableAutoReset()
                 Utils.changeState(service, Utils.CHARGE_OFF)
 
-                if (!preferences.getBoolean(SettingsFragment.KEY_ENABLE_AUTO_RECHARGE, true))
+                if (preferences.getBoolean(PrefsFragment.KEY_DISABLE_AUTO_RECHARGE, false)) {
                     Utils.stopService(service, false)
+                }
 
                 // set the "maintain" notification, this must not change from now
                 service.setNotificationTitle(service.getString(R.string.maintaining_x_to_y,
@@ -144,7 +143,7 @@ class BatteryReceiver(private val service: ForegroundService) : BroadcastReceive
                 service.setNotificationIcon(NOTIF_MAINTAIN)
                 service.setNotificationActionText(service.getString(R.string.dismiss))
             } else if (currentStatus == BatteryManager.BATTERY_STATUS_CHARGING
-                    && prefs.getBoolean(SettingsFragment.KEY_ENFORCE_CHARGE_LIMIT, true)) {
+                    && prefs.getBoolean(PrefsFragment.KEY_ENFORCE_CHARGE_LIMIT, true)) {
                 //Double the back off time with every unsuccessful round up to MAX_BACK_OFF_TIME
                 backOffTime = Math.min(backOffTime * 2, MAX_BACK_OFF_TIME)
                 Log.d("Charging State", "Fixing state w. CHARGE_ON/CHARGE_OFF " + this.hashCode()
@@ -177,7 +176,7 @@ class BatteryReceiver(private val service: ForegroundService) : BroadcastReceive
     fun detach(context: Context) {
         // unregister the listener that listens for relevant change events
         prefs.unregisterOnSharedPreferenceChangeListener(this.preferenceChangeListener)
-        context.getSharedPreferences(SETTINGS, 0)
+        Utils.getSettings(context)
                 .unregisterOnSharedPreferenceChangeListener(this.preferenceChangeListener)
         // technically not necessary, but it prevents inlining of this required field
         // see end of https://developer.android.com/guide/topics/ui/settings.html#Listening

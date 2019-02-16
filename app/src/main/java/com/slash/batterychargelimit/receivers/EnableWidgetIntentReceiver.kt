@@ -5,9 +5,8 @@ import android.content.Context
 import android.content.Intent
 import android.widget.RemoteViews
 import android.widget.Toast
-import com.slash.batterychargelimit.Constants.ENABLE
+import com.slash.batterychargelimit.Constants.CHARGE_LIMIT_ENABLED
 import com.slash.batterychargelimit.Constants.INTENT_TOGGLE_ACTION
-import com.slash.batterychargelimit.Constants.SETTINGS
 import com.slash.batterychargelimit.EnableWidget
 import com.slash.batterychargelimit.R
 import com.slash.batterychargelimit.Utils
@@ -16,12 +15,12 @@ import eu.chainfire.libsuperuser.Shell
 class EnableWidgetIntentReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         if (intent.action == INTENT_TOGGLE_ACTION) {
-            val settings = context.getSharedPreferences(SETTINGS, 0)
+            val settings = Utils.getSettings(context)
             if (Shell.SU.available()) {
-                val enable = !settings.getBoolean(ENABLE, false)
-                settings.edit().putBoolean(ENABLE, enable).apply()
+                val enable = !settings.getBoolean(CHARGE_LIMIT_ENABLED, false)
+                settings.edit().putBoolean(CHARGE_LIMIT_ENABLED, enable).apply()
                 if (enable) {
-                    Utils.startService(context)
+                    Utils.startServiceIfLimitEnabled(context)
                 } else {
                     Utils.stopService(context)
                 }
