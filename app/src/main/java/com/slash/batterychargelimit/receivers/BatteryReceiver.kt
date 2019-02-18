@@ -42,7 +42,7 @@ class BatteryReceiver(private val service: ForegroundService) : BroadcastReceive
                 PrefsFragment.KEY_TEMP_FAHRENHEIT -> {
                     useFahrenheit = sharedPreferences.getBoolean(PrefsFragment.KEY_TEMP_FAHRENHEIT, false)
                     service.setNotificationContentText(Utils.getBatteryInfo(service,
-                            service.registerReceiver(null, IntentFilter(Intent.ACTION_BATTERY_CHANGED)),
+                            service.registerReceiver(null, IntentFilter(Intent.ACTION_BATTERY_CHANGED))!!,
                             useFahrenheit))
                     service.updateNotification()
                 }
@@ -67,7 +67,7 @@ class BatteryReceiver(private val service: ForegroundService) : BroadcastReceive
         limitPercentage = settings.getInt(LIMIT, 80)
         rechargePercentage = settings.getInt(MIN, limitPercentage - 2)
         // manually fire onReceive() to update state if service is enabled
-        onReceive(service, service.registerReceiver(null, IntentFilter(Intent.ACTION_BATTERY_CHANGED)))
+        onReceive(service, service.registerReceiver(null, IntentFilter(Intent.ACTION_BATTERY_CHANGED))!!)
     }
 
     /**
@@ -109,7 +109,11 @@ class BatteryReceiver(private val service: ForegroundService) : BroadcastReceive
         val preferences = PreferenceManager.getDefaultSharedPreferences(context)
         val showTempInNotif = preferences.getBoolean("temp_in_notif", false)
 
-        if (!showTempInNotif) service.setNotificationContentText(service.getString(R.string.waiting_description)) else service.setNotificationContentText(Utils.getBatteryInfo(service, intent, useFahrenheit))
+        if (!showTempInNotif) {
+            service.setNotificationContentText(service.getString(R.string.waiting_description))
+        } else {
+            service.setNotificationContentText(Utils.getBatteryInfo(service, intent, useFahrenheit))
+        }
         // when the service was "freshly started", charge until limit
         if (!chargedToLimit && batteryLevel < limitPercentage) {
             if (switchState(CHARGE_FULL)) {

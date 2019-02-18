@@ -10,9 +10,19 @@ import android.util.Log
 import android.util.TypedValue
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.view.View.OnFocusChangeListener
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
+import android.widget.*
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat
+import com.slash.batterychargelimit.Constants
 import com.slash.batterychargelimit.Constants.AUTO_RESET_STATS
-import com.slash.batterychargelimit.Constants.DISABLE_CHARGE_NOW
 import com.slash.batterychargelimit.Constants.CHARGE_LIMIT_ENABLED
+import com.slash.batterychargelimit.Constants.DISABLE_CHARGE_NOW
 import com.slash.batterychargelimit.Constants.LIMIT
 import com.slash.batterychargelimit.Constants.LIMIT_BY_VOLTAGE
 import com.slash.batterychargelimit.Constants.MIN
@@ -27,16 +37,6 @@ import com.slash.batterychargelimit.receivers.EnableWidgetIntentReceiver
 import com.slash.batterychargelimit.settings.CtrlFileHelper
 import com.slash.batterychargelimit.settings.PrefsFragment
 import eu.chainfire.libsuperuser.Shell
-import android.view.View.OnFocusChangeListener
-import android.view.View
-import android.view.inputmethod.EditorInfo
-import android.view.inputmethod.InputMethodManager
-import android.widget.*
-import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
-import androidx.core.content.ContextCompat
-import com.slash.batterychargelimit.Constants
 import java.lang.ref.WeakReference
 
 
@@ -69,10 +69,10 @@ class MainActivity : AppCompatActivity() {
                     MSG_UPDATE_VOLTAGE_THRESHOLD -> {
                         val voltage = msg.data.getString(VOLTAGE_THRESHOLD)
                         activity.currentThreshold = voltage!!
-                        activity.currentThresholdTextView.setText(voltage)
+                        activity.currentThresholdTextView.text = voltage
                         if (activity.settings.getString(Constants.DEFAULT_VOLTAGE_LIMIT, null) == null) {
                             activity.settings.edit().putString(Constants.DEFAULT_VOLTAGE_LIMIT, voltage).apply()
-                            activity.defaultThresholdTextView.setText(voltage)
+                            activity.defaultThresholdTextView.text = voltage
                         }
                     }
                 }
@@ -86,7 +86,7 @@ class MainActivity : AppCompatActivity() {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val toolbar = findViewById(R.id.toolbar) as Toolbar
+        val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
 
         // Exit immediately if no root support
@@ -206,10 +206,10 @@ class MainActivity : AppCompatActivity() {
 
         Utils.getCurrentVoltageThresholdAsync(this@MainActivity, mHandler)
 
-        currentThreshold = settings.getString(Constants.DEFAULT_VOLTAGE_LIMIT, "4300")
+        currentThreshold = settings.getString(Constants.DEFAULT_VOLTAGE_LIMIT, "4300")!!
 
         customThresholdEditView.setText(settings.getString(Constants.CUSTOM_VOLTAGE_LIMIT, "NA"))
-        defaultThresholdTextView.setText(settings.getString(Constants.DEFAULT_VOLTAGE_LIMIT, "NA"))
+        defaultThresholdTextView.text = settings.getString(Constants.DEFAULT_VOLTAGE_LIMIT, "NA")
 
         customThresholdEditView.onFocusChangeListener = object : OnFocusChangeListener {
             override fun onFocusChange(v: View, hasFocus: Boolean) {

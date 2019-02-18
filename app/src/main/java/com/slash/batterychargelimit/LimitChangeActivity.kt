@@ -19,7 +19,7 @@ class LimitChangeActivity : AppCompatActivity() {
         val batteryLimitMime = this.getString(R.string.mime_battery_limit)
         val intent = intent
         if (Intent.ACTION_SEND == intent.action && batteryLimitMime == intent.type) {
-            Utils.handleLimitChange(this, intent.extras.get(Intent.EXTRA_TEXT))
+            Utils.handleLimitChange(this, intent.extras?.get(Intent.EXTRA_TEXT))
         } else {
             Toast.makeText(this, R.string.intent_invalid, Toast.LENGTH_LONG).show()
         }

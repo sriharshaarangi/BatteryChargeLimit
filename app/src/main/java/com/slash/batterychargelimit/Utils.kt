@@ -13,13 +13,13 @@ import android.util.Log
 import android.widget.Toast
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.slash.batterychargelimit.Constants.CHARGE_LIMIT_ENABLED
 import com.slash.batterychargelimit.Constants.CHARGE_OFF_KEY
 import com.slash.batterychargelimit.Constants.CHARGE_ON_KEY
 import com.slash.batterychargelimit.Constants.CHARGING_CHANGE_TOLERANCE_MS
 import com.slash.batterychargelimit.Constants.DEFAULT_DISABLED
 import com.slash.batterychargelimit.Constants.DEFAULT_ENABLED
 import com.slash.batterychargelimit.Constants.DEFAULT_FILE
-import com.slash.batterychargelimit.Constants.CHARGE_LIMIT_ENABLED
 import com.slash.batterychargelimit.Constants.FILE_KEY
 import com.slash.batterychargelimit.Constants.LIMIT
 import com.slash.batterychargelimit.Constants.MIN
@@ -30,7 +30,8 @@ import com.slash.batterychargelimit.settings.PrefsFragment
 import eu.chainfire.libsuperuser.Shell
 import java.io.InputStreamReader
 import java.nio.charset.Charset
-import java.util.concurrent.*
+import java.util.concurrent.ExecutorService
+import java.util.concurrent.Executors
 
 object Utils {
     private val TAG = Utils::class.java.simpleName
@@ -65,22 +66,6 @@ object Utils {
 
     fun refreshSu() {
         suShell = Shell.Builder().setWantSTDERR(false).useSU().open()
-    }
-    /**
-     * Helper function to wait for the su shell in a blocking fashion (max. 3 seconds).
-     * Chainfire considers this a bad practice, so use wisely!
-     */
-    fun waitForShell() {
-        try {
-            executor.submit { suShell.waitForIdle() }.get(3, TimeUnit.SECONDS)
-        } catch (e: InterruptedException) {
-            Log.wtf(TAG, e)
-        } catch (e: ExecutionException) {
-            Log.wtf(TAG, e)
-        } catch (e: TimeoutException) {
-            Log.w(TAG, "Timeout: Shell blocked more than 3 seconds, continue app execution.", e)
-        }
-
     }
 
     val executor: ExecutorService = Executors.newSingleThreadExecutor()
@@ -155,7 +140,7 @@ object Utils {
 
     fun isPhonePluggedIn(context: Context): Boolean {
         val batteryIntent = context.applicationContext.registerReceiver(null,
-                IntentFilter(Intent.ACTION_BATTERY_CHANGED))
+                IntentFilter(Intent.ACTION_BATTERY_CHANGED))!!
         return (batteryIntent.getIntExtra(BatteryManager.EXTRA_STATUS, -1)
                 == BatteryManager.BATTERY_STATUS_CHARGING
                 || batteryIntent.getIntExtra(BatteryManager.EXTRA_PLUGGED, -1) > 0)
@@ -213,8 +198,11 @@ object Utils {
         settings.edit().putInt(LIMIT, limit).putInt(MIN, min).apply()
     }
 
-    fun handleLimitChange(context: Context, newLimit: Any) {
+    fun handleLimitChange(context: Context, newLimit: Any?) {
         try {
+            if (newLimit == null) {
+                throw NumberFormatException("null")
+            }
             val limit = if (newLimit is Number) {
                 newLimit.toInt()
             } else {
@@ -341,7 +329,7 @@ object Utils {
         return Constants.DEFAULT_VOLTAGE_FILE
     }
 
-    var vfInitialized = false
+    private var vfInitialized = false
 
     fun setVoltageThreshold(voltage: String?, onlyIfEnabled: Boolean, context: Context, handler: Handler?) {
         if (onlyIfEnabled && !getSettings(context).getBoolean(Constants.LIMIT_BY_VOLTAGE, false)) {
@@ -384,7 +372,7 @@ object Utils {
                         val msg = handler.obtainMessage(MainActivity.MSG_UPDATE_VOLTAGE_THRESHOLD)
                         val bundle = Bundle()
                         bundle.putString(MainActivity.VOLTAGE_THRESHOLD, voltage)
-                        msg.setData(bundle)
+                        msg.data = bundle
                         handler.sendMessage(msg)
                     }
                 }
@@ -405,7 +393,7 @@ object Utils {
                 return true
             }
         }
-        Log.i(TAG, newThreshold + " not valid. Current threshold: " + currentThreshold)
+        Log.i(TAG, "$newThreshold not valid. Current threshold: $currentThreshold")
         return false
     }
 }

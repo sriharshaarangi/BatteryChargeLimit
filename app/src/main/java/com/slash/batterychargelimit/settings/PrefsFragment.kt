@@ -7,17 +7,17 @@ import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.View
-import android.view.View.OVER_SCROLL_NEVER
 import android.view.ViewGroup
-import android.widget.ListView
-
 import androidx.annotation.AttrRes
 import androidx.appcompat.app.AlertDialog
-import androidx.preference.*
+import androidx.fragment.app.DialogFragment
+import androidx.preference.ListPreference
+import androidx.preference.Preference
+import androidx.preference.PreferenceFragmentCompat
+import androidx.preference.SwitchPreference
 import com.slash.batterychargelimit.Constants
 import com.slash.batterychargelimit.R
 import com.slash.batterychargelimit.activities.CustomCtrlFileDataActivity
-import androidx.fragment.app.DialogFragment
 import com.slash.batterychargelimit.activities.MainActivity
 
 class PrefsFragment : PreferenceFragmentCompat() {
@@ -45,7 +45,7 @@ class PrefsFragment : PreferenceFragmentCompat() {
                 dialogFragment.show(this.fragmentManager!!, ControlFileDialogFragmentCompat::class.java.simpleName)
             }
         } else {
-            super.onDisplayPreferenceDialog(preference);
+            super.onDisplayPreferenceDialog(preference)
         }
     }
 

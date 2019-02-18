@@ -15,8 +15,8 @@ class EnableWidget : AppWidgetProvider() {
     override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
         val remoteViews = RemoteViews(context.packageName, R.layout.widget_button)
         val settings = Utils.getSettings(context)
-        val is_enabled = settings.getBoolean(CHARGE_LIMIT_ENABLED, false)
-        remoteViews.setImageViewResource(R.id.enable, EnableWidgetIntentReceiver.getImage(is_enabled))
+        val isEnabled = settings.getBoolean(CHARGE_LIMIT_ENABLED, false)
+        remoteViews.setImageViewResource(R.id.enable, EnableWidgetIntentReceiver.getImage(isEnabled))
         remoteViews.setOnClickPendingIntent(R.id.enable, buildButtonPendingIntent(context))
 
         pushWidgetUpdate(context, remoteViews)

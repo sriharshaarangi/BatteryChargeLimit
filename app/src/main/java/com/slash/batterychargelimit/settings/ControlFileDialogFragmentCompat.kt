@@ -2,7 +2,6 @@ package com.slash.batterychargelimit.settings
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,9 +9,7 @@ import android.widget.ArrayAdapter
 import android.widget.ListView
 import android.widget.RadioButton
 import android.widget.TextView
-import androidx.appcompat.app.AlertDialog
 import androidx.preference.PreferenceDialogFragmentCompat
-import com.slash.batterychargelimit.Constants
 import com.slash.batterychargelimit.ControlFile
 import com.slash.batterychargelimit.R
 import com.slash.batterychargelimit.Utils
@@ -24,8 +21,7 @@ class ControlFileDialogFragmentCompat : PreferenceDialogFragmentCompat() {
     override fun onCreateDialogView(context: Context?): View {
         super.onCreateDialogView(context)
         ctrlFiles = Utils.getCtrlFiles(context!!)
-        val v = ListView(context)
-        return v
+        return ListView(context)
     }
 
     override fun onBindDialogView(view: View?) {
@@ -89,9 +85,9 @@ class ControlFileDialogFragmentCompat : PreferenceDialogFragmentCompat() {
     companion object {
         fun newInstance(key: String) : ControlFileDialogFragmentCompat{
             val instance = ControlFileDialogFragmentCompat()
-            val b = Bundle(1);
-            b.putString(ARG_KEY, key);
-            instance.setArguments(b);
+            val b = Bundle(1)
+            b.putString(ARG_KEY, key)
+            instance.arguments = b
             return instance
         }
     }
