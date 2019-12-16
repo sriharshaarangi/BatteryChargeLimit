@@ -195,5 +195,12 @@
     "chargeOn": "0",
     "chargeOff": "1",
     "experimental": true
+  },
+  {
+    "file": "/proc/mtk_battery_cmd/current_cmd",
+    "label": "MtkBattery",
+    "details": "Alcatel 5059D, other MediaTek devices",
+    "chargeOn": "0 0",
+    "chargeOff": "0 1"
   }
 ]
