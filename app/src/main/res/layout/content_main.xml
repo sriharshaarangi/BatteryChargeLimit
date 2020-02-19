@@ -1,138 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fillViewport="true"
-    android:background="?attr/layout_background"
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:fillViewport="true"
+android:background="?attr/layoutBackground"
+style="@style/CustomScrollView"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.slash.batterychargelimit.activities.MainActivity"
-    tools:showIn="@layout/activity_main">
+tools:context="com.slash.batterychargelimit.activities.MainActivity"
+tools:showIn="@layout/activity_main">
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+        <com.google.android.material.card.MaterialCardView
+            style="@style/CustomMaterialCard">
 
-            <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/card_margin"
-                android:layout_marginLeft="@dimen/card_margin"
-                android:layout_marginRight="@dimen/card_margin"
-                android:foreground="?selectableItemBackground"
-                card_view:cardBackgroundColor="?attr/card_color"
-                card_view:cardCornerRadius="@dimen/card_corner_radius"
-                card_view:cardElevation="3dp"
-                card_view:contentPadding="@dimen/card_content_padding">
+                android:orientation="vertical">
 
-                <RelativeLayout
+                <Switch
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:text="@string/enable"
+                    android:textSize="16sp"
+                    android:id="@+id/enable_switch"
+                    android:textColor="?attr/primaryText"/>
 
-                    <Switch
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/enable"
-                        android:textSize="16sp"
-                        android:id="@+id/enable_switch"
-                        android:textColor="?attr/primary_text"/>
-
-                </RelativeLayout>
-            </android.support.v7.widget.CardView>
-
-            <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/card_margin"
-                android:layout_marginLeft="@dimen/card_margin"
-                android:layout_marginRight="@dimen/card_margin"
-                android:foreground="?selectableItemBackground"
-                card_view:cardBackgroundColor="?attr/card_color"
-                card_view:cardCornerRadius="@dimen/card_corner_radius"
-                card_view:cardElevation="3dp"
-                card_view:contentPadding="@dimen/card_content_padding">
-
-                <RelativeLayout
+                <Switch
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:text="@string/limit_by_voltage"
+                    android:textSize="16sp"
+                    android:id="@+id/limit_by_voltage"
+                    android:layout_marginTop="12dp"
+                    android:textColor="?attr/primaryText"
+                    />
 
-                    <LinearLayout
-                        android:id="@+id/lin_spinners"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:weightSum="2">
-
-                        <NumberPicker
-                            android:theme="@style/AppTheme.Picker"
-                            android:id="@+id/max_picker"
-                            android:layout_weight="1"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="3dp"
-                            android:layout_marginRight="3dp" />
-
-                        <NumberPicker
-                            android:theme="@style/AppTheme.Picker"
-                            android:id="@+id/min_picker"
-                            android:layout_weight="1"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="3dp"
-                            android:layout_marginLeft="3dp" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/lin_limits"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:weightSum="2"
-                        android:layout_below="@+id/lin_spinners"
-                        android:orientation="horizontal"
-                        android:gravity="center_horizontal">
-
-                        <TextView
-                            android:id="@+id/max_text"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:textSize="16sp"
-                            android:textColor="?attr/primary_text"
-                            android:layout_marginEnd="6dp"
-                            android:layout_marginRight="6dp" />
-
-                        <TextView
-                            android:id="@+id/min_text"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:textColor="?attr/primary_text"
-                            android:textSize="16sp"
-                            android:layout_marginStart="6dp"
-                            android:layout_marginLeft="6dp" />
-
-                    </LinearLayout>
-
-                    <Switch
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/notify"
-                        android:textSize="16sp"
-                        android:id="@+id/notification_sound"
-                        android:layout_below="@+id/lin_limits"
-                        android:layout_marginTop="12dp"
-                        android:textColor="?attr/primary_text"
-                        />
-
+                <Switch
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/disable_charge_now"
+                    android:textSize="16sp"
+                    android:layout_marginTop="12dp"
+                    android:id="@+id/disable_charge_switch"
+                    android:layout_below="@+id/status_ctrl_data"
+                    android:textColor="?attr/primaryText"/>
                     <Switch
                         android:id="@+id/charge_below_lower_limit"
                         android:layout_width="match_parent"
@@ -144,114 +63,276 @@
                         android:layout_marginTop="12dp"
                         android:text="@string/charge_below_lower_limit"
                         android:textSize="16sp" />
+                         </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
 
-                </RelativeLayout>
-            </android.support.v7.widget.CardView>
 
-            <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        <!--FUTURE add live current-->
+        <com.google.android.material.card.MaterialCardView
+            style="@style/CustomMaterialCard">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
+                    android:id="@+id/status_label"
+                    android:text="@string/status"
+                    android:textSize="16sp"
+                    android:layout_marginRight="5dp"
+                    android:textColor="?attr/primaryText"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/status"
+                    android:layout_toEndOf="@+id/status_label"
+                    android:textSize="16sp"
+                    android:layout_toRightOf="@+id/status_label" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/battery_info"
+                    android:layout_below="@+id/status"
+                    android:textSize="16sp"
+                    android:textColor="?attr/secondaryText" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_below="@+id/battery_info"
+                    android:id="@+id/status_ctrl_data_label"
+                    android:text="@string/status_ctrl_data_label"
+                    android:textSize="16sp"
+                    android:textColor="?attr/primaryText" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/status_ctrl_data"
+                    android:layout_below="@+id/status_ctrl_data_label"
+                    android:textSize="16sp"
+                    android:text="@string/file_data"
+                    android:textColor="?attr/secondaryText"/>
+
+            </RelativeLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            style="@style/CustomMaterialCard">
+
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/card_margin"
-                android:layout_marginLeft="@dimen/card_margin"
-                android:layout_marginRight="@dimen/card_margin"
-                android:foreground="?selectableItemBackground"
-                card_view:cardBackgroundColor="?attr/card_color"
-                card_view:cardCornerRadius="@dimen/card_corner_radius"
-                card_view:cardElevation="3dp"
-                card_view:contentPadding="@dimen/card_content_padding">
+                android:id="@+id/relative_layout_1">
 
-                <RelativeLayout
+                <LinearLayout
+                    android:id="@+id/lin_spinners"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="5dp"
-                        android:id="@+id/status_label"
-                        android:text="@string/status"
-                        android:textSize="16sp"
-                        android:layout_marginRight="5dp"
-                        android:textColor="?attr/primary_text"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/status"
-                        android:layout_toEndOf="@+id/status_label"
-                        android:textSize="16sp"
-                        android:layout_toRightOf="@+id/status_label" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/battery_info"
-                        android:layout_below="@+id/status"
-                        android:textSize="16sp"
-                        android:textColor="?attr/secondary_text" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:layout_below="@+id/battery_info"
-                        android:id="@+id/status_ctrl_data_label"
-                        android:text="@string/status_ctrl_data_label"
-                        android:textSize="16sp"
-                        android:textColor="?attr/primary_text" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/status_ctrl_data"
-                        android:layout_below="@+id/status_ctrl_data_label"
-                        android:textSize="16sp"
-                        android:text="@string/file_data"
-                        android:textColor="?attr/secondary_text"/>
-
-                </RelativeLayout>
-            </android.support.v7.widget.CardView>
-
-            <!-- Bottom most card - include android:layout_marginBottom for proper looks -->
-            <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/card_margin"
-                android:layout_marginLeft="@dimen/card_margin"
-                android:layout_marginRight="@dimen/card_margin"
-                android:layout_marginBottom="@dimen/card_bottom_margin"
-                android:foreground="?selectableItemBackground"
-                card_view:cardBackgroundColor="?attr/card_color"
-                card_view:cardCornerRadius="@dimen/card_corner_radius"
-                card_view:cardElevation="3dp"
-                card_view:contentPadding="@dimen/card_content_padding">
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <Switch
-                        android:id="@+id/auto_stats_reset"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/auto_reset_stats"
-                        android:textSize="16sp"
-                        android:layout_marginBottom="10dp"
-                        android:textColor="?attr/primary_text" />
+                        android:orientation="vertical"
+                        android:gravity="center_horizontal"
+                        android:layout_weight="1">
+                        <NumberPicker
+                            android:theme="@style/CustomPicker"
+                            android:id="@+id/max_picker"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:layout_marginLeft="3dp"
+                            android:layout_marginRight="3dp"
+                            android:descendantFocusability="blocksDescendants"
+                            />
+                        <TextView
+                            android:id="@+id/max_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="16sp"
+                            android:textColor="?attr/primaryText"
+                            android:layout_marginLeft="6dp"
+                            android:layout_marginRight="6dp"
+                            android:gravity="center_horizontal"
+                            />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal">
+                        <NumberPicker
+                            android:theme="@style/CustomPicker"
+                            android:id="@+id/min_picker"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="3dp"
+                            android:layout_marginRight="3dp"
+                            android:gravity="center_horizontal"
+                            android:descendantFocusability="blocksDescendants"
+                            />
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/min_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="?attr/primaryText"
+                            android:textSize="16sp"
+                            android:layout_marginLeft="6dp"
+                            android:layout_marginRight="6dp"
+                            android:gravity="center_horizontal"/>
+                    </LinearLayout>
+                </LinearLayout>
 
-                    <Button style="@style/Widget.AppCompat.Button.Colored"
+                <!--<com.google.android.material.checkbox.MaterialCheckBox-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="@string/notify"-->
+                    <!--android:textSize="16sp"-->
+                    <!--android:id="@+id/notification_sound"-->
+                    <!--android:layout_below="@+id/lin_spinners"-->
+                    <!--android:layout_marginTop="12dp"-->
+                    <!--android:textColor="?attr/primaryText"-->
+                    <!--/>-->
+
+
+                <!--<com.google.android.material.checkbox.MaterialCheckBox-->
+                    <!--android:id="@+id/auto_stats_reset"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="@string/auto_reset_stats"-->
+                    <!--android:textSize="16sp"-->
+                    <!--android:layout_marginTop="-12dp"-->
+                    <!--android:textColor="?attr/primaryText"-->
+                    <!--android:layout_below="@id/notification_sound"/>-->
+
+                <com.google.android.material.button.MaterialButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/reset_stats"
+                    app:strokeColor="?attr/colorAccent"
+                    app:strokeWidth="1dp"
+                    app:backgroundTint="?attr/cardColor"
+                    android:textColor="?attr/colorAccent"
+                    android:textAllCaps="false"
+                    android:id="@+id/reset_battery_stats"
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@id/lin_spinners"
+                    app:rippleColor="@color/colorAccentLight"
+                    android:layout_marginTop="6dp"
+                    android:stateListAnimator="@null"
+                    android:elevation="0dp"/>
+
+            </RelativeLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Bottom most card - include android:layout_marginBottom for proper looks -->
+        <com.google.android.material.card.MaterialCardView
+            style="@style/CustomMaterialCard"
+            android:layout_marginBottom="@dimen/card_bottom_margin">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="true"
+                android:focusableInTouchMode="true">
+
+                <GridLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/voltage_grid_layout"
+                    android:columnCount="2">
+
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/reset_stats"
-                        android:id="@+id/reset_battery_stats"
-                        android:layout_centerHorizontal="true"
-                        android:layout_below="@+id/auto_stats_reset" />
+                        android:id="@+id/voltage_threshold_text"
+                        android:layout_below="@id/limit_by_voltage"
+                        android:text="@string/custom_voltage_threshold"
+                        android:textSize="16sp"
+                        android:textColor="?attr/primaryText"
+                        android:layout_gravity="center_vertical|left"/>
 
-                </RelativeLayout>
-            </android.support.v7.widget.CardView>
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/text_input_layout"
+                        android:layout_toRightOf="@+id/voltage_threshold_text"
+                        app:boxStrokeWidth="5dp"
+                        android:layout_below="@id/limit_by_voltage"
+                        style="@style/Base.Widget.MaterialComponents.TextInputLayout"
+                        app:boxStrokeColor="@color/custom_box"
+                        android:layout_gravity="center_vertical|right"
+                        >
+                        <com.slash.batterychargelimit.CustomEditText
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/voltage_threshold"
+                            android:numeric="decimal"
+                            android:maxLines="1"
+                            android:minWidth="100dp"
+                            android:gravity="center"
+                            android:imeOptions="actionGo"
+                            android:imeActionId="666"
+                            android:imeActionLabel="Some Label"
+                            android:textColor="?attr/primaryText"
+                            android:background="@null"
+                            android:padding="6dp"
+                            android:textSize="16sp"
+                            />
 
-        </LinearLayout>
-    </ScrollView>
-</LinearLayout>
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="?attr/primaryText"
+                        android:textSize="16sp"
+                        android:text="Current Voltage Threshold"
+                        android:layout_marginTop="8dp"
+                        android:id="@+id/current_voltage_threshold_label"
+                        android:layout_gravity="center_vertical|left"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="?attr/primaryText"
+                        android:textSize="16sp"
+                        android:layout_marginTop="8dp"
+                        android:id="@+id/current_voltage_threshold"
+                        android:layout_gravity="center_vertical|right"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="?attr/primaryText"
+                        android:textSize="16sp"
+                        android:text="Default Voltage Threshold"
+                        android:layout_marginTop="16dp"
+                        android:id="@+id/default_voltage_threshold_label"
+                        android:layout_gravity="center_vertical|left"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="?attr/primaryText"
+                        android:textSize="16sp"
+                        android:layout_marginTop="16dp"
+                        android:id="@+id/default_voltage_threshold"
+                        android:layout_gravity="center_vertical|right"/>
+
+                </GridLayout>
+            </RelativeLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+    </LinearLayout>
+</ScrollView>

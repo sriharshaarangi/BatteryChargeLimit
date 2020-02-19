@@ -3,7 +3,7 @@ package com.slash.batterychargelimit.settings
 import android.app.ProgressDialog
 import android.content.Context
 import android.os.Handler
-import com.slash.batterychargelimit.SharedMethods
+import com.slash.batterychargelimit.Utils
 
 object CtrlFileHelper {
 
@@ -15,9 +15,9 @@ object CtrlFileHelper {
         dialog.isIndeterminate = true
         dialog.setCanceledOnTouchOutside(false)
         dialog.show()
-        SharedMethods.executor.submit {
-            SharedMethods.validateCtrlFiles(context)
-            SharedMethods.suShell.waitForIdle()
+        Utils.executor.submit {
+            Utils.validateCtrlFiles(context)
+            Utils.suShell.waitForIdle()
             handler.post {
                 dialog.dismiss()
                 callback?.run()

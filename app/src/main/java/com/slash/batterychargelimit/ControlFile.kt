@@ -1,6 +1,6 @@
 package com.slash.batterychargelimit
 
-import android.support.annotation.Keep
+import androidx.annotation.Keep
 
 /**
  * Created by Michael on 31.03.2017.
@@ -11,7 +11,8 @@ import android.support.annotation.Keep
  */
 class ControlFile {
 
-    @Keep val file: String? = null
+    @Keep
+    val file: String? = null
     @Keep val label: String? = null
     @Keep val details: String? = null
     @Keep val chargeOn: String? = null
@@ -31,7 +32,7 @@ class ControlFile {
         }
 
     fun validate() {
-        val suShell = SharedMethods.suShell
+        val suShell = Utils.suShell
         if (!checked) {
             suShell.addCommand("test -e " + file!!, 0) { _, exitCode, _ ->
                 valid = 0 == exitCode

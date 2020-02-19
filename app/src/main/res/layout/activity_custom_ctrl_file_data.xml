@@ -5,9 +5,27 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
-    android:background="?attr/layout_background"
+    android:background="?attr/layoutBackground"
+    android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.slash.batterychargelimit.activities.CustomCtrlFileData">
+    tools:context="com.slash.batterychargelimit.activities.CustomCtrlFileDataActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/cardColor"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:titleTextColor="?attr/primaryText"
+            app:title="@string/custom_ctrl_file_data_setup_title"
+            android:alpha="0.9"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    </com.google.android.material.appbar.AppBarLayout>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -18,20 +36,11 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/card_margin"
-                android:layout_marginLeft="@dimen/card_margin"
-                android:layout_marginRight="@dimen/card_margin"
-                android:foreground="?selectableItemBackground"
-                card_view:cardBackgroundColor="?attr/card_color"
-                card_view:cardCornerRadius="@dimen/card_corner_radius"
-                card_view:cardElevation="3dp"
-                card_view:contentPadding="@dimen/card_content_padding">
+            <com.google.android.material.card.MaterialCardView
+                style="@style/CustomMaterialCard">
 
-                <RelativeLayout
+
+            <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
@@ -41,85 +50,127 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="16sp"
-                        android:textColor="?attr/primary_text"/>
+                        android:textColor="?attr/primaryText"/>
 
-                    <EditText
-                        android:id="@+id/edit_path_file"
+                    <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:id="@+id/text_input_layout"
+                        style="@style/CustomTextInputLayoutStyle"
                         android:layout_below="@+id/path_data_title"
-                        android:hint="@string/custom_ctrl_file_path_hint"
-                        android:textColor="?attr/primary_text"
-                        android:textColorHint="?attr/secondary_text"
-                        />
+                        android:layout_gravity="center_vertical|right">
+                        <com.slash.batterychargelimit.CustomEditText
+                            android:id="@+id/edit_path_file"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/custom_ctrl_file_path_hint"
+                            android:textColor="?attr/primaryText"
+                            android:textColorHint="?attr/tertiaryText"
+
+                            android:padding="10dp"
+                            android:maxLines="1"
+                            android:imeOptions="actionGo"
+                            android:imeActionId="666"
+                            android:imeActionLabel="Some Label"
+                            />
+
+                    </com.google.android.material.textfield.TextInputLayout>
 
                     <TextView
                         android:id="@+id/path_on_title"
                         android:layout_marginTop="15dp"
                         android:text="@string/custom_ctrl_file_enabled_title"
-                        android:layout_below="@+id/edit_path_file"
+                        android:layout_below="@+id/text_input_layout"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="16sp"
-                        android:textColor="?attr/primary_text" />
+                        android:textColor="?attr/primaryText" />
 
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/text_input_layout2"
+                    style="@style/CustomTextInputLayoutStyle"
+                    android:layout_below="@+id/path_on_title"
+                    android:layout_gravity="center_vertical|right">
                     <EditText
                         android:id="@+id/edit_path_enabled"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/path_on_title"
                         android:hint="@string/custom_ctrl_file_enabled_hint"
-                        android:textColor="?attr/primary_text"
-                        android:textColorHint="?attr/secondary_text"
+                        android:textColor="?attr/primaryText"
+                        android:textColorHint="?attr/tertiaryText"
+                        android:padding="10dp"
+                        android:maxLines="1"
+                        android:imeOptions="actionGo"
+                        android:imeActionId="666"
+                        android:imeActionLabel="Some Label"
                         />
+                </com.google.android.material.textfield.TextInputLayout>
 
                     <TextView
                         android:id="@+id/path_off_title"
                         android:layout_marginTop="15dp"
                         android:text="@string/custom_ctrl_file_disabled_title"
-                        android:layout_below="@+id/edit_path_enabled"
+                        android:layout_below="@+id/text_input_layout2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="16sp"
-                        android:textColor="?attr/primary_text" />
+                        android:textColor="?attr/primaryText" />
 
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/text_input_layout3"
+                    style="@style/CustomTextInputLayoutStyle"
+                    android:layout_below="@+id/path_off_title"
+                    android:layout_gravity="center_vertical|right">
                     <EditText
                         android:id="@+id/edit_path_disabled"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/path_off_title"
                         android:hint="@string/custom_ctrl_file_disabled_hint"
-                        android:textColor="?attr/primary_text"
-                        android:textColorHint="?attr/secondary_text"
+                        android:textColor="?attr/primaryText"
+                        android:textColorHint="?attr/tertiaryText"
+                        android:padding="10dp"
+                        android:maxLines="1"
+                        android:imeOptions="actionGo"
+                        android:imeActionId="666"
+                        android:imeActionLabel="Done"
                         />
+                </com.google.android.material.textfield.TextInputLayout>
 
-                    <Button style="@style/Widget.AppCompat.Button.Colored"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/btn_update_custom"
-                        android:layout_marginTop="10dp"
-                        android:layout_below="@+id/edit_path_disabled"
-                        android:text="@string/custom_ctrl_file_update_data"/>
+                    <!--<androidx.appcompat.widget.AppCompatButton style="@style/Widget.AppCompat.Button.Colored"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:id="@+id/btn_update_custom"-->
+                        <!--android:layout_marginTop="10dp"-->
+                        <!--android:layout_below="@+id/edit_path_disabled"-->
+                        <!--android:textColor="?attr/layoutBackground"-->
+                        <!--android:text="@string/custom_ctrl_file_update_data"/>-->
+
+                <com.google.android.material.button.MaterialButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/btn_update_custom"
+                    android:layout_marginTop="10dp"
+                    android:layout_below="@+id/text_input_layout3"
+                    android:textColor="?attr/layoutBackground"
+                    android:textAllCaps="false"
+                    android:backgroundTint="?attr/colorAccent"
+                    android:text="@string/custom_ctrl_file_update_data"/>
 
                 </RelativeLayout>
-            </android.support.v7.widget.CardView>
+            </com.google.android.material.card.MaterialCardView>
 
             <!-- Bottom most card - include android:layout_marginBottom for proper looks -->
-            <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/card_margin"
-                android:layout_marginLeft="@dimen/card_margin"
-                android:layout_marginRight="@dimen/card_margin"
-                android:layout_marginBottom="@dimen/card_bottom_margin"
-                android:foreground="?selectableItemBackground"
-                card_view:cardBackgroundColor="?attr/card_color"
-                card_view:cardCornerRadius="@dimen/card_corner_radius"
-                card_view:cardElevation="3dp"
-                card_view:contentPadding="@dimen/card_content_padding">
+            <com.google.android.material.card.MaterialCardView
+                style="@style/CustomMaterialCard"
+                android:layout_marginBottom="@dimen/card_bottom_margin">
 
-                <RelativeLayout
+
+            <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
@@ -128,7 +179,7 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/custom_data_title"
                         android:text="@string/current_ctrl_data_title"
-                        android:textColor="?attr/primary_text"
+                        android:textColor="?attr/primaryText"
                         android:textSize="16sp" />
 
                     <TextView
@@ -139,7 +190,7 @@
                         android:layout_marginTop="5dp"
                         android:textSize="14sp"
                         android:hint="@string/custom_ctrl_file_updated_info"
-                        android:textColorHint="?attr/secondary_text"/>
+                        android:textColorHint="?attr/secondaryText"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -149,10 +200,10 @@
                         android:layout_marginTop="20dp"
                         android:textSize="14sp"
                         android:text="@string/custom_ctrl_file_heads_up"
-                        android:textColor="?attr/secondary_text"/>
+                        android:textColor="?attr/secondaryText"/>
 
                 </RelativeLayout>
-            </android.support.v7.widget.CardView>
+            </com.google.android.material.card.MaterialCardView>
 
         </LinearLayout>
     </ScrollView>

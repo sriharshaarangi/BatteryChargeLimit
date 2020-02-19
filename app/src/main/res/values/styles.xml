@@ -1,71 +1,226 @@
-<resources>
-    <style name="AppTheme.Light" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-
-        <item name="primary_text">#000000</item>
-        <item name="secondary_text">#757575</item>
-        <item name="card_color">#ffffff</item>
-        <item name="layout_background">#eeeeee</item>
+<!--This file is still a WIP-->
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <style name="BaseTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
 
         <item name="android:textColorPrimary" >@color/primary_text_color_selector</item>
-        <item name="android:textColorSecondary">?attr/secondary_text</item>
+        <item name="android:textColorSecondary">?attr/secondaryText</item>
 
-        <item name="android:alertDialogTheme">@style/MyAlertDialogStyle</item>
-        <item name="alertDialogTheme">@style/MyAlertDialogStyle</item>
+        <item name="android:alertDialogTheme">@style/CustomAlertDialog</item>
+        <item name="alertDialogTheme">@style/CustomAlertDialog</item>
 
-        <item name="colorSwitchThumbNormal">?attr/primary_text</item>
-        <item name="android:colorForeground">?attr/primary_text</item>
-    </style>
+        <item name="elevation">0dp</item>
 
-    <style name="AppTheme.Dark" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorControlNormal">?attr/secondaryBackground</item>
+        <item name="colorControlActivated">?attr/colorAccent</item>
 
-        <item name="primary_text">#ffffff</item>
-        <item name="secondary_text">#9e9e9e</item>
-        <item name="card_color">#212121</item>
-        <item name="layout_background">#000000</item>
+        <item name="preferenceTheme">@style/CustomPreferenceThemeOverlay</item>
 
-        <item name="android:textColorPrimary" >@color/primary_text_color_selector</item>
-        <item name="android:textColorSecondary">?attr/secondary_text</item>
+        <item name="buttonTint">@color/checkbox_filter</item>
 
-        <item name="android:alertDialogTheme">@style/MyAlertDialogStyle</item>
-        <item name="alertDialogTheme">@style/MyAlertDialogStyle</item>
-
-        <item name="colorSwitchThumbNormal">?attr/primary_text</item>
-        <item name="android:colorForeground">?attr/primary_text</item>
+        <item name="android:scrollViewStyle">@style/CustomScrollView</item>
+        <item name="android:listViewStyle">@style/CustomListView</item>
+        <!--The following are for coloring switch-->
+        <!--<item name="colorSwitchThumbNormal">?attr/primary_text</item>-->
+        <item name="android:colorForeground">?attr/primaryText</item>
 
     </style>
 
-    <style name="AppTheme.Light.NoActionBar">
+    <style name="PreferenceScreenStyle" parent="@style/PreferenceThemeOverlay.v14.Material">
+        <item name="android:scrollViewStyle">@style/CustomScrollView</item>
+        <item name="android:listViewStyle">@style/CustomListView</item>
+    </style>
+
+    <style name="CustomPreferenceThemeOverlay" parent="PreferenceThemeOverlay.v14.Material">
+        <item name="android:colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorControlNormal">?attr/secondaryBackground</item>
+        <item name="colorControlActivated">?attr/colorAccent</item>
+        <item name="colorControlHighlight">?attr/colorAccent</item>
+        <item name="android:scrollViewStyle">@style/CustomScrollView</item>
+        <item name="android:listViewStyle">@style/CustomListView</item>
+        <item name="buttonTint">@color/checkbox_filter</item>
+        <item name="android:alertDialogTheme">@style/CustomAlertDialog</item>
+        <item name="alertDialogTheme">@style/CustomAlertDialog</item>
+        <!--<item name="android:background">?attr/cardColor</item> did not allow ripple color-->
+        <item name="android:background">@null</item>
+        <item name="android:textColorPrimary">@color/primary_text_color_selector</item>
+        <item name="android:textColorSecondary">?attr/secondaryText</item>
+    </style>
+
+    <style name="BaseThemeLight" parent="BaseTheme">
+        <item name="colorPrimary">@color/colorAccent</item>
+        <item name="colorPrimaryDark">@color/white</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:colorAccent">@color/colorAccent</item>
+
+        <item name="primaryText">@color/black</item>
+        <item name="secondaryText">@color/darkGray</item>
+        <item name="tertiaryText">@color/lightGray</item>
+        <item name="cardColor">@color/white</item>
+        <item name="layoutBackground">@color/white</item>
+        <item name="secondaryBackground">@color/lighterGray</item>
+    </style>
+
+    <style name="BaseThemeDark" parent="BaseTheme">
+        <item name="colorPrimary">@color/colorAccent</item>
+        <item name="colorPrimaryDark">@color/darkestGray</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:colorAccent">@color/colorAccent</item>
+
+        <item name="primaryText">@color/white</item>
+        <item name="secondaryText">@color/lightGray</item>
+        <item name="tertiaryText">@color/darkGray</item>
+        <item name="cardColor">@color/darkestGray</item>
+        <item name="layoutBackground">@color/darkestGray</item>
+        <item name="secondaryBackground">@color/darkerGray</item>
+    </style>
+
+    <style name="BaseThemeBlack" parent="BaseTheme">
+        <item name="colorPrimary">@color/colorAccent</item>
+        <item name="colorPrimaryDark">@color/black</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:colorAccent">@color/colorAccent</item>
+
+        <item name="primaryText">@color/white</item>
+        <item name="secondaryText">@color/lightGray</item>
+        <item name="tertiaryText">@color/darkGray</item>
+        <item name="cardColor">@color/black</item>
+        <item name="layoutBackground">@color/black</item>
+        <item name="secondaryBackground">@color/darkerGray</item>
+    </style>
+
+    <style name="AppThemeLight" parent="BaseThemeLight"/>
+
+    <style name="AppThemeDark" parent="BaseThemeDark"/>
+
+    <style name="AppThemeBlack" parent="BaseThemeBlack"/>
+
+    <style name="AppThemeLight.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="AppTheme.Dark.NoActionBar">
+    <style name="AppThemeDark.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="AppThemeBlack.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
 
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat" />
+    <style name="AppTheme.AppBarOverlay" parent="Base.Theme.MaterialComponents.Light.DarkActionBar" />
 
-    <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
+    <style name="AppTheme.PopupOverlay" parent="Base.Theme.MaterialComponents" />
+
+    <style name="SplashTheme" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="colorPrimary">@color/black</item>
+        <item name="colorPrimaryDark">@color/black</item>
         <item name="android:windowBackground">@drawable/background_splash</item>
     </style>
 
-    <style name="AppTheme.Picker" parent="Theme.AppCompat.NoActionBar" >
-        <item name="android:textColorPrimary">?attr/primary_text</item>
-        <item name="android:textColorSecondary">?attr/secondary_text</item>
+    <style name="CustomPicker" parent="Theme.MaterialComponents.NoActionBar" >
+        <item name="android:textColorPrimary">?attr/primaryText</item>
+        <item name="android:textColorSecondary">?attr/secondaryBackground</item>
+        <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="MyAlertDialogStyle" parent="Theme.AppCompat.Dialog.Alert">
-        <item name="colorAccent">#ff9800</item>
-        <item name="android:textColorPrimary">?attr/primary_text</item>
-        <item name="android:background">?attr/card_color</item>
+    <!--Trying different things, to theme the alertdialog in preferencescreen-->
+    <!--Base.Theme.AppCompat.Light.Dialog.Alert-->
+    <!--Base.V14.ThemeOverlay.MaterialComponents.MaterialAlertDialog best-->
+    <!--Base.Theme.MaterialComponents.Dialog small width-->
+    <!--Base.V14.Theme.MaterialComponents.Dialog small width-->
+    <!--Theme.MaterialComponents.Dialog small width-->
+    <style name="CustomAlertDialog" parent="Theme.MaterialComponents.Dialog">
+        <item name="android:colorPrimary">?attr/colorAccent</item>
+        <item name="colorPrimary">?attr/colorAccent</item>
+        <item name="android:colorPrimaryDark">?attr/colorAccent</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:colorAccent">@color/colorAccent</item>
+        <item name="android:buttonTint">@color/colorAccent</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <!--<item name="android:colorAccent">@color/colorAccent</item>-->
+        <item name="android:textColor">?attr/primaryText</item>
+        <item name="android:textColorPrimary">@color/primary_text_color_selector</item>
+        <item name="android:textColorSecondary">?attr/secondaryText</item>
+        <item name="textColorAlertDialogListItem">?attr/primaryText</item>
+        <item name="android:background">?attr/cardColor</item>
+
+        <!--<item name="buttonStyle">@style/CustomButton</item>-->
+        <item name="colorControlNormal">?attr/secondaryBackground</item>
+        <item name="android:colorControlNormal">?attr/secondaryBackground</item>
+        <item name="colorControlActivated">?attr/colorAccent</item>
+        <item name="android:colorControlActivated">?attr/colorAccent</item>
+        <item name="colorControlHighlight">?attr/tertiaryText</item>
+        <item name="android:colorControlHighlight">?attr/tertiaryText</item>
+        <!--<item name="android:windowIsFloating">true</item>-->
+        <!--<item name="android:windowIsTranslucent">true</item>-->
+        <!--<item name="android:windowBackground">?attr/primaryText</item>-->
+        <!--<item name="android:windowContentOverlay">@color/white</item>-->
     </style>
+
+    <style name="CustomMaterialCard">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/card_margin</item>
+        <item name="android:layout_marginLeft">@dimen/card_margin</item>
+        <item name="android:layout_marginRight">@dimen/card_margin</item>
+        <item name="android:foreground">?selectableItemBackground</item>
+        <item name="contentPadding">16dp</item>
+        <item name="cardCornerRadius">@dimen/card_corner_radius</item>
+        <item name="cardBackgroundColor">?attr/cardColor</item>
+        <item name="strokeColor">?secondaryBackground</item>
+        <item name="strokeWidth">1dp</item>
+        <item name="cardElevation">0dp</item>
+    </style>
+
+    <!--Base.Widget.MaterialComponents.TextInputLayout-->
+    <!--Widget.MaterialComponents.TextInputLayout.OutlinedBox-->
+    <!--Widget.Design.TextInputLayout-->
+    <style name="CustomTextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">@color/custom_box</item>
+        <item name="android:textColorHint">?attr/tertiaryText</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorControlNormal">?attr/secondaryText</item>
+        <item name="colorControlActivated">?attr/colorAccent</item>
+        <!--<item name="android:colorPrimary">?attr/colorAccent</item>-->
+        <!--<item name="android:colorPrimaryDark">?attr/colorAccent</item>-->
+
+        <!--<item name=""-->
+        <!--<item name="boxStrokeColor">@color/colorAccent</item>-->
+        <!--app:boxStrokeWidth="5dp"-->
+        <!--android:textColorHint="?attr/tertiaryText"-->
+        <!--app:hintTextAppearance="?attr/colorAccent"-->
+
+        <!--<color name="mtrl_textinput_default_box_stroke_color" tools:override="true">?attr/secondaryText</color>-->
+        <!--<item name="boxStrokeWidth">2dp</item>-->
+    </style>
+
+    <style name="CustomCheckBox" parent="Base.Theme.MaterialComponents.Light">
+        <item name="colorControlNormal">?attr/secondaryBackground</item>
+        <item name="colorControlActivated">?attr/colorAccent</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="CustomButton" parent="Base.Theme.MaterialComponents.Light">
+        <item name="buttonTint">?attr/colorAccent</item>
+        <item name="background">?attr/colorAccent</item>
+    </style>
+
+    <style name="CustomScrollView" parent="android:Widget.ScrollView">
+        <item name="android:overScrollMode">never</item>
+        <item name="android:fadingEdge">none</item>
+    </style>
+
+    <style name="CustomListView" parent="android:Widget.ListView">
+        <item name="android:overScrollMode">never</item>
+        <item name="android:fadingEdge">none</item>
+    </style>
+    <!--<style name="MyEditText" parent="Theme.AppCompat.Light">-->
+        <!--<item name="colorAccent">@color/colorAccent</item>-->
+        <!--<item name="colorControlNormal">?attr/secondaryText</item>-->
+        <!--<item name="colorControlActivated">?attr/colorAccent</item>-->
+    <!--</style>-->
 </resources>

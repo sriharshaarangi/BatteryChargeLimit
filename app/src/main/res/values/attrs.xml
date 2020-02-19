@@ -5,11 +5,11 @@
         <attr name="colorPrimaryDark" format="color"/>
         <attr name="colorAccent" format="color"/>
 
-
-        <attr name="primary_text" format="color"/>
-        <attr name="secondary_text" format="color"/>
-        <attr name="card_color" format="color"/>
-        <attr name="layout_background" format="color"/>
-        
+        <attr name="primaryText" format="color"/>
+        <attr name="secondaryText" format="color"/>
+        <attr name="tertiaryText" format="color"/>
+        <attr name="cardColor" format="color"/>
+        <attr name="layoutBackground" format="color"/>
+        <attr name="secondaryBackground" format="color"/>
     </declare-styleable>
 </resources>

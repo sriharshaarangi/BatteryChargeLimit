@@ -3,53 +3,66 @@ package com.slash.batterychargelimit.settings
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.preference.Preference
-import android.preference.PreferenceFragment
-import android.preference.SwitchPreference
-import android.support.annotation.AttrRes
-import android.support.v7.app.AlertDialog
 import android.util.TypedValue
 import android.view.LayoutInflater
+import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import androidx.annotation.AttrRes
+import androidx.appcompat.app.AlertDialog
+import androidx.fragment.app.DialogFragment
+import androidx.preference.ListPreference
+import androidx.preference.Preference
+import androidx.preference.PreferenceFragmentCompat
+import androidx.preference.SwitchPreference
 import com.slash.batterychargelimit.Constants
 import com.slash.batterychargelimit.R
-import com.slash.batterychargelimit.SharedMethods
-import com.slash.batterychargelimit.activities.CustomCtrlFileData
+import com.slash.batterychargelimit.activities.CustomCtrlFileDataActivity
+import com.slash.batterychargelimit.activities.MainActivity
 
-class SettingsFragment : PreferenceFragment() {
+class PrefsFragment : PreferenceFragmentCompat() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        addPreferencesFromResource(R.xml.preferences)
-
-        val darkTheme:SwitchPreference = findPreference("dark_theme") as SwitchPreference
-        val customCtrlFileDataSwitch:SwitchPreference = findPreference("custom_ctrl_file_data") as SwitchPreference
-        val ctrlFilePreference:ControlFilePreference = findPreference("control_file") as ControlFilePreference
-        val ctrlFileSetupPreference:Preference = findPreference("custom_ctrl_file_setup") as Preference
-
-        darkTheme.setOnPreferenceChangeListener { _, newValue ->
-            if (newValue as Boolean) {
-                activity.setTheme(R.style.AppTheme_Dark_NoActionBar)
-            }
-            else {
-                activity.setTheme(R.style.AppTheme_Light_NoActionBar)
-            }
-            activity.recreate()
-            true
+    override fun onDisplayPreferenceDialog(preference: Preference) {
+        var dialogFragment: DialogFragment? = null
+        if (preference is ControlFilePreference) {
+            dialogFragment = ControlFileDialogFragmentCompat.newInstance(preference.key)
         }
 
-        ctrlFilePreference.setOnPreferenceClickListener {
-            val settings = view.context.getSharedPreferences(Constants.SETTINGS, 0)
+        if (dialogFragment != null) {
+            val settings = view!!.context.getSharedPreferences(Constants.SETTINGS, 0)
             if (!settings.getBoolean("has_opened_ctrl_file", false)) {
-                AlertDialog.Builder(view.context)
+                AlertDialog.Builder(view!!.context)
                         .setTitle(R.string.control_file_heads_up_title)
                         .setMessage(R.string.control_file_heads_up_desc)
                         .setCancelable(false)
                         .setPositiveButton(R.string.control_understand) { _, _ ->
                             settings.edit().putBoolean("has_opened_ctrl_file", true).apply()
+                            dialogFragment.setTargetFragment(this, 0)
+                            dialogFragment.show(this.fragmentManager!!, ControlFileDialogFragmentCompat::class.java.simpleName)
                         }.create().show()
+            } else {
+                dialogFragment.setTargetFragment(this, 0)
+                dialogFragment.show(this.fragmentManager!!, ControlFileDialogFragmentCompat::class.java.simpleName)
+            }
+        } else {
+            super.onDisplayPreferenceDialog(preference)
+        }
+    }
+
+
+    override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
+        addPreferencesFromResource(R.xml.preferences)
+
+        setHasOptionsMenu(true)
+
+        val theme: ListPreference = findPreference("theme") as ListPreference
+        val customCtrlFileDataSwitch:SwitchPreference = findPreference("custom_ctrl_file_data") as SwitchPreference
+        val ctrlFilePreference:ControlFilePreference = findPreference("control_file") as ControlFilePreference
+        val ctrlFileSetupPreference:Preference = findPreference("custom_ctrl_file_setup") as Preference
+
+        theme.setOnPreferenceChangeListener { preference, newValue ->
+            if (preference is ListPreference) {
+                activity!!.recreate()
             }
             true
         }
@@ -68,12 +81,12 @@ class SettingsFragment : PreferenceFragment() {
         }
 
         ctrlFileSetupPreference.setOnPreferenceClickListener {
-            AlertDialog.Builder(view.context)
+            AlertDialog.Builder(view!!.context)
                     .setTitle(R.string.control_file_alert_title)
                     .setMessage(R.string.control_file_alert_desc)
                     .setCancelable(false)
                     .setPositiveButton(R.string.control_understand) { _, _ ->
-                        val CtrlFileIntent = Intent(view.context, CustomCtrlFileData::class.java)
+                        val CtrlFileIntent = Intent(view!!.context, CustomCtrlFileDataActivity::class.java)
                         startActivity(CtrlFileIntent)
                     }.create().show()
             true
@@ -88,9 +101,9 @@ class SettingsFragment : PreferenceFragment() {
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup, savedInstanceState: Bundle?): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val view = super.onCreateView(inflater, container, savedInstanceState)
-        view.setBackgroundColor(view.context.getColorFromAttr(R.attr.card_color))
+        view!!.setBackgroundColor(view.context.getColorFromAttr(R.attr.cardColor))
         return view
     }
 
@@ -101,6 +114,11 @@ class SettingsFragment : PreferenceFragment() {
     ): Int {
         theme.resolveAttribute(attrColor, typedValue, resolveRefs)
         return typedValue.data
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu) {
+        val item = menu.findItem(R.id.action_settings)
+        item.isVisible = false
     }
 
     override fun onStart() {
@@ -115,16 +133,19 @@ class SettingsFragment : PreferenceFragment() {
 
     override fun onDetach() {
         super.onDetach()
-        val statusCTRLData = activity.findViewById(R.id.status_ctrl_data) as TextView
-        statusCTRLData.text = SharedMethods.getCtrlFileData(activity) + ", " + SharedMethods.getCtrlEnabledData(activity) + ", " + SharedMethods.getCtrlDisabledData(activity)
+        (activity as MainActivity).setStatusCTRLFileData()
     }
 
     companion object {
         const val KEY_CONTROL_FILE = "control_file"
         const val KEY_TEMP_FAHRENHEIT = "temp_fahrenheit"
         const val KEY_IMMEDIATE_POWER_INTENT_HANDLING = "immediate_power_intent_handling"
+        const val KEY_NOTIFICATION_SOUND = "notification_sound"
+        const val KEY_AUTO_RESET_STATS = "auto_reset_stats"
         const val KEY_ENFORCE_CHARGE_LIMIT = "enforce_charge_limit"
         const val KEY_ALWAYS_WRITE_CF = "always_write_cf"
+        const val KEY_DISABLE_AUTO_RECHARGE = "disable_auto_recharge"
+        const val KEY_THEME = "theme"
 
         private var visible = false
 

@@ -8,7 +8,10 @@
     <string name="source_code" translatable="false"><a href="https://github.com/sriharshaarangi/BatteryChargeLimit">Source Code</a></string>
     <string name="xda_thread" translatable="false"><a href="https://forum.xda-developers.com/android/apps-games/root-battery-charge-limit-t3557002/">XDA Thread</a></string>
     <string name="about">About</string>
-    <string name="enable">Enable Battery Charge Limit</string>
+    <string name="disable_charge_now">Disable charge now</string>
+    <string name="limit_by_voltage">Limit by voltage</string>
+    <string name="custom_voltage_threshold">Custom Voltage threshold</string>
+    <string name="enable">Enable charge limit</string>
     <string name="notify">Notify when limit is reached</string>
     <string name="limit">Limit charging to %1$d%%</string>
     <string name="recharge_below">Recharge below %1$d%%</string>
@@ -65,11 +68,12 @@
     <string name="always_write_cf">Always Write CTRL File</string>
     <string name="always_write_cf_desc">Always overwrite the control file blindly, even if it already contains the new content</string>
     <string name="help_and_support_title">Help &amp; Support</string>
-    <string name="dark_theme">Dark Theme</string>
 
     <string name="advanced_settings">Advanced Settings</string>
     <string name="immediate_power_intent_handling">Always Handle Power Events</string>
     <string name="immediate_power_intent_handling_desc">Power changes will be recognized immediately, even directly after control file changes.\nUse only for supported control files like battery_charging_enabled or store_mode!</string>
+    <string name="disable_auto_recharge"> Disable auto recharge</string>
+    <string name="disable_auto_recharge_desc">Experimental: Enabling this option also hides notification after limit reached. Important: Disable this option before uninstalling or reboot after uninstalling</string>
 
     <string name="hide_toast_on_service_change">Hide Toast on Service Changes</string>
     <string name="help_desc">Experiencing an issue? Feel free to open an issue on GitHub and check the thread on XDA after for more support!</string>
@@ -94,6 +98,10 @@
     <string name="custom_ctrl_file_disabled_hint">0, disabled, desired_value</string>
     <string name="custom_ctrl_file_updated_info">Updated data will appear here once you update the information</string>
     <string name="custom_ctrl_file_heads_up">If you experience issues with app crashes or the service not working properly, try enabling Always Write CTRL File in settings. There is NO guarantee that this configurable control file function will support all devices and files/values. Try adjusting the settings if issues occur or ensure the data is correct.</string>
-    <string name="custom_ctrl_file_update_data">UPDATE CTRL FILE DATA</string>
+    <string name="custom_ctrl_file_update_data">Update CTRL File Data</string>
     <string name="charge_below_lower_limit">After plugging in, recharge the battery only if it falls below the lower limit.</string>
+    <string name="theme">Theme</string>
+    <string name="light">Light</string>
+    <string name="dark">Dark</string>
+    <string name="black">Black - AMOLED</string>
 </resources>

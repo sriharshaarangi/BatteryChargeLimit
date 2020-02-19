@@ -20,16 +20,32 @@ object Constants {
 
     const val LIMIT = "limit"
     const val MIN = "min"
-    const val ENABLE = "enable"
+    const val CHARGE_LIMIT_ENABLED = "enable"
+    const val DISABLE_CHARGE_NOW = "disable_charge_now"
     const val NOTIFICATION_LIVE = "notificationLive"
     const val AUTO_RESET_STATS = "auto_reset_stats"
     const val NOTIFICATION_SOUND = "notificationSound"
     const val CHARGE_BELOW_LOWER_LIMIT_ONLY = "chargeBelowLowerLimitOnly"
 
+    const val LIMIT_BY_VOLTAGE = "limit_by_voltage"
+    const val DEFAULT_VOLTAGE_LIMIT = "default_voltage_limit"
+    const val CUSTOM_VOLTAGE_LIMIT = "custom_voltage_limit"
+//    const val CURRENT_VOLTAGE_LIMIT = "current_voltage_limit"
+
     // ms after reaching limit, where the "unplug" event is recognized as power cut instead of action unplugging
     const val POWER_CHANGE_TOLERANCE_MS: Long = 3000
     const val CHARGING_CHANGE_TOLERANCE_MS: Long = 500
     const val MAX_BACK_OFF_TIME: Long = 30000
+
+    const val MAX_ALLOWED_LIMIT_PC: Int = 100
+    const val DEFAULT_LIMIT_PC: Int = 80
+    const val MIN_ALLOWED_LIMIT_PC: Int = 40
+
+    //voltage thresholds in mV, inclusive
+    const val DEFAULT_VOLTAGE_FILE = "/sys/class/power_supply/battery/voltage_max"
+    const val MIN_VOLTAGE_THRESHOLD_MV = "3700"
+    const val DEFAULT_VOLTAGE_THRESHOLD_MV = "4100"
+    const val MAX_VOLTAGE_THRESHOLD_MV = "4400"
 
     const val NOTIF_MAINTAIN = "ic_maintain"
     const val NOTIF_CHARGE = "ic_charge"
@@ -46,10 +62,16 @@ object Constants {
             "Russian: Ричард Иванов",
             "Italian: BombeerHC",
             "Romanian: Y0lin",
-            "Dutch: hypothermic"
+            "Dutch: hypothermic",
+            "Turkish: FatihFIRINCI",
+            "Arabic: Bilux"
     )
 
     const val SAVED_PATH_DATA = "saved_ctrl_path_data"
     const val SAVED_ENABLED_DATA = "saved_ctrl_enabled_data"
     const val SAVED_DISABLED_DATA = "saved_ctrl_disabled_data"
+
+    const val LIGHT = "light"
+    const val DARK = "dark"
+    const val BLACK = "black"
 }

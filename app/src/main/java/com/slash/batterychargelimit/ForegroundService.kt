@@ -6,9 +6,8 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.media.RingtoneManager
 import android.os.IBinder
-import android.support.v4.app.NotificationCompat
-import android.support.v4.content.ContextCompat
-import com.slash.batterychargelimit.Constants.AUTO_RESET_STATS
+import androidx.core.app.NotificationCompat
+import androidx.core.content.ContextCompat
 import com.slash.batterychargelimit.Constants.INTENT_DISABLE_ACTION
 import com.slash.batterychargelimit.Constants.NOTIFICATION_LIVE
 import com.slash.batterychargelimit.Constants.NOTIF_CHARGE
@@ -16,6 +15,8 @@ import com.slash.batterychargelimit.Constants.NOTIF_MAINTAIN
 import com.slash.batterychargelimit.Constants.SETTINGS
 import com.slash.batterychargelimit.activities.MainActivity
 import com.slash.batterychargelimit.receivers.BatteryReceiver
+import com.slash.batterychargelimit.settings.PrefsFragment
+
 
 /**
  * Created by harsha on 30/1/17.
@@ -28,7 +29,8 @@ import com.slash.batterychargelimit.receivers.BatteryReceiver
 class ForegroundService : Service() {
 
     private val settings by lazy(LazyThreadSafetyMode.NONE) {this.getSharedPreferences(SETTINGS, 0)}
-    private val mNotifyBuilder by lazy(LazyThreadSafetyMode.NONE) {NotificationCompat.Builder(this)}
+    private val prefs by lazy(LazyThreadSafetyMode.NONE) {Utils.getPrefs(this)}
+    private val mNotifyBuilder by lazy(LazyThreadSafetyMode.NONE) { NotificationCompat.Builder(this) }
     private var notifyID = 1
     private var autoResetActive = false
     private var batteryReceiver: BatteryReceiver? = null
@@ -66,8 +68,12 @@ class ForegroundService : Service() {
         return super.onStartCommand(intent, flags, startId)
     }
 
-    fun setNotificationActionText(actionText: String){
-        mNotifyBuilder.mActions.clear()
+    fun setNotificationActionText(actionText: String) {
+        // Clear old actions via reflection
+        mNotifyBuilder.javaClass.getDeclaredField("mActions").let {
+            it.isAccessible = true
+            it.set(mNotifyBuilder, ArrayList<NotificationCompat.Action>())
+        }
         val notificationIntent = Intent(this, MainActivity::class.java)
         val pendingIntentApp = PendingIntent.getActivity(this, 0, notificationIntent, 0)
         val pendingIntentDisable = PendingIntent.getBroadcast(this, 0, Intent().setAction(INTENT_DISABLE_ACTION), PendingIntent.FLAG_UPDATE_CURRENT)
@@ -105,8 +111,8 @@ class ForegroundService : Service() {
     }
 
     override fun onDestroy() {
-        if (autoResetActive && !ignoreAutoReset && settings.getBoolean(AUTO_RESET_STATS, false)) {
-            SharedMethods.resetBatteryStats(this)
+        if (autoResetActive && !ignoreAutoReset && prefs.getBoolean(PrefsFragment.KEY_AUTO_RESET_STATS, false)) {
+            Utils.resetBatteryStats(this)
         }
         ignoreAutoReset = false
 

@@ -1,12 +1,13 @@
 package com.slash.batterychargelimit.receivers
 
-import android.content.*
-import android.preference.PreferenceManager
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
 import android.util.Log
 import com.slash.batterychargelimit.Constants.POWER_CHANGE_TOLERANCE_MS
 import com.slash.batterychargelimit.ForegroundService
-import com.slash.batterychargelimit.SharedMethods
-import com.slash.batterychargelimit.settings.SettingsFragment
+import com.slash.batterychargelimit.Utils
+import com.slash.batterychargelimit.settings.PrefsFragment
 
 /**
  * Created by harsha on 30/1/17.
@@ -21,14 +22,15 @@ import com.slash.batterychargelimit.settings.SettingsFragment
 class PowerConnectionReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         val action = intent.action
+
+        Utils.setVoltageThreshold(null, true, context, null)
+
         //Ignore new events after power change or during state fixing
-        if (!PreferenceManager.getDefaultSharedPreferences(context)
-                .getBoolean(SettingsFragment.KEY_IMMEDIATE_POWER_INTENT_HANDLING, false)
-                && SharedMethods.isChangePending(
-                Math.max(POWER_CHANGE_TOLERANCE_MS, BatteryReceiver.backOffTime * 2))) {
+        if (!Utils.getPrefs(context).getBoolean(PrefsFragment.KEY_IMMEDIATE_POWER_INTENT_HANDLING, false)
+                && Utils.isChangePending(Math.max(POWER_CHANGE_TOLERANCE_MS, BatteryReceiver.backOffTime * 2))) {
             if (action == Intent.ACTION_POWER_CONNECTED) {
                 //Ignore connected event only if service is running
-                if (ForegroundService.isRunning) {
+                if (ForegroundService.isRunning || Utils.getPrefs(context).getBoolean(PrefsFragment.KEY_DISABLE_AUTO_RECHARGE, false)) {
                     Log.d("Power State", "ACTION_POWER_CONNECTED ignored")
                     return
                 }
@@ -37,12 +39,13 @@ class PowerConnectionReceiver : BroadcastReceiver() {
                 return
             }
         }
+
         if (action == Intent.ACTION_POWER_CONNECTED) {
             Log.d("Power State", "ACTION_POWER_CONNECTED")
-            SharedMethods.startService(context)
+            Utils.startServiceIfLimitEnabled(context)
         } else if (action == Intent.ACTION_POWER_DISCONNECTED) {
             Log.d("Power State", "ACTION_POWER_DISCONNECTED")
-            SharedMethods.stopService(context, false)
+            Utils.stopService(context, false)
         }
     }
 }

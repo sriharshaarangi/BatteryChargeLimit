@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/layout_background"
+    android:background="?attr/layoutBackground"
     android:fillViewport="true"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
@@ -16,27 +16,17 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/card_margin"
-                android:layout_marginLeft="@dimen/card_margin"
-                android:layout_marginRight="@dimen/card_margin"
-                android:foreground="?selectableItemBackground"
-                card_view:cardBackgroundColor="?attr/card_color"
-                card_view:cardCornerRadius="@dimen/card_corner_radius"
-                card_view:cardElevation="3dp"
-                card_view:contentPadding="@dimen/card_content_padding">
+            <com.google.android.material.card.MaterialCardView
+                style="@style/CustomMaterialCard">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@mipmap/ic_launcher"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:src="@mipmap/ic_launcher_adaptive_round"
                         android:id="@+id/app_icon"/>
 
                     <TextView
@@ -44,45 +34,37 @@
                         android:layout_height="wrap_content"
                         android:text="@string/app_name"
                         android:id="@+id/app_name"
-                        android:textStyle="bold"
                         android:layout_toEndOf="@+id/app_icon"
                         android:textSize="16dp"
+                        android:layout_marginTop="6dp"
+                        android:layout_marginLeft="6dp"
                         android:layout_toRightOf="@+id/app_icon"
-                        android:textColor="?attr/secondary_text"/>
+                        android:textColor="?attr/primaryText"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/app_name"
+                        android:layout_marginLeft="6dp"
                         android:layout_toEndOf="@+id/app_icon"
                         android:id="@+id/app_version"
                         android:layout_toRightOf="@+id/app_icon"
-                        android:textColor="?attr/secondary_text" />
+                        android:textColor="?attr/primaryText" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
                         android:text="License: GPL-3.0"
                         android:id="@+id/licence"
-                        android:textStyle="bold"
                         android:layout_below="@+id/app_icon"
-                        android:textColor="?attr/secondary_text" />
+                        android:textColor="?attr/primaryText" />
 
                 </RelativeLayout>
-            </android.support.v7.widget.CardView>
+            </com.google.android.material.card.MaterialCardView>
 
-            <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/card_margin"
-                android:layout_marginLeft="@dimen/card_margin"
-                android:layout_marginRight="@dimen/card_margin"
-                android:foreground="?selectableItemBackground"
-                card_view:cardBackgroundColor="?attr/card_color"
-                card_view:cardCornerRadius="@dimen/card_corner_radius"
-                card_view:cardElevation="3dp"
-                card_view:contentPadding="@dimen/card_content_padding">
+            <com.google.android.material.card.MaterialCardView
+                style="@style/CustomMaterialCard">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -93,9 +75,8 @@
                         android:layout_height="wrap_content"
                         android:text="@string/help_and_support_title"
                         android:id="@+id/help_and_support"
-                        android:textStyle="bold"
                         android:textSize="20dp"
-                        android:textColor="?attr/secondary_text" />
+                        android:textColor="?attr/primaryText" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -104,7 +85,7 @@
                         android:text="@string/help_desc"
                         android:id="@+id/help_desc"
                         android:layout_below="@+id/help_and_support"
-                        android:textColor="?attr/secondary_text" />
+                        android:textColor="?attr/secondaryText" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -113,9 +94,8 @@
                         android:text="@string/source_code_title"
                         android:id="@+id/source"
                         android:layout_below="@id/help_desc"
-                        android:textStyle="bold"
                         android:textSize="20dp"
-                        android:textColor="?attr/secondary_text" />
+                        android:textColor="?attr/primaryText" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -130,11 +110,10 @@
                         android:layout_height="wrap_content"
                         android:text="@string/xda_thread_title"
                         android:id="@+id/xda"
-                        android:textStyle="bold"
                         android:layout_below="@+id/source_code"
                         android:layout_marginTop="6dp"
                         android:textSize="20dp"
-                        android:textColor="?attr/secondary_text" />
+                        android:textColor="?attr/primaryText" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -145,22 +124,12 @@
                         android:autoLink="web" />
 
                 </RelativeLayout>
-            </android.support.v7.widget.CardView>
+            </com.google.android.material.card.MaterialCardView>
 
             <!-- Bottom most card - include android:layout_marginBottom for proper looks -->
-            <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/card_margin"
-                android:layout_marginLeft="@dimen/card_margin"
-                android:layout_marginRight="@dimen/card_margin"
-                android:layout_marginBottom="@dimen/card_bottom_margin"
-                android:foreground="?selectableItemBackground"
-                card_view:cardBackgroundColor="?attr/card_color"
-                card_view:cardCornerRadius="@dimen/card_corner_radius"
-                card_view:cardElevation="3dp"
-                card_view:contentPadding="@dimen/card_content_padding">
+            <com.google.android.material.card.MaterialCardView
+                style="@style/CustomMaterialCard"
+                android:layout_marginBottom="@dimen/card_bottom_margin">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -171,9 +140,8 @@
                         android:layout_height="wrap_content"
                         android:text="Developers "
                         android:id="@+id/developers_title"
-                        android:textStyle="bold"
                         android:textSize="20dp"
-                        android:textColor="?attr/secondary_text" />
+                        android:textColor="?attr/primaryText" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -181,17 +149,17 @@
                         android:text=""
                         android:id="@+id/developers"
                         android:layout_below="@+id/developers_title"
-                        android:textColor="?attr/secondary_text" />
+                        android:textColor="?attr/secondaryText"
+                        android:layout_marginBottom="8dp"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Translators "
                         android:id="@+id/translators_title"
-                        android:textStyle="bold"
                         android:layout_below="@+id/developers"
                         android:textSize="20dp"
-                        android:textColor="?attr/secondary_text" />
+                        android:textColor="?attr/primaryText" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -199,10 +167,10 @@
                         android:text=""
                         android:id="@+id/translators"
                         android:layout_below="@+id/translators_title"
-                        android:textColor="?attr/secondary_text" />
+                        android:textColor="?attr/secondaryText" />
 
                 </RelativeLayout>
-            </android.support.v7.widget.CardView>
+            </com.google.android.material.card.MaterialCardView>
 
         </LinearLayout>
     </ScrollView>

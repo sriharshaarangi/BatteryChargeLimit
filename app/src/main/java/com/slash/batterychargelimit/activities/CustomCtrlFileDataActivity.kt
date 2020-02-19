@@ -1,45 +1,41 @@
 package com.slash.batterychargelimit.activities
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.preference.PreferenceManager
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import com.slash.batterychargelimit.Constants
 import com.slash.batterychargelimit.Constants.DEFAULT_DISABLED
 import com.slash.batterychargelimit.Constants.DEFAULT_ENABLED
 import com.slash.batterychargelimit.Constants.DEFAULT_FILE
 import com.slash.batterychargelimit.R
-import com.slash.batterychargelimit.SharedMethods
+import com.slash.batterychargelimit.Utils
 
-class CustomCtrlFileData : AppCompatActivity() {
+class CustomCtrlFileDataActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        val preferences = PreferenceManager.getDefaultSharedPreferences(this)
-        if (preferences.getBoolean("dark_theme", false))
-            setTheme(R.style.AppTheme_Dark)
+        Utils.setTheme(this)
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_custom_ctrl_file_data)
-        supportActionBar!!.title = getString(R.string.custom_ctrl_file_data_setup_title)
 
         var customPathData: String? = null
         var customEnabledData: String? = null
         var customDisabledData: String? = null
-        val editPathData = findViewById(R.id.edit_path_file) as EditText
-        val editEnabledData = findViewById(R.id.edit_path_enabled) as EditText
-        val editDisabledData = findViewById(R.id.edit_path_disabled) as EditText
-        val btnUpdateData = findViewById(R.id.btn_update_custom) as Button
+        val editPathData = findViewById<EditText>(R.id.edit_path_file)
+        val editEnabledData = findViewById<EditText>(R.id.edit_path_enabled)
+        val editDisabledData = findViewById<EditText>(R.id.edit_path_disabled)
+        val btnUpdateData = findViewById<Button>(R.id.btn_update_custom)
         val settings = this.getSharedPreferences(Constants.SETTINGS, 0)
         val savedPathData = settings.getString(Constants.SAVED_PATH_DATA, DEFAULT_FILE)
         val savedEnabledData = settings.getString(Constants.SAVED_ENABLED_DATA, DEFAULT_ENABLED)
         val savedDisabledData = settings.getString(Constants.SAVED_DISABLED_DATA, DEFAULT_DISABLED)
-        val updatedDataText = findViewById(R.id.custom_data_updated) as TextView
+        val updatedDataText = findViewById<TextView>(R.id.custom_data_updated)
 
-        updatedDataText.hint = "Path Data: " + savedPathData + "\nEnable Value: " + savedEnabledData + "\nDisabled Value: " + savedDisabledData
+        updatedDataText.hint = "Path Data: $savedPathData\nEnable Value: $savedEnabledData\nDisabled Value: $savedDisabledData"
 
 
         editPathData.addTextChangedListener(object : TextWatcher {
@@ -84,13 +80,13 @@ class CustomCtrlFileData : AppCompatActivity() {
             }
         })
 
-        btnUpdateData.setOnClickListener({
-            SharedMethods.stopService(this)
+        btnUpdateData.setOnClickListener {
+            Utils.stopService(this)
             settings.edit().putString(Constants.SAVED_PATH_DATA, customPathData).apply()
             settings.edit().putString(Constants.SAVED_ENABLED_DATA, customEnabledData).apply()
             settings.edit().putString(Constants.SAVED_DISABLED_DATA, customDisabledData).apply()
             updatedDataText.hint = "Path Data: $customPathData\nEnable Value: $customEnabledData\nDisabled Value: $customDisabledData"
-            SharedMethods.startService(this)
-        })
+            Utils.startServiceIfLimitEnabled(this)
+        }
     }
 }

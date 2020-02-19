@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_settings">Ayarlar</string>
+    <string name="xda_thread_title">XDA Konusu</string>
+    <string name="source_code_title">Kaynak Kodu</string>
+    <string name="about">Hakkında</string>
+    <string name="enable">Battery Charge Limit\'i Etkinleştir</string>
+    <string name="notify">Limit aşıldığında bildir</string>
+    <string name="limit">Şarj limiti: %1$d%%</string>
+    <string name="recharge_below">%1$d%% altında yeniden şarj et</string>
+    <string name="status">Durum: </string>
+    <string name="status_ctrl_data_label">Kontrol dosyası verileri</string>
+    <string name="experimental">DENEYSEL</string>
+    <string name="issues">BİLİNEN SORUNLAR</string>
+    <string name="auto_reset_stats">Pil istatistiklerini otomatik sıfırla</string>
+    <string name="reset_stats">Pil İstatistiklerini Sıfırla</string>
+    <string name="disable">Devre dışı bırak</string>
+    <string name="disable_temporarily">Geçici olarak devre dışı bırak</string>
+    <string name="dismiss">Devre dışı bırak</string>
+    <string name="open_app">Uygulamayı Aç</string>
+    <string name="file_data">(CTRL dosyası verileri burada görünecek)</string>
+
+    <string name="previously_started">Daha Önce Başladı</string>
+    <string name="device_not_supported">Cihazınız desteklenmiyor (henüz)!</string>
+    <string name="ok">Tamam</string>
+    <string name="no_recharge">Otomatik yeniden şarj yok</string>
+
+    <string name="charging">ŞARJ OLUYOR</string>
+    <string name="discharging">BOŞALTILIYOR</string>
+    <string name="full">DOLU</string>
+    <string name="not_charging">ŞARJ OLMUYOR</string>
+    <string name="unknown">BİLİNMİYOR</string>
+
+    <string name="please_wait">Lütfen bekleyin…</string>
+    <string name="maintaining_x_to_y">%1$d%% - %2$d%% arasında koruma</string>
+    <string name="maintaining_description">Cihaz çıkarıldığında, hizmeti devre dışı bırak</string>
+    <string name="waiting_until_x">%1$d%% seviyesine kadar şarj oluyor</string>
+    <string name="waiting_description">Limite ulaşıldığında pil şarjı durduracak</string>
+    <string name="battery_info_C">U: %1$.3f V, S: %2$.1f &#8451;</string>
+    <string name="battery_info_F">U: %1$.3f V, S: %2$.1f &#8457;</string>
+
+    <string name="root_denied">Uygulamaya ROOT izni verilmedi veya cihaz rootlanmamış!</string>
+    <string name="stats_reset_success">Pil İstatistikleri Sıfırlandı</string>
+
+    <string name="intent_handle_activity">Battery Charge Limit\'in Kullanılma Etkinliği</string>
+    <string name="intent_invalid">Sağlanan amaç geçersizdi.</string>
+    <string name="intent_limit_invalid">Sağlanan limit geçersizdi.</string>
+    <string name="intent_limit_accepted">Pil şarj limiti %1$d%% olarak değiştirildi.</string>
+
+    <string name="service_enabled"> Pil Limiti Hizmeti Etkin! </string>
+    <string name="service_disabled"> Pil Limiti Hizmeti Devre Dışı! </string>
+
+    <string name="main_settings">Ana Ayarlar</string>
+    <string name="set_control_file">Kontrol Dosyasını Ayarla</string>
+    <string name="select_control_file">Kontrol Dosyasını Seç</string>
+    <string name="show_temperature_fahrenheit">Sıcaklığı &#8457; Biçiminde Göster</string>
+    <string name="show_temperature_in_notification">Bildirimde Sıcaklığı Göster</string>
+    <string name="enforce_charge_limit">Şarj Limitini Zorla</string>
+    <string name="enforce_charge_limit_desc">Cihazı, durumu giderek artan bir gecikmeyle değiştirerek kontrol dosyasındaki değişiklikleri tanımak için zorlamayı dene</string>
+    <string name="always_write_cf">Her Zaman CTRL Dosyasına Yaz</string>
+    <string name="always_write_cf_desc">Her zaman yeni içeriği içeriyor olsa bile, kontrol dosyasının körü körüne üzerine yaz</string>
+    <string name="help_and_support_title">Yardım &amp; Destek</string>
+    <string name="dark_theme">Koyu Tema</string>
+
+    <string name="advanced_settings">Gelişmiş Ayarlar</string>
+    <string name="immediate_power_intent_handling">Her Zaman Güç Olaylarını Kullan</string>
+    <string name="immediate_power_intent_handling_desc">Güç değişiklikleri doğrudan kontrol dosyası değişikliklerinden sonra bile hemen tanınır.\nSadece battery_charging_enabled veya store_mode gibi desteklenen kontrol dosyaları için kullanın!</string>
+
+    <string name="hide_toast_on_service_change">Hizmet Değişikliklerinde Uyarıyı Gizle</string>
+    <string name="help_desc">Bir sorun mu yaşıyorsunuz? GitHub\'da bir sorun açmaktan çekinmeyin ve daha fazla destek için XDA\'daki konuyu kontrol edin!</string>
+
+    <string name="control_file_settings">Kontrol Dosyası Verileri</string>
+    <string name="current_ctrl_data_title">Yapılandırılmış Dosya Verileri</string>
+    <string name="control_file_option_summary_on">Kullanıcı tanımlı CTRL dosyası verileri kullanılıyor</string>
+    <string name="control_file_option_summary_off">Öntanımlı CTRL dosyası kullanılıyor</string>
+    <string name="control_file_alert_title">Sadece Gelişmiş Kullanıcılar!</string>
+    <string name="control_file_alert_desc">UYARI: Ne değiştirmekte olduğunuz hakkında bilgi sahibi olmadan bu bölüme müdahale etmeniz, cihazınızda beklenmedik sorunlara neden olabilir. Cihazın yeniden başlatılması genellikle çok sayıda sorunu giderir, ancak bazıları kolayca düzeltilmeyebilir. DİKKATLE İLERLEYİN!</string>
+    <string name="control_understand">Anladım</string>
+    <string name="control_file_heads_up_title">Kontrol Dosyası Bilgileri</string>
+    <string name="control_file_heads_up_desc">Sadece cihazınızda tespit edilen kontrol dosyaları mevcut olarak görünecektir. Bir kontrol dosyası tespit edilirse, ancak başka bir cihaz için kullanılması güvenli olmalıdır. Bu listeye eklenecek kontrol dosyası verileriyle bir sorun açın veya cihazınız için GitHub\'da bir çekme isteği gönderin.</string>
+
+    <string name="custom_ctrl_file_data_title">Yapılandırılabilir CTRL Dosyası Verileri</string>
+    <string name="custom_ctrl_file_data_setup_title">Kontrol Verilerini Yapılandır</string>
+    <string name="custom_ctrl_file_path_title">İstenilen Dosya İçin Yol Ayarla</string>
+    <string name="custom_ctrl_file_path_hint">/sys/folder/folder/desired_file</string>
+    <string name="custom_ctrl_file_enabled_title">Etkin Değeri Ayarla</string>
+    <string name="custom_ctrl_file_enabled_hint">1, enabled, desired_value</string>
+    <string name="custom_ctrl_file_disabled_title">Devre Dışı Değeri Ayarla</string>
+    <string name="custom_ctrl_file_disabled_hint">0, disabled, desired_value</string>
+    <string name="custom_ctrl_file_updated_info">Bilgileri güncelledikten sonra güncellenmiş veriler burada görünecektir</string>
+    <string name="custom_ctrl_file_heads_up">Uygulama çökmeleriyle ilgili sorunlar yaşarsanız veya hizmet düzgün çalışmazsa, ayarlardan her zaman CTRL dosyasına yazmayı etkinleştirmeyi deneyin. Bu yapılandırılabilir kontrol dosyası işlevinin tüm cihazları ve dosyaları/değerleri destekleyeceğine dair bir garanti YOKTUR. Sorun çıkarsa ayarları düzeltmeyi deneyin veya verilerin doğruluğundan emin olun.</string>
+    <string name="custom_ctrl_file_update_data">CTRL DOSYASI VERİLERİNİ GÜNCELLE</string>
+</resources>
