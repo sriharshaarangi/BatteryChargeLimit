@@ -32,7 +32,7 @@ class BatteryReceiver(private val service: ForegroundService) : BroadcastReceive
     private var limitPercentage: Int = 0
     private var rechargePercentage: Int = 0
     private val prefs = Utils.getPrefs(service.baseContext)
-    private var preferenceChangeListener: android.content.SharedPreferences.OnSharedPreferenceChangeListener? = null
+    private var preferenceChangeListener: SharedPreferences.OnSharedPreferenceChangeListener? = null
     private val settings = service.getSharedPreferences(SETTINGS, 0)
     private var useNotificationSound = prefs.getBoolean(PrefsFragment.KEY_NOTIFICATION_SOUND, false)
 
@@ -149,7 +149,7 @@ class BatteryReceiver(private val service: ForegroundService) : BroadcastReceive
             } else if (currentStatus == BatteryManager.BATTERY_STATUS_CHARGING
                     && prefs.getBoolean(PrefsFragment.KEY_ENFORCE_CHARGE_LIMIT, true)) {
                 //Double the back off time with every unsuccessful round up to MAX_BACK_OFF_TIME
-                backOffTime = Math.min(backOffTime * 2, MAX_BACK_OFF_TIME)
+                backOffTime = (backOffTime * 2).coerceAtMost(MAX_BACK_OFF_TIME)
                 Log.d("Charging State", "Fixing state w. CHARGE_ON/CHARGE_OFF " + this.hashCode()
                         + " (Delay: $backOffTime)")
                 // if the device did not stop charging, try to "cycle" the state to fix this

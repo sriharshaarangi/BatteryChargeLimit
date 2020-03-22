@@ -55,12 +55,12 @@ class PrefsFragment : PreferenceFragmentCompat() {
 
         setHasOptionsMenu(true)
 
-        val theme: ListPreference = findPreference("theme") as ListPreference
-        val customCtrlFileDataSwitch:SwitchPreference = findPreference("custom_ctrl_file_data") as SwitchPreference
-        val ctrlFilePreference:ControlFilePreference = findPreference("control_file") as ControlFilePreference
-        val ctrlFileSetupPreference:Preference = findPreference("custom_ctrl_file_setup") as Preference
+        val theme: ListPreference = findPreference("theme")!!
+        val customCtrlFileDataSwitch: SwitchPreference = findPreference("custom_ctrl_file_data")!!
+        val ctrlFilePreference: ControlFilePreference = findPreference("control_file")!!
+        val ctrlFileSetupPreference: Preference = findPreference("custom_ctrl_file_setup")!!
 
-        theme.setOnPreferenceChangeListener { preference, newValue ->
+        theme.setOnPreferenceChangeListener { preference, _ ->
             if (preference is ListPreference) {
                 activity!!.recreate()
             }
@@ -86,8 +86,8 @@ class PrefsFragment : PreferenceFragmentCompat() {
                     .setMessage(R.string.control_file_alert_desc)
                     .setCancelable(false)
                     .setPositiveButton(R.string.control_understand) { _, _ ->
-                        val CtrlFileIntent = Intent(view!!.context, CustomCtrlFileDataActivity::class.java)
-                        startActivity(CtrlFileIntent)
+                        val ctrlFileIntent = Intent(view!!.context, CustomCtrlFileDataActivity::class.java)
+                        startActivity(ctrlFileIntent)
                     }.create().show()
             true
         }
@@ -107,7 +107,7 @@ class PrefsFragment : PreferenceFragmentCompat() {
         return view
     }
 
-    fun Context.getColorFromAttr(
+    private fun Context.getColorFromAttr(
             @AttrRes attrColor: Int,
             typedValue: TypedValue = TypedValue(),
             resolveRefs: Boolean = true

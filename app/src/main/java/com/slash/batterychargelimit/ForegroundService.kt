@@ -30,7 +30,7 @@ class ForegroundService : Service() {
 
     private val settings by lazy(LazyThreadSafetyMode.NONE) {this.getSharedPreferences(SETTINGS, 0)}
     private val prefs by lazy(LazyThreadSafetyMode.NONE) {Utils.getPrefs(this)}
-    private val mNotifyBuilder by lazy(LazyThreadSafetyMode.NONE) { NotificationCompat.Builder(this) }
+    private val mNotifyBuilder by lazy(LazyThreadSafetyMode.NONE) { NotificationCompat.Builder(this, "Charge Limit State") }
     private var notifyID = 1
     private var autoResetActive = false
     private var batteryReceiver: BatteryReceiver? = null

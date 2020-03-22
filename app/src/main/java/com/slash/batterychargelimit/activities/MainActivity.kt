@@ -10,7 +10,6 @@ import android.util.Log
 import android.util.TypedValue
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import android.view.View.OnFocusChangeListener
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
@@ -41,19 +40,19 @@ import java.lang.ref.WeakReference
 
 
 class MainActivity : AppCompatActivity() {
-    private val minPicker by lazy(LazyThreadSafetyMode.NONE) {findViewById(R.id.min_picker) as NumberPicker}
-    private val minText by lazy(LazyThreadSafetyMode.NONE) {findViewById(R.id.min_text) as TextView}
-    private val maxPicker by lazy(LazyThreadSafetyMode.NONE) {findViewById(R.id.max_picker) as NumberPicker}
-    private val maxText by lazy(LazyThreadSafetyMode.NONE) {findViewById(R.id.max_text) as TextView}
+    private val minPicker by lazy(LazyThreadSafetyMode.NONE) { findViewById<NumberPicker>(R.id.min_picker) }
+    private val minText by lazy(LazyThreadSafetyMode.NONE) { findViewById<TextView>(R.id.min_text) }
+    private val maxPicker by lazy(LazyThreadSafetyMode.NONE) { findViewById<NumberPicker>(R.id.max_picker) }
+    private val maxText by lazy(LazyThreadSafetyMode.NONE) { findViewById<TextView>(R.id.max_text) }
     private val settings by lazy(LazyThreadSafetyMode.NONE) {getSharedPreferences(SETTINGS, 0)}
-    private val statusText by lazy(LazyThreadSafetyMode.NONE) {findViewById(R.id.status) as TextView}
-    private val batteryInfo by lazy(LazyThreadSafetyMode.NONE) {findViewById(R.id.battery_info) as TextView}
-    private val enableSwitch by lazy(LazyThreadSafetyMode.NONE) {findViewById(R.id.enable_switch) as Switch}
-    private val disableChargeSwitch by lazy(LazyThreadSafetyMode.NONE) {findViewById(R.id.disable_charge_switch) as Switch}
-    private val limitByVoltageSwitch by lazy(LazyThreadSafetyMode.NONE) {findViewById(R.id.limit_by_voltage) as Switch}
-    private val customThresholdEditView by lazy(LazyThreadSafetyMode.NONE) {findViewById(R.id.voltage_threshold) as EditText}
-    private val currentThresholdTextView by lazy(LazyThreadSafetyMode.NONE) {findViewById(R.id.current_voltage_threshold) as TextView}
-    private val defaultThresholdTextView by lazy(LazyThreadSafetyMode.NONE) {findViewById(R.id.default_voltage_threshold) as TextView}
+    private val statusText by lazy(LazyThreadSafetyMode.NONE) { findViewById<TextView>(R.id.status) }
+    private val batteryInfo by lazy(LazyThreadSafetyMode.NONE) { findViewById<TextView>(R.id.battery_info) }
+    private val enableSwitch by lazy(LazyThreadSafetyMode.NONE) { findViewById<Switch>(R.id.enable_switch) }
+    private val disableChargeSwitch by lazy(LazyThreadSafetyMode.NONE) { findViewById<Switch>(R.id.disable_charge_switch) }
+    private val limitByVoltageSwitch by lazy(LazyThreadSafetyMode.NONE) { findViewById<Switch>(R.id.limit_by_voltage) }
+    private val customThresholdEditView by lazy(LazyThreadSafetyMode.NONE) { findViewById<EditText>(R.id.voltage_threshold) }
+    private val currentThresholdTextView by lazy(LazyThreadSafetyMode.NONE) { findViewById<TextView>(R.id.current_voltage_threshold) }
+    private val defaultThresholdTextView by lazy(LazyThreadSafetyMode.NONE) { findViewById<TextView>(R.id.default_voltage_threshold) }
     private var initComplete = false
     private var preferenceChangeListener: SharedPreferences.OnSharedPreferenceChangeListener? = null
     private lateinit var currentThreshold : String
@@ -137,6 +136,7 @@ class MainActivity : AppCompatActivity() {
         val settingsVersion = prefs.getInt(SETTINGS_VERSION, 0)
         var versionCode = 0
         try {
+            @Suppress("DEPRECATION")
             versionCode = packageManager.getPackageInfo(packageName, 0).versionCode
         } catch (e: PackageManager.NameNotFoundException) {
             Log.wtf(TAG, e)
@@ -194,7 +194,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        customThresholdEditView.setOnEditorActionListener { v, actionId, event ->
+        customThresholdEditView.setOnEditorActionListener { _, actionId, _ ->
             var handled = false
             if (actionId == EditorInfo.IME_ACTION_GO) {
                 hideKeybord()
@@ -211,14 +211,12 @@ class MainActivity : AppCompatActivity() {
         customThresholdEditView.setText(settings.getString(Constants.CUSTOM_VOLTAGE_LIMIT, "NA"))
         defaultThresholdTextView.text = settings.getString(Constants.DEFAULT_VOLTAGE_LIMIT, "NA")
 
-        customThresholdEditView.onFocusChangeListener = object : OnFocusChangeListener {
-            override fun onFocusChange(v: View, hasFocus: Boolean) {
-                if (!hasFocus) {
-                    val newThreshold = customThresholdEditView.text.toString()
-                    if (Utils.isValidVoltageThreshold(newThreshold, currentThreshold)) {
-                        settings.edit().putString(Constants.CUSTOM_VOLTAGE_LIMIT, newThreshold).apply()
-                        Utils.setVoltageThreshold(null, true, this@MainActivity , mHandler)
-                    }
+        customThresholdEditView.onFocusChangeListener = OnFocusChangeListener { _, hasFocus ->
+            if (!hasFocus) {
+                val newThreshold = customThresholdEditView.text.toString()
+                if (Utils.isValidVoltageThreshold(newThreshold, currentThreshold)) {
+                    settings.edit().putString(Constants.CUSTOM_VOLTAGE_LIMIT, newThreshold).apply()
+                    Utils.setVoltageThreshold(null, true, this@MainActivity , mHandler)
                 }
             }
         }
@@ -229,7 +227,7 @@ class MainActivity : AppCompatActivity() {
             this.startService(Intent(this, ForegroundService::class.java))
         }
 
-        val resetBatteryStats_Button = findViewById(R.id.reset_battery_stats) as Button
+        val resetBatteryStatsButton = findViewById<Button>(R.id.reset_battery_stats)
 //        val autoResetSwitch = findViewById(R.id.auto_stats_reset) as CheckBox
 //        val notificationSound = findViewById(R.id.notification_sound) as CheckBox
 
@@ -258,7 +256,7 @@ class MainActivity : AppCompatActivity() {
             settings.edit().putInt(MIN, min).apply()
             updateMinText(min)
         }
-        resetBatteryStats_Button.setOnClickListener { Utils.resetBatteryStats(this@MainActivity) }
+        resetBatteryStatsButton.setOnClickListener { Utils.resetBatteryStats(this@MainActivity) }
 //        autoResetSwitch.setOnCheckedChangeListener { _, isChecked ->
 //            settings.edit().putBoolean(AUTO_RESET_STATS, isChecked).apply() }
 //        notificationSound.setOnCheckedChangeListener { _, isChecked ->
@@ -332,11 +330,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun getColorFromAttr(attr: Int, context: Context): Int {
+    private fun getColorFromAttr(attr: Int, context: Context): Int {
         val typedValue = TypedValue()
         context.theme.resolveAttribute(attr, typedValue, true)
-        val color = typedValue.data
-        return color
+        return typedValue.data
     }
 
     //to update battery status on UI
@@ -458,7 +455,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun setStatusCTRLFileData() {
-        val statusCTRLData = findViewById(R.id.status_ctrl_data) as TextView
+        val statusCTRLData = findViewById<TextView>(R.id.status_ctrl_data)
         statusCTRLData.text = String.format("%s, %s, %s",
                 Utils.getCtrlFileData(this),
                 Utils.getCtrlEnabledData(this),

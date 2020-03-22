@@ -135,7 +135,7 @@ object Utils {
                 .putString(CHARGE_ON_KEY, cf.chargeOn)
                 .putString(CHARGE_OFF_KEY, cf.chargeOff).apply()
         //Respawn the service if necessary
-        Utils.startServiceIfLimitEnabled(context)
+        startServiceIfLimitEnabled(context)
     }
 
     fun isPhonePluggedIn(context: Context): Boolean {
@@ -194,7 +194,7 @@ object Utils {
     fun setLimit(limit: Int, settings: SharedPreferences) {
         val max = settings.getInt(LIMIT, Constants.DEFAULT_LIMIT_PC)
         // calculate new recharge threshold from previous distance
-        val min = Math.max(0, limit - (max - settings.getInt(MIN, max - 2)))
+        val min = (limit - (max - settings.getInt(MIN, max - 2))).coerceAtLeast(0)
         settings.edit().putInt(LIMIT, limit).putInt(MIN, min).apply()
     }
 
@@ -212,7 +212,7 @@ object Utils {
                 val settings = getSettings(context)
                 stopService(context)
                 settings.edit().putBoolean(CHARGE_LIMIT_ENABLED, false).apply()
-            } else if (limit in Constants.MIN_ALLOWED_LIMIT_PC..(Constants.MAX_ALLOWED_LIMIT_PC-1)) {
+            } else if (limit in Constants.MIN_ALLOWED_LIMIT_PC until Constants.MAX_ALLOWED_LIMIT_PC) {
                 val settings = getSettings(context)
                 // set the new limit
                 setLimit(limit, settings)
@@ -234,10 +234,10 @@ object Utils {
     fun startServiceIfLimitEnabled(context: Context) {
         if (getSettings(context).getBoolean(CHARGE_LIMIT_ENABLED, false)) {
             if (getPrefs(context).getBoolean(PrefsFragment.KEY_DISABLE_AUTO_RECHARGE, false)) {
-                changeState(context, Utils.CHARGE_ON)
+                changeState(context, CHARGE_ON)
             }
             Handler().postDelayed({
-                if (Utils.isPhonePluggedIn(context)) {
+                if (isPhonePluggedIn(context)) {
                     context.startService(Intent(context, ForegroundService::class.java))
                     // display service enabled Toast message if not disabled in settings
                     if (!getPrefs(context).getBoolean("hide_toast_on_service_changes", false)) {
@@ -263,7 +263,7 @@ object Utils {
         }
         context.stopService(Intent(context, ForegroundService::class.java))
         if(!getPrefs(context).getBoolean(PrefsFragment.KEY_DISABLE_AUTO_RECHARGE, false)) {
-            Utils.changeState(context, CHARGE_ON)
+            changeState(context, CHARGE_ON)
         }
         // display service disabled Toast message if not disabled in settings
         if (wasServiceRunning && !getPrefs(context).getBoolean("hide_toast_on_service_changes", false)) {
@@ -352,14 +352,14 @@ object Utils {
             switchCommands = arrayOf("mount -o rw,remount $voltageFile", "chmod u+w $voltageFile",
                     "echo $voltageThreshold > $voltageFile")
         }
-        Utils.executor.submit {
+        executor.submit {
             suShell.addCommand(switchCommands)
         }
         getCurrentVoltageThresholdAsync(context, handler)
     }
 
     fun getCurrentVoltageThresholdAsync(context: Context, handler: Handler?){
-        Utils.executor.submit {
+        executor.submit {
             val voltageFile = getVoltageFile()
             suShell.addCommand("cat $voltageFile", 0) { _, _, output ->
                 if (output.size != 0 ) {

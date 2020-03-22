@@ -6,7 +6,7 @@ import android.view.KeyEvent
 import com.google.android.material.textfield.TextInputEditText
 
 class CustomEditText : TextInputEditText {
-    constructor(context: Context) : super(context) {}
+    constructor(context: Context) : super(context)
 
     constructor(context: Context, attribute_set: AttributeSet) : super(context, attribute_set)
 
