@@ -18,7 +18,7 @@
     <string name="disable_temporarily">Temporär deaktivieren</string>
     <string name="dismiss">Verwerfen</string>
     <string name="open_app">Anwendung öffnen</string>
-    <string name="file_data">(Steuerdatei-Daten werden hier erscgeinen)</string>
+    <string name="file_data">(Steuerdatei-Daten werden hier erscheinen)</string>
 
     <string name="previously_started">Previously Started</string>
     <string name="device_not_supported">Dein Gerät wird (noch) nicht unterstützt!</string>
@@ -32,7 +32,7 @@
     <string name="unknown">UNBEKANNT</string>
 
     <string name="please_wait">Bitte warten…</string>
-    <string name="maintaining_x_to_y">Halte %1$d%% - %2$d%% WENN verbunden\"</string>
+    <string name="maintaining_x_to_y">Halte %1$d%% - %2$d%% WENN verbunden</string>
     <string name="maintaining_description">Wenn das Gerät abgesteckt wird, Dienst abschalten</string>
     <string name="waiting_until_x">Warte bis %1$d%%</string>
     <string name="waiting_description">Die Batterie wird nicht mehr geladen sobald die Grenze erreicht ist</string>
@@ -66,29 +66,29 @@
     <string name="immediate_power_intent_handling_desc">Wenn aktiviert, reagiert die App sofort auf Änderungen der Stromversorgung, auch nach der Änderung der Steuerungsdatei.\n
      Nur für unterstützte Steuerdateien wie battery_charging_enabled oder store_mode!</string>
 
-    <string name="hide_toast_on_service_change">Verstecke Begrüßung bei Netzänderungen</string>
-    <string name="help_desc">Ein Problem gefunden? Bitte ein Issue öffnen bei GitHub und den Diskussionsfaden bei XDA ansehen für mehr Unterstützung!</string>
+    <string name="hide_toast_on_service_change">Verstecke Toast bei Änderung der Stromversorgung</string>
+    <string name="help_desc">Ein Problem gefunden? Bitte den Thread bei XDA ansehen und ggf. für weitere Unterstützung auf GitHub ein Issue öffnen!</string>
 
     <string name="control_file_settings">Steuerdatei-Daten</string>
-    <string name="current_ctrl_data_title">Konfigurierte Dateidaten</string>
-    <string name="control_file_option_summary_on">Nutzerspezifizierte Steuerdatei-Daten die benutzt werden</string>
-    <string name="control_file_option_summary_off">Vordefinierte Steuerdatei die benutzt wird</string>
+    <string name="current_ctrl_data_title">Konfigurierte Steuerungs-Daten</string>
+    <string name="control_file_option_summary_on">Benutzerdefinierte Steuerdatei-Daten werden verwendet</string>
+    <string name="control_file_option_summary_off">Vordefinierte Steuerdatei werden verwendet</string>
     <string name="control_file_alert_title">Nur für erfahrene Anwender!</string>
-    <string name="control_file_alert_desc">ACHTUNG: Änderungen in diesem Bereich ohne Wissen was man ändert kann unvorhergesehene Probleme mit dem Gerät verursachen. Der Neustart des Geräts hilft meistens solche Probleme zu lösen doch einige Probleme können nicht so leicht behoben werden! HIER NUR MIT VORSICHT UND WISSEN WEITERMACHEN!</string>
+    <string name="control_file_alert_desc">ACHTUNG: Änderungen in diesem Programmteil können Probleme mit dem Gerät verursachen! Ein Neustart des Geräts hilft meistens solche Probleme zu lösen, doch einige Probleme können nicht so leicht behoben werden! HIER NUR MIT VORSICHT UND KNOW-HOW WEITERMACHEN!</string>
     <string name="control_understand">Ich verstehe</string>
     <string name="control_file_heads_up_title">Steuerdatei Information</string>
-    <string name="control_file_heads_up_desc">Nur Steuerdateien die auf dem Gerät gefunden wurden, werden als verfügbar angezeigt. Wen eine Steuerdatei entdeckt wurde die zu einem anderen Gerät gehört, könnte sie zur Nutzung sicher sein. Öffnen sie ein Issue auf Github oder senden Sie einen Pull Request bei Github für Ihr Gerät mit der Steuerdatei die zu dieser Liste hinzugefügt werden soll.</string>
+    <string name="control_file_heads_up_desc">Nur Steuerdateien die auf dem Gerät gefunden wurden, werden als verfügbar angezeigt. Wenn eine Steuerdatei entdeckt wurde, die zu einem anderen Gerät gehört, könnte sie nutzbar sein. Öffnen Sie ein Issue oder einen Pull Request bei Github mit Informationen zur gefundenen Steuerdatei, wenn sie der offiziellen Liste hinzugefügt werden soll.</string>
 
     <string name="custom_ctrl_file_data_title">Konfigurierbare Steuerdatei-Daten</string>
     <string name="custom_ctrl_file_data_setup_title">Konfiguriere Steuerdaten</string>
     <string name="custom_ctrl_file_path_title">Setze den Pfad zur gewünschten Datei</string>
     <string name="custom_ctrl_file_path_hint">/sys/verzeichnis/verzeichnis/gewünschte_datei</string>
-    <string name="custom_ctrl_file_enabled_title">Setze eingeschalteten Wert</string>
-    <string name="custom_ctrl_file_enabled_hint">1, eingeschaltet, gewünschter Wert</string>
-    <string name="custom_ctrl_file_disabled_title">Setze abgeschalteten Wert</string>
-    <string name="custom_ctrl_file_disabled_hint">0, abgeschaltet, gewünschter Wert</string>
+    <string name="custom_ctrl_file_enabled_title">Wert für Zustand \"Laden\"</string>
+    <string name="custom_ctrl_file_enabled_hint">1, Laden ein, gewünschter Wert</string>
+    <string name="custom_ctrl_file_disabled_title">Wert für Zustand \"Entladen\"</string>
+    <string name="custom_ctrl_file_disabled_hint">0, Laden aus, gewünschter Wert</string>
     <string name="custom_ctrl_file_updated_info">Aktualisierte Daten werden hier erscheinen wenn Sie die Infirmationen aktualisieren</string>
-    <string name="custom_ctrl_file_heads_up">Wenn Probleme mit Anwendungsabstürzen auftreten oder dieser Dienst nicht arbeitet wie er soll, bitte versuchen, in den Einstellungen Immer Steuerdatei schreiben einzuschalten. Es gibt keine Garantie das diese Funktion der konfigurierbaren Steuerdatei alle Geräte Dateien/Werte unterstützt. Wenn Probleme auftreten versuchsweise diese Einstellungen abgleichen oder sicherstellen, dass die Daten korrekt sind.</string>
+    <string name="custom_ctrl_file_heads_up">Wenn Probleme mit Anwendungsabstürzen auftreten oder dieser Dienst nicht arbeitet wie er soll, bitte versuchen, in den Einstellungen \"Steuerdatei immer schreiben\" einzuschalten. Es gibt KEINE Garantie dafür, dass diese Funktion alle Geräte und Dateien/Werte unterstützt. Wenn Probleme auftreten, versuchen Sie diese Einstellungen anzupassen und sicherzustellen, dass die Daten korrekt sind.</string>
     <string name="custom_ctrl_file_update_data">AKTUALISIERE STEUERDATEI-DATEN</string>
     <string name="theme">Farbschema</string>
     <string name="light">Hell</string>
