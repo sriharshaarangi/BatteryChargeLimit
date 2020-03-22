@@ -90,4 +90,8 @@
     <string name="custom_ctrl_file_updated_info">Aktualisierte Daten werden hier erscheinen wenn Sie die Infirmationen aktualisieren</string>
     <string name="custom_ctrl_file_heads_up">Wenn Probleme mit Anwendungsabstürzen auftreten oder dieser Dienst nicht arbeitet wie er soll, bitte versuchen, in den Einstellungen Immer Steuerdatei schreiben einzuschalten. Es gibt keine Garantie das diese Funktion der konfigurierbaren Steuerdatei alle Geräte Dateien/Werte unterstützt. Wenn Probleme auftreten versuchsweise diese Einstellungen abgleichen oder sicherstellen, dass die Daten korrekt sind.</string>
     <string name="custom_ctrl_file_update_data">AKTUALISIERE STEUERDATEI-DATEN</string>
+    <string name="theme">Farbschema</string>
+    <string name="light">Hell</string>
+    <string name="dark">Dunkel</string>
+    <string name="black">Schwarz</string>
 </resources>

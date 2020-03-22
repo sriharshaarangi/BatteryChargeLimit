@@ -28,7 +28,7 @@
     <string name="full">VOL</string>
     <string name="not_charging">NIET OPLADEN</string>
     <string name="unknown">ONBEKEND</string>
-    <string name="please_wait">Wachten alstublieft...</string>
+    <string name="please_wait">Wachten alstublieft…</string>
     <string name="waiting_until_x">Aan het opladen tot %1$d%%</string>
     <string name="waiting_description">Het opladen zal gestopt worden als het limiet wordt bereikt</string>
     <string name="maintaining_description">Service uitschakelen zodra het apparaat losgekoppeld wordt</string>
@@ -53,7 +53,6 @@
     <string name="always_write_cf">Schrijf altijd naar het besturingsbestand</string>
     <string name="always_write_cf_desc">Overschrijf altijd het besturingsbestand ookal bevat het al nieuwe inhoud</string>
     <string name="help_and_support_title">Help en Ondersteuning</string>
-    <string name="dark_theme">Donker thema</string>
     <string name="advanced_settings">Geavanceerde Instellingen</string>
     <string name="immediate_power_intent_handling">Power Events altijd behandelen</string>
     <string name="immediate_power_intent_handling_desc">Stroomveranderingen worden meteen herkend, zelfs direct nadat het besturingsbestand is gewijzigd. Gebruik alleen voor ondersteunde besturingsbestanden zoals battery_charging_enabled of store_mode!</string>
@@ -79,4 +78,5 @@
     <string name="custom_ctrl_file_updated_info">Geactualiseerde gegevens zullen hier verschijnen</string>
     <string name="custom_ctrl_file_heads_up">Als u problemen ervaart met crashes of een niet-werkende service, probeer \"Schrijf altijd naar het besturingsbestand\" in te schakelen in de instellingen. Er is GEEN garantie dat deze oplossing op alle apparaten zal werken.</string>
     <string name="custom_ctrl_file_update_data">ACTUALISEER BESTURINGSBESTANDSGEGEVENS</string>
+    <string name="dark">Donker</string>
 </resources>

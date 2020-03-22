@@ -2,9 +2,7 @@
 <!-- Translation by Jose(XDA username: Joseahfer) on 03/11/2017-->
 <resources>
         <string name="action_settings">Ajustes</string>
-        <string name="source_code"><a href="https://github.com/sriharshaarangi/BatteryChargeLimit">Código fuente</a></string>
-        <string name="xda_thread"><a href="https://forum.xda-developers.com/android/apps-games/root-battery-charge-limit-t3557002/">Hilo de XDA</a></string>
-        <string name="about">Sobre la aplicación</string>
+        <string name="about">Sobre la aplicación</string>
         <string name="enable">Activar límite de carga</string>
         <string name="limit">Limitar a un %1$d%%</string>
         <string name="recharge_below">Recargar tras un %1$d%%</string>

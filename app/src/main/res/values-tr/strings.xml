@@ -60,8 +60,6 @@
     <string name="always_write_cf">Her Zaman CTRL Dosyasına Yaz</string>
     <string name="always_write_cf_desc">Her zaman yeni içeriği içeriyor olsa bile, kontrol dosyasının körü körüne üzerine yaz</string>
     <string name="help_and_support_title">Yardım &amp; Destek</string>
-    <string name="dark_theme">Koyu Tema</string>
-
     <string name="advanced_settings">Gelişmiş Ayarlar</string>
     <string name="immediate_power_intent_handling">Her Zaman Güç Olaylarını Kullan</string>
     <string name="immediate_power_intent_handling_desc">Güç değişiklikleri doğrudan kontrol dosyası değişikliklerinden sonra bile hemen tanınır.\nSadece battery_charging_enabled veya store_mode gibi desteklenen kontrol dosyaları için kullanın!</string>
@@ -90,4 +88,5 @@
     <string name="custom_ctrl_file_updated_info">Bilgileri güncelledikten sonra güncellenmiş veriler burada görünecektir</string>
     <string name="custom_ctrl_file_heads_up">Uygulama çökmeleriyle ilgili sorunlar yaşarsanız veya hizmet düzgün çalışmazsa, ayarlardan her zaman CTRL dosyasına yazmayı etkinleştirmeyi deneyin. Bu yapılandırılabilir kontrol dosyası işlevinin tüm cihazları ve dosyaları/değerleri destekleyeceğine dair bir garanti YOKTUR. Sorun çıkarsa ayarları düzeltmeyi deneyin veya verilerin doğruluğundan emin olun.</string>
     <string name="custom_ctrl_file_update_data">CTRL DOSYASI VERİLERİNİ GÜNCELLE</string>
+    <string name="dark">Koyu</string>
 </resources>
