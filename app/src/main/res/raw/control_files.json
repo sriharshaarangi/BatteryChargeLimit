@@ -195,5 +195,12 @@
     "chargeOn": "0",
     "chargeOff": "1",
     "experimental": true
+  },
+  {
+    "file": "/sys/class/power_supply/battery/device/smartchg_stop_charging",
+    "label": "ROG_Phone_2",
+    "details": "Asus ROG Phone 2",
+    "chargeOn": "0",
+    "chargeOff": "1",
   }
 ]
