@@ -99,7 +99,7 @@
     <string name="custom_ctrl_file_updated_info">Updated data will appear here once you update the information</string>
     <string name="custom_ctrl_file_heads_up">If you experience issues with app crashes or the service not working properly, try enabling Always Write CTRL File in settings. There is NO guarantee that this configurable control file function will support all devices and files/values. Try adjusting the settings if issues occur or ensure the data is correct.</string>
     <string name="custom_ctrl_file_update_data">Update CTRL File Data</string>
-
+    <string name="charge_below_lower_limit">After plugging in, recharge the battery only if it falls below the lower limit.</string>
     <string name="theme">Theme</string>
     <string name="light">Light</string>
     <string name="dark">Dark</string>

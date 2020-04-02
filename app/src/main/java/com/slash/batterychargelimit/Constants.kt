@@ -25,6 +25,7 @@ object Constants {
     const val NOTIFICATION_LIVE = "notificationLive"
     const val AUTO_RESET_STATS = "auto_reset_stats"
     const val NOTIFICATION_SOUND = "notificationSound"
+    const val CHARGE_BELOW_LOWER_LIMIT_ONLY = "chargeBelowLowerLimitOnly"
 
     const val LIMIT_BY_VOLTAGE = "limit_by_voltage"
     const val DEFAULT_VOLTAGE_LIMIT = "default_voltage_limit"

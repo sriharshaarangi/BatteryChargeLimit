@@ -52,6 +52,17 @@ tools:showIn="@layout/activity_main">
                     android:id="@+id/disable_charge_switch"
                     android:layout_below="@+id/status_ctrl_data"
                     android:textColor="?attr/primaryText"/>
+                <Switch
+                    android:id="@+id/charge_below_lower_limit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="false"
+                    android:layout_alignParentLeft="false"
+                    android:layout_alignParentStart="false"
+                    android:layout_below="@+id/notification_sound"
+                    android:layout_marginTop="12dp"
+                    android:text="@string/charge_below_lower_limit"
+                    android:textSize="16sp" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
