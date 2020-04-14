@@ -4,6 +4,9 @@
     <string name="xda_thread_title">XDA Thread</string>
     <string name="source_code_title">Codice sorgente</string>
     <string name="about">Info su</string>
+    <string name="disable_charge_now">Disabilita la ricarica ora</string>
+    <string name="limit_by_voltage">Limita con il voltaggio</string>
+    <string name="custom_voltage_threshold">Soglia di voltaggio personalizzata</string>
     <string name="enable">Abilita Battery Charge Limit</string>
     <string name="notify">Notifica quando il limite viene raggiunto</string>
     <string name="limit">Limita la carica a %1$d%%</string>
@@ -64,6 +67,8 @@
     <string name="advanced_settings">Impostazioni Avanzate</string>
     <string name="immediate_power_intent_handling">Gestisci sempre gli eventi di ricarica</string>
     <string name="immediate_power_intent_handling_desc">I cambiamenti alla ricarica vengono riconosciuti immediatamente, anche dopo il cambiamento del File di Controllo.\nUsa solo per i File di Controllo supportati, come battery_charging_enabled o store_mode!</string>
+    <string name="disable_auto_recharge"> Disabilita ricarica automatica</string>
+    <string name="disable_auto_recharge_desc">Sperimentale: Abilitando questa opzione anche le notifiche verranno nascoste dopo aver raggiunto il limite. Importante: Disabilita questa opzione prima di disinstallare o effettuare un riavvio dopo la disinstallazione</string>
 
     <string name="hide_toast_on_service_change">Nascondi la notifica toast quando abiliti/disabiliti il servizio</string>
     <string name="help_desc">Riscontri errori? Sentiti libero di aprire una segnalazione di errore su GitHub e consultare il thread su XDA per avere maggiore supporto!</string>
@@ -89,4 +94,9 @@
     <string name="custom_ctrl_file_updated_info">I dati aggiornati appariranno una volta che aggiornerai le informazioni</string>
     <string name="custom_ctrl_file_heads_up">Se riscontri qualche errore o qualche crash, prova a abilitare "Forza scrittura File di Controllo" nelle impostazioni. Non c\'è NESSUNA garanzia che questo tipo di configurazione del File di Controllo funzioni per tutti i tipi di dispositivi. Prova a regolare le impostazioni in caso di problemi o assicurati che i dati siano corretti.</string>
     <string name="custom_ctrl_file_update_data">AGGIORNA DATI DEL FILE DI CONTROLLO</string>
+
+    <string name="theme">Tema</string>
+    <string name="light">Chiaro</string>
+    <string name="dark">Scuro</string>
+    <string name="black">Scuro - AMOLED</string>
 </resources>
