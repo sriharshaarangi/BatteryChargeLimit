@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_settings">Pengaturan</string>
+    <string name="xda_thread_title">XDA Thread</string>
+    <string name="source_code_title">Kode sumber</string>
+    <string name="about">Tentang</string>
+    <string name="disable_charge_now">Nonaktifkan pengisian daya sekarang</string>
+    <string name="limit_by_voltage">Batasi berdasarkan tegangan</string>
+    <string name="custom_voltage_threshold">Kustom Ambang Tegangan</string>
+    <string name="enable">Aktifkan batas pengisian</string>
+    <string name="notify">Beri tahu saat batas tercapai</string>
+    <string name="limit">Batasi pengisian hingga %1$d%%</string>
+    <string name="recharge_below">Isi ulang di bawah %1$d%%</string>
+    <string name="status">Status: </string>
+    <string name="status_ctrl_data_label">Kontrol data file</string>
+    <string name="experimental">EKSPERIMENTAL</string>
+    <string name="issues">MASALAH DIKETAHUI</string>
+    <string name="auto_reset_stats">Secara otomatis mengatur ulang statistik baterai</string>
+    <string name="reset_stats">Setel Ulang Statistik Baterai</string>
+    <string name="disable">Nonaktifkan</string>
+    <string name="disable_temporarily">Nonaktifkan sementara</string>
+    <string name="dismiss">Menghentikan</string>
+    <string name="open_app">Buka aplikasi</string>
+    <string name="file_data">(Data file CTRL akan muncul di sini)</string>
+
+    <string name="previously_started">Sebelumnya Dimulai</string>
+    <string name="device_not_supported">Perangkat Anda belum didukung (belum)!</string>
+    <string name="ok">OK</string>
+    <string name="no_recharge">Tidak otomatis isi ulang</string>
+
+    <string name="charging">MENGISI DAYA</string>
+    <string name="discharging">MEMBERHENTIKAN</string>
+    <string name="full">PENUH</string>
+    <string name="not_charging">TIDAK MENGISI DAYA</string>
+    <string name="unknown">TIDAK DIKETAHUI</string>
+
+    <string name="please_wait">Tunggu sebentar…</string>
+    <string name="maintaining_x_to_y">Mempertahankan dari %1$d%% - %2$d%%</string>
+    <string name="maintaining_description">Jika perangkat dicabut, nonaktifkan layanan</string>
+    <string name="waiting_until_x">Mengisi ke %1$d%%</string>
+    <string name="waiting_description">Baterai akan berhenti mengisi setelah batas tercapai</string>
+    <string name="battery_info_C">U: %1$.3f V, T: %2$.1f &#8451;</string>
+    <string name="battery_info_F">U: %1$.3f V, T: %2$.1f &#8457;</string>
+
+    <string name="root_denied">Aplikasi ditolak akses ROOT atau perangkat tidak di-root!</string>
+    <string name="stats_reset_success">Battery Stats berhasil disetel ulang</string>
+
+    <string name="intent_handle_activity">Aktivitas Penanganan Batas Pengisian Baterai</string>
+    <string name="intent_invalid">Maksud yang diberikan tidak valid.</string>
+    <string name="intent_limit_invalid">Batas yang diberikan tidak valid.</string>
+    <string name="intent_limit_accepted">Batas pengisian baterai diubah menjadi %1$d%%.</string>
+
+    <string name="service_enabled"> Layanan Batas Baterai Diaktifkan! </string>
+    <string name="service_disabled"> Layanan Batas Baterai Dinonaktifkan! </string>
+
+    <string name="main_settings">Pengaturan utama</string>
+    <string name="set_control_file">Atur File Kontrol</string>
+    <string name="select_control_file">Pilih File Kontrol</string>
+    <string name="show_temperature_fahrenheit">Tunjukkan Suhu dalam &#8457;</string>
+    <string name="show_temperature_in_notification">Tampilkan Suhu di Pemberitahuan</string>
+    <string name="enforce_charge_limit">Terapkan Batas Tagihan</string>
+    <string name="enforce_charge_limit_desc">Mencoba memaksa perangkat untuk mengenali perubahan pada file kontrol dengan mengubah statusnya dengan penundaan yang meningkat</string>
+    <string name="always_write_cf">Selalu Tulis File CTRL</string>
+    <string name="always_write_cf_desc">Selalu timpa file kontrol secara membabi buta, meskipun sudah berisi konten baru</string>
+    <string name="help_and_support_title">Tolong &amp; Dukung</string>
+
+    <string name="advanced_settings">Pengaturan lanjutan</string>
+    <string name="immediate_power_intent_handling">Selalu Tangani Peristiwa Daya</string>
+    <string name="immediate_power_intent_handling_desc">Perubahan daya akan segera dikenali, bahkan langsung setelah perubahan file kontrol.\nGunakan hanya untuk file kontrol yang didukung seperti battery_charging_enabled atau store_mode!</string>
+    <string name="disable_auto_recharge">Nonaktifkan isi ulang otomatis</string>
+    <string name="disable_auto_recharge_desc">Eksperimental: Mengaktifkan opsi ini juga menyembunyikan pemberitahuan setelah batas tercapai. Penting: Nonaktifkan opsi ini sebelum mencopot pemasangan atau boot ulang setelah mencopot pemasangan</string>
+
+    <string name="hide_toast_on_service_change">Sembunyikan Toast pada Perubahan Layanan</string>
+    <string name="help_desc">Mengalami masalah? Jangan ragu untuk membuka masalah di GitHub dan periksa utas di XDA setelahnya untuk dukungan lebih lanjut!</string>
+
+    <string name="control_file_settings">Kontrol Data File</string>
+    <string name="current_ctrl_data_title">Data File yang Dikonfigurasi</string>
+    <string name="control_file_option_summary_on">Data file CTRL yang ditentukan pengguna sedang digunakan</string>
+    <string name="control_file_option_summary_off">File CTRL yang telah ditentukan digunakan</string>
+    <string name="control_file_alert_title">Hanya Pengguna Tingkat Lanjut!</string>
+    <string name="control_file_alert_desc">PERINGATAN: Merusak bagian ini tanpa mengetahui apa yang Anda ubah dapat menyebabkan masalah pada perangkat Anda yang tidak terduga. Mem-boot ulang perangkat biasanya memperbaiki banyak masalah, namun, beberapa mungkin tidak dapat diperbaiki dengan mudah. LANJUTKAN DENGAN HATI HATI!</string>
+    <string name="control_understand">Saya mengerti</string>
+    <string name="control_file_heads_up_title">Kontrol Informasi File</string>
+    <string name="control_file_heads_up_desc">Hanya file kontrol yang terdeteksi di perangkat Anda yang akan muncul sebagai tersedia. Jika file kontrol terdeteksi, tetapi untuk perangkat lain, itu harus aman digunakan. Buka masalah atau kirim permintaan tarik ke GitHub untuk perangkat Anda dengan data file kontrol yang akan ditambahkan ke daftar ini..</string>
+
+    <string name="custom_ctrl_file_data_title">Data File CTRL yang Dapat Dikonfigurasi</string>
+    <string name="custom_ctrl_file_data_setup_title">Konfigurasikan Data Kontrol</string>
+    <string name="custom_ctrl_file_path_title">Setel Path ke File Yang Diinginkan</string>
+    <string name="custom_ctrl_file_path_hint">/sys/folder/folder/desired_file</string>
+    <string name="custom_ctrl_file_enabled_title">Setel Nilai yang Diaktifkan</string>
+    <string name="custom_ctrl_file_enabled_hint">1, diaktifkan, desired_value</string>
+    <string name="custom_ctrl_file_disabled_title">Atur Nilai Dinonaktifkan</string>
+    <string name="custom_ctrl_file_disabled_hint">0, dinonaktifkan, desired_value</string>
+    <string name="custom_ctrl_file_updated_info">Data yang diperbarui akan muncul di sini setelah Anda memperbarui informasi</string>
+    <string name="custom_ctrl_file_heads_up">Jika Anda mengalami masalah dengan aplikasi mogok atau layanan tidak berfungsi dengan baik, coba aktifkan Selalu Tulis File CTRL di pengaturan. TIDAK ada jaminan bahwa fungsi file kontrol yang dapat dikonfigurasi ini akan mendukung semua perangkat dan file / nilai. Coba sesuaikan pengaturan jika terjadi masalah atau pastikan datanya benar.</string>
+    <string name="custom_ctrl_file_update_data">Perbarui Data File CTRL</string>
+
+    <string name="theme">Tema</string>
+    <string name="light">Cerah</string>
+    <string name="dark">Gelap</string>
+    <string name="black">Hitam - AMOLED</string>
+</resources>
