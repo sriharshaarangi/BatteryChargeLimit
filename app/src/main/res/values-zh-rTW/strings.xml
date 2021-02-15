@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name" translatable="false">Battery Charge Limit</string>
+    <string name="receiver_limit" translatable="false">Limit BroadcastReceiver</string>
+    <string name="action_settings">設置</string>
+    <string name="xda_thread_title">XDA Thread</string>
+    <string name="source_code_title">源碼</string>
+    <string name="source_code" translatable="false"><a href="https://github.com/sriharshaarangi/BatteryChargeLimit">Source Code</a></string>
+    <string name="xda_thread" translatable="false"><a href="https://forum.xda-developers.com/android/apps-games/root-battery-charge-limit-t3557002/">XDA Thread </a></string>
+    <string name="about">關於</string>
+    <string name="disable_charge_now">立即停止充電</string>
+    <string name="limit_by_voltage">按電壓限制</string>
+    <string name="custom_voltage_threshold">自定義電壓範圍</string>
+    <string name="enable">開啟充電控制</string>
+    <string name="notify">當充電到限制值時通知我</string>
+    <string name="limit">當充電至%1$d%%時開啟限制</string>
+    <string name="recharge_below">電量低於%1$d%%時恢復充電</string>
+    <string name="status">狀態: </string>
+    <string name="status_ctrl_data_label">控製文件信息</string>
+    <string name="experimental">實驗性功能</string>
+    <string name="issues">已知問題</string>
+    <string name="auto_reset_stats">自動重置電池狀態信息</string>
+    <string name="reset_stats">重置電池狀態信息</string>
+    <string name="disable">禁用</string>
+    <string name="disable_temporarily">暫時禁用</string>
+    <string name="dismiss">取消</string>
+    <string name="open_app">進入應用</string>
+    <string name="file_data">(控製文件數據將會在這裡出現)</string>
+
+    <string name="previously_started">Previously Started</string>
+    <string name="device_not_supported">您的設備還未受支持！ </string>
+    <string name="ok">OK</string>
+    <string name="no_recharge">不自動恢復充電</string>
+
+    <string name="charging">充電中</string>
+    <string name="discharging">放電中</string>
+    <string name="full">已充滿</string>
+    <string name="not_charging">未在充電</string>
+    <string name="unknown">未知</string>
+
+    <string name="please_wait">請稍候...</string>
+    <string name="maintaining_x_to_y">維持從%1$d%% 到 %2$d%%</string>
+    <string name="maintaining_description">如果充電器被拔出，關閉本應用的服務</string>
+    <string name="waiting_until_x">充電至 %1$d%%</string>
+    <string name="waiting_description">當達到限制值時，電池將會立刻停止充電</string>
+    <string name="battery_info_C">U: %1$.3f V, T: %2$.1f &#8451;</string>
+    <string name="battery_info_F">U: %1$.3f V, T: %2$.1f &#8457;</string>
+
+    <string name="root_denied">應用被拒絕了ROOT權限或者設備還未ROOT！ </string>
+    <string name="stats_reset_success">電池狀態重置成功</string>
+
+    <string name="intent_handle_activity">電池電量限制處理Activity</string>
+    <string name="intent_invalid">提供的Intent無效。 </string>
+    <string name="intent_limit_invalid">提供的限制無效</string>
+    <string name="intent_limit_accepted">充電控制限制值變更為 %1$d%%.</string>
+    <string name="mime_battery_limit" translatable="false">text/x-battery-limit</string>
+
+    <string name="service_enabled"> 電池限制服務開啟！ </string>
+    <string name="service_disabled"> 電池限制服務關閉！ </string>
+
+    <string name="main_settings">主設置</string>
+    <string name="set_control_file">設置控製文件</string>
+    <string name="select_control_file">選擇控製文件</string>
+    <string name="show_temperature_fahrenheit">以 &#8457; 來顯示溫度</string>
+    <string name="show_temperature_in_notification">在通知中顯示溫度</string>
+    <string name="enforce_charge_limit">強制控制充電</string>
+    <string name="enforce_charge_limit_desc">嘗試增加切換設備的狀態的延遲以強制設備識別控製文件的變更</string>
+    <string name="always_write_cf">總是寫入控製文件</string>
+    <string name="always_write_cf_desc">始終盲目地覆蓋控製文件，即使該文件已經包含新內容</string>
+    <string name="help_and_support_title">幫助 &amp; 支持</string>
+
+    <string name="advanced_settings">高級設置</string>
+    <string name="immediate_power_intent_handling">總是處理電源事件</string>
+    <string name="immediate_power_intent_handling_desc">即使更改了控製文件，也可以立即識別出電源更改。 \n僅用於受支持的控製文件，例如battery_charging_enabled或store_mode！ </string>
+    <string name="disable_auto_recharge"> 關閉自動恢復充電</string>
+    <string name="disable_auto_recharge_desc">實驗性: 開啟這個選項也會隱藏充電至限制值時候的通知 請注意（重要）: 如果要卸載應用，請關閉這個選項或在卸載後重啟設備</string>
+
+    <string name="hide_toast_on_service_change">服務狀態變更時不再彈出提示</string>
+    <string name="help_desc">正遇到一個問題嗎？您可以隨時在GitHub上開啟一個Issue，然後在XDA上查看Thread以獲取更多支持！ </string>
+
+    <string name="control_file_settings">控製文件的數據</string>
+    <string name="current_ctrl_data_title">Configured File Data</string>
+    <string name="control_file_option_summary_on">使用用戶指定的控製文件數據</string>
+    <string name="control_file_option_summary_off">正在使用預定義的控製文件</string>
+    <string name="control_file_alert_title">只適用於高級用戶！ </string>
+    <string name="control_file_alert_desc">警告: 在不了解所更改內容的情況下擅自修改此部分可能會導致無法預料的設備問題。重啟設備通常可以解決很多問題，但是有些問題可能會非常棘手！請謹慎操作！ ！ ！ </string>
+    <string name="control_understand">我明白了</string>
+    <string name="control_file_heads_up_title">控製文件信息</string>
+    <string name="control_file_heads_up_desc">僅在設備上檢測到的控製文件將顯示為可用。如果檢測到控製文件，但卻是為其他設備所使用的，則應安全使用。在GitHub上發布issue或在GitHub上為您的設備發送pull request，來將控製文件數據添加到此列表中。 </string>
+
+    <string name="custom_ctrl_file_data_title">自定義控製文件數據</string>
+    <string name="custom_ctrl_file_data_setup_title">自定義控制數據</string>
+    <string name="custom_ctrl_file_path_title">設置所需文件的路徑</string>
+    <string name="custom_ctrl_file_path_hint">/sys/folder/folder/desired_file</string>
+    <string name="custom_ctrl_file_enabled_title">設置啟用值</string>
+    <string name="custom_ctrl_file_enabled_hint">1, enabled, desired_value</string>
+    <string name="custom_ctrl_file_disabled_title">設置禁用值</string>
+    <string name="custom_ctrl_file_disabled_hint">0, disabled, desired_value</string>
+    <string name="custom_ctrl_file_updated_info">更新信息後，已被更新的數據將會立即出現在這裡</string>
+    <string name="custom_ctrl_file_heads_up">如果你遇到應用崩潰或服務無法正常運行的問題，嘗試打開設置中的“總是寫入控製文件”。不能保證此可配置的控製文件功能將支持所有設備和文件/值(files/values)。如果出現問題，請嘗試調整設置，或確保數據正確。 </string>
+    <string name="custom_ctrl_file_update_data">更新控製文件數據</string>
+
+    <string name="theme">主題</string>
+    <string name="light">亮色</string>
+    <string name="dark">暗色</string>
+    <string name="black">黑 - AMOLED</string>
+</resources>
