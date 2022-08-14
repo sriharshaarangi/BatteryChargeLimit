@@ -195,5 +195,13 @@
     "chargeOn": "0",
     "chargeOff": "1",
     "experimental": true
+  },
+  {
+    "file": "/sys/devices/virtual/oplus_chg/battery/mmi_charging_enable",
+    "label": "OnePlus",
+    "details": "OnePlus Nord 2T 5G",
+    "chargeOn": "1",
+    "chargeOff": "0",
+    "experimental": true
   }
 ]
