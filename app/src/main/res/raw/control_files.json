@@ -196,4 +196,11 @@
     "chargeOff": "1",
     "experimental": true
   }
+  {
+    "file": "/sys/devices/soc/800f000.qcom,spmi/spmi-0/spmi0-02/800f000.qcom,spmi:qcom,pmi8998@2:qcom,qpnp-smb2/power_supply/battery/charging_enabled",
+    "label": "charging_enabled",
+    "details": "OnePlus 5T OxygenOS 9.0.11",
+    "chargeOn": "1",
+    "chargeOff": "0"
+  },
 ]
