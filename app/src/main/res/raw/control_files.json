@@ -36,6 +36,13 @@
     "experimental": true
   },
   {
+    "file": "/sys/class/power_supply/battery/charge_disable",
+    "label": "charge_disable",
+    "details": "Pixel 3",
+    "chargeOn": "0",
+    "chargeOff": "1"
+  },
+  {
     "file": "/sys/class/power_supply/battery/charge_enabled",
     "label": "charge_enabled",
     "details": "Galaxy Nexus (maguro)",
